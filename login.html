@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Login — HelpReach</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <style>
+        .auth-card { max-width:480px; margin:120px auto 40px; box-shadow:0 6px 18px rgba(0,0,0,.06); padding:28px; border-radius:8px; }
+    </style>
+</head>
+<body>
+    <div class="container auth-card bg-white">
+        <h2 class="mb-3">Welcome back</h2>
+        <p class="text-muted">Login to your HelpReach account — donors, event organizers and NGOs.</p>
+        <form id="loginForm">
+            <div class="mb-3">
+                <label class="form-label">Email</label>
+                <input type="email" class="form-control" name="email" placeholder="you@domain.com" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Password</label>
+                <input type="password" class="form-control" name="password" required>
+            </div>
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <div>
+                    <input id="remember" type="checkbox"> <label for="remember">Remember me</label>
+                </div>
+                <div>
+                    <a class="small" href="#" id="forgot">Forgot password?</a>
+                </div>
+            </div>
+            <div class="mb-3 d-flex">
+                <button type="submit" class="btn btn-primary me-2">Login</button>
+                <a class="btn btn-outline-secondary" href="register.html">Create account</a>
+            </div>
+        </form>
+        <div id="loginMsg" style="display:none;" class="alert alert-info"></div>
+    </div>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(e){
+            e.preventDefault();
+            const email = this.email.value.trim();
+            // Basic client-side validation
+            if (!email) return alert('Please enter your email');
+            const msg = document.getElementById('loginMsg');
+            msg.style.display = 'block';
+            msg.textContent = 'Login successful — redirecting to dashboard...';
+            setTimeout(()=> window.location.href='dashboard.html',800);
+        });
+        document.getElementById('forgot').addEventListener('click', (e)=>{ e.preventDefault(); alert('A password reset link would be sent to your registered email (simulation).');});
+    </script>
+</body>
+</html>

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Active Donations — HelpReach</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <style>.card-compact{box-shadow:0 6px 18px rgba(0,0,0,.05);border-radius:8px}</style>
+</head>
+<body>
+    <div class="container" style="margin-top:80px;">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h2>Active Donations</h2>
+            <a class="btn btn-primary" href="donate.html">Post donation</a>
+        </div>
+
+        <div class="mb-4">
+            <label class="form-label">Filters</label>
+            <div class="row g-2">
+                <div class="col-md-3"><input id="fLocation" class="form-control" placeholder="Location"></div>
+                <div class="col-md-3"><select id="fType" class="form-select"><option value="">All Types</option><option>food</option><option>clothes</option><option>other</option></select></div>
+                <div class="col-md-3"><input id="fMinQty" type="number" class="form-control" placeholder="Min quantity"></div>
+                <div class="col-md-3"><button id="applyFilter" class="btn btn-outline-secondary">Apply</button></div>
+            </div>
+        </div>
+
+        <div id="listArea" class="row gy-3"></div>
+    </div>
+
+    <script>
+        function render(){
+            const list = JSON.parse(localStorage.getItem('donations')||'[]');
+            const area = document.getElementById('listArea'); area.innerHTML='';
+            if (!list.length){ area.innerHTML='<div class="alert alert-info">No active donations yet.</div>'; return; }
+            list.forEach(d => {
+                const col = document.createElement('div'); col.className='col-12';
+                col.innerHTML = `
+                    <div class="card p-3 card-compact">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div>
+                                <h5 class="mb-1">${d.type} <small class="text-muted">(${d.quantity})</small></h5>
+                                <p class="mb-1 small">${d.address} • ${d.date} ${d.time}</p>
+                                <p class="mb-1"><strong>Status:</strong> <span class="badge bg-${d.status==='Available'?'success':'secondary'}">${d.status}</span></p>
+                            </div>
+                            <div class="text-end">
+                                <button class="btn btn-sm btn-outline-primary me-2" onclick="view(${d.id})">View</button>
+                                <button class="btn btn-sm btn-success" onclick="claim(${d.id})" ${d.status!=='Available'?'disabled':''}>Claim</button>
+                            </div>
+                        </div>
+                    </div>`;
+                area.appendChild(col);
+            });
+        }
+        function view(id){
+            const list = JSON.parse(localStorage.getItem('donations')||'[]');
+            const d = list.find(x=>x.id===id);
+            if (!d) return alert('Not found');
+            alert(`Donation details:\nItem: ${d.type}\nQuantity: ${d.quantity}\nAddress: ${d.address}\nPickup: ${d.date} ${d.time}`);
+        }
+        function claim(id){
+            // First-come claim simulation: mark claimed by this NGO (localStorage)
+            let list = JSON.parse(localStorage.getItem('donations')||'[]');
+            const idx = list.findIndex(x=>x.id===id);
+            if (idx===-1) return alert('Not found');
+            const donation = list[idx];
+            if (donation.status !== 'Available') return alert('Already claimed');
+            // simulate multiple NGOs racing: pick random chance to split if quantity >5
+            const qty = Number(donation.quantity) || 1;
+            if (qty > 10){
+                // split between 2 NGOs
+                donation.status = 'Split Between 2 NGOs';
+            } else {
+                donation.status = 'Fully Assigned';
+            }
+            localStorage.setItem('donations', JSON.stringify(list));
+            alert('Claim successful. Refreshing list...');
+            render();
+        }
+        document.getElementById('applyFilter').addEventListener('click', ()=>{
+            // Basic client-side filter (not location-aware, only type and min qty)
+            const type = document.getElementById('fType').value;
+            const min = Number(document.getElementById('fMinQty').value||0);
+            let list = JSON.parse(localStorage.getItem('donations')||'[]');
+            if (type) list = list.filter(d=> (d.donType||d.type).toLowerCase().includes(type.toLowerCase()));
+            if (min) list = list.filter(d=> Number(d.quantity) >= min);
+            document.getElementById('listArea').innerHTML='';
+            if (!list.length) document.getElementById('listArea').innerHTML='<div class="alert alert-warning">No results for filters.</div>';
+            list.forEach(d=>{
+                const col = document.createElement('div'); col.className='col-12';
+                col.innerHTML = `<div class="card p-3 card-compact"><div class="d-flex justify-content-between"><div><h5>${d.type} <small class="text-muted">(${d.quantity})</small></h5><p class="small">${d.address}</p></div><div><button class="btn btn-sm btn-success" onclick="claim(${d.id})">Claim</button></div></div></div>`;
+                document.getElementById('listArea').appendChild(col);
+            });
+        });
+
+        // initial render
+        render();
+    </script>
+</body>
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Donate — HelpReach</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <style>.donate-card{max-width:900px;margin:80px auto;padding:26px;border-radius:10px;box-shadow:0 6px 18px rgba(0,0,0,.06)}</style>
+</head>
+<body>
+    <div class="container donate-card bg-white">
+        <h2 class="mb-3">Make a donation</h2>
+        <p class="text-muted">Choose donation type and provide pickup details. NGOs will be notified and can claim.</p>
+        <form id="donateForm">
+            <div class="mb-3">
+                <label class="form-label">Donation type</label>
+                <select id="donType" class="form-select" required>
+                    <option value="food">Food Donation</option>
+                    <option value="clothes">Clothes Donation</option>
+                    <option value="other">Other Essential Donations</option>
+                </select>
+            </div>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Item type</label>
+                    <input class="form-control" name="item_type" required>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Quantity (approx.)</label>
+                    <input type="number" class="form-control" name="quantity" min="1" required>
+                </div>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Pickup address / Event location</label>
+                <input class="form-control" name="address" required>
+            </div>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Pickup date</label>
+                    <input type="date" class="form-control" name="date" required>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Pickup time</label>
+                    <input type="time" class="form-control" name="time" required>
+                </div>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Photos (optional)</label>
+                <input type="file" class="form-control" name="photos" accept="image/*" multiple>
+            </div>
+            <div class="mb-3">
+                <button class="btn btn-success" type="submit">Submit donation</button>
+                <a class="btn btn-link" href="listings.html">See active donations</a>
+            </div>
+        </form>
+        <div id="donMsg" class="alert mt-3" style="display:none;"></div>
+    </div>
+
+    <script>
+        document.getElementById('donateForm').addEventListener('submit', function(e){
+            e.preventDefault();
+            const data = new FormData(this);
+            // Simulate sending request to NGOs
+            const msg = document.getElementById('donMsg');
+            msg.style.display = 'block';
+            msg.className = 'alert alert-success';
+            msg.textContent = 'Donation request sent to nearby NGOs. Listing will appear in active donations.';
+            // Save to localStorage for listings simulation
+            const donations = JSON.parse(localStorage.getItem('donations')||'[]');
+            donations.unshift({
+                id: Date.now(),
+                type: data.get('item_type'),
+                donType: data.get('donType')||document.getElementById('donType').value,
+                quantity: data.get('quantity'),
+                address: data.get('address'),
+                date: data.get('date'),
+                time: data.get('time'),
+                status: 'Available'
+            });
+            localStorage.setItem('donations', JSON.stringify(donations));
+            setTimeout(()=> window.location.href='listings.html',1200);
+        });
+    </script>
+</body>
+</html>
