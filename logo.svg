@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="40" height="40">
+  <!-- Circle background -->
+  <circle cx="50" cy="50" r="48" fill="#007bff" opacity="0.1" stroke="#007bff" stroke-width="2"/>
+  
+  <!-- Helping hands symbol -->
+  <g fill="#007bff">
+    <!-- Left hand -->
+    <path d="M 30 55 Q 25 45 30 35 L 35 35 Q 32 45 37 55 Z"/>
+    <!-- Right hand -->
+    <path d="M 70 55 Q 75 45 70 35 L 65 35 Q 68 45 63 55 Z"/>
+    <!-- Heart in center -->
+    <path d="M 50 38 C 50 38 45 33 42 33 C 39 33 37 35 37 38 C 37 42 50 55 50 55 C 50 55 63 42 63 38 C 63 35 61 33 58 33 C 55 33 50 38 50 38 Z" fill="#28a745"/>
+  </g>
+</svg>

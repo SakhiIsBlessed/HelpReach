@@ -1,9 +1,100 @@
 /********** Template CSS **********/
 :root {
-    --primary: #3CB815;
+    --primary: #007bff;
+    --primary-light: #0056b3;
     --secondary: #F65005;
     --light: #F7F8FC;
     --dark: #111111;
+}
+
+/* Navbar Styling */
+.navbar {
+    padding: 1.2rem 0;
+    transition: all 0.3s ease;
+}
+
+.navbar-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--primary) !important;
+    transition: all 0.3s ease;
+}
+
+.navbar-brand:hover {
+    transform: scale(1.05);
+    color: var(--primary-light) !important;
+}
+
+.navbar-brand img {
+    height: 45px;
+    width: auto;
+    transition: transform 0.3s ease;
+}
+
+.navbar-brand:hover img {
+    transform: rotate(-5deg);
+}
+
+.nav-link {
+    position: relative;
+    padding: 0.5rem 1.2rem !important;
+    color: #333 !important;
+    font-weight: 500;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    margin: 0 0.25rem;
+}
+
+.nav-link::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--primary), var(--primary-light));
+    transition: width 0.3s ease;
+}
+
+.nav-link:hover {
+    color: var(--primary) !important;
+    transform: translateY(-2px);
+}
+
+.nav-link:hover::before {
+    width: 100%;
+}
+
+.nav-link.active {
+    color: var(--primary) !important;
+    font-weight: 600;
+}
+
+.nav-link.active::before {
+    width: 100%;
+}
+
+.navbar-toggler {
+    border: none;
+    padding: 0.25rem 0.75rem;
+    transition: all 0.3s ease;
+}
+
+.navbar-toggler:focus {
+    outline: none;
+    box-shadow: 0 0 0 0.25rem rgba(0, 123, 255, 0.25);
+}
+
+.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='%23007bff' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+
+.fixed-top {
+    box-shadow: 0 4px 12px rgba(0, 123, 255, 0.1);
+    backdrop-filter: blur(10px);
 }
 
 .back-to-top {
