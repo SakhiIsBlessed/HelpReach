@@ -45,12 +45,161 @@
         }
 
         .stat {
-            font-size: 2rem;
-            font-weight: 700;
+            font-size: 2.6rem;
+            font-weight: 800;
+            line-height: 1;
+            margin-top: 8px;
+            color: #111827;
         }
 
         .stat-label {
             color: #6c757d;
+            font-weight: 600;
+            margin-top: 6px;
+            transition: color 0.4s ease, transform 0.4s ease, opacity 0.4s ease;
+        }
+
+        /* Animated stat card styles */
+        .stat-item {
+            position: relative;
+            padding-top: 8px;
+            transition: transform 0.5s cubic-bezier(.2, .9, .2, 1), box-shadow 0.45s ease;
+            overflow: hidden;
+        }
+
+        .stat-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 6px;
+            width: 100%;
+            background: linear-gradient(90deg, rgba(13, 110, 253, 0.95), rgba(16, 185, 129, 0.95));
+            transform: scaleX(0);
+            transform-origin: left center;
+            transition: transform 0.6s cubic-bezier(.2, .9, .2, 1);
+            z-index: 2;
+        }
+
+        .stat-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 96px;
+            height: 96px;
+            margin: 0 auto 6px;
+            border-radius: 50%;
+            background: transparent;
+        }
+
+        .stat-icon svg {
+            width: 84px;
+            height: 84px;
+            display: block;
+        }
+
+        @keyframes stat-pop {
+            0% {
+                transform: translateY(10px) scale(0.98);
+                opacity: 0
+            }
+
+            60% {
+                transform: translateY(-6px) scale(1.06);
+                opacity: 1
+            }
+
+            100% {
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .stat-item.stat-animate {
+            transform: translateY(-6px);
+            box-shadow: 0 18px 50px rgba(13, 110, 253, 0.12);
+        }
+
+        .stat-item.stat-animate::before {
+            transform: scaleX(1);
+        }
+
+        .stat.stat-animate-number {
+            animation: stat-pop 700ms cubic-bezier(.2, .9, .2, 1);
+        }
+
+        /* Decorative burst when a stat completes */
+        .stat-burst {
+            position: absolute;
+            left: 50%;
+            top: 18px;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, #fff, rgba(255, 255, 255, 0.85));
+            box-shadow: 0 0 0 6px rgba(13, 110, 253, 0.12), 0 0 18px 4px rgba(16, 185, 129, 0.06);
+            transform: translate(-50%, -50%) scale(0);
+            opacity: 1;
+            animation: burst 900ms cubic-bezier(.2, .9, .2, 1) forwards;
+            pointer-events: none;
+            z-index: 4;
+        }
+
+        @keyframes burst {
+            0% {
+                transform: translate(-50%, -50%) scale(0);
+                opacity: 1;
+            }
+
+            60% {
+                transform: translate(-50%, -50%) scale(1.6);
+                opacity: 0.9;
+            }
+
+            100% {
+                transform: translate(-50%, -50%) scale(3);
+                opacity: 0;
+                box-shadow: 0 0 0 18px rgba(16, 185, 129, 0.04);
+            }
+        }
+
+        .stat-icon.pulse {
+            animation: pulse 900ms cubic-bezier(.2, .9, .2, 1);
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1)
+            }
+
+            50% {
+                transform: scale(1.12)
+            }
+
+            100% {
+                transform: scale(1)
+            }
+        }
+
+        .stat-label {
+            opacity: 0;
+            transform: translateY(6px);
+        }
+
+        .stat-item.stat-animate .stat-label {
+            opacity: 1;
+            transform: translateY(0);
+            color: #0d6efd
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+
+            .stat-item,
+            .stat-icon,
+            .stat,
+            .stat-burst {
+                animation: none !important;
+                transition: none !important;
+            }
         }
 
         .feature-card {
@@ -376,16 +525,144 @@
         }
 
         .why-choose .why-card {
-            background: #ffffff;
+            background: linear-gradient(180deg, #ffffff, #fbfbff);
             border-radius: 14px;
             padding: 22px;
             text-align: left;
-            box-shadow: 0 10px 35px rgba(13, 110, 253, 0.03);
-            transition: transform 0.38s cubic-bezier(.2, .8, .2, 1), box-shadow 0.38s ease;
+            box-shadow: 0 8px 30px rgba(16, 24, 40, 0.06);
+            transition: transform 0.45s cubic-bezier(.2, .8, .2, 1), box-shadow 0.45s ease, color 0.3s ease;
             opacity: 0;
-            transform: translateY(18px) scale(0.995);
-            animation: popIn 0.6s cubic-bezier(.2, .8, .2, 1) forwards;
+            transform: translateY(22px) scale(0.992);
             overflow: hidden;
+        }
+
+        /* Entrance animation when card enters viewport */
+        @keyframes why-pop {
+            0% {
+                opacity: 0;
+                transform: translateY(22px) scale(0.992);
+            }
+
+            60% {
+                opacity: 1;
+                transform: translateY(-6px) scale(1.02);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .why-card.in-view {
+            animation: why-pop 620ms cubic-bezier(.2, .85, .2, 1) forwards;
+        }
+
+        /* Staggered delays based on column position */
+        .why-row>.col-md-4:nth-child(1) .why-card.in-view {
+            animation-delay: 0.06s;
+        }
+
+        .why-row>.col-md-4:nth-child(2) .why-card.in-view {
+            animation-delay: 0.12s;
+        }
+
+        .why-row>.col-md-4:nth-child(3) .why-card.in-view {
+            animation-delay: 0.18s;
+        }
+
+        .why-row>.col-md-4:nth-child(4) .why-card.in-view {
+            animation-delay: 0.24s;
+        }
+
+        .why-row>.col-md-4:nth-child(5) .why-card.in-view {
+            animation-delay: 0.30s;
+        }
+
+        .why-row>.col-md-4:nth-child(6) .why-card.in-view {
+            animation-delay: 0.36s;
+        }
+
+        /* Icon container - glowing ring and subtle motion */
+        .why-icon {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 14px;
+            flex-shrink: 0;
+            background: linear-gradient(135deg, rgba(13, 110, 253, 0.08), rgba(16, 185, 129, 0.04));
+            box-shadow: 0 8px 20px rgba(13, 110, 253, 0.04);
+            position: relative;
+            overflow: visible;
+        }
+
+        .why-icon::after {
+            content: '';
+            position: absolute;
+            inset: -6px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, rgba(16, 185, 129, 0.12), rgba(13, 110, 253, 0.04));
+            filter: blur(8px);
+            opacity: 0;
+            transform: scale(0.8);
+            transition: opacity 0.45s ease, transform 0.45s ease;
+            pointer-events: none;
+        }
+
+        .why-card.in-view .why-icon::after {
+            opacity: 1;
+            transform: scale(1.05);
+        }
+
+        .why-icon i {
+            font-size: 1.6rem;
+            color: #0d6efd;
+            display: inline-block;
+            transition: transform 0.45s cubic-bezier(.2, .8, .2, 1), filter 0.45s ease;
+        }
+
+        .why-card.in-view .why-icon i {
+            transform: translateY(-4px) scale(1.06);
+            filter: drop-shadow(0 8px 18px rgba(13, 110, 253, 0.06));
+        }
+
+        /* Hover micro-interaction */
+        .why-card:hover {
+            transform: translateY(-12px) rotate(-0.6deg) scale(1.02);
+            box-shadow: 0 28px 70px rgba(13, 110, 253, 0.12);
+        }
+
+        .why-card:hover .why-icon::after {
+            opacity: 1;
+            transform: scale(1.12);
+        }
+
+        .why-card .why-title {
+            transition: color 0.28s ease;
+        }
+
+        .why-card.in-view .why-title {
+            color: #0d6efd;
+        }
+
+        /* Respect reduced motion */
+        @media (prefers-reduced-motion: reduce) {
+
+            .why-card,
+            .why-icon,
+            .why-card.in-view,
+            .why-card:hover {
+                animation: none !important;
+                transition: none !important;
+                transform: none !important;
+            }
+
+            .why-icon::after {
+                display: none;
+            }
         }
 
         /* subtle animated highlight sweep */
@@ -580,6 +857,12 @@
                 flex: 1 1 auto;
             }
         }
+
+        /* Impact Stats background image */
+        .impact-bg {
+            background: linear-gradient(rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.85)), url('img/impact-bg.jpg') center center/cover no-repeat;
+            position: relative;
+        }
     </style>
 </head>
 
@@ -712,33 +995,44 @@
                         communities, reducing waste and hunger without any profit motive. Every donation goes directly
                         to the people who need it most, ensuring transparency and trust.</p>
 
-                    <div class="d-flex gap-3 mb-4 tab-btns" role="tablist" aria-label="Mission and Vision tabs">
-                        <button class="btn btn-light tab-toggle tab-active" data-target="missionContent"
-                            aria-controls="missionContent" aria-selected="true" role="tab">Our Mission</button>
-                        <button class="btn btn-outline-primary tab-toggle" data-target="visionContent"
-                            aria-controls="visionContent" aria-selected="false" role="tab">Our Vision</button>
-                    </div>
+                    <div class="row g-3 align-items-start">
+                        <div class="col-auto">
+                            <div class="d-flex flex-column gap-2 tab-btns" role="tablist"
+                                aria-label="Mission and Vision tabs">
+                                <button class="btn btn-light tab-toggle tab-active" data-target="missionContent"
+                                    aria-controls="missionContent" aria-selected="true" role="tab">Our Mission</button>
+                                <button class="btn btn-primary tab-toggle" data-target="visionContent"
+                                    aria-controls="visionContent" aria-selected="false" role="tab">Our Vision</button>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div id="missionContent" class="mission-vision-content">
+                                <p class="small text-muted">Our Mission: To step up to the challenge and work towards
+                                    serving
+                                    the needy and reducing hunger in our areas of operation. We coordinate with verified
+                                    NGOs
+                                    and volunteers to make sure each donation creates impact. We prioritise safety,
+                                    speed and
+                                    dignity while redistributing surplus food and clothes.</p>
+                            </div>
 
-                    <div id="missionContent" class="mission-vision-content">
-                        <p class="small text-muted">Our Mission: To step up to the challenge and work towards serving
-                            the needy and reducing hunger in our areas of operation. We coordinate with verified NGOs
-                            and volunteers to make sure each donation creates impact. We prioritise safety, speed and
-                            dignity while redistributing surplus food and clothes.</p>
-                    </div>
-
-                    <div id="visionContent" class="mission-vision-content d-none" aria-hidden="true">
-                        <p class="small text-muted">Our Vision: A future where surplus from gatherings and events never
-                            goes to waste — where every extra meal and usable item finds a home. We envision resilient
-                            communities supported by a network of verified NGOs and caring donors working together.</p>
+                            <div id="visionContent" class="mission-vision-content d-none" aria-hidden="true">
+                                <p class="small text-muted">Our Vision: A future where surplus from gatherings and
+                                    events never
+                                    goes to waste — where every extra meal and usable item finds a home. We envision
+                                    resilient
+                                    communities supported by a network of verified NGOs and caring donors working
+                                    together.</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="col-lg-6 wow fadeInRight" data-wow-delay="0.2s">
-                    <div class="media-card position-relative overflow-hidden rounded">
+                    <div class="media-card position-relative overflow-hidden rounded"
+                        style="height: 100%; min-height: 250px;">
                         <img src="img/We Are Non Profit Organization.png" alt="field team" class="img-fluid rounded"
+                            style="width: 85%; height: 85%; object-fit: cover;"
                             onerror="this.src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTW6XfdlOlbZ-Oc-mcOaN8tTTXOletm72UvTw&s'">
-                        <a class="play-overlay" href="#">
-                            <span class="play-btn"></span>
-                        </a>
                     </div>
                 </div>
             </div>
@@ -751,6 +1045,14 @@
         <div class="container">
             <div class="row g-4 align-items-center">
                 <div class="col-lg-6 wow fadeInLeft" data-wow-delay="0.1s">
+                    <div class="media-card position-relative overflow-hidden rounded"
+                        style="height: 100%; min-height: 350px;">
+                        <img src="img/We Are A Strong Team.jpg" alt="team" class="img-fluid rounded"
+                            style="width: 100%; height: 100%; object-fit: cover;"
+                            onerror="this.src='https://via.placeholder.com/800x500?text=Team'">
+                    </div>
+                </div>
+                <div class="col-lg-6 wow fadeInRight" data-wow-delay="0.2s">
                     <h2>We Are A Strong Team</h2>
                     <p class="mb-3">Our team is made up of volunteers, logistics coordinators and community partners who
                         believe in using technology to connect surplus with need. We coordinate pickups, perform basic
@@ -764,41 +1066,85 @@
                     <a href="contact.html" class="read-more-link mt-3 d-inline-block">Join Our Team <i
                             class="fa fa-arrow-right ms-2"></i></a>
                 </div>
-                <div class="col-lg-6 wow fadeInRight" data-wow-delay="0.2s">
-                    <div class="media-card position-relative overflow-hidden rounded">
-                        <img src="img/We Are A Strong Team.jpg" alt="team" class="img-fluid rounded"
-                            onerror="this.src='https://via.placeholder.com/800x500?text=Team'">
-                    </div>
-                </div>
             </div>
         </div>
     </div>
 
 
     <!-- Impact Stats Start -->
-    <div class="container-fluid py-5 bg-light">
+    <div class="container-fluid py-5 impact-bg">
         <div class="container">
             <div class="row g-4 text-center">
                 <div class="col-md-3 wow fadeInUp" data-wow-delay="0.1s">
                     <div class="p-4 bg-white rounded stat-item">
+                        <div class="stat-icon mb-2">
+                            <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                <defs>
+                                    <linearGradient id="s1" x1="0" x2="1">
+                                        <stop offset="0" stop-color="#0d6efd" />
+                                        <stop offset="1" stop-color="#10b981" />
+                                    </linearGradient>
+                                </defs>
+                                <circle cx="32" cy="32" r="30" fill="url(#s1)" opacity="0.12" />
+                                <path d="M32 18a8 8 0 100 16 8 8 0 000-16zM12 50c2-6 10-10 20-10s18 4 20 10H12z"
+                                    fill="#0d6efd" />
+                            </svg>
+                        </div>
                         <div class="stat" data-target="12450">0</div>
                         <div class="stat-label">Meals Redirected</div>
                     </div>
                 </div>
                 <div class="col-md-3 wow fadeInUp" data-wow-delay="0.2s">
                     <div class="p-4 bg-white rounded stat-item">
+                        <div class="stat-icon mb-2">
+                            <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                <defs>
+                                    <linearGradient id="s2" x1="0" x2="1">
+                                        <stop offset="0" stop-color="#ff7a59" />
+                                        <stop offset="1" stop-color="#ffb86b" />
+                                    </linearGradient>
+                                </defs>
+                                <rect x="6" y="16" width="52" height="36" rx="6" fill="url(#s2)" opacity="0.12" />
+                                <path d="M20 22h24v14H20z" fill="#ff7a59" />
+                            </svg>
+                        </div>
                         <div class="stat" data-target="3420">0</div>
                         <div class="stat-label">Items Donated</div>
                     </div>
                 </div>
                 <div class="col-md-3 wow fadeInUp" data-wow-delay="0.3s">
                     <div class="p-4 bg-white rounded stat-item">
+                        <div class="stat-icon mb-2">
+                            <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                <defs>
+                                    <linearGradient id="s3" x1="0" x2="1">
+                                        <stop offset="0" stop-color="#8b5cf6" />
+                                        <stop offset="1" stop-color="#06b6d4" />
+                                    </linearGradient>
+                                </defs>
+                                <circle cx="32" cy="32" r="30" fill="url(#s3)" opacity="0.12" />
+                                <path d="M18 26h28v4H18zM22 34h20v10H22z" fill="#8b5cf6" />
+                            </svg>
+                        </div>
                         <div class="stat" data-target="680">0</div>
                         <div class="stat-label">Active NGO Partners</div>
                     </div>
                 </div>
                 <div class="col-md-3 wow fadeInUp" data-wow-delay="0.4s">
                     <div class="p-4 bg-white rounded stat-item">
+                        <div class="stat-icon mb-2">
+                            <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                <defs>
+                                    <linearGradient id="s4" x1="0" x2="1">
+                                        <stop offset="0" stop-color="#06b6d4" />
+                                        <stop offset="1" stop-color="#60a5fa" />
+                                    </linearGradient>
+                                </defs>
+                                <rect x="8" y="10" width="48" height="44" rx="6" fill="url(#s4)" opacity="0.12" />
+                                <path d="M32 18c-6 10-12 12-12 18 0 4 4 6 12 6s12-2 12-6c0-6-6-8-12-18z"
+                                    fill="#06b6d4" />
+                            </svg>
+                        </div>
                         <div class="stat" data-target="980">0</div>
                         <div class="stat-label">Events Supported</div>
                     </div>
@@ -1049,7 +1395,7 @@
                     <h6>Contact</h6>
                     <p class="small mb-1"><i class="fa fa-map-marker-alt me-2"></i>411 041 Narhe Road, Pune</p>
                     <p class="small mb-1"><i class="fa fa-envelope me-2"></i>info@helpreach.org</p>
-                    <p class="small mb-0"><i class="fa fa-phone me-2"></i>+91 8530932462</p>
+                    <p class="small mb-0"><i class="fa fa-phone me-2"></i>+91 8530932462 & +91 9607340088</p>
                 </div>
             </div>
             <div class="text-center mt-3 small">&copy; <span id="year"></span> HelpReach. All rights reserved.</div>
@@ -1171,6 +1517,35 @@
             }
 
             type();
+        })();
+    </script>
+    <script>
+        // Reveal why-choose cards on scroll with IntersectionObserver (adds .in-view)
+        (function () {
+            const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            const cards = document.querySelectorAll('.why-card');
+            if (!cards || cards.length === 0) return;
+            if (prefersReduced) {
+                // if reduced motion, reveal immediately
+                cards.forEach(c => c.classList.add('in-view'));
+                return;
+            }
+
+            if (!('IntersectionObserver' in window)) {
+                cards.forEach(c => c.classList.add('in-view'));
+                return;
+            }
+
+            const io = new IntersectionObserver((entries, obs) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('in-view');
+                        obs.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.18 });
+
+            cards.forEach(c => io.observe(c));
         })();
     </script>
     <script>
