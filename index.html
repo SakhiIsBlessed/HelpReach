@@ -119,9 +119,14 @@
     </section>
 
     <!-- Who can use it -->
-    <section class="container-fluid bg-white py-5">
+    <section class="container-fluid bg-white py-5 tight-section">
         <div class="container">
             <h2 class="text-center mb-4">Who can use HelpReach</h2>
+            <div class="section-deco">
+                <div class="line"></div>
+                <div class="icon"><i class="fas fa-users"></i></div>
+                <div class="line"></div>
+            </div>
             <div class="row text-center g-4">
                 <div class="col-md-4">
                     <div class="card p-4 h-100">
@@ -149,8 +154,13 @@
     </section>
 
     <!-- How it works (3 step) -->
-    <section class="container py-5">
+    <section class="container py-5 tight-section">
         <h2 class="text-center mb-4">How it works</h2>
+        <div class="section-deco">
+            <div class="line"></div>
+            <div class="icon"><i class="fas fa-cogs"></i></div>
+            <div class="line"></div>
+        </div>
         <div class="row g-4 justify-content-center">
             <div class="col-md-3">
                 <div class="card text-center p-4 h-100">
@@ -177,9 +187,14 @@
     </section>
 
     <!-- Benefits -->
-    <section class="container-fluid bg-light py-5">
+    <section class="container-fluid bg-light py-5 tight-section">
         <div class="container">
             <h2 class="text-center mb-4">Benefits of donating</h2>
+            <div class="section-deco">
+                <div class="line"></div>
+                <div class="icon"><i class="fas fa-leaf"></i></div>
+                <div class="line"></div>
+            </div>
             <div class="row g-4">
                 <div class="col-md-4">
                     <div class="d-flex align-items-start">
@@ -211,46 +226,12 @@
             </div>
         </div>
     </section>
-
-        <!-- CTA strip -->
-        <div class="container py-5 text-center">
-            <h3>Ready to give?</h3>
-            <p class="mb-3">Post a donation in under a minute — or register your NGO to start receiving claims.</p>
-            <a class="btn btn-lg btn-success me-2" href="donate.html">Donate Now</a>
-            <a class="btn btn-lg btn-register-ngo" href="ngo-directory.html">Register as NGO</a>
-        </div>
-
-        <!-- Our Impact / Stats -->
-        <section class="container-fluid bg-white py-5">
-            <div class="container">
-                <h2 class="text-center mb-4">Our Impact</h2>
-                <div class="row text-center g-4">
-                    <div class="col-md-4">
-                        <div class="p-4">
-                            <div class="stat-number display-6 fw-bold text-success" data-target="12450">12,450</div>
-                            <div class="small">Meals redistributed</div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="p-4">
-                            <div class="stat-number display-6 fw-bold text-success" data-target="3780">3,780</div>
-                            <div class="small">Items donated</div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="p-4">
-                            <div class="stat-number display-6 fw-bold text-success" data-target="215">215</div>
-                            <div class="small">Registered NGOs</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+        <!-- Our Impact / Stats (moved later) -->
 
         <!-- Safety & Handling (theoretical guidance) -->
         <section class="container py-4">
-            <div class="row g-4 align-items-center">
-                <div class="col-lg-6">
+            <div class="row g-4">
+                <div class="col-12">
                     <h3>Safety & handling guidelines</h3>
                     <p class="small">Donating food and items responsibly helps recipients and preserves dignity. Follow these best practices to ensure safety and quality:</p>
                     <ul class="small">
@@ -260,9 +241,6 @@
                         <li><strong>Transport:</strong> Arrange prompt pickup and handover, keeping hot foods hot and cold foods cold.</li>
                         <li><strong>Verification:</strong> NGOs should confirm the donation condition before acceptance and report any concerns.</li>
                     </ul>
-                </div>
-                <div class="col-lg-6">
-                    <img src="img/about.jpg" alt="Handling" class="img-fluid rounded shadow-sm">
                 </div>
             </div>
         </section>
@@ -324,6 +302,46 @@
                 </div>
             </div>
         </section>
+
+        <!-- Our Impact / Stats -->
+        <section class="container-fluid bg-white py-5 tight-section">
+            <div class="container">
+                <h2 class="text-center mb-4">Our Impact</h2>
+                <div class="section-deco">
+                    <div class="line"></div>
+                    <div class="icon"><i class="fas fa-chart-line"></i></div>
+                    <div class="line"></div>
+                </div>
+                <div class="row text-center g-4">
+                    <div class="col-md-4">
+                        <div class="p-4">
+                            <div class="stat-number display-6 fw-bold text-success" data-target="12450">12,450</div>
+                            <div class="small">Meals redistributed</div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="p-4">
+                            <div class="stat-number display-6 fw-bold text-success" data-target="3780">3,780</div>
+                            <div class="small">Items donated</div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="p-4">
+                            <div class="stat-number display-6 fw-bold text-success" data-target="215">215</div>
+                            <div class="small">Registered NGOs</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA strip -->
+        <div class="container py-5 text-center">
+            <h3>Ready to give?</h3>
+            <p class="mb-3">Post a donation in under a minute — or register your NGO to start receiving claims.</p>
+            <a class="btn btn-lg btn-success me-2" href="donate.html">Donate Now</a>
+            <a class="btn btn-lg btn-register-ngo" href="ngo-directory.html">Register as NGO</a>
+        </div>
 
         <!-- Footer -->
         <footer class="container-fluid bg-dark text-light py-5">
