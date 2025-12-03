@@ -618,3 +618,40 @@ header + section.container + section.container-fluid.bg-white {
 .accordion-button {
     font-weight: 600;
 }
+
+/* Tight section variant and decorative separators for tighter flow */
+.tight-section {
+    padding-top: 1.25rem !important;
+    padding-bottom: 1.25rem !important;
+}
+
+.section-deco {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    margin-top: -0.5rem;
+    margin-bottom: 0.75rem;
+}
+
+.section-deco .line {
+    flex: 1 1 40%;
+    height: 2px;
+    background: linear-gradient(90deg, rgba(0,123,255,0.15), rgba(0,123,255,0.35));
+}
+
+.section-deco .icon {
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: #ffffff;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+    border: 3px solid rgba(0,123,255,0.06);
+}
+
+.section-deco .icon i {
+    color: var(--primary);
+}
