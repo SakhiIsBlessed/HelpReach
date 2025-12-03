@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>NGO Directory — HelpReach</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="img/favicon.ico" rel="icon">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Navbar -->
+    <div class="container-fluid fixed-top bg-white shadow-sm">
+        <nav class="navbar navbar-expand-lg navbar-light container">
+            <a class="navbar-brand fw-bold" href="index.html">HelpReach</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="donate.html">Donate</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="ngo-directory.html">NGO Directory</a></li>
+                    <li class="nav-item"><a class="nav-link" href="dashboard.html">Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link" href="updates.html">Updates</a></li>
+                    <li class="nav-item"><a class="nav-link" href="contact.html">Contact Us</a></li>
+                </ul>
+                <div class="d-flex ms-3">
+                    <a class="btn btn-outline-primary me-2" href="donate.html">Donate Now</a>
+                    <a class="btn btn-primary" href="register.html">Register as NGO</a>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    <main class="container" style="margin-top:100px;">
+        <h1 class="mt-4">NGO Directory</h1>
+        <p class="lead">Find registered NGOs in your area. If you are an NGO and want to register, click "Register as NGO".</p>
+
+        <div class="row g-3">
+            <div class="col-md-6">
+                <div class="card p-3">
+                    <h5>Helping Hands Pune</h5>
+                    <p class="mb-1">Location: Narhe, Pune</p>
+                    <p class="mb-1">Phone: +91 8530932462</p>
+                    <p class="mb-0">Services: Food distribution, items collection</p>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card p-3">
+                    <h5>Community Care</h5>
+                    <p class="mb-1">Location: Pune</p>
+                    <p class="mb-1">Phone: +91 9876543210</p>
+                    <p class="mb-0">Services: Shelter and food assistance</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>document.querySelectorAll('.nav-link').forEach(a=>{if(a.href===location.href) a.classList.add('active')});</script>
+</body>
+
+</html>
