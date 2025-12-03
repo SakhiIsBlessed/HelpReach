@@ -96,12 +96,17 @@
 }
 
 .fixed-top {
-    box-shadow: 0 4px 12px rgba(0, 123, 255, 0.1);
-    backdrop-filter: blur(10px);
+    background: #ffffff !important;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+    /* disable backdrop blur for consistent appearance */
+    backdrop-filter: none;
+    /* ensure navbar sits above hero/background imagery */
+    z-index: 1030;
 }
 
 /* Base CTA Button Styling - Unified for Donate Now and Register as NGO */
-.btn-success, .btn-register-ngo {
+.btn-success,
+.btn-register-ngo {
     border: none;
     color: white !important;
     font-weight: 600;
@@ -109,12 +114,14 @@
     border-radius: 6px;
 }
 
-.btn-success:hover, .btn-register-ngo:hover {
+.btn-success:hover,
+.btn-register-ngo:hover {
     color: white !important;
     transform: translateY(-2px);
 }
 
-.btn-success:focus, .btn-register-ngo:focus {
+.btn-success:focus,
+.btn-register-ngo:focus {
     color: white !important;
 }
 
@@ -343,7 +350,7 @@
         position: relative;
         min-height: 450px;
     }
-    
+
     #header-carousel .carousel-item img {
         position: absolute;
         width: 100%;
@@ -574,8 +581,8 @@ header.container-fluid.bg-light img.img-fluid {
 }
 
 /* Tighter spacing for the first content sections that follow the hero */
-header + section.container,
-header + section.container + section.container-fluid.bg-white {
+header+section.container,
+header+section.container+section.container-fluid.bg-white {
     padding-top: 2rem;
     padding-bottom: 2rem;
 }
@@ -586,7 +593,8 @@ header + section.container + section.container-fluid.bg-white {
     padding-bottom: 1.75rem;
 }
 
-.card.p-3, .card.p-4 {
+.card.p-3,
+.card.p-4 {
     padding: 0.9rem;
 }
 
@@ -637,7 +645,7 @@ header + section.container + section.container-fluid.bg-white {
 .section-deco .line {
     flex: 1 1 40%;
     height: 2px;
-    background: linear-gradient(90deg, rgba(0,123,255,0.15), rgba(0,123,255,0.35));
+    background: linear-gradient(90deg, rgba(0, 123, 255, 0.15), rgba(0, 123, 255, 0.35));
 }
 
 .section-deco .icon {
@@ -648,8 +656,8 @@ header + section.container + section.container-fluid.bg-white {
     justify-content: center;
     border-radius: 50%;
     background: #ffffff;
-    box-shadow: 0 6px 18px rgba(0,0,0,0.06);
-    border: 3px solid rgba(0,123,255,0.06);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+    border: 3px solid rgba(0, 123, 255, 0.06);
 }
 
 .section-deco .icon i {

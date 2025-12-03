@@ -99,21 +99,29 @@
     </style>
 </head>
 <body>
-    <!-- Navbar -->
+    <!-- Navbar Start -->
     <div class="container-fluid fixed-top bg-white">
         <nav class="navbar navbar-expand-lg navbar-light container">
             <a class="navbar-brand fw-bold" href="index.html">
-                <img src="logo.svg" alt="HelpReach Logo" class="me-2" style="height: 40px;">
+                <img src="logo.svg" alt="HelpReach Logo" class="me-2">
                 HelpReach
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
+                aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link " href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link " href="about.html">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="donate.html">Donate</a></li>
+                    <li class="nav-item"><a class="nav-link" href="ngo-directory.html">NGO Directory</a></li>
+                    <li class="nav-item"><a class="nav-link" href="dashboard.html">Dashboard</a></li>
                     <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
                 </ul>
+                <div class="d-flex ms-2">
+                    <a class="btn btn-ngo-login btn-sm" href="login.html">NGO Login</a>
+                </div>
             </div>
         </nav>
     </div>
@@ -153,6 +161,7 @@
 
         <a href="index.html" class="back-home">← Back to Home</a>
     </div>
+    
 
     <!-- Scripts -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
