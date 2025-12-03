@@ -100,27 +100,73 @@
     backdrop-filter: blur(10px);
 }
 
-/* NGO Login Button Styling */
+/* Base CTA Button Styling - Unified for Donate Now and Register as NGO */
+.btn-success, .btn-register-ngo {
+    border: none;
+    color: white !important;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    border-radius: 6px;
+}
+
+.btn-success:hover, .btn-register-ngo:hover {
+    color: white !important;
+    transform: translateY(-2px);
+}
+
+.btn-success:focus, .btn-register-ngo:focus {
+    color: white !important;
+}
+
+/* Donate Now Button - Green Gradient */
+.btn-success {
+    background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+}
+
+.btn-success:hover {
+    background: linear-gradient(135deg, #20c997 0%, #17a2b8 100%);
+    box-shadow: 0 8px 20px rgba(40, 167, 69, 0.4);
+}
+
+.btn-success:focus {
+    box-shadow: 0 0 0 0.25rem rgba(40, 167, 69, 0.25);
+}
+
+/* NGO Login Button Styling - Red (Navbar) */
 .btn-ngo-login {
     background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
     border: none;
     color: white !important;
     font-weight: 600;
+    transition: all 0.3s ease;
+    border-radius: 6px;
     padding: 0.4rem 1rem !important;
     font-size: 0.9rem;
-    transition: all 0.3s ease;
-    border-radius: 5px;
 }
 
 .btn-ngo-login:hover {
     background: linear-gradient(135deg, #c82333 0%, #b01a28 100%);
     color: white !important;
     transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(220, 53, 69, 0.3);
+    box-shadow: 0 8px 20px rgba(220, 53, 69, 0.4);
 }
 
 .btn-ngo-login:focus {
     color: white !important;
+    box-shadow: 0 0 0 0.25rem rgba(220, 53, 69, 0.25);
+}
+
+/* Register as NGO Button Styling - Red Gradient */
+.btn-register-ngo {
+    background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+}
+
+.btn-register-ngo:hover {
+    background: linear-gradient(135deg, #c82333 0%, #b01a28 100%);
+    box-shadow: 0 8px 20px rgba(220, 53, 69, 0.4);
+}
+
+.btn-register-ngo:focus {
     box-shadow: 0 0 0 0.25rem rgba(220, 53, 69, 0.25);
 }
 
@@ -499,4 +545,76 @@
 
 .footer .copyright a:hover {
     color: var(--primary);
+}
+
+/* Homepage — gentle spacing/tightening (conservative, homepage-only feel)
+   These rules reduce excessive vertical whitespace on the hero and nearby
+   sections, slightly reduce hero heading sizes, and cap the hero image height.
+   They are intentionally subtle and non-destructive. */
+header.container-fluid.bg-light {
+    padding-top: 2.5rem;
+    padding-bottom: 2.5rem;
+}
+
+header.container-fluid.bg-light h1 {
+    font-size: 2.25rem;
+    margin-bottom: 0.5rem;
+    line-height: 1.15;
+}
+
+header.container-fluid.bg-light .lead {
+    font-size: 1.05rem;
+    margin-bottom: 0.9rem;
+    color: #444444;
+}
+
+header.container-fluid.bg-light img.img-fluid {
+    max-height: 320px;
+    object-fit: cover;
+}
+
+/* Tighter spacing for the first content sections that follow the hero */
+header + section.container,
+header + section.container + section.container-fluid.bg-white {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+}
+
+/* Slightly compact the CTA strip */
+.container.py-5.text-center {
+    padding-top: 1.75rem;
+    padding-bottom: 1.75rem;
+}
+
+.card.p-3, .card.p-4 {
+    padding: 0.9rem;
+}
+
+.card.h-100 p.small {
+    margin-bottom: 0.25rem;
+}
+
+@media (max-width: 991.98px) {
+    header.container-fluid.bg-light {
+        padding-top: 2rem;
+        padding-bottom: 2rem;
+    }
+
+    header.container-fluid.bg-light img.img-fluid {
+        max-height: 260px;
+    }
+
+    .navbar .navbar-nav .nav-link {
+        padding: 8px 0;
+    }
+}
+
+/* Small helpers for the stats numbers */
+.stat-number {
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.5px;
+}
+
+.accordion-button {
+    font-weight: 600;
 }

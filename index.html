@@ -43,11 +43,11 @@
                     <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
                     <li class="nav-item"><a class="nav-link" href="donate.html">Donate</a></li>
                     <li class="nav-item"><a class="nav-link" href="ngo-directory.html">NGO Directory</a></li>
-                    <li class="nav-item"><a class="nav-link" href="dashboard.html">Your Dashboard</a></li>
-                    <li class="nav-item"><a class="nav-link" href="contact.html">Contact Us</a></li>
+                    <li class="nav-item"><a class="nav-link" href="dashboard.html">Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
                 </ul>
-                <div class="d-flex ms-3">
-                    <a class="btn btn-outline-primary btn-sm" href="login.html">NGO Login</a>
+                <div class="d-flex ms-2">
+                    <a class="btn btn-ngo-login btn-sm" href="login.html">NGO Login</a>
                 </div>
             </div>
         </nav>
@@ -62,7 +62,7 @@
                     <p class="lead mb-4">HelpReach connects event organizers and donors with NGOs so leftover food and useful items reach people who need them instead of being wasted.</p>
                     <p class="mb-4"><strong>Our mission:</strong> Make it easy to donate surplus food and items from events, households and businesses — and notify nearby registered NGOs instantly to claim them.</p>
                     <a id="donate" class="btn btn-lg btn-success me-2" href="contact.html">Donate Now</a>
-                    <a id="register" class="btn btn-lg btn-outline-secondary" href="contact.html">Register as NGO</a>
+                    <a id="register" class="btn btn-lg btn-register-ngo" href="ngo-directory.html">Register as NGO</a>
                 </div>
                 <div class="col-lg-6 text-center">
                     <img src="img/about.jpg" alt="Food donation" class="img-fluid rounded shadow-sm" style="max-height:360px; object-fit:cover;">
@@ -217,8 +217,113 @@
             <h3>Ready to give?</h3>
             <p class="mb-3">Post a donation in under a minute — or register your NGO to start receiving claims.</p>
             <a class="btn btn-lg btn-success me-2" href="donate.html">Donate Now</a>
-            <a class="btn btn-lg btn-outline-secondary" href="register.html">Register as NGO</a>
+            <a class="btn btn-lg btn-register-ngo" href="ngo-directory.html">Register as NGO</a>
         </div>
+
+        <!-- Our Impact / Stats -->
+        <section class="container-fluid bg-white py-5">
+            <div class="container">
+                <h2 class="text-center mb-4">Our Impact</h2>
+                <div class="row text-center g-4">
+                    <div class="col-md-4">
+                        <div class="p-4">
+                            <div class="stat-number display-6 fw-bold text-success" data-target="12450">12,450</div>
+                            <div class="small">Meals redistributed</div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="p-4">
+                            <div class="stat-number display-6 fw-bold text-success" data-target="3780">3,780</div>
+                            <div class="small">Items donated</div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="p-4">
+                            <div class="stat-number display-6 fw-bold text-success" data-target="215">215</div>
+                            <div class="small">Registered NGOs</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Safety & Handling (theoretical guidance) -->
+        <section class="container py-4">
+            <div class="row g-4 align-items-center">
+                <div class="col-lg-6">
+                    <h3>Safety & handling guidelines</h3>
+                    <p class="small">Donating food and items responsibly helps recipients and preserves dignity. Follow these best practices to ensure safety and quality:</p>
+                    <ul class="small">
+                        <li><strong>Temperature & freshness:</strong> Pack perishable food in insulated containers and indicate best-before/time windows.</li>
+                        <li><strong>Sealing & labelling:</strong> Seal packaged food and label contents and any allergens clearly.</li>
+                        <li><strong>Hygiene:</strong> Use clean utensils, gloves and sanitized containers to avoid contamination.</li>
+                        <li><strong>Transport:</strong> Arrange prompt pickup and handover, keeping hot foods hot and cold foods cold.</li>
+                        <li><strong>Verification:</strong> NGOs should confirm the donation condition before acceptance and report any concerns.</li>
+                    </ul>
+                </div>
+                <div class="col-lg-6">
+                    <img src="img/about.jpg" alt="Handling" class="img-fluid rounded shadow-sm">
+                </div>
+            </div>
+        </section>
+
+        <!-- Success stories -->
+        <section class="container-fluid bg-light py-5">
+            <div class="container">
+                <h2 class="text-center mb-4">Success Stories</h2>
+                <div class="row g-4">
+                    <div class="col-md-6">
+                        <div class="card p-3 h-100">
+                            <p class="mb-2">"After a wedding donation, our team collected the meals within an hour and distributed them to a local shelter. The event organizers were thrilled to see the food used instead of thrown away."</p>
+                            <p class="small fw-bold mb-0">— Community Kitchen Partner</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card p-3 h-100">
+                            <p class="mb-2">"A batch of usable blankets from a corporate cleanout helped our cold-weather drive reach dozens of families. The platform made coordination easy and fast."</p>
+                            <p class="small fw-bold mb-0">— Relief NGO</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ -->
+        <section class="container py-5">
+            <h2 class="text-center mb-4">Frequently Asked Questions</h2>
+            <div class="accordion" id="faqAccordion">
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="faqHeadingOne">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqOne" aria-expanded="false" aria-controls="faqOne">
+                            Who can post a donation?
+                        </button>
+                    </h2>
+                    <div id="faqOne" class="accordion-collapse collapse" aria-labelledby="faqHeadingOne" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body small">Event organizers, households and businesses can post available food or usable items. Provide clear pickup details and any special instructions.</div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="faqHeadingTwo">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqTwo" aria-expanded="false" aria-controls="faqTwo">
+                            How do NGOs claim donations?
+                        </button>
+                    </h2>
+                    <div id="faqTwo" class="accordion-collapse collapse" aria-labelledby="faqHeadingTwo" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body small">Registered NGOs receive notifications for nearby donations and can claim them through their dashboard. After claiming, they coordinate pickup with the donor or organizer.</div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="faqHeadingThree">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqThree" aria-expanded="false" aria-controls="faqThree">
+                            Is there any cost to register?
+                        </button>
+                    </h2>
+                    <div id="faqThree" class="accordion-collapse collapse" aria-labelledby="faqHeadingThree" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body small">Registration for NGOs and donors is free. HelpReach aims to simplify redistribution without adding financial barriers for community organizations.</div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
         <!-- Footer -->
         <footer class="container-fluid bg-dark text-light py-5">
@@ -241,7 +346,7 @@
                         <h6>Contact</h6>
                         <p class="small mb-1"><i class="fa fa-map-marker-alt me-2"></i>411 041 Narhe Road, Pune</p>
                         <p class="small mb-1"><i class="fa fa-envelope me-2"></i>info@helpreach.org</p>
-                        <p class="small mb-0"><i class="fa fa-phone me-2"></i>+91 8530932462</p>
+                        <p class="small mb-0"><i class="fa fa-phone me-2"></i>+91 8530932462 & +91 9607340088</p>
                     </div>
                 </div>
                 <div class="text-center mt-3 small">&copy; <span id="year"></span> HelpReach. All rights reserved.</div>
@@ -258,6 +363,26 @@
         <script src="lib/easing/easing.min.js"></script>
         <script src="lib/waypoints/waypoints.min.js"></script>
         <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+
+        <script>
+            // Lightweight counter animation for the stat-number elements
+            document.addEventListener('DOMContentLoaded', function () {
+                document.querySelectorAll('.stat-number').forEach(function (el) {
+                    var target = parseInt(el.getAttribute('data-target')) || 0;
+                    var current = 0;
+                    var step = Math.max(1, Math.floor(target / 120));
+                    var interval = setInterval(function () {
+                        current += step;
+                        if (current >= target) {
+                            el.textContent = target.toLocaleString();
+                            clearInterval(interval);
+                        } else {
+                            el.textContent = current.toLocaleString();
+                        }
+                    }, 12);
+                });
+            });
+        </script>
 
         <!-- Template Javascript -->
         <script src="js/main.js"></script>
