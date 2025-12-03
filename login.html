@@ -1,56 +1,170 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <title>Login — HelpReach</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/style.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NGO Login - HelpReach</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/style.css">
     <style>
-        .auth-card { max-width:480px; margin:120px auto 40px; box-shadow:0 6px 18px rgba(0,0,0,.06); padding:28px; border-radius:8px; }
+        body {
+            background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 80px;
+        }
+        .login-container {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0, 123, 255, 0.2);
+            padding: 40px;
+            width: 100%;
+            max-width: 400px;
+        }
+        .login-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .login-header h2 {
+            color: #111111;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        .login-header p {
+            color: #666;
+            font-size: 0.95rem;
+        }
+        .form-control {
+            border: 1px solid #e0e0e0;
+            padding: 12px 15px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+        .form-control:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+            background-color: #f8f9ff;
+        }
+        .form-label {
+            color: #333;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+        }
+        .btn-login {
+            width: 100%;
+            padding: 12px;
+            font-weight: 600;
+            border-radius: 5px;
+            background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+            border: none;
+            color: white;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+        .btn-login:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(0, 123, 255, 0.3);
+            color: white;
+        }
+        .login-footer {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .login-footer a {
+            color: #007bff;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+        .login-footer a:hover {
+            color: #0056b3;
+        }
+        .back-home {
+            display: block;
+            text-align: center;
+            margin-top: 15px;
+            color: #666;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+        }
+        .back-home:hover {
+            color: #007bff;
+        }
     </style>
 </head>
 <body>
-    <div class="container auth-card bg-white">
-        <h2 class="mb-3">Welcome back</h2>
-        <p class="text-muted">Login to your HelpReach account — donors, event organizers and NGOs.</p>
-        <form id="loginForm">
-            <div class="mb-3">
-                <label class="form-label">Email</label>
-                <input type="email" class="form-control" name="email" placeholder="you@domain.com" required>
+    <!-- Navbar -->
+    <div class="container-fluid fixed-top bg-white">
+        <nav class="navbar navbar-expand-lg navbar-light container">
+            <a class="navbar-brand fw-bold" href="index.html">
+                <img src="logo.svg" alt="HelpReach Logo" class="me-2" style="height: 40px;">
+                HelpReach
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="contact.html">Contact Us</a></li>
+                </ul>
             </div>
-            <div class="mb-3">
-                <label class="form-label">Password</label>
-                <input type="password" class="form-control" name="password" required>
-            </div>
-            <div class="d-flex justify-content-between align-items-center mb-3">
-                <div>
-                    <input id="remember" type="checkbox"> <label for="remember">Remember me</label>
-                </div>
-                <div>
-                    <a class="small" href="#" id="forgot">Forgot password?</a>
-                </div>
-            </div>
-            <div class="mb-3 d-flex">
-                <button type="submit" class="btn btn-primary me-2">Login</button>
-                <a class="btn btn-outline-secondary" href="register.html">Create account</a>
-            </div>
-        </form>
-        <div id="loginMsg" style="display:none;" class="alert alert-info"></div>
+        </nav>
     </div>
 
+    <!-- Login Form -->
+    <div class="login-container">
+        <div class="login-header">
+            <h2>NGO Login</h2>
+            <p>Access your organization dashboard</p>
+        </div>
+
+        <form id="loginForm">
+            <div class="mb-3">
+                <label for="email" class="form-label">Email Address</label>
+                <input type="email" class="form-control" id="email" placeholder="Enter your email" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" class="form-control" id="password" placeholder="Enter your password" required>
+            </div>
+
+            <div class="form-check mb-3">
+                <input class="form-check-input" type="checkbox" id="remember" style="border-color: #007bff;">
+                <label class="form-check-label" for="remember" style="color: #666; font-weight: 500;">
+                    Remember me
+                </label>
+            </div>
+
+            <button type="submit" class="btn btn-login">Login to Dashboard</button>
+        </form>
+
+        <div class="login-footer">
+            <p style="color: #666; margin-bottom: 10px;">Don't have an account?</p>
+            <a href="ngo-directory.html">Register your NGO</a>
+        </div>
+
+        <a href="index.html" class="back-home">← Back to Home</a>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
     <script>
         document.getElementById('loginForm').addEventListener('submit', function(e){
             e.preventDefault();
-            const email = this.email.value.trim();
-            // Basic client-side validation
+            const email = document.getElementById('email').value.trim();
             if (!email) return alert('Please enter your email');
-            const msg = document.getElementById('loginMsg');
-            msg.style.display = 'block';
-            msg.textContent = 'Login successful — redirecting to dashboard...';
-            setTimeout(()=> window.location.href='dashboard.html',800);
+            alert('Login successful — redirecting to dashboard...');
+            setTimeout(()=> window.location.href='dashboard.html', 800);
         });
-        document.getElementById('forgot').addEventListener('click', (e)=>{ e.preventDefault(); alert('A password reset link would be sent to your registered email (simulation).');});
     </script>
 </body>
 </html>
