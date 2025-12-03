@@ -3,10 +3,10 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Foody - Organic Food Website Template</title>
+    <title>About — HelpReach</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <meta content="" name="keywords">
-    <meta content="" name="description">
+    <meta name="description"
+        content="HelpReach connects event organizers and donors with registered NGOs so leftover food and donated items reach people in need instead of being wasted.">
 
     <!-- Favicon -->
     <link href="img/favicon.ico" rel="icon">
@@ -14,7 +14,8 @@
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500&family=Lora:wght@600;700&display=swap" rel="stylesheet"> 
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500&family=Lora:wght@600;700&display=swap"
+        rel="stylesheet">
 
     <!-- Icon Font Stylesheet -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
@@ -29,24 +30,57 @@
 
     <!-- Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
+
+    <style>
+        /* Small inline style additions to enhance the About page */
+        .hero {
+            background: linear-gradient(120deg, rgba(23, 162, 184, 0.12), rgba(13, 110, 253, 0.08)), url('img/hero-bg.jpg');
+            background-size: cover;
+            background-position: center;
+            padding: 6rem 0;
+        }
+
+        .hero .lead {
+            font-size: 1.125rem;
+        }
+
+        .stat {
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        .stat-label {
+            color: #6c757d;
+        }
+
+        .feature-card {
+            transition: transform .28s ease, box-shadow .28s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+        }
+
+        .testimonial {
+            min-height: 110px;
+        }
+    </style>
 </head>
 
 <body>
-    <!-- Spinner Start -->
-    <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+    <!-- Spinner (kept for consistency) -->
+    <div id="spinner"
+        class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
         <div class="spinner-border text-primary" role="status"></div>
     </div>
-    <!-- Spinner End -->
-
 
     <!-- Navbar Start -->
-    <div class="container-fluid fixed-top bg-white">
+    <div class="container-fluid fixed-top px-0 bg-white shadow-sm">
         <nav class="navbar navbar-expand-lg navbar-light container">
-            <a class="navbar-brand fw-bold" href="index.html">
-                <img src="logo.svg" alt="HelpReach Logo" class="me-2">
-                HelpReach
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <a class="navbar-brand fw-bold ms-4 ms-lg-0" href="index.html">HelpReach</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
+                aria-controls="#navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
@@ -55,179 +89,229 @@
                     <li class="nav-item"><a class="nav-link active" href="about.html">About</a></li>
                     <li class="nav-item"><a class="nav-link" href="donate.html">Donate</a></li>
                     <li class="nav-item"><a class="nav-link" href="ngo-directory.html">NGO Directory</a></li>
-                    <li class="nav-item"><a class="nav-link" href="dashboard.html">Dashboard</a></li>
                     <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
                 </ul>
-                <div class="d-flex ms-2">
-                    <a class="btn btn-ngo-login btn-sm" href="login.html">NGO Login</a>
+                <div class="d-flex ms-3">
+                    <a class="btn btn-outline-primary me-2" href="donate.html">Donate Now</a>
+                    <a class="btn btn-primary" href="register.html">Register</a>
                 </div>
             </div>
         </nav>
     </div>
     <!-- Navbar End -->
 
-
-    <!-- Page Header Start -->
-    <div class="container-fluid page-header mb-5 wow fadeIn" data-wow-delay="0.1s">
+    <!-- Hero Start -->
+    <section class="hero text-center text-dark">
         <div class="container">
-            <h1 class="display-3 mb-3 animated slideInDown">About Us</h1>
-            <nav aria-label="breadcrumb animated slideInDown">
-                <ol class="breadcrumb mb-0">
-                    <li class="breadcrumb-item"><a class="text-body" href="#">Home</a></li>
-                    <li class="breadcrumb-item"><a class="text-body" href="#">Pages</a></li>
-                    <li class="breadcrumb-item text-dark active" aria-current="page">About Us</li>
-                </ol>
-            </nav>
+            <div class="row justify-content-center">
+                <div class="col-lg-9 wow fadeInUp" data-wow-delay="0.1s">
+                    <h1 class="display-4 fw-bold">Turn Surplus Into Impact</h1>
+                    <p class="lead mb-4">HelpReach connects event organizers and donors with verified NGOs so leftover
+                        food and usable items reach people who need them — fast and responsibly.</p>
+                    <p>
+                        <a class="btn btn-primary btn-lg me-2" href="donate.html">Donate or List Now</a>
+                        <a class="btn btn-outline-secondary btn-lg" href="register-ngo.html">Become an NGO Partner</a>
+                    </p>
+                </div>
+            </div>
         </div>
-    </div>
-    <!-- Page Header End -->
+    </section>
+    <!-- Hero End -->
 
-
-    <!-- About Start -->
+    <!-- Mission & Story Start -->
     <div class="container-xxl py-5">
         <div class="container">
             <div class="row g-5 align-items-center">
-                <div class="col-lg-6 wow fadeIn" data-wow-delay="0.1s">
-                    <div class="about-img position-relative overflow-hidden p-5 pe-0">
-                        <img class="img-fluid w-100" src="img/about.jpg">
+                <div class="col-lg-6 wow fadeInLeft" data-wow-delay="0.1s">
+                    <h2>Our Mission</h2>
+                    <p class="mb-3">We reduce food and item wastage by making it effortless for event organizers and
+                        donors to share surplus. Registered NGOs receive real-time alerts and can claim donations,
+                        ensuring extra resources are redirected to people in need.</p>
+                    <h5>Why we started</h5>
+                    <p>Every year, tonnes of food and usable goods are discarded after events while thousands go hungry.
+                        HelpReach bridges that gap with a simple workflow and verified partners.</p>
+                </div>
+                <div class="col-lg-6 wow fadeInRight" data-wow-delay="0.2s">
+                    <h2>Our Story</h2>
+                    <p class="mb-3">What began as a volunteer initiative to collect leftover meals from community events
+                        has grown into a platform used by organizers, donors and NGO partners. We focus on speed, safety
+                        and transparency so donations make real impact.</p>
+                    <ul class="list-unstyled">
+                        <li><i class="fa fa-check text-primary me-2"></i>Verified NGO partners</li>
+                        <li><i class="fa fa-check text-primary me-2"></i>Simple listing & claim flow</li>
+                        <li><i class="fa fa-check text-primary me-2"></i>Pickup coordination and confirmation</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Mission & Story End -->
+
+    <!-- Impact Stats Start -->
+    <div class="container-fluid py-5 bg-light">
+        <div class="container">
+            <div class="row g-4 text-center">
+                <div class="col-md-3 wow fadeInUp" data-wow-delay="0.1s">
+                    <div class="p-4 bg-white rounded stat-item">
+                        <div class="stat" data-target="12450">0</div>
+                        <div class="stat-label">Meals Redirected</div>
                     </div>
                 </div>
-                <div class="col-lg-6 wow fadeIn" data-wow-delay="0.5s">
-                    <h1 class="display-5 mb-4">Best Organic Fruits And Vegetables</h1>
-                    <p class="mb-4">Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit. Aliqu diam amet diam et eos. Clita erat ipsum et lorem et sit, sed stet lorem sit clita duo justo magna dolore erat amet</p>
-                    <p><i class="fa fa-check text-primary me-3"></i>Tempor erat elitr rebum at clita</p>
-                    <p><i class="fa fa-check text-primary me-3"></i>Aliqu diam amet diam et eos</p>
-                    <p><i class="fa fa-check text-primary me-3"></i>Clita duo justo magna dolore erat amet</p>
-                    <a class="btn btn-primary rounded-pill py-3 px-5 mt-3" href="">Read More</a>
+                <div class="col-md-3 wow fadeInUp" data-wow-delay="0.2s">
+                    <div class="p-4 bg-white rounded stat-item">
+                        <div class="stat" data-target="3420">0</div>
+                        <div class="stat-label">Items Donated</div>
+                    </div>
+                </div>
+                <div class="col-md-3 wow fadeInUp" data-wow-delay="0.3s">
+                    <div class="p-4 bg-white rounded stat-item">
+                        <div class="stat" data-target="680">0</div>
+                        <div class="stat-label">Active NGO Partners</div>
+                    </div>
+                </div>
+                <div class="col-md-3 wow fadeInUp" data-wow-delay="0.4s">
+                    <div class="p-4 bg-white rounded stat-item">
+                        <div class="stat" data-target="980">0</div>
+                        <div class="stat-label">Events Supported</div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    <!-- About End -->
+    <!-- Impact Stats End -->
 
-
-    <!-- Firm Visit Start -->
-    <div class="container-fluid bg-primary bg-icon mt-5 py-6">
+    <!-- How It Works Start -->
+    <div class="container-xxl py-5">
         <div class="container">
-            <div class="row g-5 align-items-center">
-                <div class="col-md-7 wow fadeIn" data-wow-delay="0.1s">
-                    <h1 class="display-5 text-white mb-3">Visit Our Firm</h1>
-                    <p class="text-white mb-0">Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit. Aliqu diam amet diam et eos. Clita erat ipsum et lorem et sit, sed stet lorem sit clita duo justo magna dolore erat amet. Diam dolor diam ipsum sit. Aliqu diam amet diam et eos.</p>
-                </div>
-                <div class="col-md-5 text-md-end wow fadeIn" data-wow-delay="0.5s">
-                    <a class="btn btn-lg btn-secondary rounded-pill py-3 px-5" href="">Visit Now</a>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Firm Visit End -->
-
-
-    <!-- Feature Start -->
-    <div class="container-fluid bg-light bg-icon py-6">
-        <div class="container">
-            <div class="section-header text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
-                <h1 class="display-5 mb-3">Our Features</h1>
-                <p>Tempor ut dolore lorem kasd vero ipsum sit eirmod sit. Ipsum diam justo sed rebum vero dolor duo.</p>
+            <div class="section-header text-center mx-auto mb-5" style="max-width: 700px;">
+                <h1 class="display-5 mb-3">How It Works</h1>
+                <p>List, notify, claim and deliver — the four-step flow that gets surplus to people who need it.</p>
             </div>
             <div class="row g-4">
-                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                    <div class="bg-white text-center h-100 p-4 p-xl-5">
-                        <img class="img-fluid mb-4" src="img/icon-1.png" alt="">
-                        <h4 class="mb-3">Natural Process</h4>
-                        <p class="mb-4">Tempor ut dolore lorem kasd vero ipsum sit eirmod sit. Ipsum diam justo sed vero dolor duo.</p>
-                        <a class="btn btn-outline-primary border-2 py-2 px-4 rounded-pill" href="">Read More</a>
+                <div class="col-md-3 text-center wow fadeInUp" data-wow-delay="0.1s">
+                    <div class="p-4 bg-white h-100 rounded feature-card">
+                        <i class="fa fa-list fa-2x text-primary mb-3"></i>
+                        <h5>1. List Donation</h5>
+                        <p class="small mb-0">Add donation details: food type, quantity, pickup window and location.</p>
                     </div>
                 </div>
-                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
-                    <div class="bg-white text-center h-100 p-4 p-xl-5">
-                        <img class="img-fluid mb-4" src="img/icon-2.png" alt="">
-                        <h4 class="mb-3">Organic Products</h4>
-                        <p class="mb-4">Tempor ut dolore lorem kasd vero ipsum sit eirmod sit. Ipsum diam justo sed vero dolor duo.</p>
-                        <a class="btn btn-outline-primary border-2 py-2 px-4 rounded-pill" href="">Read More</a>
+                <div class="col-md-3 text-center wow fadeInUp" data-wow-delay="0.2s">
+                    <div class="p-4 bg-white h-100 rounded feature-card">
+                        <i class="fa fa-bell fa-2x text-primary mb-3"></i>
+                        <h5>2. Instant Alerts</h5>
+                        <p class="small mb-0">Nearby verified NGOs receive a notification with donation details.</p>
                     </div>
                 </div>
-                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
-                    <div class="bg-white text-center h-100 p-4 p-xl-5">
-                        <img class="img-fluid mb-4" src="img/icon-3.png" alt="">
-                        <h4 class="mb-3">Biologically Safe</h4>
-                        <p class="mb-4">Tempor ut dolore lorem kasd vero ipsum sit eirmod sit. Ipsum diam justo sed vero dolor duo.</p>
-                        <a class="btn btn-outline-primary border-2 py-2 px-4 rounded-pill" href="">Read More</a>
+                <div class="col-md-3 text-center wow fadeInUp" data-wow-delay="0.3s">
+                    <div class="p-4 bg-white h-100 rounded feature-card">
+                        <i class="fa fa-handshake fa-2x text-primary mb-3"></i>
+                        <h5>3. Claim & Coordinate</h5>
+                        <p class="small mb-0">An NGO claims the donation and schedules pickup directly with the donor.
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-3 text-center wow fadeInUp" data-wow-delay="0.4s">
+                    <div class="p-4 bg-white h-100 rounded feature-card">
+                        <i class="fa fa-people-carry fa-2x text-primary mb-3"></i>
+                        <h5>4. Deliver</h5>
+                        <p class="small mb-0">NGOs distribute donations to people and communities in need.</p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <!-- Feature End -->
+    <!-- How It Works End -->
 
-
-    <!-- Footer Start -->
-    <div class="container-fluid bg-dark footer pt-5 wow fadeIn" data-wow-delay="0.1s">
-        <div class="container py-5">
-            <div class="row g-5">
-                <div class="col-lg-3 col-md-6">
-                    <h1 class="fw-bold text-primary mb-4">F<span class="text-secondary">oo</span>dy</h1>
-                    <p>Diam dolor diam ipsum sit. Aliqu diam amet diam et eos. Clita erat ipsum et lorem et sit, sed stet lorem sit clita</p>
-                    <div class="d-flex pt-2">
-                        <a class="btn btn-square btn-outline-light rounded-circle me-1" href=""><i class="fab fa-twitter"></i></a>
-                        <a class="btn btn-square btn-outline-light rounded-circle me-1" href=""><i class="fab fa-facebook-f"></i></a>
-                        <a class="btn btn-square btn-outline-light rounded-circle me-1" href=""><i class="fab fa-youtube"></i></a>
-                        <a class="btn btn-square btn-outline-light rounded-circle me-0" href=""><i class="fab fa-linkedin-in"></i></a>
+    <!-- Testimonials Start -->
+    <div class="container-xxl py-5 bg-light">
+        <div class="container">
+            <div class="section-header text-center mx-auto mb-5" style="max-width: 700px;">
+                <h1 class="display-5 mb-3">Voices from the Field</h1>
+                <p>Short stories from NGO partners and organizers who reuse surplus thanks to HelpReach.</p>
+            </div>
+            <div class="owl-carousel testimonial-carousel">
+                <div class="item px-3">
+                    <div class="bg-white p-4 rounded testimonial wow fadeInUp" data-wow-delay="0.1s">
+                        <p class="mb-2">"We picked up hot meals from a wedding and fed a shelter that same evening —
+                            fast and easy."</p>
+                        <strong>- Asha, NGO Partner</strong>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-6">
-                    <h4 class="text-light mb-4">Address</h4>
-                    <p><i class="fa fa-map-marker-alt me-3"></i>123 Street, New York, USA</p>
-                    <p><i class="fa fa-phone-alt me-3"></i>+012 345 67890</p>
-                    <p><i class="fa fa-envelope me-3"></i>info@example.com</p>
+                <div class="item px-3">
+                    <div class="bg-white p-4 rounded testimonial wow fadeInUp" data-wow-delay="0.15s">
+                        <p class="mb-2">"As an event organizer, listing leftover food took minutes. The pickup was
+                            coordinated smoothly."</p>
+                        <strong>- Raj, Event Organizer</strong>
+                    </div>
                 </div>
-                <div class="col-lg-3 col-md-6">
-                    <h4 class="text-light mb-4">Quick Links</h4>
-                    <a class="btn btn-link" href="">About Us</a>
-                    <a class="btn btn-link" href="">Contact Us</a>
-                    <a class="btn btn-link" href="">Our Services</a>
-                    <a class="btn btn-link" href="">Terms & Condition</a>
-                    <a class="btn btn-link" href="">Support</a>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <h4 class="text-light mb-4">Newsletter</h4>
-                    <p>Dolor amet sit justo amet elitr clita ipsum elitr est.</p>
-                    <div class="position-relative mx-auto" style="max-width: 400px;">
-                        <input class="form-control bg-transparent w-100 py-3 ps-4 pe-5" type="text" placeholder="Your email">
-                        <button type="button" class="btn btn-primary py-2 position-absolute top-0 end-0 mt-2 me-2">SignUp</button>
+                <div class="item px-3">
+                    <div class="bg-white p-4 rounded testimonial wow fadeInUp" data-wow-delay="0.2s">
+                        <p class="mb-2">"Donating clothes after our community drive was simple — they reached families
+                            the next day."</p>
+                        <strong>- Meera, Donor</strong>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="container-fluid copyright">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-4 mb-3">
-                        <h5 class="fw-bold">HelpReach</h5>
-                        <p class="small">A platform that connects event organizers and donors with NGOs to reduce food and item wastage.</p>
-                    </div>
-                    <div class="col-md-4 mb-3">
-                        <h6>Quick links</h6>
-                        <ul class="list-unstyled small">
-                            <li><a class="text-light" href="contact.html">Contact</a></li>
-                            <li><a class="text-light" href="about.html">About</a></li>
-                            <li><a class="text-light" href="listings.html">Active donations</a></li>
-                            <li><a class="text-light" href="dashboard.html">Dashboard</a></li>
-                        </ul>
-                    </div>
-                    <div class="col-md-4 mb-3">
-                        <h6>Contact</h6>
-                        <p class="small mb-1"><i class="fa fa-map-marker-alt me-2"></i>411 041 Narhe Road, Pune</p>
-                        <p class="small mb-1"><i class="fa fa-envelope me-2"></i>info@helpreach.org</p>
-                        <p class="small mb-0"><i class="fa fa-phone me-2"></i>+91 8530932462</p>
-                    </div>
+    </div>
+    <!-- Testimonials End -->
+
+    <!-- NGO Verification & Safety Start -->
+    <div class="container-xxl py-5">
+        <div class="container">
+            <div class="row g-4 align-items-center">
+                <div class="col-lg-6 wow fadeInLeft" data-wow-delay="0.1s">
+                    <h3>NGO Verification & Safety</h3>
+                    <p class="mb-3">We verify NGOs during registration to maintain trust. Every claim shows NGO details
+                        to the donor and includes collection confirmation to close the loop.</p>
+                    <ul>
+                        <li>Basic identity checks</li>
+                        <li>Address and operation verification</li>
+                        <li>Collection confirmation and feedback</li>
+                    </ul>
                 </div>
-                <div class="text-center mt-3 small">&copy; <span id="year"></span> HelpReach. All rights reserved.</div>
+                <div class="col-lg-6 wow fadeInRight" data-wow-delay="0.2s">
+                    <h3>Privacy & Food Safety</h3>
+                    <p class="mb-3">We advise organizers to list only safe, properly packed food and to follow local
+                        health guidelines. Personal donor info is shared only for coordination purposes.</p>
+                </div>
             </div>
-        </footer>
+        </div>
+    </div>
+    <!-- NGO Verification & Safety End -->
+
+    <!-- Footer -->
+    <footer class="container-fluid bg-dark text-light py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <h5 class="fw-bold">HelpReach</h5>
+                    <p class="small">A platform that connects event organizers and donors with NGOs to reduce food and
+                        item wastage.</p>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <h6>Quick links</h6>
+                    <ul class="list-unstyled small">
+                        <li><a class="text-light" href="contact.html">Contact</a></li>
+                        <li><a class="text-light" href="about.html">About</a></li>
+                        <li><a class="text-light" href="listings.html">Active donations</a></li>
+                        <li><a class="text-light" href="dashboard.html">Dashboard</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <h6>Contact</h6>
+                    <p class="small mb-1"><i class="fa fa-map-marker-alt me-2"></i>411 041 Narhe Road, Pune</p>
+                    <p class="small mb-1"><i class="fa fa-envelope me-2"></i>info@helpreach.org</p>
+                    <p class="small mb-0"><i class="fa fa-phone me-2"></i>+91 8530932462</p>
+                </div>
+            </div>
+            <div class="text-center mt-3 small">&copy; <span id="year"></span> HelpReach. All rights reserved.</div>
+        </div>
+    </footer>
 
     <!-- Back to Top -->
-    <a href="#" class="btn btn-lg btn-primary btn-lg-square rounded-circle back-to-top"><i class="bi bi-arrow-up"></i></a>
+    <a href="#" class="btn btn-lg btn-primary btn-lg-square rounded-circle back-to-top"><i
+            class="bi bi-arrow-up"></i></a>
 
 
     <!-- JavaScript Libraries -->
@@ -240,6 +324,60 @@
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
+    <script>
+        // set current year in footer
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // Initialize WOW animations if available
+        if (typeof WOW === 'function') {
+            new WOW().init();
+        }
+
+        // Simple counter animation using IntersectionObserver
+        (function () {
+            const counters = document.querySelectorAll('.stat');
+            if (!('IntersectionObserver' in window) || counters.length === 0) return;
+
+            const runCounter = (el) => {
+                const target = +el.getAttribute('data-target') || 0;
+                const duration = 1600;
+                let start = 0;
+                const step = (timestamp, startTime) => {
+                    if (!startTime) startTime = timestamp;
+                    const progress = Math.min((timestamp - startTime) / duration, 1);
+                    el.textContent = Math.floor(progress * target).toLocaleString();
+                    if (progress < 1) requestAnimationFrame((t) => step(t, startTime));
+                    else el.textContent = target.toLocaleString();
+                };
+                requestAnimationFrame(step);
+            };
+
+            const io = new IntersectionObserver((entries, obs) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        runCounter(entry.target);
+                        obs.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.5 });
+
+            counters.forEach(c => io.observe(c));
+        })();
+
+        // Initialize testimonial carousel (owlCarousel)
+        (function () {
+            if (window.jQuery && typeof jQuery().owlCarousel === 'function') {
+                $('.testimonial-carousel').owlCarousel({
+                    items: 2,
+                    loop: true,
+                    margin: 20,
+                    autoplay: true,
+                    autoplayTimeout: 5000,
+                    responsive: { 0: { items: 1 }, 768: { items: 2 } }
+                });
+            }
+        })();
+    </script>
 </body>
 
 </html>
