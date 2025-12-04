@@ -17,12 +17,35 @@
     <!-- Libraries Stylesheet -->
     <link href="lib/animate/animate.min.css" rel="stylesheet">
     <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>HelpReach — Connecting Donors & NGOs</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="HelpReach connects event organizers and donors with NGOs to reduce food and item wastage. Donate leftover food or items and let NGOs claim them instantly.">
+
+    <!-- Favicon -->
+    <link href="img/favicon.ico" rel="icon">
+
+    <!-- Fonts & Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="lib/animate/animate.min.css" rel="stylesheet">
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
 
     <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Site Styles -->
     <link href="css/style.css" rel="stylesheet">
+    <style>
+        /* temporary small fix: ensure body leaves space for fixed navbar */
+        body { padding-top: 72px; }
+    </style>
 </head>
 
 <body>
@@ -53,374 +76,428 @@
         </nav>
     </div>
 
-    <!-- Hero -->
-    <header class="container-fluid bg-light py-5" style="margin-top:70px;">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-lg-6">
-                    <h1 class="display-5">Reduce food waste, help people in need.</h1>
-                    <p class="lead mb-4">HelpReach connects event organizers and donors with NGOs so leftover food and useful items reach people who need them instead of being wasted.</p>
-                    <p class="mb-4"><strong>Our mission:</strong> Make it easy to donate surplus food and items from events, households and businesses — and notify nearby registered NGOs instantly to claim them.</p>
-                    <a id="donate" class="btn btn-lg btn-success me-2" href="contact.html">Donate Now</a>
-                    <a id="register" class="btn btn-lg btn-register-ngo" href="ngo-directory.html">Register as NGO</a>
-                </div>
-                <div class="col-lg-6 text-center">
-                    <img src="img/about.jpg" alt="Food donation" class="img-fluid rounded shadow-sm" style="max-height:360px; object-fit:cover;">
+    <!-- HERO -->
+    <header id="hero" class="container-fluid hero-bg py-6">
+        <div class="hero-blob b1" aria-hidden="true"></div>
+        <div class="hero-blob b2" aria-hidden="true"></div>
+        <div class="hero-blob b3" aria-hidden="true"></div>
+        <div class="container hero-inner text-center">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="glass-panel wow fadeInUp" data-wow-delay="0.12s">
+                        <h1 class="display-4 hero-title">Connecting Donors &amp; NGOs to Reduce Waste</h1>
+                        <p class="lead hero-lead">Donate leftover food, clothes, and essential items so they reach people in need — instantly.</p>
+                        <div class="hero-ctas mt-4 wow fadeInUp" data-wow-delay="0.3s">
+                            <a id="donate" class="btn btn-lg btn-success me-3 glass-btn" href="donate.html">Donate Now</a>
+                            <a id="register" class="btn btn-lg btn-register-ngo glass-btn" href="login.html">Register NGO</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </header>
 
-    <!-- What we do -->
-    <section class="container py-5">
+    <!-- What We Do -->
+    <section class="container py-5" id="what-we-do">
+        <div class="section-header text-center mx-auto mb-4" style="max-width:720px;">
+            <h2 class="mb-2">What We Do</h2>
+            <p class="small">A simple platform to post donations and coordinate safe pickups with local NGOs.</p>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-4 wow fadeInUp" data-wow-delay="0.1s">
+                <div class="feature-card p-4 h-100 text-center">
+                    <i class="fas fa-utensils fa-2x text-success mb-3"></i>
+                    <h5>Food Donation</h5>
+                    <p class="small">Post leftover meals from events, catering, and gatherings for quick pickup.</p>
+                </div>
+            </div>
+            <div class="col-md-4 wow fadeInUp" data-wow-delay="0.2s">
+                <div class="feature-card p-4 h-100 text-center">
+                    <i class="fas fa-box-open fa-2x text-success mb-3"></i>
+                    <h5>Item Donation</h5>
+                    <p class="small">Donate usable items such as clothes, blankets and household goods.</p>
+                </div>
+            </div>
+            <div class="col-md-4 wow fadeInUp" data-wow-delay="0.3s">
+                <div class="feature-card p-4 h-100 text-center">
+                    <i class="fas fa-truck-loading fa-2x text-success mb-3"></i>
+                    <h5>Pickup Coordination</h5>
+                    <p class="small">Coordinate safe handovers between donors and NGOs with clear pickup times.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="container py-5 bg-light" id="how-it-works">
+        <div class="section-header text-center mx-auto mb-4" style="max-width:720px;">
+            <h2 class="mb-2">How It Works</h2>
+            <p class="small">Three easy steps to get surplus items to people who need them.</p>
+        </div>
         <div class="row g-4 align-items-center">
-            <div class="col-md-6">
-                <h2>What HelpReach does</h2>
-                <p>We provide a simple, fast platform for donating leftover food and usable items. Event organizers and donors post available donations with pickup details. Registered NGOs get instant notifications and can claim the donation — helping redistribute extra food and items to people in need.</p>
-                <ul class="list-unstyled">
-                    <li><i class="fa fa-check text-success me-2"></i>Quick posting of donations</li>
-                    <li><i class="fa fa-check text-success me-2"></i>Instant NGO notifications</li>
-                    <li><i class="fa fa-check text-success me-2"></i>Safe handover and tracking</li>
-                </ul>
+            <div class="col-md-4 wow fadeInLeft" data-wow-delay="0.12s">
+                <div class="step-card p-4 h-100 text-center">
+                    <div class="step-number mb-3">1</div>
+                    <i class="fa fa-upload fa-2x mb-2"></i>
+                    <h5>Upload Donation</h5>
+                    <p class="small">Event organizers or donors upload details about leftover food or items.</p>
+                </div>
             </div>
-            <div class="col-md-6">
-                <div class="row">
-                    <div class="col-6 mb-3">
-                        <div class="card h-100 text-center p-3">
-                            <i class="fas fa-utensils fa-2x text-primary mb-2"></i>
-                            <h5>Food donations</h5>
-                            <p class="small">Leftover meals from events, catering or gatherings.</p>
-                        </div>
+            <div class="col-md-4 wow fadeInUp" data-wow-delay="0.18s">
+                <div class="step-card p-4 h-100 text-center">
+                    <div class="step-number mb-3">2</div>
+                    <i class="fa fa-bell fa-2x mb-2"></i>
+                    <h5>NGOs Notified</h5>
+                    <p class="small">Nearby registered NGOs receive instant notifications with pickup details.</p>
+                </div>
+            </div>
+            <div class="col-md-4 wow fadeInRight" data-wow-delay="0.24s">
+                <div class="step-card p-4 h-100 text-center">
+                    <div class="step-number mb-3">3</div>
+                    <i class="fa fa-handshake fa-2x mb-2"></i>
+                    <h5>Claim &amp; Collect</h5>
+                    <p class="small">An NGO claims the donation and coordinates a timely pickup before it wastes away.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Our Platform -->
+    <section class="container py-5" id="why-us">
+        <div class="section-header text-center mx-auto mb-4" style="max-width:720px;">
+            <h2 class="mb-2">Why Our Platform</h2>
+            <p class="small">Simple, fast, and community-focused — designed to get donations where they matter.</p>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-4 wow fadeInUp" data-wow-delay="0.12s">
+                <div class="feature-card p-4 h-100 text-center">
+                    <i class="fas fa-leaf fa-2x text-success mb-3"></i>
+                    <h5>Reduce Wastage</h5>
+                    <p class="small">Keep good food and items out of the landfill and in the hands of people who need them.</p>
+                </div>
+            </div>
+            <div class="col-md-4 wow fadeInUp" data-wow-delay="0.18s">
+                <div class="feature-card p-4 h-100 text-center">
+                    <i class="fas fa-hands-helping fa-2x text-success mb-3"></i>
+                    <h5>Empower NGOs</h5>
+                    <p class="small">Help NGOs reach more people quickly with reliable notifications and coordination tools.</p>
+                </div>
+            </div>
+            <div class="col-md-4 wow fadeInUp" data-wow-delay="0.24s">
+                <div class="feature-card p-4 h-100 text-center">
+                    <i class="fas fa-stopwatch fa-2x text-success mb-3"></i>
+                    <h5>Fast &amp; Simple</h5>
+                    <p class="small">Post a donation in seconds and let nearby NGOs claim it immediately.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Who Can Donate Section -->
+    <section class="container py-5" id="who-can-donate">
+        <div class="section-header text-center mx-auto mb-5" style="max-width:720px;">
+            <h2 class="mb-2">Who Can Donate?</h2>
+            <p class="small">Anyone can make a difference! HelpReach welcomes donations from individuals, businesses, events, and organizations.</p>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-3 wow fadeInUp" data-wow-delay="0.1s">
+                <div class="donor-card text-center">
+                    <div class="donor-icon">
+                        <i class="fas fa-home fa-3x text-success"></i>
                     </div>
-                    <div class="col-6 mb-3">
-                        <div class="card h-100 text-center p-3">
-                            <i class="fas fa-tshirt fa-2x text-primary mb-2"></i>
-                            <h5>Item donations</h5>
-                            <p class="small">Clothes, blankets, and usable household items.</p>
-                        </div>
+                    <h5 class="mt-3 mb-2">Households</h5>
+                    <p class="small">Donate extra food and household items from your home.</p>
+                </div>
+            </div>
+            <div class="col-md-3 wow fadeInUp" data-wow-delay="0.15s">
+                <div class="donor-card text-center">
+                    <div class="donor-icon">
+                        <i class="fas fa-utensils fa-3x text-success"></i>
                     </div>
-                    <div class="col-6 mb-3">
-                        <div class="card h-100 text-center p-3">
-                            <i class="fas fa-calendar-check fa-2x text-primary mb-2"></i>
-                            <h5>Event organizers</h5>
-                            <p class="small">Easily give away surplus food after events.</p>
-                        </div>
+                    <h5 class="mt-3 mb-2">Restaurants & Caterers</h5>
+                    <p class="small">Post excess prepared meals from catering events.</p>
+                </div>
+            </div>
+            <div class="col-md-3 wow fadeInUp" data-wow-delay="0.2s">
+                <div class="donor-card text-center">
+                    <div class="donor-icon">
+                        <i class="fas fa-store fa-3x text-success"></i>
                     </div>
-                    <div class="col-6 mb-3">
-                        <div class="card h-100 text-center p-3">
-                            <i class="fas fa-hands-helping fa-2x text-primary mb-2"></i>
-                            <h5>NGOs</h5>
-                            <p class="small">Receive instant notifications and claim donations.</p>
-                        </div>
+                    <h5 class="mt-3 mb-2">Retailers & Businesses</h5>
+                    <p class="small">Donate surplus stock and unsold merchandise.</p>
+                </div>
+            </div>
+            <div class="col-md-3 wow fadeInUp" data-wow-delay="0.25s">
+                <div class="donor-card text-center">
+                    <div class="donor-icon">
+                        <i class="fas fa-calendar-alt fa-3x text-success"></i>
+                    </div>
+                    <h5 class="mt-3 mb-2">Event Organizers</h5>
+                    <p class="small">Post leftover food and items after events.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Types of Donations We Accept Section -->
+    <section class="container-fluid py-5 bg-light" id="donation-types">
+        <div class="container">
+            <div class="section-header text-center mx-auto mb-5" style="max-width:720px;">
+                <h2 class="mb-2">Types of Donations We Accept</h2>
+                <p class="small">We accept a wide variety of useful items to serve different community needs.</p>
+            </div>
+            <div class="row g-3">
+                <div class="col-md-6 col-lg-4 wow fadeInUp" data-wow-delay="0.1s">
+                    <div class="donation-type-card">
+                        <i class="fas fa-apple-alt text-success mb-2"></i>
+                        <h6 class="mb-2">Fresh, Untouched Leftover Food</h6>
+                        <p class="small">Unopened, unexpired food from events, catering, and businesses.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4 wow fadeInUp" data-wow-delay="0.15s">
+                    <div class="donation-type-card">
+                        <i class="fas fa-box text-success mb-2"></i>
+                        <h6 class="mb-2">Packed Meals</h6>
+                        <p class="small">Ready-to-eat meals from restaurants, caterers, and events.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4 wow fadeInUp" data-wow-delay="0.2s">
+                    <div class="donation-type-card">
+                        <i class="fas fa-coat text-success mb-2"></i>
+                        <h6 class="mb-2">Clothes</h6>
+                        <p class="small">Clean, gently used clothing in good condition.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4 wow fadeInUp" data-wow-delay="0.25s">
+                    <div class="donation-type-card">
+                        <i class="fas fa-blanket text-success mb-2"></i>
+                        <h6 class="mb-2">Blankets</h6>
+                        <p class="small">Clean blankets and bedding for winter relief programs.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4 wow fadeInUp" data-wow-delay="0.3s">
+                    <div class="donation-type-card">
+                        <i class="fas fa-book text-success mb-2"></i>
+                        <h6 class="mb-2">Books & Stationery</h6>
+                        <p class="small">Educational books, notebooks, and school supplies.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4 wow fadeInUp" data-wow-delay="0.35s">
+                    <div class="donation-type-card">
+                        <i class="fas fa-puzzle-piece text-success mb-2"></i>
+                        <h6 class="mb-2">Toys</h6>
+                        <p class="small">Clean, safe toys for children in need.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-4">
+                <div class="col-lg-12 wow fadeInUp" data-wow-delay="0.4s">
+                    <div class="donation-type-card">
+                        <i class="fas fa-home text-success mb-2"></i>
+                        <h6 class="mb-2">Household Usable Items</h6>
+                        <p class="small">Kitchenware, furniture, electronics, and other household items in working condition.</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Who can use it -->
-    <section class="container-fluid bg-white py-5 tight-section">
-        <div class="container">
-            <h2 class="text-center mb-4">Who can use HelpReach</h2>
-            <div class="section-deco">
-                <div class="line"></div>
-                <div class="icon"><i class="fas fa-users"></i></div>
-                <div class="line"></div>
+    <!-- Impact Metrics Section -->
+    <section class="container py-5" id="impact-metrics">
+        <div class="section-header text-center mx-auto mb-5" style="max-width:720px;">
+            <h2 class="mb-2">Our Impact by the Numbers</h2>
+            <p class="small">Real results from our community-driven platform.</p>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-6 col-lg-3 wow fadeInUp" data-wow-delay="0.1s">
+                <div class="metric-card text-center">
+                    <div class="metric-number" data-target="12500">0</div>
+                    <div class="metric-label">Donations Served</div>
+                    <p class="small">Active donations matched with NGOs</p>
+                </div>
             </div>
-            <div class="row text-center g-4">
-                <div class="col-md-4">
-                    <div class="card p-4 h-100">
-                        <i class="fas fa-microphone-alt fa-2x text-success mb-3"></i>
-                        <h5>Event Organizers</h5>
-                        <p class="small">Quickly list leftover food after weddings, conferences, festivals and more.</p>
-                    </div>
+            <div class="col-md-6 col-lg-3 wow fadeInUp" data-wow-delay="0.15s">
+                <div class="metric-card text-center">
+                    <div class="metric-number" data-target="85000">0</div>
+                    <div class="metric-label">Kg of Food Saved</div>
+                    <p class="small">From waste to tables that matter</p>
                 </div>
-                <div class="col-md-4">
-                    <div class="card p-4 h-100">
-                        <i class="fas fa-user-plus fa-2x text-success mb-3"></i>
-                        <h5>Donors</h5>
-                        <p class="small">Households or businesses can offer clothes, blankets or extra items.</p>
-                    </div>
+            </div>
+            <div class="col-md-6 col-lg-3 wow fadeInUp" data-wow-delay="0.2s">
+                <div class="metric-card text-center">
+                    <div class="metric-number" data-target="45000">0</div>
+                    <div class="metric-label">Families Helped</div>
+                    <p class="small">Direct beneficiaries of donations</p>
                 </div>
-                <div class="col-md-4">
-                    <div class="card p-4 h-100">
-                        <i class="fas fa-hands fa-2x text-success mb-3"></i>
-                        <h5>NGOs</h5>
-                        <p class="small">Registered NGOs get alerts, claim donations and coordinate pickups.</p>
-                    </div>
+            </div>
+            <div class="col-md-6 col-lg-3 wow fadeInUp" data-wow-delay="0.25s">
+                <div class="metric-card text-center">
+                    <div class="metric-number" data-target="325">0</div>
+                    <div class="metric-label">Partner NGOs</div>
+                    <p class="small">Working together for change</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- How It Works Start -->
-    <div class="container-xxl py-5">
-        <div class="container">
-            <div class="section-header text-center mx-auto mb-5" style="max-width: 700px;">
-                <h1 class="display-5 mb-3">How It Works</h1>
-                <p>List, notify, claim and deliver — the four-step flow that gets surplus to people who need it.</p>
-            </div>
-            <div class="row g-4">
-                <div class="col-md-3 text-center wow fadeInUp" data-wow-delay="0.1s">
-                    <div class="p-4 bg-white h-100 rounded feature-card">
-                        <i class="fa fa-list fa-2x text-primary mb-3"></i>
-                        <h5>1. List Donation</h5>
-                        <p class="small mb-0">Add donation details: food type, quantity, pickup window and location.</p>
-                    </div>
-                </div>
-                <div class="col-md-3 text-center wow fadeInUp" data-wow-delay="0.2s">
-                    <div class="p-4 bg-white h-100 rounded feature-card">
-                        <i class="fa fa-bell fa-2x text-primary mb-3"></i>
-                        <h5>2. Instant Alerts</h5>
-                        <p class="small mb-0">Nearby verified NGOs receive a notification with donation details.</p>
-                    </div>
-                </div>
-                <div class="col-md-3 text-center wow fadeInUp" data-wow-delay="0.3s">
-                    <div class="p-4 bg-white h-100 rounded feature-card">
-                        <i class="fa fa-handshake fa-2x text-primary mb-3"></i>
-                        <h5>3. Claim & Coordinate</h5>
-                        <p class="small mb-0">An NGO claims the donation and schedules pickup directly with the donor.
-                        </p>
-                    </div>
-                </div>
-                <div class="col-md-3 text-center wow fadeInUp" data-wow-delay="0.4s">
-                    <div class="p-4 bg-white h-100 rounded feature-card">
-                        <i class="fa fa-people-carry fa-2x text-primary mb-3"></i>
-                        <h5>4. Deliver</h5>
-                        <p class="small mb-0">NGOs distribute donations to people and communities in need.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- How It Works End -->
 
-    <!-- Benefits -->
-    <section class="container-fluid bg-light py-5 tight-section">
-        <div class="container">
-            <h2 class="text-center mb-4">Benefits of donating</h2>
-            <div class="section-deco">
-                <div class="line"></div>
-                <div class="icon"><i class="fas fa-leaf"></i></div>
-                <div class="line"></div>
-            </div>
-            <div class="row g-4">
-                <div class="col-md-4">
-                    <div class="d-flex align-items-start">
-                        <i class="fas fa-leaf fa-2x text-success me-3"></i>
-                        <div>
-                            <h5>Reduce waste</h5>
-                            <p class="small">Prevent perfectly good food and items from going to landfill.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="d-flex align-items-start">
-                        <i class="fas fa-hands-helping fa-2x text-success me-3"></i>
-                        <div>
-                            <h5>Help communities</h5>
-                            <p class="small">Ensure extra food/items reach people who need them the most.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="d-flex align-items-start">
-                        <i class="fas fa-globe fa-2x text-success me-3"></i>
-                        <div>
-                            <h5>Build partnerships</h5>
-                            <p class="small">Connect organizers, donors and NGOs for ongoing collaboration.</p>
-                        </div>
-                    </div>
+    <!-- Health & Wellness Section -->
+    <section class="container py-5" id="health-wellness">
+        <div class="row align-items-center g-5">
+            <div class="col-md-6 wow fadeInLeft" data-wow-delay="0.12s">
+                <div class="health-image-wrapper">
+                    <img src="img/Health.jpg" class="img-fluid rounded-lg shadow-lg" alt="Health & Wellness Programs" />
                 </div>
             </div>
-        </div>
-    </section>
-        <!-- Our Impact / Stats (moved later) -->
-
-        <!-- Safety & Handling (theoretical guidance) -->
-        <section class="container py-4">
-            <div class="row g-4">
-                <div class="col-12">
-                    <h3>Safety & handling guidelines</h3>
-                    <p class="small">Donating food and items responsibly helps recipients and preserves dignity. Follow these best practices to ensure safety and quality:</p>
-                    <ul class="small">
-                        <li><strong>Temperature & freshness:</strong> Pack perishable food in insulated containers and indicate best-before/time windows.</li>
-                        <li><strong>Sealing & labelling:</strong> Seal packaged food and label contents and any allergens clearly.</li>
-                        <li><strong>Hygiene:</strong> Use clean utensils, gloves and sanitized containers to avoid contamination.</li>
-                        <li><strong>Transport:</strong> Arrange prompt pickup and handover, keeping hot foods hot and cold foods cold.</li>
-                        <li><strong>Verification:</strong> NGOs should confirm the donation condition before acceptance and report any concerns.</li>
+            <div class="col-md-6 wow fadeInRight" data-wow-delay="0.16s">
+                <div class="health-content">
+                    <h2 class="health-title mb-3">Supporting Health & Wellness</h2>
+                    <p class="health-lead mb-4">Beyond just donations, we support community health and well-being through nutritious food distribution and essential wellness items.</p>
+                    <ul class="health-list">
+                        <li><i class="fas fa-apple-alt text-success me-2"></i>Nutritious food programs for underprivileged families</li>
+                        <li><i class="fas fa-heartbeat text-success me-2"></i>Health awareness and wellness initiatives</li>
+                        <li><i class="fas fa-hands-helping text-success me-2"></i>Emergency relief during crises</li>
+                        <li><i class="fas fa-book text-success me-2"></i>Education and skill development support</li>
                     </ul>
                 </div>
             </div>
-        </section>
-
-        <!-- Success stories -->
-        <section class="container-fluid bg-light py-5">
-            <div class="container">
-                <h2 class="text-center mb-4">Success Stories</h2>
-                <div class="row g-4">
-                    <div class="col-md-6">
-                        <div class="card p-3 h-100">
-                            <p class="mb-2">"After a wedding donation, our team collected the meals within an hour and distributed them to a local shelter. The event organizers were thrilled to see the food used instead of thrown away."</p>
-                            <p class="small fw-bold mb-0">— Community Kitchen Partner</p>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="card p-3 h-100">
-                            <p class="mb-2">"A batch of usable blankets from a corporate cleanout helped our cold-weather drive reach dozens of families. The platform made coordination easy and fast."</p>
-                            <p class="small fw-bold mb-0">— Relief NGO</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- FAQ -->
-        <section class="container py-5">
-            <h2 class="text-center mb-4">Frequently Asked Questions</h2>
-            <div class="accordion" id="faqAccordion">
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="faqHeadingOne">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqOne" aria-expanded="false" aria-controls="faqOne">
-                            Who can post a donation?
-                        </button>
-                    </h2>
-                    <div id="faqOne" class="accordion-collapse collapse" aria-labelledby="faqHeadingOne" data-bs-parent="#faqAccordion">
-                        <div class="accordion-body small">Event organizers, households and businesses can post available food or usable items. Provide clear pickup details and any special instructions.</div>
-                    </div>
-                </div>
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="faqHeadingTwo">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqTwo" aria-expanded="false" aria-controls="faqTwo">
-                            How do NGOs claim donations?
-                        </button>
-                    </h2>
-                    <div id="faqTwo" class="accordion-collapse collapse" aria-labelledby="faqHeadingTwo" data-bs-parent="#faqAccordion">
-                        <div class="accordion-body small">Registered NGOs receive notifications for nearby donations and can claim them through their dashboard. After claiming, they coordinate pickup with the donor or organizer.</div>
-                    </div>
-                </div>
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="faqHeadingThree">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqThree" aria-expanded="false" aria-controls="faqThree">
-                            Is there any cost to register?
-                        </button>
-                    </h2>
-                    <div id="faqThree" class="accordion-collapse collapse" aria-labelledby="faqHeadingThree" data-bs-parent="#faqAccordion">
-                        <div class="accordion-body small">Registration for NGOs and donors is free. HelpReach aims to simplify redistribution without adding financial barriers for community organizations.</div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Our Impact / Stats -->
-        <section class="container-fluid bg-white py-5 tight-section">
-            <div class="container">
-                <h2 class="text-center mb-4">Our Impact</h2>
-                <div class="section-deco">
-                    <div class="line"></div>
-                    <div class="icon"><i class="fas fa-chart-line"></i></div>
-                    <div class="line"></div>
-                </div>
-                <div class="row text-center g-4">
-                    <div class="col-md-4">
-                        <div class="p-4">
-                            <div class="stat-number display-6 fw-bold text-success" data-target="12450">12,450</div>
-                            <div class="small">Meals redistributed</div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="p-4">
-                            <div class="stat-number display-6 fw-bold text-success" data-target="3780">3,780</div>
-                            <div class="small">Items donated</div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="p-4">
-                            <div class="stat-number display-6 fw-bold text-success" data-target="215">215</div>
-                            <div class="small">Registered NGOs</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- CTA strip -->
-        <div class="container py-5 text-center">
-            <h3>Ready to give?</h3>
-            <p class="mb-3">Post a donation in under a minute — or register your NGO to start receiving claims.</p>
-            <a class="btn btn-lg btn-success me-2" href="donate.html">Donate Now</a>
-            <a class="btn btn-lg btn-register-ngo" href="ngo-directory.html">Register as NGO</a>
         </div>
+    </section>
 
-        <!-- Footer -->
-        <footer class="container-fluid bg-dark text-light py-5">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-4 mb-3">
-                        <h5 class="fw-bold">HelpReach</h5>
-                        <p class="small">A platform that connects event organizers and donors with NGOs to reduce food and item wastage.</p>
-                    </div>
-                    <div class="col-md-4 mb-3">
-                        <h6>Quick links</h6>
-                        <ul class="list-unstyled small">
-                            <li><a class="text-light" href="contact.html">Contact</a></li>
-                            <li><a class="text-light" href="about.html">About</a></li>
-                            <li><a class="text-light" href="listings.html">Active donations</a></li>
-                            <li><a class="text-light" href="dashboard.html">Dashboard</a></li>
-                        </ul>
-                    </div>
-                    <div class="col-md-4 mb-3">
-                        <h6>Contact</h6>
-                        <p class="small mb-1"><i class="fa fa-map-marker-alt me-2"></i>411 041 Narhe Road, Pune</p>
-                        <p class="small mb-1"><i class="fa fa-envelope me-2"></i>info@helpreach.org</p>
-                        <p class="small mb-0"><i class="fa fa-phone me-2"></i>+91 8530932462 & +91 9607340088</p>
+    <!-- Impact Section with Women Empowerment Image -->
+    <section class="impact-section py-6" id="impact-section">
+        <div class="container">
+            <div class="row align-items-center g-4">
+                <!-- Image column with enhanced styling -->
+                <div class="col-md-6 wow fadeInLeft" data-wow-delay="0.12s">
+                    <div class="impact-image-wrapper">
+                        <img src="img/Women-Empowerment-5.jpg" class="img-fluid rounded-lg shadow-lg" alt="Women Empowerment & Community Support" />
+                        <div class="impact-image-overlay"></div>
                     </div>
                 </div>
-                <div class="text-center mt-3 small">&copy; <span id="year"></span> HelpReach. All rights reserved.</div>
+                <!-- Content column with better typography -->
+                <div class="col-md-6 wow fadeInRight" data-wow-delay="0.16s">
+                    <div class="impact-content">
+                        <h2 class="impact-title mb-3">Make an impact with every donation</h2>
+                        <p class="impact-lead mb-4">Your contributions — whether meals or usable items — create immediate relief and longer-term community support.</p>
+                        <div class="impact-highlights">
+                            <div class="highlight-item">
+                                <i class="fas fa-check-circle text-success me-2"></i>
+                                <span>Immediate help for vulnerable communities</span>
+                            </div>
+                            <div class="highlight-item">
+                                <i class="fas fa-check-circle text-success me-2"></i>
+                                <span>Reduce waste and environmental impact</span>
+                            </div>
+                            <div class="highlight-item">
+                                <i class="fas fa-check-circle text-success me-2"></i>
+                                <span>Build stronger local networks and partnerships</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </footer>
+        </div>
+    </section>
 
-        <!-- Back to Top -->
-        <a href="#" class="btn btn-primary btn-lg rounded-circle back-to-top" style="position:fixed;right:20px;bottom:20px;"><i class="bi bi-arrow-up"></i></a>
+    <!-- Final CTA -->
+    <section class="container-fluid py-5 final-cta">
+        <div class="container text-center">
+            <div class="p-4 rounded-lg cta-panel wow fadeInUp" data-wow-delay="0.12s">
+                <h2 class="mb-2">Ready to make a difference?</h2>
+                <p class="small mb-3">Post a donation in under a minute or register your NGO to start receiving claims.</p>
+                <a class="btn btn-lg btn-success me-3" href="donate.html">Donate Now</a>
+                <a class="btn btn-lg btn-register-ngo" href="login.html">Register as NGO</a>
+            </div>
+        </div>
+    </section>
 
-        <!-- JavaScript Libraries -->
-        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-        <script src="lib/wow/wow.min.js"></script>
-        <script src="lib/easing/easing.min.js"></script>
-        <script src="lib/waypoints/waypoints.min.js"></script>
-        <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+    <!-- Footer -->
+    <footer class="container-fluid bg-dark text-light py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <h5 class="fw-bold">HelpReach</h5>
+                    <p class="small">A platform that connects event organizers and donors with NGOs to reduce food and item wastage.</p>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <h6>Quick links</h6>
+                    <ul class="list-unstyled small">
+                        <li><a class="text-light" href="contact.html">Contact</a></li>
+                        <li><a class="text-light" href="about.html">About</a></li>
+                        <li><a class="text-light" href="listings.html">Active donations</a></li>
+                        <li><a class="text-light" href="dashboard.html">Dashboard</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <h6>Contact</h6>
+                    <p class="small mb-1"><i class="fa fa-map-marker-alt me-2"></i>411 041 Narhe Road, Pune</p>
+                    <p class="small mb-1"><i class="fa fa-envelope me-2"></i>info@helpreach.org</p>
+                    <p class="small mb-0"><i class="fa fa-phone me-2"></i>+91 8530932462 &amp; +91 9607340088</p>
+                </div>
+            </div>
+            <div class="text-center mt-3 small">&copy; <span id="year"></span> HelpReach. All rights reserved.</div>
+        </div>
+    </footer>
 
-        <script>
-            // Lightweight counter animation for the stat-number elements
-            document.addEventListener('DOMContentLoaded', function () {
-                document.querySelectorAll('.stat-number').forEach(function (el) {
-                    var target = parseInt(el.getAttribute('data-target')) || 0;
-                    var current = 0;
-                    var step = Math.max(1, Math.floor(target / 120));
-                    var interval = setInterval(function () {
-                        current += step;
-                        if (current >= target) {
-                            el.textContent = target.toLocaleString();
-                            clearInterval(interval);
-                        } else {
-                            el.textContent = current.toLocaleString();
-                        }
-                    }, 12);
+    <!-- Back to Top -->
+    <a href="#" class="btn btn-primary btn-lg rounded-circle back-to-top" style="position:fixed;right:20px;bottom:20px;"><i class="bi bi-arrow-up"></i></a>
+
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="lib/wow/wow.min.js"></script>
+    <script src="lib/easing/easing.min.js"></script>
+    <script src="lib/waypoints/waypoints.min.js"></script>
+    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+
+    <script>
+        // Initialize WOW.js animations if available
+        document.addEventListener('DOMContentLoaded', function () {
+            if (typeof WOW !== 'undefined') {
+                try { new WOW().init(); } catch (e) { /* ignore */ }
+            }
+            
+            // Animate metric numbers on scroll
+            const metricNumbers = document.querySelectorAll('.metric-number');
+            const observerOptions = { threshold: 0.5 };
+            
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting && !entry.target.classList.contains('animated')) {
+                        entry.target.classList.add('animated');
+                        const target = parseInt(entry.target.getAttribute('data-target'));
+                        const element = entry.target;
+                        let current = 0;
+                        const increment = Math.ceil(target / 50);
+                        
+                        const counter = setInterval(() => {
+                            current += increment;
+                            if (current >= target) {
+                                element.textContent = target.toLocaleString();
+                                clearInterval(counter);
+                            } else {
+                                element.textContent = current.toLocaleString();
+                            }
+                        }, 30);
+                    }
                 });
-            });
-        </script>
+            }, observerOptions);
+            
+            metricNumbers.forEach(number => observer.observe(number));
+        });
+    </script>
 
-        <!-- Template Javascript -->
-        <script src="js/main.js"></script>
-        <script>
-            // small script: update year and smooth back-to-top
-            document.getElementById('year').textContent = new Date().getFullYear();
-            document.querySelectorAll('.back-to-top').forEach(el=>el.addEventListener('click', function (e) {
-                e.preventDefault();
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            }));
-        </script>
-    </body>
+    <!-- Template Javascript -->
+    <script src="js/main.js"></script>
+    <script>
+        // small script: update year and smooth back-to-top
+        document.getElementById('year').textContent = new Date().getFullYear();
+        document.querySelectorAll('.back-to-top').forEach(el=>el.addEventListener('click', function (e) {
+            e.preventDefault();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }));
+    </script>
+</body>
 
-    </html>
+</html>
