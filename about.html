@@ -37,6 +37,7 @@
     <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
 
+    <!-- EmailJS removed - email sending disabled -->
 
     <style>
         /* Small inline style additions to enhance the About page */
@@ -870,6 +871,434 @@
             background: linear-gradient(rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.85)), url('img/impact-bg.jpg') center center/cover no-repeat;
             position: relative;
         }
+
+        /* Registration Modal & Profile Styles */
+        .registration-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1040;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .registration-overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .registration-modal {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            max-width: 500px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            animation: slideUp 0.4s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .registration-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .registration-header h3 {
+            margin: 0;
+            font-weight: 700;
+            color: #212529;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 28px;
+            cursor: pointer;
+            color: #6c757d;
+            padding: 0;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .close-btn:hover {
+            color: #212529;
+            background: #f1f3f5;
+            border-radius: 50%;
+        }
+
+        .registration-body {
+            padding: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            font-weight: 600;
+            margin-bottom: 8px;
+            display: block;
+            color: #212529;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #dee2e6;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            transition: border-color 0.2s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #0d6efd;
+            box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.1);
+        }
+
+        .user-type-selector {
+            display: flex;
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .user-type-option {
+            flex: 1;
+            padding: 15px;
+            border: 2px solid #dee2e6;
+            border-radius: 8px;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.2s ease;
+        }
+
+        .user-type-option:hover {
+            border-color: #0d6efd;
+            background: #f8f9fa;
+        }
+
+        .user-type-option input {
+            display: none;
+        }
+
+        .user-type-option input:checked+label {
+            color: #0d6efd;
+            font-weight: 700;
+        }
+
+        .user-type-option.active {
+            border-color: #0d6efd;
+            background: rgba(13, 110, 253, 0.05);
+        }
+
+        .user-type-option label {
+            margin: 0;
+            cursor: pointer;
+        }
+
+        .ngo-fields {
+            display: none;
+        }
+
+        .ngo-fields.show {
+            display: block;
+        }
+
+        .registration-footer {
+            padding: 20px 30px;
+            border-top: 1px solid #eee;
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-register {
+            flex: 1;
+            padding: 12px;
+            background: #0d6efd;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-register:hover {
+            background: #0b5ed7;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(13, 110, 253, 0.3);
+        }
+
+        .profile-icon {
+            position: fixed;
+            top: 15px;
+            right: 1px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: #0d6efd;
+            color: white;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            box-shadow: 0 4px 12px rgba(13, 110, 253, 0.3);
+            transition: all 0.3s ease;
+            z-index: 1035;
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .profile-icon.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .profile-icon:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(13, 110, 253, 0.4);
+        }
+
+        .fill-form-btn {
+            position: fixed;
+            bottom: 100px;
+            right: 20px;
+            padding: 12px 20px;
+            background: #10b981;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+            transition: all 0.3s ease;
+            z-index: 1035;
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .fill-form-btn.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .fill-form-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+        }
+
+        .profile-sidebar {
+            position: fixed;
+            right: -400px;
+            top: 0;
+            width: 400px;
+            height: 100vh;
+            background: white;
+            box-shadow: -4px 0 20px rgba(0, 0, 0, 0.1);
+            z-index: 1050;
+            transition: right 0.4s ease;
+            overflow-y: auto;
+        }
+
+        .profile-sidebar.open {
+            right: 0;
+        }
+
+        .profile-header {
+            background: linear-gradient(135deg, #0d6efd 0%, #10b981 100%);
+            padding: 30px 20px;
+            color: white;
+            position: relative;
+            text-align: center;
+        }
+
+        .profile-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: white;
+            margin: 0 auto 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            color: #0d6efd;
+            border: 3px solid white;
+        }
+
+        .profile-name {
+            font-weight: 700;
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+        }
+
+        .profile-type {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            margin-bottom: 10px;
+        }
+
+        .verify-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+        }
+
+        .profile-section {
+            padding: 20px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .profile-section-title {
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: #212529;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .profile-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            font-size: 0.95rem;
+        }
+
+        .profile-item-label {
+            color: #6c757d;
+            font-weight: 500;
+        }
+
+        .profile-item-value {
+            color: #212529;
+            font-weight: 600;
+        }
+
+        .quick-actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            padding: 20px;
+        }
+
+        .action-btn {
+            padding: 12px;
+            border: 1px solid #dee2e6;
+            background: white;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            color: #0d6efd;
+        }
+
+        .action-btn:hover {
+            background: #0d6efd;
+            color: white;
+        }
+
+        .action-btn.logout {
+            grid-column: 1 / -1;
+            background: #dc3545;
+            color: white;
+            border-color: #dc3545;
+        }
+
+        .action-btn.logout:hover {
+            background: #c82333;
+        }
+
+        .sidebar-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            transition: all 0.2s ease;
+        }
+
+        .sidebar-close:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .profile-overlay {
+            position: fixed;
+            left: 0;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.3);
+            z-index: 1045;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .profile-overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        @media (max-width: 768px) {
+            .profile-sidebar {
+                width: 100%;
+                right: -100%;
+            }
+
+            .quick-actions {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
 </head>
 
@@ -1387,12 +1816,20 @@
                 <!-- About Section -->
                 <div class="col-lg-3 col-md-6 footer-section">
                     <h5 class="fw-bold">HelpReach</h5>
-                    <p class="small">A platform connecting donors and NGOs to reduce food and item wastage while helping communities in need.</p>
+                    <p class="small">A platform connecting donors and NGOs to reduce food and item wastage while helping
+                        communities in need.</p>
                     <div class="social-links">
-                        <a href="#" title="Facebook" aria-label="Follow us on Facebook"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#" title="Twitter" aria-label="Follow us on Twitter"><i class="fab fa-twitter"></i></a>
-                        <a href="#" title="Instagram" aria-label="Follow us on Instagram"><i class="fab fa-instagram"></i></a>
-                        <a href="#" title="LinkedIn" aria-label="Follow us on LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" title="Facebook" aria-label="Follow us on Facebook"><i
+                                class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" title="Twitter" aria-label="Follow us on Twitter"><i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" title="Instagram" aria-label="Follow us on Instagram"><i
+                                class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" title="LinkedIn" aria-label="Follow us on LinkedIn"><i
+                                class="fab fa-linkedin-in"></i>
+                        </a>
                     </div>
                 </div>
 
@@ -1447,10 +1884,13 @@
             <div class="footer-bottom">
                 <div class="row align-items-center">
                     <div class="col-md-6 text-center text-md-start">
-                        <p class="small mb-0">&copy; <span id="year"></span> <strong>HelpReach</strong>. All rights reserved.</p>
+                        <p class="small mb-0">&copy; <span id="year"></span> <strong>HelpReach</strong>. All rights
+                            reserved.
+                        </p>
                     </div>
                     <div class="col-md-6 text-center text-md-end">
-                        <p class="small mb-0">Made with <i class="fas fa-heart text-danger"></i> to make a difference</p>
+                        <p class="small mb-0">Made with <i class="fas fa-heart text-danger"></i> to make a difference
+                        </p>
                     </div>
                 </div>
             </div>
@@ -1637,6 +2077,438 @@
                 });
             });
         })();
+    </script>
+
+    <!-- Registration Modal -->
+    <div class="registration-overlay" id="registrationOverlay">
+        <div class="registration-modal">
+            <div class="registration-header">
+                <h3>Join HelpReach</h3>
+                <button class="close-btn" onclick="closeRegistration()">❌</button>
+            </div>
+            <div class="registration-body">
+                <form id="registrationForm">
+                    <div class="form-group">
+                        <label>Full Name</label>
+                        <input type="text" placeholder="Enter your full name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" placeholder="Enter your email" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Phone</label>
+                        <input type="tel" placeholder="Enter your phone number" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>User Type</label>
+                        <div class="user-type-selector">
+                            <div class="user-type-option active" onclick="selectUserType('donor', this)">
+                                <input type="radio" name="userType" value="donor" checked>
+                                <label><i class="fas fa-gift"></i><br>Donor</label>
+                            </div>
+                            <div class="user-type-option" onclick="selectUserType('organizer', this)">
+                                <input type="radio" name="userType" value="organizer">
+                                <label><i class="fas fa-calendar"></i><br>Organizer</label>
+                            </div>
+                            <div class="user-type-option" onclick="selectUserType('ngo', this)">
+                                <input type="radio" name="userType" value="ngo">
+                                <label><i class="fas fa-handshake"></i><br>NGO</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Location</label>
+                        <input type="text" placeholder="Enter your city/location" required>
+                    </div>
+
+                    <div class="ngo-fields" id="ngoFields">
+                        <div class="form-group">
+                            <label>NGO Name</label>
+                            <input type="text" placeholder="Organization name">
+                        </div>
+                        <div class="form-group">
+                            <label>Registration Number</label>
+                            <input type="text" placeholder="NGO registration number">
+                        </div>
+                        <div class="form-group">
+                            <label>Service Area</label>
+                            <input type="text" placeholder="Area of operation">
+                        </div>
+                        <div class="form-group">
+                            <label>Upload Documents</label>
+                            <input type="file" multiple>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" required> I agree to the terms and conditions
+                        </label>
+                    </div>
+                </form>
+            </div>
+            <div class="registration-footer">
+                <button class="btn-register" onclick="submitRegistration()">Register</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Profile Icon (appears after registration) -->
+    <button class="profile-icon" id="profileIcon" onclick="openProfileSidebar()">
+        <i class="fas fa-user"></i>
+    </button>
+
+    <!-- Fill Form Button (appears when form is closed) -->
+    <button class="fill-form-btn show" id="fillFormBtn" onclick="openRegistration()">
+        <i class="fas fa-edit"></i> Fill Form
+    </button>
+
+    <!-- Profile Overlay -->
+    <div class="profile-overlay" id="profileOverlay" onclick="closeProfileSidebar()"></div>
+
+    <!-- Profile Sidebar -->
+    <div class="profile-sidebar" id="profileSidebar">
+        <button class="sidebar-close" onclick="closeProfileSidebar()">✕</button>
+
+        <div class="profile-header">
+            <div class="profile-avatar">
+                <i class="fas fa-user-circle"></i>
+            </div>
+            <div class="profile-name" id="profileName">John Doe</div>
+            <div class="profile-type" id="profileType">Donor</div>
+            <div class="verify-badge">
+                <i class="fas fa-check-circle"></i> VerifiedC
+            </div>
+        </div>
+
+        <!-- Contact Info -->
+        <div class="profile-section">
+            <div class="profile-section-title">
+                <i class="fas fa-phone"></i> Contact Info
+            </div>
+            <div class="profile-item">
+                <span class="profile-item-label">Email:</span>
+                <span class="profile-item-value" id="profileEmail">john@example.com</span>
+            </div>
+            <div class="profile-item">
+                <span class="profile-item-label">Phone:</span>
+                <span class="profile-item-value" id="profilePhone">+91 98765 43210</span>
+            </div>
+            <div class="profile-item">
+                <span class="profile-item-label">Location:</span>
+                <span class="profile-item-value" id="profileLocation">Pune, India</span>
+            </div>
+        </div>
+
+        <!-- Account Info -->
+        <div class="profile-section">
+            <div class="profile-section-title">
+                <i class="fas fa-chart-bar"></i> Account Info
+            </div>
+            <div class="profile-item">
+                <span class="profile-item-label">Donations:</span>
+                <span class="profile-item-value" id="donationCount">24</span>
+            </div>
+            <div class="profile-item">
+                <span class="profile-item-label">Claimed:</span>
+                <span class="profile-item-value" id="claimedCount">12</span>
+            </div>
+            <div class="profile-item">
+                <span class="profile-item-label">Activity:</span>
+                <span class="profile-item-value" id="activityLevel">Very Active</span>
+            </div>
+        </div>
+
+        <!-- NGO Extra Info (hidden by default) -->
+        <div class="profile-section" id="ngoInfoSection" style="display: none;">
+            <div class="profile-section-title">
+                <i class="fas fa-building"></i> NGO Info
+            </div>
+            <div class="profile-item">
+                <span class="profile-item-label">Reg. Number:</span>
+                <span class="profile-item-value" id="ngoRegNumber">NGO-2024-001</span>
+            </div>
+            <div class="profile-item">
+                <span class="profile-item-label">Service Area:</span>
+                <span class="profile-item-value" id="ngoServiceArea">Pune</span>
+            </div>
+            <div class="profile-item">
+                <span class="profile-item-label">Documents:</span>
+                <span class="profile-item-value" id="ngoDocuments">3 files</span>
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="quick-actions">
+            <button class="action-btn" onclick="editProfile()">
+                <i class="fas fa-edit"></i> Edit
+            </button>
+            <button class="action-btn" onclick="myDonations()">
+                <i class="fas fa-heart"></i> Donations
+            </button>
+            <button class="action-btn" onclick="notifications()">
+                <i class="fas fa-bell"></i> Alerts
+            </button>
+            <button class="action-btn" onclick="myAccount()">
+                <i class="fas fa-cog"></i> Account
+            </button>
+            <button class="action-btn logout" onclick="logoutUser()">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Email sending removed. Keep globals for profile behavior.
+        var guestNumber = Math.floor(Math.random() * 10000);
+        var isLoggedIn = false;
+
+        // Show registration form on page load
+        window.addEventListener('load', () => {
+            const userProfile = localStorage.getItem('userProfile');
+            if (!userProfile) {
+                document.getElementById('registrationOverlay').classList.add('show');
+                document.getElementById('fillFormBtn').classList.add('show');
+            } else {
+                isLoggedIn = true;
+                const userData = JSON.parse(userProfile);
+                updateProfileDisplay(userData);
+                document.getElementById('profileIcon').classList.add('show');
+                document.getElementById('fillFormBtn').classList.remove('show');
+            }
+        });
+
+        function closeRegistration() {
+            document.getElementById('registrationOverlay').classList.remove('show');
+            document.getElementById('fillFormBtn').classList.add('show');
+            if (!isLoggedIn) {
+                showGuestProfile();
+            }
+        }
+
+        function openRegistration() {
+            document.getElementById('registrationOverlay').classList.add('show');
+            document.getElementById('fillFormBtn').classList.remove('show');
+        }
+
+        function showGuestProfile() {
+            isLoggedIn = false;
+            document.getElementById('profileName').textContent = 'Guest #' + guestNumber;
+            document.getElementById('profileType').textContent = 'Guest';
+            document.getElementById('profileEmail').textContent = 'guest@helpreach.org';
+            document.getElementById('profilePhone').textContent = '---';
+            document.getElementById('profileLocation').textContent = 'Not specified';
+            document.getElementById('donationCount').textContent = '0';
+            document.getElementById('claimedCount').textContent = '0';
+            document.getElementById('activityLevel').textContent = 'Inactive';
+            document.getElementById('ngoInfoSection').style.display = 'none';
+            document.getElementById('profileIcon').classList.add('show');
+        }
+
+        function selectUserType(type, element) {
+            document.querySelectorAll('.user-type-option').forEach(opt => opt.classList.remove('active'));
+            element.classList.add('active');
+            element.querySelector('input').checked = true;
+
+            // Show/hide NGO fields
+            const ngoFields = document.getElementById('ngoFields');
+            if (type === 'ngo') {
+                ngoFields.classList.add('show');
+            } else {
+                ngoFields.classList.remove('show');
+            }
+        }
+
+        function submitRegistration() {
+            console.log('submitRegistration() called');
+            const form = document.getElementById('registrationForm');
+            if (!form) {
+                console.error('Form not found!');
+                alert('Error: Form not found');
+                return;
+            }
+
+            const userType = document.querySelector('input[name="userType"]:checked');
+            if (!userType) {
+                alert('Please select a user type');
+                return;
+            }
+
+            // Get form inputs using more specific selectors to avoid NGO field confusion
+            const formGroups = form.querySelectorAll('.form-group');
+            console.log('Form groups found:', formGroups.length);
+
+            const nameInput = formGroups[0]?.querySelector('input[type="text"]');
+            const emailInput = formGroups[1]?.querySelector('input[type="email"]');
+            const phoneInput = formGroups[2]?.querySelector('input[type="tel"]');
+            const locationInput = formGroups[4]?.querySelector('input[type="text"]');
+            const termsCheckbox = form.querySelector('input[type="checkbox"]');
+
+            console.log('Name:', nameInput?.value, 'Email:', emailInput?.value, 'Phone:', phoneInput?.value, 'Location:', locationInput?.value);
+
+            // Validate all fields
+            if (!nameInput || !nameInput.value.trim()) {
+                alert('Please enter your full name');
+                console.error('Name input missing or empty');
+                return;
+            }
+            if (!emailInput || !emailInput.value.trim()) {
+                alert('Please enter your email');
+                console.error('Email input missing or empty');
+                return;
+            }
+            if (!phoneInput || !phoneInput.value.trim()) {
+                alert('Please enter your phone number');
+                console.error('Phone input missing or empty');
+                return;
+            }
+            if (!locationInput || !locationInput.value.trim()) {
+                alert('Please enter your location');
+                console.error('Location input missing or empty');
+                return;
+            }
+            if (!termsCheckbox || !termsCheckbox.checked) {
+                alert('Please agree to the terms and conditions');
+                console.error('Terms not accepted');
+                return;
+            }
+
+            // Store user data
+            const userData = {
+                userType: userType.value,
+                name: nameInput.value.trim(),
+                email: emailInput.value.trim(),
+                phone: phoneInput.value.trim(),
+                location: locationInput.value.trim()
+            };
+
+            console.log('User data:', userData);
+            localStorage.setItem('userProfile', JSON.stringify(userData));
+            isLoggedIn = true;
+
+            // Show profile icon and hide fill form button
+            const profileIcon = document.getElementById('profileIcon');
+            const fillFormBtn = document.getElementById('fillFormBtn');
+            if (profileIcon) {
+                profileIcon.classList.add('show');
+                console.log('Profile icon shown');
+            }
+            if (fillFormBtn) {
+                fillFormBtn.classList.remove('show');
+                console.log('Fill form button hidden');
+            }
+
+            // Email sending disabled — just show success message
+            alert('Registration successful!');
+            closeRegistration();
+
+            // Update profile with user data
+            updateProfileDisplay(userData);
+        }
+
+        // Email sending removed. sendConfirmationEmail() intentionally omitted.
+
+        function updateProfileDisplay(userData) {
+            const profileName = document.getElementById('profileName');
+            const profileType = document.getElementById('profileType');
+            const profileEmail = document.getElementById('profileEmail');
+            const profilePhone = document.getElementById('profilePhone');
+            const profileLocation = document.getElementById('profileLocation');
+            const donationCount = document.getElementById('donationCount');
+            const claimedCount = document.getElementById('claimedCount');
+            const activityLevel = document.getElementById('activityLevel');
+
+            if (profileName) profileName.textContent = userData.name;
+            if (profileType) profileType.textContent = userData.userType.charAt(0).toUpperCase() + userData.userType.slice(1);
+            if (profileEmail) profileEmail.textContent = userData.email;
+            if (profilePhone) profilePhone.textContent = userData.phone;
+            if (profileLocation) profileLocation.textContent = userData.location;
+            if (donationCount) donationCount.textContent = '0';
+            if (claimedCount) claimedCount.textContent = '0';
+            if (activityLevel) activityLevel.textContent = 'New';
+
+            // Ensure profile icon is visible
+            const profileIcon = document.getElementById('profileIcon');
+            const fillFormBtn = document.getElementById('fillFormBtn');
+            if (profileIcon) profileIcon.classList.add('show');
+            if (fillFormBtn) fillFormBtn.classList.remove('show');
+
+            // Show NGO section if user type is NGO
+            const ngoInfoSection = document.getElementById('ngoInfoSection');
+            if (ngoInfoSection) {
+                if (userData.userType === 'ngo') {
+                    ngoInfoSection.style.display = 'block';
+                } else {
+                    ngoInfoSection.style.display = 'none';
+                }
+            }
+        }
+
+        function openProfileSidebar() {
+            document.getElementById('profileSidebar').classList.add('open');
+            document.getElementById('profileOverlay').classList.add('show');
+        }
+
+        function closeProfileSidebar() {
+            document.getElementById('profileSidebar').classList.remove('open');
+            document.getElementById('profileOverlay').classList.remove('show');
+        }
+
+        function editProfile() {
+            if (isLoggedIn) {
+                alert('Edit Profile: Redirect to profile edit page');
+                // window.location.href = 'edit-profile.html';
+            } else {
+                alert('Please register or login to edit profile');
+            }
+        }
+
+        function myDonations() {
+            if (isLoggedIn) {
+                alert('My Donations: View all your donations');
+                // window.location.href = 'my-donations.html';
+            } else {
+                alert('Please register or login to view donations');
+            }
+        }
+
+        function notifications() {
+            if (isLoggedIn) {
+                alert('Notifications: You have no new notifications');
+            } else {
+                alert('Please register or login to view notifications');
+            }
+        }
+
+        function myAccount() {
+            if (isLoggedIn) {
+                alert('Account Settings: Manage your account');
+                // window.location.href = 'account-settings.html';
+            } else {
+                alert('Please register or login to access account settings');
+            }
+        }
+
+        function logoutUser() {
+            if (isLoggedIn) {
+                if (confirm('Are you sure you want to logout?')) {
+                    localStorage.removeItem('userProfile');
+                    isLoggedIn = false;
+                    showGuestProfile();
+                    closeProfileSidebar();
+                    alert('Logged out successfully! You are now viewing as Guest #' + guestNumber);
+                }
+            } else {
+                alert('You are currently browsing as Guest #' + guestNumber);
+            }
+        }
+
+        // Check if user is already logged in on page load (moved to window load event above)
     </script>
 </body>
 
