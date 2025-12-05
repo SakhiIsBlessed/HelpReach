@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register NGO - HelpReach</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        :root{--accent:#007bff;--accent-dark:#0056b3;--success:#28a745}
+        body {
+            background: linear-gradient(135deg, var(--success) 0%, #20c997 100%);
+            min-height: 100vh;
+            padding-top: 80px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+        }
+        .register-container {
+            background: linear-gradient(180deg, rgba(255,255,255,0.98), #ffffff);
+            border-radius: 14px;
+            box-shadow: 0 12px 50px rgba(2,6,23,0.16);
+            padding: 40px;
+            max-width: 600px;
+            margin: 40px auto;
+            animation: slideUp 600ms ease both;
+        }
+        .register-header {
+            text-align: center;
+            margin-bottom: 28px;
+        }
+        .register-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            justify-content: center;
+            margin-bottom: 16px;
+        }
+        .register-brand img { height: 48px }
+        .register-header h1 {
+            color: #0b2540;
+            font-weight: 800;
+            font-size: 2rem;
+            margin-bottom: 8px;
+        }
+        .register-header p {
+            color: #5b6b78;
+            font-size: 1rem;
+        }
+        .form-label {
+            color: #223;
+            font-weight: 700;
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+        }
+        .form-control, .form-select {
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 11px 12px;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+        .form-control:focus, .form-select:focus {
+            border-color: var(--accent);
+            box-shadow: 0 8px 30px rgba(0,123,255,0.12);
+            background-color: #f8f9ff;
+        }
+        .input-group .form-control { border-radius: 8px }
+        .input-group-text {
+            background: #f8f9fa;
+            border: 1px solid #e0e0e0;
+            border-right: none;
+            color: #6c757d;
+        }
+        .input-group .form-control:focus ~ .input-group-text,
+        .input-group .form-control:focus ~ .pw-toggle {
+            border-color: var(--accent);
+        }
+        .field-help {
+            font-size: 0.8rem;
+            color: #6c757d;
+            margin-top: 4px;
+        }
+        .invalid-feedback {
+            display: none;
+            font-size: 0.8rem;
+            color: #dc3545;
+            margin-top: 4px;
+        }
+        .invalid-feedback.show { display: block }
+        .strength-container {
+            margin-top: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .strength-bar {
+            flex: 1;
+            height: 5px;
+            background: #e9ecef;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+        .strength-bar-fill {
+            height: 100%;
+            transition: width 0.3s ease, background 0.3s ease;
+            width: 0%;
+            background: #e9ecef;
+        }
+        .strength-text {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #6c757d;
+            min-width: 50px;
+        }
+        .pw-toggle {
+            background: transparent;
+            border: none;
+            color: #6c757d;
+            cursor: pointer;
+            padding: 8px 12px;
+        }
+        .form-check {
+            padding: 0;
+            margin-bottom: 12px;
+        }
+        .form-check-input {
+            width: 18px;
+            height: 18px;
+            margin-top: 3px;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .form-check-input:checked {
+            background-color: var(--success);
+            border-color: var(--success);
+        }
+        .form-check-label {
+            font-size: 0.9rem;
+            color: #333;
+            cursor: pointer;
+            margin-left: 8px;
+        }
+        .btn-register {
+            width: 100%;
+            padding: 12px;
+            font-weight: 700;
+            border-radius: 10px;
+            background: linear-gradient(135deg, var(--success) 0%, #20c997 100%);
+            border: none;
+            color: white;
+            transition: all 0.3s ease;
+            margin-top: 8px;
+            font-size: 1rem;
+        }
+        .btn-register:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(40, 167, 69, 0.3);
+            color: white;
+        }
+        .btn-register:disabled {
+            opacity: 0.65;
+            cursor: not-allowed;
+        }
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+        .form-row.full { grid-template-columns: 1fr }
+        .success-message {
+            display: none;
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-bottom: 16px;
+            text-align: center;
+            animation: slideDown 400ms ease both;
+        }
+        .success-message.show { display: block }
+        .back-link {
+            text-align: center;
+            margin-top: 16px;
+        }
+        .back-link a {
+            color: #6c757d;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+        }
+        .back-link a:hover { color: var(--success) }
+        
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px) } to { opacity: 1; transform: none } }
+        @keyframes slideDown { from { opacity: 0; transform: translateY(-10px) } to { opacity: 1; transform: none } }
+        
+        @media (max-width: 640px) {
+            .register-container { padding: 24px; margin: 20px 12px }
+            .register-header h1 { font-size: 1.6rem }
+            .form-row { grid-template-columns: 1fr }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar Start -->
+    <div class="container-fluid fixed-top bg-white">
+        <nav class="navbar navbar-expand-lg navbar-light container">
+            <a class="navbar-brand fw-bold" href="index.html">
+                <img src="logo.svg" alt="HelpReach Logo" class="me-2" style="height: 40px;">
+                HelpReach
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
+                aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="donate.html">Donate</a></li>
+                    <li class="nav-item"><a class="nav-link" href="ngo-directory.html">NGO Directory</a></li>
+                    <li class="nav-item"><a class="nav-link" href="dashboard.html">Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+                </ul>
+                <div class="d-flex ms-2">
+                    <a class="btn btn-ngo-login btn-sm" href="login.html">NGO Login</a>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <!-- Navbar End -->
+
+    <!-- Registration Form -->
+    <div class="register-container" role="main">
+        <div class="register-header">
+            <div class="register-brand">
+                <img src="logo.svg" alt="HelpReach logo">
+                <div>
+                    <h1>Register Your NGO</h1>
+                    <p>Join our community and make a difference</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="success-message" id="successMessage">
+            <i class="fas fa-check-circle me-2"></i>
+            <strong>Registration successful!</strong> Redirecting to login...
+        </div>
+
+        <form id="registerForm" novalidate>
+            <!-- Organization Details Section -->
+            <div style="margin-bottom: 24px">
+                <h5 style="color: #0b2540; font-weight: 700; margin-bottom: 16px; font-size: 1.1rem">Organization Details</h5>
+
+                <div class="mb-3">
+                    <label for="orgName" class="form-label">Organization Name</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-building"></i></span>
+                        <input type="text" class="form-control" id="orgName" name="orgName" placeholder="Your NGO name" required>
+                    </div>
+                    <div class="field-help">Official name of your organization</div>
+                    <div class="invalid-feedback" id="orgNameError"></div>
+                </div>
+
+                <div class="form-row">
+                    <div class="mb-3">
+                        <label for="registrationNumber" class="form-label">Registration Number</label>
+                        <input type="text" class="form-control" id="registrationNumber" name="registrationNumber" placeholder="e.g., 12A/80G" required>
+                        <div class="field-help">12A/80G or NGO registration number</div>
+                        <div class="invalid-feedback" id="regNumberError"></div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="category" class="form-label">Category</label>
+                        <select class="form-select" id="category" name="category" required>
+                            <option value="">Select category</option>
+                            <option value="food">Food Distribution</option>
+                            <option value="education">Education</option>
+                            <option value="healthcare">Healthcare</option>
+                            <option value="environment">Environment</option>
+                            <option value="other">Other</option>
+                        </select>
+                        <div class="invalid-feedback" id="categoryError"></div>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="description" class="form-label">Organization Description</label>
+                    <textarea class="form-control" id="description" name="description" rows="3" placeholder="Brief description of your NGO's mission" required></textarea>
+                    <div class="field-help">Max 200 characters</div>
+                    <div class="invalid-feedback" id="descriptionError"></div>
+                </div>
+            </div>
+
+            <!-- Contact Details Section -->
+            <div style="margin-bottom: 24px">
+                <h5 style="color: #0b2540; font-weight: 700; margin-bottom: 16px; font-size: 1.1rem">Contact Details</h5>
+
+                <div class="form-row">
+                    <div class="mb-3">
+                        <label for="contactPerson" class="form-label">Contact Person</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-user"></i></span>
+                            <input type="text" class="form-control" id="contactPerson" name="contactPerson" placeholder="Full name" required>
+                        </div>
+                        <div class="invalid-feedback" id="contactPersonError"></div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="designation" class="form-label">Designation</label>
+                        <input type="text" class="form-control" id="designation" name="designation" placeholder="e.g., Director" required>
+                        <div class="invalid-feedback" id="designationError"></div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="mb-3">
+                        <label for="regEmail" class="form-label">Email Address</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                            <input type="email" class="form-control" id="regEmail" name="regEmail" placeholder="ngo@organization.org" required>
+                        </div>
+                        <div class="field-help">Official NGO email</div>
+                        <div class="invalid-feedback" id="regEmailError"></div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="regPhone" class="form-label">Phone Number</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                            <input type="tel" class="form-control" id="regPhone" name="regPhone" placeholder="+91 98765 43210" pattern="[0-9+\s\-()]{10,}" required>
+                        </div>
+                        <div class="invalid-feedback" id="regPhoneError"></div>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="address" class="form-label">Office Address</label>
+                    <input type="text" class="form-control" id="address" name="address" placeholder="Street address, city, state" required>
+                    <div class="invalid-feedback" id="addressError"></div>
+                </div>
+            </div>
+
+            <!-- Account Details Section -->
+            <div style="margin-bottom: 24px">
+                <h5 style="color: #0b2540; font-weight: 700; margin-bottom: 16px; font-size: 1.1rem">Account Details</h5>
+
+                <div class="mb-3">
+                    <label for="regPassword" class="form-label">Password</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                        <input type="password" class="form-control" id="regPassword" name="regPassword" placeholder="Minimum 8 characters" minlength="8" required>
+                        <button type="button" class="pw-toggle" aria-label="Show password" id="toggleRegPw"><i class="fas fa-eye"></i></button>
+                    </div>
+                    <div class="strength-container">
+                        <div class="strength-bar"><span class="strength-bar-fill" id="strengthBarFill"></span></div>
+                        <div class="strength-text" id="strengthText">-</div>
+                    </div>
+                    <div class="field-help">Must include uppercase, numbers, and special characters for strong password</div>
+                    <div class="invalid-feedback" id="regPasswordError"></div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="regPasswordConfirm" class="form-label">Confirm Password</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                        <input type="password" class="form-control" id="regPasswordConfirm" name="regPasswordConfirm" placeholder="Re-enter password" required>
+                    </div>
+                    <div class="invalid-feedback" id="regPasswordConfirmError"></div>
+                </div>
+            </div>
+
+            <!-- Terms & Conditions -->
+            <div class="mb-4">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="regTerms" name="regTerms" required>
+                    <label class="form-check-label" for="regTerms">
+                        I agree to the <a href="#" style="color: var(--accent); text-decoration: none">terms and conditions</a>
+                    </label>
+                    <div class="invalid-feedback" id="regTermsError"></div>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="newsletter" name="newsletter">
+                    <label class="form-check-label" for="newsletter">
+                        Subscribe to updates and newsletters
+                    </label>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-register" id="registerSubmitBtn">
+                <i class="fas fa-check-circle me-2"></i>Create Account
+            </button>
+        </form>
+
+        <div class="back-link">
+            <p style="margin-bottom: 8px; color: #6c757d; font-size: 0.9rem">Already have an account?</p>
+            <a href="login.html">← Go to Login</a>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        (function(){
+            const form = document.getElementById('registerForm');
+            const orgName = document.getElementById('orgName');
+            const registrationNumber = document.getElementById('registrationNumber');
+            const category = document.getElementById('category');
+            const description = document.getElementById('description');
+            const contactPerson = document.getElementById('contactPerson');
+            const designation = document.getElementById('designation');
+            const regEmail = document.getElementById('regEmail');
+            const regPhone = document.getElementById('regPhone');
+            const address = document.getElementById('address');
+            const regPassword = document.getElementById('regPassword');
+            const regPasswordConfirm = document.getElementById('regPasswordConfirm');
+            const regTerms = document.getElementById('regTerms');
+            const registerSubmitBtn = document.getElementById('registerSubmitBtn');
+            const strengthBarFill = document.getElementById('strengthBarFill');
+            const strengthText = document.getElementById('strengthText');
+            const toggleRegPw = document.getElementById('toggleRegPw');
+            const successMessage = document.getElementById('successMessage');
+
+            function validateEmail(val){ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val); }
+            function validatePhone(val){ return /^[0-9+\s\-()]{10,}$/.test(val); }
+            function validateName(val){ return val.trim().length >= 2; }
+
+            function passwordStrength(value){
+                let score = 0; if (!value) return 0;
+                if (value.length >= 8) score += 1;
+                if (/[A-Z]/.test(value)) score += 1;
+                if (/[0-9]/.test(value)) score += 1;
+                if (/[^A-Za-z0-9]/.test(value)) score += 1;
+                return score;
+            }
+
+            function updateStrengthBar(){
+                const val = regPassword.value || '';
+                const score = passwordStrength(val);
+                const widths = ['0%','25%','55%','80%','100%'];
+                const colors = ['#e9ecef','#ff6b6b','#ffb84d','#7bd389','#20c997'];
+                const labels = ['-','Weak','Fair','Good','Strong'];
+                strengthBarFill.style.width = widths[score];
+                strengthBarFill.style.background = colors[score];
+                strengthText.textContent = labels[score];
+                strengthText.style.color = colors[score];
+            }
+
+            function clearError(elementId){
+                const el = document.getElementById(elementId);
+                if (el) el.classList.remove('show');
+            }
+
+            function showError(elementId, message){
+                const el = document.getElementById(elementId);
+                if (el) { el.textContent = message; el.classList.add('show') }
+            }
+
+            function validateForm(){
+                let ok = true;
+                clearError('orgNameError'); clearError('regNumberError'); clearError('categoryError');
+                clearError('descriptionError'); clearError('contactPersonError'); clearError('designationError');
+                clearError('regEmailError'); clearError('regPhoneError'); clearError('addressError');
+                clearError('regPasswordError'); clearError('regPasswordConfirmError'); clearError('regTermsError');
+
+                if (!validateName(orgName.value)){ showError('orgNameError', 'Organization name required (min 2 chars)'); ok = false }
+                if (!registrationNumber.value.trim()){ showError('regNumberError', 'Registration number required'); ok = false }
+                if (!category.value){ showError('categoryError', 'Category required'); ok = false }
+                if (!description.value.trim() || description.value.length > 200){ showError('descriptionError', 'Description required (max 200 chars)'); ok = false }
+                if (!validateName(contactPerson.value)){ showError('contactPersonError', 'Contact person name required'); ok = false }
+                if (!designation.value.trim()){ showError('designationError', 'Designation required'); ok = false }
+                if (!validateEmail(regEmail.value)){ showError('regEmailError', 'Valid email required'); ok = false }
+                if (!validatePhone(regPhone.value)){ showError('regPhoneError', 'Valid phone required (10+ digits)'); ok = false }
+                if (!address.value.trim()){ showError('addressError', 'Address required'); ok = false }
+                if (regPassword.value.length < 8){ showError('regPasswordError', 'Password must be 8+ characters'); ok = false }
+                if (regPassword.value !== regPasswordConfirm.value){ showError('regPasswordConfirmError', 'Passwords do not match'); ok = false }
+                if (!regTerms.checked){ showError('regTermsError', 'You must agree to terms'); ok = false }
+
+                return ok;
+            }
+
+            regPassword.addEventListener('input', updateStrengthBar);
+
+            toggleRegPw.addEventListener('click', function(){
+                const type = regPassword.getAttribute('type') === 'password' ? 'text' : 'password';
+                regPassword.setAttribute('type', type);
+                this.querySelector('i').classList.toggle('fa-eye');
+                this.querySelector('i').classList.toggle('fa-eye-slash');
+            });
+
+            form.addEventListener('submit', function(e){
+                e.preventDefault();
+                if (!validateForm()) return;
+
+                const ngoData = {
+                    id: Date.now(),
+                    orgName: orgName.value,
+                    registrationNumber: registrationNumber.value,
+                    category: category.value,
+                    description: description.value,
+                    contactPerson: contactPerson.value,
+                    designation: designation.value,
+                    email: regEmail.value,
+                    phone: regPhone.value,
+                    address: address.value,
+                    newsletter: document.getElementById('newsletter').checked,
+                    createdAt: new Date().toISOString()
+                };
+
+                let ngos = JSON.parse(localStorage.getItem('ngos') || '[]');
+                ngos.push(ngoData);
+                localStorage.setItem('ngos', JSON.stringify(ngos));
+
+                successMessage.classList.add('show');
+                registerSubmitBtn.disabled = true;
+                registerSubmitBtn.innerHTML = '<i class="fas fa-check me-2"></i>Account Created!';
+
+                setTimeout(() => { window.location.href = 'login.html' }, 2000);
+            });
+
+            [orgName, registrationNumber, category, description, contactPerson, designation, regEmail, regPhone, address, regPassword, regPasswordConfirm, regTerms].forEach(el => {
+                el.addEventListener('change', validateForm);
+                el.addEventListener('blur', validateForm);
+            });
+
+            updateStrengthBar();
+        })();
+    </script>
+</body>
+</html>

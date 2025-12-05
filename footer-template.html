@@ -1,53 +1,4 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Updates & Tracking — HelpReach</title>
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/style.css" rel="stylesheet">
-  </head>
-  <body>
-    <div class="container" style="margin-top:80px;">
-      <div class="d-flex justify-content-between align-items-center mb-3">
-        <h2>Updates & Tracking</h2>
-        <a class="btn btn-outline-secondary" href="dashboard.html">Back to Dashboard</a>
-      </div>
-
-      <div class="row">
-        <div class="col-lg-7">
-          <h5>Donation timeline</h5>
-          <div id="timelineArea"></div>
-        </div>
-        <div class="col-lg-5">
-          <h5>Contact / Support</h5>
-          <form id="contactForm">
-            <div class="mb-2"><input class="form-control" id="cname" placeholder="Your name"></div>
-            <div class="mb-2"><input class="form-control" id="cemail" placeholder="Email"></div>
-            <div class="mb-2"><textarea class="form-control" id="cmsg" placeholder="Message" rows="6"></textarea></div>
-            <button class="btn btn-primary">Send</button>
-          </form>
-        </div>
-      </div>
-    </div>
-
-    <script>
-      function renderTimeline(){
-        const list = JSON.parse(localStorage.getItem('donations')||'[]');
-        const area = document.getElementById('timelineArea'); area.innerHTML='';
-        if (!list.length){ area.innerHTML='<div class="alert alert-info">No donation activity yet.</div>'; return; }
-        list.forEach(d=>{
-          const card = document.createElement('div'); card.className='card p-3 mb-2';
-          card.innerHTML = `<h6>${d.type} (${d.quantity})</h6><p class="small mb-1">${d.address} • ${d.date} ${d.time}</p><p class="mb-0"><strong>Status:</strong> ${d.status}</p>`;
-          area.appendChild(card);
-        });
-      }
-      document.getElementById('contactForm').addEventListener('submit', e=>{ e.preventDefault(); alert('Message sent — we will contact you soon.'); e.target.reset(); });
-      renderTimeline();
-    </script>
-
-    <!-- Footer -->
-    <footer class="container-fluid bg-dark text-light py-5" style="margin-top: 50px;">
+    <footer class="container-fluid bg-dark text-light py-5">
         <div class="container">
             <div class="row g-4">
                 <!-- About Section -->
@@ -122,5 +73,3 @@
             </div>
         </div>
     </footer>
-  </body>
-</html>
