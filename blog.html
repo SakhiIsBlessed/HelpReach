@@ -1,7 +1,9 @@
 <!DOCTYPE html>
-
+<html lang="en">
 <head>
-    <html lang="en">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Blog — HelpReach</title>
     <!-- Favicon -->
     <link href="img/favicon.ico" rel="icon">
 
@@ -11,8 +13,79 @@
 
     <!-- Libraries Stylesheet -->
     <link href="lib/animate/animate.min.css" rel="stylesheet">
-    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">    
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+
+    <!-- Bootstrap + Template Styles -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+
+    <style>
+        /* Blog category filter styles */
+        .category-filter { display:flex; gap:12px; justify-content:center; flex-wrap:wrap; margin:24px 0 36px; }
+        .category-btn { padding:10px 16px; border-radius:999px; border:1px solid rgba(13,110,253,0.12); background:#fff; cursor:pointer; font-weight:600; color:#0d6efd; transition:all .25s ease; box-shadow:0 6px 18px rgba(13,110,253,0.04); }
+        .category-btn:hover { transform:translateY(-4px); box-shadow:0 14px 30px rgba(13,110,253,0.09); }
+        .category-btn.active { background:linear-gradient(90deg,#0d6efd,#10b981); color:#fff; border-color:transparent; box-shadow:0 18px 45px rgba(13,110,253,0.12); }
+
+        /* Post card enhancements */
+        .post-card { border-radius:12px; overflow:hidden; background:#fff; transition:transform .35s cubic-bezier(.2,.9,.3,1), box-shadow .35s; box-shadow:0 8px 24px rgba(6,24,44,0.06); }
+        .post-card:hover { transform:translateY(-10px) rotateZ(-0.5deg); box-shadow:0 30px 60px rgba(6,24,44,0.12); }
+        .post-card img { display:block; width:100%; height:220px; object-fit:cover; }
+        .post-card .bg-light { background:linear-gradient(180deg,#ffffff,#f8fbff); }
+        .post-badge { display:inline-block; padding:6px 10px; border-radius:8px; font-size:.85rem; font-weight:700; margin-bottom:10px; }
+        .badge-food { background:rgba(16,185,129,0.12); color:#10b981; }
+        .badge-clothes { background:rgba(59,130,246,0.10); color:#0d6efd; }
+        .badge-books { background:rgba(168,85,247,0.10); color:#a855f7; }
+        .badge-electronics { background:rgba(245,158,11,0.10); color:#f59e0b; }
+        .badge-other { background:rgba(107,114,128,0.08); color:#6b7280; }
+
+        /* Small reveal animation for JS (fallback if wow not running) */
+        .invisible { opacity:0; transform:translateY(12px); transition:all .6s cubic-bezier(.2,.9,.3,1); }
+        .visible { opacity:1; transform:translateY(0); }
+
+        /* Page theme variables */
+        :root{
+            --primary:#0d6efd;
+            --accent:#10b981;
+            --muted:#6b7280;
+        }
+
+        /* Hero / Section header enhancements */
+        .section-hero{ position:relative; padding:60px 24px; border-radius:16px; overflow:visible; background:linear-gradient(180deg,#f8fbff, #ffffff); box-shadow:0 8px 40px rgba(13,110,253,0.04); }
+        .hero-blob{ position:absolute; filter:blur(18px); opacity:.28; pointer-events:none; border-radius:50%; transform:translate3d(0,0,0); }
+        .blob-1{ width:280px; height:280px; background:linear-gradient(90deg,var(--primary), #7c3aed); top:-80px; left:-60px; }
+        .blob-2{ width:200px; height:200px; background:linear-gradient(90deg,var(--accent), #34d399); bottom:-60px; right:-40px; }
+
+        /* Image micro-interactions */
+        .post-card img{ transition:transform .6s cubic-bezier(.2,.9,.3,1), filter .4s; }
+        .post-card:hover img{ transform:scale(1.06) rotateZ(-0.7deg); filter:brightness(.98) saturate(1.05); }
+
+        /* Badge pulse */
+        .post-badge{ position:relative; }
+        .post-badge::after{ content:''; position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); width:72px; height:72px; border-radius:50%; background:currentColor; opacity:.06; animation:badgePulse 2.6s infinite; z-index:-1; }
+        @keyframes badgePulse{ 0%{transform:translate(-50%,-50%) scale(.8); opacity:.06} 50%{transform:translate(-50%,-50%) scale(1.12); opacity:.02} 100%{transform:translate(-50%,-50%) scale(.8); opacity:.06} }
+
+        /* Filter underline */
+        .category-filter{ position:relative; }
+        .filter-underline{ position:absolute; height:3px; background:linear-gradient(90deg,var(--primary),var(--accent)); bottom:-6px; left:50%; width:120px; transform:translateX(-50%); border-radius:6px; transition:all .32s cubic-bezier(.2,.9,.3,1); }
+        .category-btn{ position:relative; }
+
+        @media (max-width:576px){ .post-card img{ height:160px; } }
+        /* Featured carousel and extras */
+        .featured-carousel .item{ border-radius:12px; overflow:hidden; box-shadow:0 18px 40px rgba(6,24,44,0.08); background:#fff; }
+        .featured-card{ position:relative; }
+        .featured-card img{ width:100%; height:260px; object-fit:cover; display:block; }
+        .featured-card .fc-body{ padding:18px; }
+        .tag-cloud{ display:flex; gap:8px; flex-wrap:wrap; justify-content:center; margin:18px 0; }
+        .tag-cloud .tag{ padding:6px 12px; border-radius:999px; border:1px solid rgba(0,0,0,0.06); background:#fff; color:var(--muted); cursor:pointer; transition:all .18s; }
+        .tag-cloud .tag:hover{ transform:translateY(-4px); box-shadow:0 8px 20px rgba(6,24,44,0.06); }
+        .author-card{ display:flex; gap:12px; align-items:center; padding:12px; border-radius:10px; background:linear-gradient(180deg,#fff,#fbfeff); box-shadow:0 8px 24px rgba(6,24,44,0.04); }
+        .author-card img{ width:64px; height:64px; object-fit:cover; border-radius:50%; }
+        .counters{ display:flex; gap:28px; justify-content:center; margin-top:16px; }
+        .counter{ text-align:center; }
+        .counter .num{ font-size:1.6rem; font-weight:800; color:var(--primary); }
+    </style>
 </head>
+<body>
 <!-- Navbar Start -->
 <div class="container-fluid fixed-top bg-white">
     <nav class="navbar navbar-expand-lg navbar-light container">
@@ -40,167 +113,216 @@
     </nav>
 </div>
 <!-- Navbar End -->
-</div>
-
-<nav class="navbar navbar-expand-lg navbar-light py-lg-0 px-lg-5 wow fadeIn" data-wow-delay="0.1s">
-    <a href="index.html" class="navbar-brand ms-4 ms-lg-0">HelpReach</a>
-    <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarCollapse">
-        <div class="navbar-nav ms-auto p-4 p-lg-0">
-            <a href="index.html" class="nav-item nav-link">Home</a>
-            <a href="about.html" class="nav-item nav-link">About Us</a>
-            <a href="donate.html" class="nav-item nav-link">Donate</a>
-            <div class="nav-item dropdown">
-                <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown">Pages</a>
-                <div class="dropdown-menu m-0">
-                    <a href="blog.html" class="dropdown-item active">Blog Grid</a>
-                    <a href="feature.html" class="dropdown-item">Our Features</a>
-                    <a href="testimonial.html" class="dropdown-item">Testimonial</a>
-                    <a href="404.html" class="dropdown-item">404 Page</a>
-                </div>
-            </div>
-            <a href="contact.html" class="nav-item nav-link">Contact Us</a>
-        </div>
-        <div class="d-none d-lg-flex ms-2">
-            <a class="btn-sm-square bg-white rounded-circle ms-3" href="">
-                <small class="fa fa-search text-body"></small>
-            </a>
-            <a class="btn-sm-square bg-white rounded-circle ms-3" href="">
-                <small class="fa fa-user text-body"></small>
-            </a>
-            <a class="btn-sm-square bg-white rounded-circle ms-3" href="">
-                <small class="fa fa-shopping-bag text-body"></small>
-            </a>
-        </div>
-    </div>
-</nav>
-</div>
 <!-- Navbar End -->
 
 
-<!-- Page Header Start -->
-<div class="container-fluid page-header wow fadeIn" data-wow-delay="0.1s">
-    <div class="container">
-        <h1 class="display-3 mb-3 animated slideInDown">Blog Grid</h1>
-        <nav aria-label="breadcrumb animated slideInDown">
-            <ol class="breadcrumb mb-0">
-                <li class="breadcrumb-item"><a class="text-body" href="#">Home</a></li>
-                <li class="breadcrumb-item"><a class="text-body" href="#">Pages</a></li>
-                <li class="breadcrumb-item text-dark active" aria-current="page">Blog Grid</li>
-            </ol>
-        </nav>
-    </div>
-</div>
-<!-- Page Header End -->
+
 
 
 <!-- Blog Start -->
 <div class="container-xxl py-6">
     <div class="container">
-        <div class="section-header text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s"
-            style="max-width: 500px;">
-            <h1 class="display-5 mb-3">Latest Blog</h1>
-            <p>Tempor ut dolore lorem kasd vero ipsum sit eirmod sit. Ipsum diam justo sed rebum vero dolor duo.</p>
+        <div class="section-header text-center mx-auto mb-5" style="max-width: 900px;">
+            <div class="section-hero wow fadeInUp" data-wow-delay="0.08s">
+                <div class="hero-blob blob-1"></div>
+                <div class="hero-blob blob-2"></div>
+                <h1 class="display-5 mb-3">Latest Blog</h1>
+                <p class="lead mb-0">Stories and guides on donating food, clothing, books, electronics and more — made easy and safe.</p>
+            </div>
+        </div>
+        <!-- Featured Carousel -->
+        <div class="mb-4">
+            <div class="featured-carousel owl-carousel owl-theme">
+                <div class="item">
+                    <div class="featured-card">
+                        <img src="img/feature-1.jpg" alt="Featured: Food Drive">
+                        <div class="fc-body">
+                            <span class="post-badge badge-food">Featured</span>
+                            <h5 class="mt-2">City-wide Food Drive: How you can help</h5>
+                            <p class="small text-muted mb-0">Join local NGOs in collecting surplus meals and distributing them safely.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="featured-card">
+                        <img src="img/feature-2.jpg" alt="Featured: Clothing Donation">
+                        <div class="fc-body">
+                            <span class="post-badge badge-clothes">Featured</span>
+                            <h5 class="mt-2">Clothing Drives: Sorting and care tips</h5>
+                            <p class="small text-muted mb-0">Best practices for making clothing donations useful and dignified.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="featured-card">
+                        <img src="img/feature-3.jpg" alt="Featured: Book Donation">
+                        <div class="fc-body">
+                            <span class="post-badge badge-books">Featured</span>
+                            <h5 class="mt-2">Book Drives: Building community libraries</h5>
+                            <p class="small text-muted mb-0">How to collect, catalogue and share books with schools and shelters.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tag-cloud">
+                <div class="tag">#food</div>
+                <div class="tag">#clothing</div>
+                <div class="tag">#books</div>
+                <div class="tag">#electronics</div>
+                <div class="tag">#volunteer</div>
+                <div class="tag">#upcycle</div>
+            </div>
+            <div class="d-flex justify-content-center gap-3 align-items-center mb-4">
+                <div class="author-card">
+                    <img src="logo.svg" alt="HelpReach Logo" class="me-2">
+                    <div>
+                        <div class="fw-bold">HelpReach Team</div>
+                        <div class="small text-muted">Contributors & Community Volunteers</div>
+                    </div>
+                </div>
+                <div>
+                    <div class="counters">
+                        <div class="counter">
+                            <div class="num" data-target="1245">0</div>
+                            <div class="small text-muted">Donations</div>
+                        </div>
+                        <div class="counter">
+                            <div class="num" data-target="348">0</div>
+                            <div class="small text-muted">Volunteers</div>
+                        </div>
+                        <div class="counter">
+                            <div class="num" data-target="98">0</div>
+                            <div class="small text-muted">Partner NGOs</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Category Filter -->
+        <div class="category-filter">
+            <button class="category-btn active" data-filter="all">All</button>
+            <button class="category-btn" data-filter="food">Food Donation</button>
+            <button class="category-btn" data-filter="clothes">Clothing</button>
+            <button class="category-btn" data-filter="books">Books</button>
+            <button class="category-btn" data-filter="electronics">Electronics</button>
+            <button class="category-btn" data-filter="other">Other</button>
         </div>
         <div class="row g-4">
             <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                <img class="img-fluid" src="img/blog-1.jpg" alt="">
-                <div class="bg-light p-4">
-                    <a class="d-block h5 lh-base mb-4" href="">How to cultivate organic fruits and vegetables in own
-                        firm</a>
-                    <div class="text-muted border-top pt-4">
-                        <small class="me-3"><i class="fa fa-user text-primary me-2"></i>Admin</small>
-                        <small class="me-3"><i class="fa fa-calendar text-primary me-2"></i>01 Jan, 2045</small>
+                <div class="post-card invisible" data-category="food">
+                    <img class="img-fluid" src="img/blog-1.jpg" alt="">
+                    <div class="bg-light p-4">
+                        <span class="post-badge badge-food">Food Donation</span>
+                        <a class="d-block h5 lh-base mb-4" href="">How to safely donate excess food in your community</a>
+                        <div class="text-muted border-top pt-4">
+                            <small class="me-3"><i class="fa fa-user text-primary me-2"></i>Admin</small>
+                            <small class="me-3"><i class="fa fa-calendar text-primary me-2"></i>01 Jan, 2045</small>
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
-                <img class="img-fluid" src="img/blog-2.jpg" alt="">
-                <div class="bg-light p-4">
-                    <a class="d-block h5 lh-base mb-4" href="">How to cultivate organic fruits and vegetables in own
-                        firm</a>
-                    <div class="text-muted border-top pt-4">
-                        <small class="me-3"><i class="fa fa-user text-primary me-2"></i>Admin</small>
-                        <small class="me-3"><i class="fa fa-calendar text-primary me-2"></i>01 Jan, 2045</small>
+                <div class="post-card invisible" data-category="clothes">
+                    <img class="img-fluid" src="img/blog-2.jpg" alt="">
+                    <div class="bg-light p-4">
+                        <span class="post-badge badge-clothes">Clothing</span>
+                        <a class="d-block h5 lh-base mb-4" href="">Guidelines for donating gently used clothing</a>
+                        <div class="text-muted border-top pt-4">
+                            <small class="me-3"><i class="fa fa-user text-primary me-2"></i>Admin</small>
+                            <small class="me-3"><i class="fa fa-calendar text-primary me-2"></i>01 Jan, 2045</small>
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
-                <img class="img-fluid" src="img/blog-3.jpg" alt="">
-                <div class="bg-light p-4">
-                    <a class="d-block h5 lh-base mb-4" href="">How to cultivate organic fruits and vegetables in own
-                        firm</a>
-                    <div class="text-muted border-top pt-4">
-                        <small class="me-3"><i class="fa fa-user text-primary me-2"></i>Admin</small>
-                        <small class="me-3"><i class="fa fa-calendar text-primary me-2"></i>01 Jan, 2045</small>
+                <div class="post-card invisible" data-category="books">
+                    <img class="img-fluid" src="img/blog-3.jpg" alt="">
+                    <div class="bg-light p-4">
+                        <span class="post-badge badge-books">Books</span>
+                        <a class="d-block h5 lh-base mb-4" href="">Collecting and donating books: best practices</a>
+                        <div class="text-muted border-top pt-4">
+                            <small class="me-3"><i class="fa fa-user text-primary me-2"></i>Admin</small>
+                            <small class="me-3"><i class="fa fa-calendar text-primary me-2"></i>01 Jan, 2045</small>
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                <img class="img-fluid" src="img/blog-2.jpg" alt="">
-                <div class="bg-light p-4">
-                    <a class="d-block h5 lh-base mb-4" href="">How to cultivate organic fruits and vegetables in own
-                        firm</a>
-                    <div class="text-muted border-top pt-4">
-                        <small class="me-3"><i class="fa fa-user text-primary me-2"></i>Admin</small>
-                        <small class="me-3"><i class="fa fa-calendar text-primary me-2"></i>01 Jan, 2045</small>
+                <div class="post-card invisible" data-category="electronics">
+                    <img class="img-fluid" src="img/blog-2.jpg" alt="">
+                    <div class="bg-light p-4">
+                        <span class="post-badge badge-electronics">Electronics</span>
+                        <a class="d-block h5 lh-base mb-4" href="">How to safely donate small electronics</a>
+                        <div class="text-muted border-top pt-4">
+                            <small class="me-3"><i class="fa fa-user text-primary me-2"></i>Admin</small>
+                            <small class="me-3"><i class="fa fa-calendar text-primary me-2"></i>01 Jan, 2045</small>
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
-                <img class="img-fluid" src="img/blog-3.jpg" alt="">
-                <div class="bg-light p-4">
-                    <a class="d-block h5 lh-base mb-4" href="">How to cultivate organic fruits and vegetables in own
-                        firm</a>
-                    <div class="text-muted border-top pt-4">
-                        <small class="me-3"><i class="fa fa-user text-primary me-2"></i>Admin</small>
-                        <small class="me-3"><i class="fa fa-calendar text-primary me-2"></i>01 Jan, 2045</small>
+                <div class="post-card invisible" data-category="food">
+                    <img class="img-fluid" src="img/blog-3.jpg" alt="">
+                    <div class="bg-light p-4">
+                        <span class="post-badge badge-food">Food Donation</span>
+                        <a class="d-block h5 lh-base mb-4" href="">Neighborhood food-sharing programs that work</a>
+                        <div class="text-muted border-top pt-4">
+                            <small class="me-3"><i class="fa fa-user text-primary me-2"></i>Admin</small>
+                            <small class="me-3"><i class="fa fa-calendar text-primary me-2"></i>01 Jan, 2045</small>
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
-                <img class="img-fluid" src="img/blog-1.jpg" alt="">
-                <div class="bg-light p-4">
-                    <a class="d-block h5 lh-base mb-4" href="">How to cultivate organic fruits and vegetables in own
-                        firm</a>
-                    <div class="text-muted border-top pt-4">
-                        <small class="me-3"><i class="fa fa-user text-primary me-2"></i>Admin</small>
-                        <small class="me-3"><i class="fa fa-calendar text-primary me-2"></i>01 Jan, 2045</small>
+                <div class="post-card invisible" data-category="clothes">
+                    <img class="img-fluid" src="img/blog-1.jpg" alt="">
+                    <div class="bg-light p-4">
+                        <span class="post-badge badge-clothes">Clothing</span>
+                        <a class="d-block h5 lh-base mb-4" href="">Preparing winter clothes for donation drives</a>
+                        <div class="text-muted border-top pt-4">
+                            <small class="me-3"><i class="fa fa-user text-primary me-2"></i>Admin</small>
+                            <small class="me-3"><i class="fa fa-calendar text-primary me-2"></i>01 Jan, 2045</small>
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                <img class="img-fluid" src="img/blog-3.jpg" alt="">
-                <div class="bg-light p-4">
-                    <a class="d-block h5 lh-base mb-4" href="">How to cultivate organic fruits and vegetables in own
-                        firm</a>
-                    <div class="text-muted border-top pt-4">
-                        <small class="me-3"><i class="fa fa-user text-primary me-2"></i>Admin</small>
-                        <small class="me-3"><i class="fa fa-calendar text-primary me-2"></i>01 Jan, 2045</small>
+                <div class="post-card invisible" data-category="books">
+                    <img class="img-fluid" src="img/blog-3.jpg" alt="">
+                    <div class="bg-light p-4">
+                        <span class="post-badge badge-books">Books</span>
+                        <a class="d-block h5 lh-base mb-4" href="">Setting up community book exchanges</a>
+                        <div class="text-muted border-top pt-4">
+                            <small class="me-3"><i class="fa fa-user text-primary me-2"></i>Admin</small>
+                            <small class="me-3"><i class="fa fa-calendar text-primary me-2"></i>01 Jan, 2045</small>
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
-                <img class="img-fluid" src="img/blog-1.jpg" alt="">
-                <div class="bg-light p-4">
-                    <a class="d-block h5 lh-base mb-4" href="">How to cultivate organic fruits and vegetables in own
-                        firm</a>
-                    <div class="text-muted border-top pt-4">
-                        <small class="me-3"><i class="fa fa-user text-primary me-2"></i>Admin</small>
-                        <small class="me-3"><i class="fa fa-calendar text-primary me-2"></i>01 Jan, 2045</small>
+                <div class="post-card invisible" data-category="electronics">
+                    <img class="img-fluid" src="img/blog-2.jpg" alt="">
+                    <div class="bg-light p-4">
+                        <span class="post-badge badge-electronics">Electronics</span>
+                        <a class="d-block h5 lh-base mb-4" href="">Repair cafes and donating usable electronics</a>
+                        <div class="text-muted border-top pt-4">
+                            <small class="me-3"><i class="fa fa-user text-primary me-2"></i>Admin</small>
+                            <small class="me-3"><i class="fa fa-calendar text-primary me-2"></i>01 Jan, 2045</small>
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
-                <img class="img-fluid" src="img/blog-2.jpg" alt="">
-                <div class="bg-light p-4">
-                    <a class="d-block h5 lh-base mb-4" href="">How to cultivate organic fruits and vegetables in own
-                        firm</a>
-                    <div class="text-muted border-top pt-4">
-                        <small class="me-3"><i class="fa fa-user text-primary me-2"></i>Admin</small>
-                        <small class="me-3"><i class="fa fa-calendar text-primary me-2"></i>01 Jan, 2045</small>
+                <div class="post-card invisible" data-category="other">
+                    <img class="img-fluid" src="img/blog-2.jpg" alt="">
+                    <div class="bg-light p-4">
+                        <span class="post-badge badge-other">Other</span>
+                        <a class="d-block h5 lh-base mb-4" href="">Community stories: creative reuse and upcycling</a>
+                        <div class="text-muted border-top pt-4">
+                            <small class="me-3"><i class="fa fa-user text-primary me-2"></i>Admin</small>
+                            <small class="me-3"><i class="fa fa-calendar text-primary me-2"></i>01 Jan, 2045</small>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -214,6 +336,120 @@
 
 
 <!-- Footer Start -->
+<script>
+    // Enhanced category filter + animations
+    (function(){
+        function initWOW(){
+            try{ if (typeof WOW !== 'undefined') new WOW().init(); }catch(e){}
+        }
+
+        function qs(sel){ return document.querySelector(sel); }
+        function qsa(sel){ return Array.from(document.querySelectorAll(sel)); }
+
+        const buttons = qsa('.category-btn');
+        const posts = qsa('.post-card');
+        const filterWrap = qs('.category-filter');
+
+        // add underline element for active button
+        const underline = document.createElement('div');
+        underline.className = 'filter-underline';
+        filterWrap.appendChild(underline);
+
+        function positionUnderline(activeBtn){
+            if(!activeBtn) return;
+            const rect = activeBtn.getBoundingClientRect();
+            const wrapRect = filterWrap.getBoundingClientRect();
+            const left = rect.left - wrapRect.left + rect.width/2;
+            underline.style.left = left + 'px';
+            underline.style.width = Math.max(80, rect.width*0.9) + 'px';
+        }
+
+        function showPosts(filter){
+            let visibleIndex = 0;
+            posts.forEach((p)=>{
+                const cat = p.getAttribute('data-category');
+                p.classList.remove('animate__animated','animate__fadeInUp');
+                p.style.animationDelay = '';
+                if(filter === 'all' || cat === filter){
+                    p.classList.remove('invisible');
+                    // stagger using CSS animation-delay on element
+                    p.style.animationDelay = (visibleIndex * 90) + 'ms';
+                    // force reflow then add animate class
+                    void p.offsetWidth;
+                    p.classList.add('visible','animate__animated','animate__fadeInUp');
+                    visibleIndex++;
+                } else {
+                    p.classList.remove('visible');
+                    p.classList.add('invisible');
+                }
+            });
+        }
+
+        buttons.forEach(b => b.addEventListener('click', (e)=>{
+            buttons.forEach(x=>x.classList.remove('active'));
+            b.classList.add('active');
+            positionUnderline(b);
+            showPosts(b.getAttribute('data-filter'));
+        }));
+
+        // initialize on DOM ready
+        document.addEventListener('DOMContentLoaded', ()=>{
+            initWOW();
+            // position underline on first active button
+            const active = qs('.category-btn.active') || buttons[0];
+            positionUnderline(active);
+            // small timeout so layout settles
+            setTimeout(()=> showPosts((active && active.getAttribute('data-filter'))||'all'), 80);
+            // reposition on resize
+            window.addEventListener('resize', ()=> positionUnderline(qs('.category-btn.active')));
+        });
+    })();
+</script>
+<script>
+    // Init carousel and counters
+    (function(){
+        function initCarousel(){
+            try{
+                if(typeof $ !== 'undefined' && typeof $.fn.owlCarousel !== 'undefined'){
+                    $('.featured-carousel').owlCarousel({
+                        loop:true, margin:20, nav:true, dots:false, autoplay:true, autoplayTimeout:4200, autoplayHoverPause:true,
+                        responsive:{0:{items:1},768:{items:2},992:{items:3}}
+                    });
+                }
+            }catch(e){console.warn('Carousel init failed',e);} 
+        }
+
+        function animateCounters(){
+            const counters = document.querySelectorAll('.num[data-target]');
+            const easeOut = (t)=> 1 - Math.pow(1 - t, 3);
+            counters.forEach(c => {
+                const target = +c.getAttribute('data-target');
+                let started = false;
+                const onView = ()=>{
+                    if(started) return; started = true;
+                    const duration = 1200; const start = performance.now();
+                    function step(ts){
+                        const p = Math.min(1, (ts - start)/duration);
+                        c.textContent = Math.floor(easeOut(p) * target);
+                        if(p < 1) requestAnimationFrame(step);
+                        else c.textContent = target;
+                    }
+                    requestAnimationFrame(step);
+                };
+                // use IntersectionObserver
+                if('IntersectionObserver' in window){
+                    const io = new IntersectionObserver((entries, obs)=>{ if(entries[0].isIntersecting){ onView(); obs.disconnect(); } });
+                    io.observe(c);
+                } else { onView(); }
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', ()=>{
+            initCarousel();
+            animateCounters();
+        });
+    })();
+</script>
 <footer class="container-fluid bg-dark text-light py-5 wow fadeIn" data-wow-delay="0.1s">
     <div class="container">
         <div class="row g-4">

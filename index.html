@@ -18,38 +18,18 @@
     <!-- Libraries Stylesheet -->
     <link href="lib/animate/animate.min.css" rel="stylesheet">
     <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
-    <!DOCTYPE html>
-    <html lang="en">
 
-    <head>
-        <meta charset="utf-8">
-        <title>HelpReach — Connecting Donors & NGOs</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="description"
-            content="HelpReach connects event organizers and donors with NGOs to reduce food and item wastage. Donate leftover food or items and let NGOs claim them instantly.">
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
 
-        <!-- Favicon -->
-        <link href="img/favicon.ico" rel="icon">
-
-        <!-- Fonts & Icons -->
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
-
-        <!-- Libraries Stylesheet -->
-        <link href="lib/animate/animate.min.css" rel="stylesheet">
-        <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
-
-        <!-- Bootstrap -->
-        <link href="css/bootstrap.min.css" rel="stylesheet">
-
-        <!-- Site Styles -->
-        <link href="css/style.css" rel="stylesheet">
-        <style>
+    <!-- Site Styles -->
+    <link href="css/style.css" rel="stylesheet">
+    <style>
             /* temporary small fix: ensure body leaves space for fixed navbar */
             body {
                 padding-top: 72px;
             }
-<!-- for profile and form-->
+
 
         /* Registration Modal & Profile Styles */
         .registration-overlay {
@@ -525,7 +505,7 @@
                         <div class="hero-ctas mt-4 wow fadeInUp" data-wow-delay="0.3s">
                             <a id="donate" class="btn btn-lg btn-success me-3 glass-btn" href="donate.html">Donate
                                 Now</a>
-                            <a id="register" class="btn btn-lg btn-register-ngo glass-btn" href="login.html">Register
+                            <a id="register" class="btn btn-lg btn-register-ngo glass-btn" href="register-ngo.html">Register
                                 NGO</a>
                         </div>
                     </div>
@@ -855,7 +835,7 @@
                 <p class="small mb-3">Post a donation in under a minute or register your NGO to start receiving claims.
                 </p>
                 <a class="btn btn-lg btn-success me-3" href="donate.html">Donate Now</a>
-                <a class="btn btn-lg btn-register-ngo" href="login.html">Register as NGO</a>
+                <a class="btn btn-lg btn-register-ngo" href="register-ngo.html">Register as NGO</a>
             </div>
         </div>
     </section>
@@ -1186,18 +1166,38 @@
         var guestNumber = Math.floor(Math.random() * 10000);
         var isLoggedIn = false;
 
-        // Show registration form on page load
+        // Show registration form on page load: show once per session when navigating, and also show on reload
         window.addEventListener('load', () => {
             const userProfile = localStorage.getItem('userProfile');
-            if (!userProfile) {
-                document.getElementById('registrationOverlay').classList.add('show');
-                document.getElementById('fillFormBtn').classList.add('show');
-            } else {
+            const icon = document.getElementById('profileIcon'); if(icon) icon.classList.add('show');
+            const fillBtn = document.getElementById('fillFormBtn'); if(fillBtn) fillBtn.classList.add('show');
+
+            function getNavType(){
+                try{
+                    const entries = performance.getEntriesByType && performance.getEntriesByType('navigation');
+                    if(entries && entries.length) return entries[0].type; // 'navigate'|'reload'|'back_forward'
+                    if(performance.navigation && typeof performance.navigation.type !== 'undefined'){
+                        return (performance.navigation.type === 1) ? 'reload' : 'navigate';
+                    }
+                }catch(e){}
+                return 'navigate';
+            }
+
+            const navType = getNavType();
+            const sessionShown = sessionStorage.getItem('registrationShown');
+
+            if (userProfile) {
                 isLoggedIn = true;
                 const userData = JSON.parse(userProfile);
                 updateProfileDisplay(userData);
-                document.getElementById('profileIcon').classList.add('show');
-                document.getElementById('fillFormBtn').classList.remove('show');
+                if(fillBtn) fillBtn.classList.remove('show');
+                return;
+            }
+
+            // Show modal if this is a reload OR we haven't shown it yet this session
+            if (navType === 'reload' || !sessionShown) {
+                const overlay = document.getElementById('registrationOverlay'); if(overlay) overlay.classList.add('show');
+                try{ sessionStorage.setItem('registrationShown','true'); }catch(e){}
             }
         });
 

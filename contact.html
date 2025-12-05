@@ -454,6 +454,306 @@
                 grid-template-columns: 1fr;
             }
         }
+
+        /* Contact Page Styles */
+        .bg-gradient {
+            background: linear-gradient(135deg, #0d6efd 0%, #10b981 100%);
+        }
+
+        .card {
+            border: none;
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1) !important;
+        }
+
+        .operating-hours {
+            font-size: 0.95rem;
+        }
+
+        .operating-hours span {
+            color: #6c757d;
+        }
+
+        #contactFAQ .accordion-button:not(.collapsed) {
+            background-color: #0d6efd;
+            color: white;
+        }
+
+        #contactFAQ .accordion-button:focus {
+            border-color: #0d6efd;
+            box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+        }
+
+        .border-danger {
+            border: 2px solid #dc3545 !important;
+        }
+
+        .border-success {
+            border: 2px solid #10b981 !important;
+        }
+
+        .form-control:focus,
+        .form-select:focus {
+            border-color: #0d6efd;
+            box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+        }
+
+        .wow {
+            visibility: visible;
+        }
+
+        /* Enhanced animations for contact page */
+        @keyframes slideUpIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes slideLeftIn {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideRightIn {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.02);
+            }
+        }
+
+        /* Spacing utilities */
+        .mb-8 {
+            margin-bottom: 4rem !important;
+        }
+
+        .p-6 {
+            padding: 2rem !important;
+        }
+
+        .fw-600 {
+            font-weight: 600;
+        }
+
+        /* Apply animations to contact sections */
+        .section-header {
+            animation: slideUpIn 0.6s ease-out;
+        }
+
+        .card {
+            border: none;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            animation: scaleIn 0.5s ease-out;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.12) !important;
+        }
+
+        .contact-card {
+            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+            transition: all 0.4s ease;
+        }
+
+        .contact-card:hover {
+            background: linear-gradient(135deg, #ffffff 0%, #f0f3ff 100%);
+        }
+
+        .special-card {
+            background: white;
+            border-radius: 12px;
+            transition: all 0.4s ease;
+        }
+
+        .special-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15) !important;
+        }
+
+        .emergency-card {
+            border-left: 4px solid #dc3545;
+        }
+
+        .volunteer-card {
+            border-left: 4px solid #198754;
+        }
+
+        .trust-card {
+            transition: all 0.4s ease;
+            background: white;
+        }
+
+        .trust-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1) !important;
+        }
+
+        .form-control,
+        .form-select {
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus,
+        .form-select:focus {
+            border-color: #0d6efd;
+            box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.15);
+        }
+
+        .form-control-lg,
+        .form-select-lg {
+            height: 3rem;
+            font-size: 1rem;
+        }
+
+        /* WhatsApp Banner Styling */
+        .whatsapp-banner {
+            background: linear-gradient(135deg, #25d366 0%, #128c7e 100%);
+            animation: slideUpIn 0.6s ease-out;
+            box-shadow: 0 10px 40px rgba(37, 211, 102, 0.3);
+        }
+
+        .whatsapp-banner:hover {
+            box-shadow: 0 15px 50px rgba(37, 211, 102, 0.4);
+            transform: translateY(-3px);
+        }
+
+        .btn-success {
+            background-color: #25d366;
+            border-color: #25d366;
+            transition: all 0.3s ease;
+        }
+
+        .btn-success:hover {
+            background-color: #128c7e;
+            border-color: #128c7e;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(37, 211, 102, 0.3);
+        }
+
+        /* Animation delays for staggered effect */
+        .row.g-4 > div:nth-child(1) { animation-delay: 0.1s; }
+        .row.g-4 > div:nth-child(2) { animation-delay: 0.2s; }
+        .row.g-4 > div:nth-child(3) { animation-delay: 0.3s; }
+        .row.g-4 > div:nth-child(4) { animation-delay: 0.4s; }
+
+        /* Map section styling */
+        iframe {
+            transition: all 0.3s ease;
+            border-radius: 12px;
+        }
+
+        iframe:hover {
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Accordion styling */
+        #contactFAQ .accordion-button {
+            border: none;
+            border-radius: 8px;
+            margin-bottom: 12px;
+            transition: all 0.3s ease;
+        }
+
+        #contactFAQ .accordion-button:not(.collapsed) {
+            background-color: #0d6efd;
+            color: white;
+            box-shadow: 0 4px 12px rgba(13, 110, 253, 0.2);
+        }
+
+        #contactFAQ .accordion-body {
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+        }
+
+        /* Decorative floating blobs */
+        .blob-wrap { position: absolute; inset: 0; pointer-events: none; overflow: visible; }
+        .blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(30px);
+            opacity: 0.18;
+            transform: translate3d(0,0,0);
+            animation: floatY 6s ease-in-out infinite;
+        }
+        .blob.b1 { width: 260px; height: 260px; background: #10b981; left: -40px; top: -40px; }
+        .blob.b2 { width: 200px; height: 200px; background: #0d6efd; right: -50px; top: 30px; animation-duration: 7s; }
+        .blob.b3 { width: 160px; height: 160px; background: #7dd3fc; left: 20%; bottom: -40px; animation-duration: 5.5s; }
+
+        @keyframes floatY {
+            0% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-18px) scale(1.03); }
+            100% { transform: translateY(0) scale(1); }
+        }
+
+        /* WhatsApp CTA pulse effect */
+        .pulse { animation: pulse 2s infinite; }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(37,211,102,0.6); transform: translateY(0); }
+            70% { box-shadow: 0 0 0 18px rgba(37,211,102,0); transform: translateY(-3px); }
+            100% { box-shadow: 0 0 0 0 rgba(37,211,102,0); transform: translateY(0); }
+        }
+
+        /* Success overlay for WhatsApp redirect */
+        .wa-overlay {
+            position: fixed; inset: 0; display: flex; align-items: center; justify-content: center;
+            background: rgba(0,0,0,0.45); z-index: 2000; visibility: hidden; opacity: 0; transition: all 0.25s ease;
+        }
+        .wa-overlay.show { visibility: visible; opacity: 1; }
+        .wa-box { background: white; padding: 30px 36px; border-radius: 12px; text-align: center; width: 340px; }
+        .checkmark { width: 72px; height: 72px; border-radius: 50%; display: inline-block; background: linear-gradient(135deg,#10b981,#0d6efd); color: white; font-size: 36px; line-height: 72px; margin-bottom: 12px; animation: scaleIn 0.5s ease-out; }
     </style>
 </head>
 
@@ -493,79 +793,244 @@
     <!-- Navbar End -->
 
 
-    <!-- Page Header Start -->
-    <div class="container-fluid page-header wow fadeIn" data-wow-delay="0.1s">
-        <div class="container">
-            <h1 class="display-3 mb-3 animated slideInDown">Contact Us</h1>
-            <nav aria-label="breadcrumb animated slideInDown">
-                <ol class="breadcrumb mb-0">
-                    <li class="breadcrumb-item"><a class="text-body" href="#">Home</a></li>
-                    <li class="breadcrumb-item"><a class="text-body" href="#">Pages</a></li>
-                    <li class="breadcrumb-item text-dark active" aria-current="page">Contact Us</li>
-                </ol>
-            </nav>
-        </div>
-    </div>
-    <!-- Page Header End -->
+
 
     <!-- Contact Start -->
     <div class="container-xxl py-6">
         <div class="container">
-            <div class="section-header text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
-                <h1 class="display-5 mb-3">Contact Us</h1>
-                <p>Tempor ut dolore lorem kasd vero ipsum sit eirmod sit. Ipsum diam justo sed rebum vero dolor duo.</p>
+            <!-- Hero Section -->
+            <div class="position-relative">
+                <div class="blob-wrap" aria-hidden="true">
+                    <span class="blob b1"></span>
+                    <span class="blob b2"></span>
+                    <span class="blob b3"></span>
+                </div>
+                <div class="section-header text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 720px; position: relative; z-index: 2;">
+                    <h1 class="display-5 mb-3">Get in Touch with <span style="background:linear-gradient(90deg,#0d6efd,#10b981);-webkit-background-clip:text;color:transparent;">HelpReach</span></h1>
+                    <p class="lead">We're here to help — donate, claim, volunteer, or ask questions. Our team responds fast.</p>
+                </div>
             </div>
-            <div class="row g-5 justify-content-center">
-                <div class="col-lg-5 col-md-12 wow fadeInUp" data-wow-delay="0.1s">
-                    <div class="bg-primary text-white d-flex flex-column justify-content-center h-100 p-5">
-                        <h5 class="text-white">Call Us</h5>
-                        <p class="mb-5"><i class="fa fa-phone-alt me-3"></i>+012 345 67890</p>
-                        <h5 class="text-white">Email Us</h5>
-                        <p class="mb-5"><i class="fa fa-envelope me-3"></i>info@example.com</p>
-                        <h5 class="text-white">Office Address</h5>
-                        <p class="mb-5"><i class="fa fa-map-marker-alt me-3"></i>123 Street, New York, USA</p>
-                        <h5 class="text-white">Follow Us</h5>
-                        <div class="d-flex pt-2">
-                            <a class="btn btn-square btn-outline-light rounded-circle me-1" href=""><i class="fab fa-twitter"></i></a>
-                            <a class="btn btn-square btn-outline-light rounded-circle me-1" href=""><i class="fab fa-facebook-f"></i></a>
-                            <a class="btn btn-square btn-outline-light rounded-circle me-1" href=""><i class="fab fa-youtube"></i></a>
-                            <a class="btn btn-square btn-outline-light rounded-circle me-0" href=""><i class="fab fa-linkedin-in"></i></a>
+
+            <!-- Quick Contact Channels -->
+            <div class="row g-4 mb-8 wow fadeInUp" data-wow-delay="0.2s">
+                <div class="col-md-6">
+                    <div class="card text-center p-5 border-0 shadow h-100 contact-card">
+                        <div class="mb-4">
+                            <i class="fas fa-phone-alt text-primary" style="font-size: 2.5rem;"></i>
+                        </div>
+                        <h5 class="mb-3">Call Us</h5>
+                        <p class="text-muted mb-4">Mon-Fri, 9 AM - 6 PM<br><small class="text-muted">24/7 Emergency Available</small></p>
+                        <div class="d-grid gap-2">
+                            <a href="tel:+918530932462" class="btn btn-primary btn-lg"><i class="fas fa-phone me-2"></i>+91 8530932462</a>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-7 col-md-12 wow fadeInUp" data-wow-delay="0.5s">
-                    <p class="mb-4">The contact form is currently inactive. Get a functional and working contact form with Ajax & PHP in a few minutes. Just copy and paste the files, add a little code and you're done. <a href="https://htmlcodex.com/contact-form">Download Now</a>.</p>
-                    <form>
-                        <div class="row g-3">
-                            <div class="col-md-6">
-                                <div class="form-floating">
-                                    <input type="text" class="form-control" id="name" placeholder="Your Name">
-                                    <label for="name">Your Name</label>
+                <div class="col-md-6">
+                    <div class="card text-center p-5 border-0 shadow h-100 contact-card">
+                        <div class="mb-4">
+                            <i class="fas fa-envelope text-success" style="font-size: 2.5rem;"></i>
+                        </div>
+                        <h5 class="mb-3">Email Us</h5>
+                        <p class="text-muted mb-4">We respond within 24 hours<br><small class="text-muted">info@helpreach.org</small></p>
+                        <div class="d-grid gap-2">
+                            <a href="mailto:info@helpreach.org" class="btn btn-success btn-lg"><i class="fas fa-envelope me-2"></i>Send Email</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contact Form Section -->
+            <div class="row mb-8 wow fadeInUp" data-wow-delay="0.3s">
+                <div class="col-lg-8 mx-auto">
+                    <div class="card border-0 shadow p-6">
+                        <h3 class="mb-5 text-center">Send us a Message</h3>
+                        <form id="contactForm" onsubmit="handleContactForm(event)">
+                            <div class="row g-4">
+                                <div class="col-md-6">
+                                    <label class="form-label fw-600">Your Name *</label>
+                                    <input type="text" class="form-control form-control-lg" id="contactName" required placeholder="Enter your full name">
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label fw-600">Email Address *</label>
+                                    <input type="email" class="form-control form-control-lg" id="contactEmail" required placeholder="your@email.com">
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label fw-600">Phone Number</label>
+                                    <input type="tel" class="form-control form-control-lg" id="contactPhone" placeholder="+91 9876 543 210">
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label fw-600">Inquiry Type *</label>
+                                    <select class="form-select form-select-lg" id="inquiryType" required>
+                                        <option value="">Select a category...</option>
+                                        <option value="donation">Donation Inquiry</option>
+                                        <option value="claim">Claim Items</option>
+                                        <option value="volunteer">Volunteer</option>
+                                        <option value="partner">Partner/NGO</option>
+                                        <option value="other">Other</option>
+                                    </select>
+                                </div>
+                                <div class="col-12">
+                                    <label class="form-label fw-600">Message *</label>
+                                    <textarea class="form-control" id="contactMessage" rows="6" required placeholder="Tell us how we can help..."></textarea>
+                                </div>
+                                <div class="col-12">
+                                    <button type="submit" class="btn btn-primary btn-lg w-100 py-3">
+                                        <i class="fas fa-paper-plane me-2"></i>Send Message
+                                    </button>
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="form-floating">
-                                    <input type="email" class="form-control" id="email" placeholder="Your Email">
-                                    <label for="email">Your Email</label>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Special Support Lines -->
+            <div class="row g-4 mb-8 wow fadeInUp" data-wow-delay="0.4s">
+                <div class="col-md-6">
+                    <div class="card border-0 shadow p-5 text-center special-card emergency-card">
+                        <i class="fas fa-exclamation-triangle text-danger mb-4" style="font-size: 3rem;"></i>
+                        <h4 class="mb-3">Emergency Assistance</h4>
+                        <p class="text-muted mb-4">Need immediate help? Our emergency team is available 24/7.</p>
+                        <a href="tel:+918530932462" class="btn btn-danger btn-lg w-100">
+                            <i class="fas fa-phone-alt me-2"></i>+91 8530932462
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card border-0 shadow p-5 text-center special-card volunteer-card">
+                        <i class="fas fa-hands-helping text-success mb-4" style="font-size: 3rem;"></i>
+                        <h4 class="mb-3">Become a Volunteer</h4>
+                        <p class="text-muted mb-4">Join our community and make a difference. Register to volunteer today!</p>
+                        <a href="tel:+919607340088" class="btn btn-success btn-lg w-100">
+                            <i class="fas fa-heart me-2"></i>+91 9607340088
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <!-- FAQ Section -->
+            <div class="row mb-8 wow fadeInUp" data-wow-delay="0.6s">
+                <div class="col-12">
+                    <h3 class="mb-6 text-center">Frequently Asked Questions</h3>
+                </div>
+                <div class="col-lg-8 mx-auto">
+                    <div class="accordion" id="contactFAQ">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+                                    How can I donate food or items?
+                                </button>
+                            </h2>
+                            <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#contactFAQ">
+                                <div class="accordion-body">
+                                    You can register on our platform, create a donation listing with details and photos of the items, and our NGO partners will claim them. It's that simple!
                                 </div>
-                            </div>
-                            <div class="col-12">
-                                <div class="form-floating">
-                                    <input type="text" class="form-control" id="subject" placeholder="Subject">
-                                    <label for="subject">Subject</label>
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <div class="form-floating">
-                                    <textarea class="form-control" placeholder="Leave a message here" id="message" style="height: 200px"></textarea>
-                                    <label for="message">Message</label>
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <button class="btn btn-primary rounded-pill py-3 px-5" type="submit">Send Message</button>
                             </div>
                         </div>
-                    </form>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+                                    What items can I donate?
+                                </button>
+                            </h2>
+                            <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#contactFAQ">
+                                <div class="accordion-body">
+                                    You can donate food (prepared or unopened), clothing, books, electronics, and other useful items. Check our donation guidelines for specific categories.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
+                                    Is my donation tax-deductible?
+                                </button>
+                            </h2>
+                            <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#contactFAQ">
+                                <div class="accordion-body">
+                                    Yes! HelpReach is a registered non-profit. You'll receive a tax certificate for your donations. Contact us for details on tax deduction procedures.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq4">
+                                    How do I become an NGO partner?
+                                </button>
+                            </h2>
+                            <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#contactFAQ">
+                                <div class="accordion-body">
+                                    NGOs can apply through our partner registration form. We verify your credentials and documentation before approval. Visit the NGO Directory page for more information.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq5">
+                                    Can I volunteer with HelpReach?
+                                </button>
+                            </h2>
+                            <div id="faq5" class="accordion-collapse collapse" data-bs-parent="#contactFAQ">
+                                <div class="accordion-body">
+                                    Absolutely! Call our Volunteer Hotline at +91 8888 888 888 to register. We have opportunities for logistics, distribution, and community outreach.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Why Choose HelpReach -->
+            <div class="row g-4 mb-8 text-center wow fadeInUp" data-wow-delay="0.7s" style="margin-top: 60px;">
+                <div class="col-md-3 col-sm-6">
+                    <div class="card border-0 h-100">
+                        <div class="card-body">
+                            <i class="fas fa-shield-alt text-primary mb-3" style="font-size: 2.5rem;"></i>
+                            <h5>Verified & Trusted</h5>
+                            <p class="text-muted small">All NGO partners are verified and certified</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <div class="card border-0 h-100">
+                        <div class="card-body">
+                            <i class="fas fa-lock text-success mb-3" style="font-size: 2.5rem;"></i>
+                            <h5>Secure & Safe</h5>
+                            <p class="text-muted small">Your data is encrypted and protected</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <div class="card border-0 h-100">
+                        <div class="card-body">
+                            <i class="fas fa-users text-info mb-3" style="font-size: 2.5rem;"></i>
+                            <h5>Community Driven</h5>
+                            <p class="text-muted small">Join thousands helping reduce waste</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <div class="card border-0 h-100">
+                        <div class="card-body">
+                            <i class="fas fa-certificate text-warning mb-3" style="font-size: 2.5rem;"></i>
+                            <h5>ISO Certified</h5>
+                            <p class="text-muted small">Following international quality standards</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- WhatsApp CTA Banner -->
+            <div class="row mb-8 wow fadeInUp" data-wow-delay="0.8s">
+                <div class="col-12">
+                    <div class="whatsapp-banner p-6 rounded text-white text-center">
+                        <h3 class="mb-3 fw-bold">Chat with Us on WhatsApp</h3>
+                        <p class="mb-4 fs-5">Get instant responses and support from our team</p>
+                        <a href="https://wa.me/919607340088" target="_blank" rel="noopener noreferrer" class="btn btn-success btn-lg px-5 py-3 whatsapp-btn pulse">
+                            <i class="fab fa-whatsapp me-2" style="font-size: 1.5rem;"></i>Start Instant Chat
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -871,18 +1336,37 @@
         var guestNumber = Math.floor(Math.random() * 10000);
         var isLoggedIn = false;
 
-        // Show registration form on page load
+        // Show registration form on page load: show once per session when navigating, and also show on reload
         window.addEventListener('load', () => {
             const userProfile = localStorage.getItem('userProfile');
-            if (!userProfile) {
-                document.getElementById('registrationOverlay').classList.add('show');
-                document.getElementById('fillFormBtn').classList.add('show');
-            } else {
+            const icon = document.getElementById('profileIcon'); if(icon) icon.classList.add('show');
+            const fillBtn = document.getElementById('fillFormBtn'); if(fillBtn) fillBtn.classList.add('show');
+
+            function getNavType(){
+                try{
+                    const entries = performance.getEntriesByType && performance.getEntriesByType('navigation');
+                    if(entries && entries.length) return entries[0].type;
+                    if(performance.navigation && typeof performance.navigation.type !== 'undefined'){
+                        return (performance.navigation.type === 1) ? 'reload' : 'navigate';
+                    }
+                }catch(e){}
+                return 'navigate';
+            }
+
+            const navType = getNavType();
+            const sessionShown = sessionStorage.getItem('registrationShown');
+
+            if (userProfile) {
                 isLoggedIn = true;
                 const userData = JSON.parse(userProfile);
                 updateProfileDisplay(userData);
-                document.getElementById('profileIcon').classList.add('show');
-                document.getElementById('fillFormBtn').classList.remove('show');
+                if(fillBtn) fillBtn.classList.remove('show');
+                return;
+            }
+
+            if (navType === 'reload' || !sessionShown) {
+                const overlay = document.getElementById('registrationOverlay'); if(overlay) overlay.classList.add('show');
+                try{ sessionStorage.setItem('registrationShown','true'); }catch(e){}
             }
         });
 
@@ -1111,8 +1595,56 @@
             }
         }
 
+        // Contact Form Handler — opens WhatsApp to footer number with prefilled message
+        function handleContactForm(event) {
+            event.preventDefault();
+
+            const name = document.getElementById('contactName').value.trim();
+            const email = document.getElementById('contactEmail').value.trim();
+            const phone = document.getElementById('contactPhone').value.trim();
+            const inquiryType = document.getElementById('inquiryType').value;
+            const message = document.getElementById('contactMessage').value.trim();
+
+            // Validate inputs
+            if (!name || !email || !inquiryType || !message) {
+                alert('Please fill all required fields');
+                return;
+            }
+
+            // Build prefilled WhatsApp message and open to footer number
+            const footerNumber = '919607340088'; // footer number (country code + number)
+            const text = `Name: ${name}\nEmail: ${email}\nPhone: ${phone || '-'}\nInquiry: ${inquiryType}\nMessage: ${message}`;
+
+            const overlay = document.getElementById('waOverlay');
+            if (overlay) overlay.classList.add('show');
+            const waText = document.getElementById('waBoxText');
+            if (waText) waText.textContent = 'Opening WhatsApp...';
+
+            // Open WhatsApp in a new tab after a short animation
+            setTimeout(() => {
+                const url = 'https://wa.me/' + footerNumber + '?text=' + encodeURIComponent(text);
+                window.open(url, '_blank');
+
+                // hide overlay shortly after
+                setTimeout(() => {
+                    if (overlay) overlay.classList.remove('show');
+                }, 900);
+
+                // Reset form for next use
+                const form = document.getElementById('contactForm');
+                if (form) form.reset();
+            }, 700);
+        }
+
         // Check if user is already logged in on page load (moved to window load event above)
     </script>
+    <!-- WhatsApp overlay (shown briefly while redirecting) -->
+    <div id="waOverlay" class="wa-overlay" aria-hidden="true">
+        <div class="wa-box">
+            <div class="checkmark">✓</div>
+            <div id="waBoxText">Opening WhatsApp...</div>
+        </div>
+    </div>
 </body>
 
 </html>

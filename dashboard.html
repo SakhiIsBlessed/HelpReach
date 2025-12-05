@@ -836,18 +836,37 @@
         var guestNumber = Math.floor(Math.random() * 10000);
         var isLoggedIn = false;
 
-        // Show registration form on page load
+        // Show registration form on page load: show once per session when navigating, and also show on reload
         window.addEventListener('load', () => {
             const userProfile = localStorage.getItem('userProfile');
-            if (!userProfile) {
-                document.getElementById('registrationOverlay').classList.add('show');
-                document.getElementById('fillFormBtn').classList.add('show');
-            } else {
+            const icon = document.getElementById('profileIcon'); if(icon) icon.classList.add('show');
+            const fillBtn = document.getElementById('fillFormBtn'); if(fillBtn) fillBtn.classList.add('show');
+
+            function getNavType(){
+                try{
+                    const entries = performance.getEntriesByType && performance.getEntriesByType('navigation');
+                    if(entries && entries.length) return entries[0].type;
+                    if(performance.navigation && typeof performance.navigation.type !== 'undefined'){
+                        return (performance.navigation.type === 1) ? 'reload' : 'navigate';
+                    }
+                }catch(e){}
+                return 'navigate';
+            }
+
+            const navType = getNavType();
+            const sessionShown = sessionStorage.getItem('registrationShown');
+
+            if (userProfile) {
                 isLoggedIn = true;
                 const userData = JSON.parse(userProfile);
                 updateProfileDisplay(userData);
-                document.getElementById('profileIcon').classList.add('show');
-                document.getElementById('fillFormBtn').classList.remove('show');
+                if(fillBtn) fillBtn.classList.remove('show');
+                return;
+            }
+
+            if (navType === 'reload' || !sessionShown) {
+                const overlay = document.getElementById('registrationOverlay'); if(overlay) overlay.classList.add('show');
+                try{ sessionStorage.setItem('registrationShown','true'); }catch(e){}
             }
         });
 
