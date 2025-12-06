@@ -26,325 +26,7 @@
     <!-- Bootstrap & Style -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
-    
-    <style>
-        * { box-sizing: border-box; }
-        body { padding-top: 72px; font-family: 'Open Sans', sans-serif; }
-        
-        /* Feature Hero Section */
-        .feature-hero {
-            background: linear-gradient(135deg, rgba(32, 201, 151, 0.12), rgba(13, 110, 253, 0.08)), url('img/hero-bg.jpg');
-            background-size: cover;
-            background-position: center;
-            padding: 100px 0;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .feature-hero::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: radial-gradient(circle at 20% 50%, rgba(255,255,255,0.1) 0%, transparent 50%),
-                        radial-gradient(circle at 80% 80%, rgba(255,255,255,0.05) 0%, transparent 50%);
-        }
-        
-        .feature-hero .container {
-            position: relative;
-            z-index: 1;
-            text-align: center;
-            color: #fff;
-        }
-        
-        .feature-hero h1 {
-            font-size: 3.5rem;
-            font-weight: 800;
-            color: #ffffff;
-            margin-bottom: 1rem;
-            letter-spacing: -1px;
-            text-shadow: 0 6px 30px rgba(11,37,64,0.35);
-        }
-        
-        .feature-hero p {
-            font-size: 1.2rem;
-            color: rgba(255,255,255,0.9);
-            margin-bottom: 0;
-            font-weight: 500;
-        }
-        
-        .breadcrumb-custom {
-            background: transparent;
-            padding: 0;
-            margin-top: 1.5rem;
-        }
-        
-        .breadcrumb-custom .breadcrumb-item { color: #5b6b78; }
-        .breadcrumb-custom .breadcrumb-item.active { color: #0b2540; font-weight: 600; }
-        .breadcrumb-custom .breadcrumb-item a { color: #007bff; text-decoration: none; transition: color 0.3s; }
-        .breadcrumb-custom .breadcrumb-item a:hover { color: #0056b3; }
-        .breadcrumb-custom .breadcrumb-item a { color: rgba(255,255,255,0.85); }
-        .breadcrumb-custom .breadcrumb-item { color: rgba(255,255,255,0.8); }
-        .breadcrumb-custom .breadcrumb-item.active { color: #fff; font-weight: 700; }
-        
-        /* Main Features Section */
-        .features-section {
-            padding: 80px 0;
-            background: linear-gradient(180deg, #ffffff 0%, #f8f9fa 100%);
-        }
-        
-        .section-title {
-            text-align: center;
-            margin-bottom: 60px;
-        }
-        
-        .section-title h2 {
-            font-size: 2.8rem;
-            font-weight: 800;
-            color: #0b2540;
-            margin-bottom: 1rem;
-            letter-spacing: -0.5px;
-        }
-        
-        .section-title p {
-            font-size: 1.1rem;
-            color: #5b6b78;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-        
-        /* Feature Card Styles */
-        .feature-card {
-            background: white;
-            border-radius: 16px;
-            padding: 36px 28px;
-            height: 100%;
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
-            transition: all 0.4s cubic-bezier(0.23, 1, 0.320, 1);
-            position: relative;
-            overflow: hidden;
-        }
-        .feature-card { border: 1px solid rgba(11,37,64,0.04); }
-        
-        .feature-card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%;
-            height: 4px;
-            background: linear-gradient(90deg, #20c997 0%, #0dcaf0 100%);
-            transform: scaleX(0);
-            transform-origin: left;
-            transition: transform 0.5s ease;
-        }
-        
-        .feature-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 16px 40px rgba(32, 201, 151, 0.2);
-        }
-        
-        .feature-card:hover::before {
-            transform: scaleX(1);
-        }
-        
-        .feature-icon-wrapper {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 90px;
-            height: 90px;
-            border-radius: 14px;
-            background: linear-gradient(135deg, rgba(32, 201, 151, 0.15), rgba(13, 202, 240, 0.15));
-            margin: 0 auto 24px;
-            transition: all 0.4s ease;
-        }
-        .feature-icon-wrapper { box-shadow: 0 8px 30px rgba(13,110,253,0.06); }
-        
-        .feature-card:hover .feature-icon-wrapper {
-            background: linear-gradient(135deg, #20c997, #0dcaf0);
-            transform: scale(1.08) rotate(-5deg);
-        }
-        
-        .feature-icon {
-            font-size: 2.2rem;
-            color: #20c997;
-            transition: color 0.4s ease;
-        }
-        
-        .feature-card:hover .feature-icon {
-            color: white;
-        }
-        
-        .feature-card h4 {
-            font-size: 1.4rem;
-            font-weight: 700;
-            color: #0b2540;
-            margin-bottom: 14px;
-            transition: color 0.3s ease;
-        }
-        
-        .feature-card:hover h4 {
-            color: #20c997;
-        }
-        
-        .feature-card p {
-            font-size: 0.95rem;
-            color: #5b6b78;
-            line-height: 1.7;
-            margin-bottom: 20px;
-        }
-        
-        .feature-link {
-            display: inline-flex;
-            align-items: center;
-            color: #007bff;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            gap: 8px;
-        }
-        
-        .feature-link:hover {
-            color: #0056b3;
-            gap: 12px;
-        }
-        
-        .feature-link i {
-            transition: transform 0.3s ease;
-        }
-        
-        .feature-link:hover i {
-            transform: translateX(4px);
-        }
-        
-        /* Benefits Section */
-        .benefits-section {
-            padding: 80px 0;
-            background: white;
-        }
-        
-        .benefits-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 40px;
-            margin-top: 50px;
-        }
-        
-        .benefit-item {
-            display: flex;
-            gap: 20px;
-            animation: fadeInUp 0.6s ease forwards;
-            opacity: 0;
-        }
-        .benefit-item { background: linear-gradient(180deg, rgba(255,255,255,0.8), rgba(248,249,250,0.8)); padding: 16px; border-radius: 12px; }
-        
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        .benefit-item:nth-child(1) { animation-delay: 0.1s; }
-        .benefit-item:nth-child(2) { animation-delay: 0.2s; }
-        .benefit-item:nth-child(3) { animation-delay: 0.3s; }
-        .benefit-item:nth-child(4) { animation-delay: 0.4s; }
-        .benefit-item:nth-child(5) { animation-delay: 0.5s; }
-        .benefit-item:nth-child(6) { animation-delay: 0.6s; }
-        
-        .benefit-icon {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 56px;
-            height: 56px;
-            border-radius: 10px;
-            background: linear-gradient(135deg, #20c997 0%, #0dcaf0 100%);
-            color: white;
-            font-size: 1.5rem;
-            flex-shrink: 0;
-        }
-        
-        .benefit-content h5 {
-            font-size: 1.1rem;
-            font-weight: 700;
-            color: #0b2540;
-            margin-bottom: 8px;
-        }
-        
-        .benefit-content p {
-            font-size: 0.9rem;
-            color: #5b6b78;
-            margin: 0;
-            line-height: 1.6;
-        }
-        
-        /* CTA Section */
-        .cta-section {
-            background: linear-gradient(135deg, #20c997 0%, #0dcaf0 100%);
-            padding: 60px 0;
-            color: white;
-            text-align: center;
-            border-radius: 20px;
-            margin: 80px 0;
-        }
-        
-        .cta-section h2 {
-            font-size: 2.4rem;
-            font-weight: 800;
-            margin-bottom: 1rem;
-        }
-        
-        .cta-section p {
-            font-size: 1.1rem;
-            margin-bottom: 2rem;
-            opacity: 0.95;
-        }
-        
-        .cta-button {
-            display: inline-block;
-            padding: 14px 40px;
-            background: white;
-            color: #20c997;
-            text-decoration: none;
-            border-radius: 8px;
-            font-weight: 700;
-            transition: all 0.3s ease;
-            border: 2px solid white;
-        }
-        .cta-button.primary {
-            background: linear-gradient(90deg,#fff 0%,#f8f9fa 100%);
-            color: #0b2540;
-            box-shadow: 0 8px 30px rgba(32,201,151,0.12);
-        }
-        
-        .cta-button:hover {
-            background: transparent;
-            color: white;
-            transform: translateY(-2px);
-        }
-        
-        /* Responsive */
-        @media (max-width: 768px) {
-            .feature-hero { padding: 60px 0; }
-            .feature-hero h1 { font-size: 2.2rem; }
-            .feature-hero p { font-size: 1rem; }
-            .features-section { padding: 60px 0; }
-            .section-title h2 { font-size: 2rem; }
-            .feature-card { padding: 24px 20px; }
-            .benefits-grid { grid-template-columns: 1fr; gap: 24px; }
-            .cta-section { padding: 40px 20px; margin: 60px 0; }
-            .cta-section h2 { font-size: 1.8rem; }
-        }
-        /* Navbar polish */
-        .fixed-top.bg-white { backdrop-filter: blur(6px); box-shadow: 0 6px 20px rgba(11,37,64,0.06); }
-        .navbar-brand img { filter: drop-shadow(0 6px 18px rgba(11,37,64,0.08)); }
-        .btn-ngo-login { background: linear-gradient(90deg,#20c997,#0dcaf0); color: #fff; border: none; }
-        .btn-ngo-login:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(32,201,151,0.12); }
-    </style>
+    <link href="css/feature.css" rel="stylesheet">
 </head>
 <body>
     <!-- Navbar Start -->
@@ -361,6 +43,7 @@
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                     <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
                     <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="feature.html">Features</a></li>
                     <li class="nav-item"><a class="nav-link" href="donate.html">Donate</a></li>
                     <li class="nav-item"><a class="nav-link" href="ngo-directory.html">NGO Directory</a></li>
                     <li class="nav-item"><a class="nav-link" href="dashboard.html">Dashboard</a></li>
@@ -377,20 +60,15 @@
     <!-- Feature Hero Section -->
     <div class="feature-hero">
         <div class="container">
+            <div class="float-accent" aria-hidden="true"></div>
             <div>
                 <h1 class="mb-3">Powerful Features</h1>
                 <p>Discover how HelpReach makes donation management seamless, transparent, and impactful</p>
                 <div class="mt-4">
-                    <a href="#features" class="btn btn-light btn-lg me-2" id="explore-features">Explore Features</a>
-                    <a href="donate.html" class="btn btn-ngo-login btn-lg">Donate Now</a>
+                    <a href="#features" class="btn btn-explore btn-lg me-2"><i class="fas fa-lightbulb me-2"></i> Explore Features</a>
+                    <a href="donate.html" class="btn btn-donate btn-lg">Donate Now</a>
                 </div>
-                <nav aria-label="breadcrumb" class="breadcrumb-custom mt-3">
-                    <ol class="breadcrumb justify-content-center">
-                        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                        <li class="breadcrumb-item"><a href="#">Pages</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Features</li>
-                    </ol>
-                </nav>
+                <!-- breadcrumb removed as requested -->
             </div>
         </div>
     </div>
@@ -404,14 +82,30 @@
                 <p>Everything you need to manage donations efficiently and track their impact in real-time</p>
             </div>
 
+            <!-- Featured article -->
+            <div class="featured-article wow fadeInUp" data-wow-delay="0.12s">
+                    <div class="fa-thumb">
+                    <img src="img/impact-bg.jpg" alt="Featured: Getting Started with HelpReach" class="img-fluid">
+                </div>
+                <div class="featured-content">
+                    <h3>Getting Started: Post Your First Donation</h3>
+                    <p class="lead">A short walkthrough that helps new donors and organizers post donations the right way — quick tips on photos, descriptions, and safe pickup coordination.</p>
+                    <div class="meta mb-3">By <strong>HelpReach</strong> • Nov 20, 2025 • <span class="tag">Guide</span></div>
+                    <p>We recommend adding clear photos, approximate quantities, and an exact pickup window to increase the chances of a quick claim. Learn how to write listings that get picked up fast and safely.</p>
+                    <a href="donate.html" class="feature-link">Read Full Guide <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+
             <div class="row g-4">
                 <!-- Feature 1 -->
                 <div class="col-lg-4 col-md-6">
-                    <div class="feature-card wow fadeInUp" data-wow-delay="0.1s">
+                        <div class="feature-card wow fadeInUp" data-wow-delay="0.1s">
+                        <div class="feature-thumb"><img src="img/Women-Empowerment-5.jpg" alt="Smart Donation Posting"></div>
                         <div class="feature-icon-wrapper">
                             <i class="fas fa-donate feature-icon"></i>
                         </div>
                         <h4>Smart Donation Posting</h4>
+                        <div class="post-meta mb-2"><small>By <strong>HelpReach</strong> • Jan 10, 2025 • <span class="tag">How-To</span></small></div>
                         <p>Post food items, books, clothes, and other donations in seconds with detailed descriptions, quantities, and pickup locations.</p>
                         <a href="donate.html" class="feature-link">Get Started <i class="fas fa-arrow-right"></i></a>
                     </div>
@@ -420,10 +114,12 @@
                 <!-- Feature 2 -->
                 <div class="col-lg-4 col-md-6">
                     <div class="feature-card wow fadeInUp" data-wow-delay="0.2s">
+                        <div class="feature-thumb"><img src="img/Health.jpg" alt="NGO Directory & Discovery"></div>
                         <div class="feature-icon-wrapper">
                             <i class="fas fa-network-wired feature-icon"></i>
                         </div>
                         <h4>NGO Directory & Discovery</h4>
+                        <div class="post-meta mb-2"><small>By <strong>HelpReach</strong> • Feb 02, 2025 • <span class="tag">Community</span></small></div>
                         <p>Browse verified NGOs, view their impact metrics, and connect directly with organizations making a real difference in your community.</p>
                         <a href="ngo-directory.html" class="feature-link">Explore NGOs <i class="fas fa-arrow-right"></i></a>
                     </div>
@@ -432,10 +128,12 @@
                 <!-- Feature 3 -->
                 <div class="col-lg-4 col-md-6">
                     <div class="feature-card wow fadeInUp" data-wow-delay="0.3s">
+                        <div class="feature-thumb"><img src="img/We Are A Strong Team.jpg" alt="Real-Time Tracking"></div>
                         <div class="feature-icon-wrapper">
                             <i class="fas fa-chart-line feature-icon"></i>
                         </div>
                         <h4>Real-Time Tracking</h4>
+                        <div class="post-meta mb-2"><small>By <strong>HelpReach</strong> • Mar 15, 2025 • <span class="tag">Product</span></small></div>
                         <p>Monitor donation status from posting to delivery. View which NGOs claimed items, track progress, and measure community impact instantly.</p>
                         <a href="dashboard.html" class="feature-link">View Dashboard <i class="fas fa-arrow-right"></i></a>
                     </div>
@@ -444,10 +142,12 @@
                 <!-- Feature 4 -->
                 <div class="col-lg-4 col-md-6">
                     <div class="feature-card wow fadeInUp" data-wow-delay="0.4s">
+                        <div class="feature-thumb"><img src="img/pict_large.jpg" alt="Transparent Communication"></div>
                         <div class="feature-icon-wrapper">
                             <i class="fas fa-lock-open feature-icon"></i>
                         </div>
                         <h4>Transparent Communication</h4>
+                        <div class="post-meta mb-2"><small>By <strong>HelpReach</strong> • Apr 04, 2025 • <span class="tag">Trust</span></small></div>
                         <p>Direct messaging between donors and NGOs. Share pickup details, confirm delivery, and build lasting relationships with trust and transparency.</p>
                         <a href="#" class="feature-link">Learn More <i class="fas fa-arrow-right"></i></a>
                     </div>
@@ -456,10 +156,12 @@
                 <!-- Feature 5 -->
                 <div class="col-lg-4 col-md-6">
                     <div class="feature-card wow fadeInUp" data-wow-delay="0.5s">
+                        <div class="feature-thumb"><img src="img/about.jpg" alt="Impact Metrics & Recognition"></div>
                         <div class="feature-icon-wrapper">
                             <i class="fas fa-award feature-icon"></i>
                         </div>
                         <h4>Impact Metrics & Recognition</h4>
+                        <div class="post-meta mb-2"><small>By <strong>HelpReach</strong> • May 22, 2025 • <span class="tag">Impact</span></small></div>
                         <p>Earn badges and recognition for contributions. Track items saved from waste, lives helped, and your positive community impact over time.</p>
                         <a href="#" class="feature-link">See Recognition <i class="fas fa-arrow-right"></i></a>
                     </div>
@@ -468,10 +170,12 @@
                 <!-- Feature 6 -->
                 <div class="col-lg-4 col-md-6">
                     <div class="feature-card wow fadeInUp" data-wow-delay="0.6s">
+                        <div class="feature-thumb"><img src="img/DSC00649-1-scaled.jpg" alt="Mobile-Optimized Platform"></div>
                         <div class="feature-icon-wrapper">
                             <i class="fas fa-mobile-alt feature-icon"></i>
                         </div>
                         <h4>Mobile-Optimized Platform</h4>
+                        <div class="post-meta mb-2"><small>By <strong>HelpReach</strong> • Jun 30, 2025 • <span class="tag">Mobile</span></small></div>
                         <p>Fully responsive design works seamlessly on all devices. Post donations, track claims, and manage your account from anywhere, anytime.</p>
                         <a href="#" class="feature-link">Download App <i class="fas fa-arrow-right"></i></a>
                     </div>
@@ -544,12 +248,12 @@
 
     <!-- CTA Section -->
     <div class="container">
-        <div class="cta-section">
-            <h2>Ready to Make a Difference?</h2>
-            <p>Start donating today or register your NGO to receive support</p>
-            <div>
-                <a href="donate.html" class="cta-button me-3">Start Donating</a>
-                <a href="register-ngo.html" class="cta-button" style="background: transparent; color: white; border-color: white;">Register NGO</a>
+            <div class="cta-section">
+            <h2 class="cta-anim">Ready to Make a Difference?</h2>
+            <p class="cta-anim">Start donating today or register your NGO to receive support</p>
+            <div class="cta-anim">
+                <a href="donate.html" class="cta-button primary-action me-3">Start Donating</a>
+                <a href="register-ngo.html" class="cta-button secondary-action">Register NGO</a>
             </div>
         </div>
     </div>
@@ -631,4 +335,30 @@
             </div>
         </div>
     </footer>
+    <!-- Back to Top -->
+    <a href="#" class="btn btn-primary btn-lg rounded-circle back-to-top" style="position:fixed;right:20px;bottom:20px;"><i class="bi bi-arrow-up"></i></a>
+
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="lib/wow/wow.min.js"></script>
+    <script src="lib/easing/easing.min.js"></script>
+    <script src="lib/waypoints/waypoints.min.js"></script>
+    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            if (typeof WOW !== 'undefined') { try { new WOW().init(); } catch (e) { /* ignore */ } }
+            // year
+            var y = document.getElementById('year'); if (y) y.textContent = new Date().getFullYear();
+
+            // simple back-to-top
+            document.querySelectorAll('.back-to-top').forEach(el => el.addEventListener('click', function (e) { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }));
+        });
+    </script>
+
+    <!-- Template Javascript -->
+    <script src="js/main.js"></script>
+</body>
+</html>
 

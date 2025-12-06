@@ -1,0 +1,150 @@
+/* Feature page styles - moved from inline and tuned for blog-like look */
+:root{
+  --brand-1: #20c997;
+  --brand-2: #0dcaf0;
+  --accent: #0b2540;
+  --muted: #5b6b78;
+}
+*{box-sizing:border-box}
+body{padding-top:72px;font-family:'Open Sans',sans-serif;color:var(--accent);background:#fff}
+
+.feature-hero{
+  /* Simple gradient banner (no background image) similar to donate page */
+  background: linear-gradient(135deg, #007bff 0%, #20c997 50%, #0dcaf0 100%);
+  color: white;
+  padding: 80px 0;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  min-height: 260px;
+  display: flex;
+  align-items: center;
+}
+.feature-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 20% 50%, rgba(255,255,255,0.08) 0%, transparent 50%), radial-gradient(circle at 80% 80%, rgba(255,255,255,0.05) 0%, transparent 50%);pointer-events:none}
+.feature-hero .container{position:relative;z-index:1;color:#fff}
+.feature-hero .hero-inner{max-width:920px;margin:0 auto;text-align:center;position:relative;padding:8px 18px}
+.feature-hero h1{font-family:'Lora',serif;font-size:2.8rem;font-weight:800;color:#fff;margin-bottom:.25rem;letter-spacing:-0.6px;text-shadow:0 6px 18px rgba(11,37,64,0.18);line-height:1.05}
+.feature-hero p{font-size:1.05rem;color:rgba(255,255,255,0.95);margin-bottom:0;font-weight:500}
+.feature-hero .btn{min-width:160px}
+
+/* gradient accent text inside headline */
+.feature-hero h1 .gradient{background:linear-gradient(90deg,var(--brand-1),var(--brand-2));-webkit-background-clip:text;background-clip:text;color:transparent}
+
+/* hero subtitle / small lead */
+.hero-subtitle{display:block;margin-top:.6rem;font-size:1.06rem;color:rgba(255,255,255,0.95);opacity:0.95}
+
+/* hero animations */
+.feature-hero .hero-inner > *{opacity:0;transform:translateY(10px);animation:heroFade .7s cubic-bezier(.2,.9,.2,1) forwards}
+.feature-hero .hero-inner h1{animation-delay:.12s}
+.feature-hero .hero-inner p{animation-delay:.24s}
+.feature-hero .hero-ctas{animation-delay:.36s}
+
+@keyframes heroFade{to{opacity:1;transform:none}}
+
+/* ensure hero CTAs look good on dark background */
+.feature-hero .btn-light{background:rgba(255,255,255,0.94);color:var(--accent);font-weight:700}
+/* NGO login button (hero & navbar) - red */
+.btn-ngo-login{background:#dc3545;color:#fff;border:none}
+.btn-ngo-login:hover{background:#c82333;transform:translateY(-2px);box-shadow:0 10px 30px rgba(220,53,69,0.12)}
+
+.breadcrumb-custom{background:transparent;padding:0;margin-top:1rem}
+.breadcrumb-custom .breadcrumb-item a{color:rgba(255,255,255,0.85)}
+.breadcrumb-custom .breadcrumb-item.active{color:#fff;font-weight:700}
+
+.features-section{padding:80px 0;background:linear-gradient(180deg,#ffffff 0%,#f8f9fa 100%)}
+.section-title{text-align:center;margin-bottom:40px}
+.section-title h2{font-size:2.4rem;font-weight:800;color:var(--accent);margin-bottom:0.5rem}
+.section-title p{font-size:1.05rem;color:var(--muted);max-width:680px;margin:0 auto}
+
+/* Feature Card (blog post style) */
+.feature-card{background:#fff;border-radius:14px;padding:30px;height:100%;box-shadow:0 8px 30px rgba(11,37,64,0.06);transition:all 0.35s ease;border:1px solid rgba(11,37,64,0.04);position:relative;overflow:hidden}
+.feature-card::before{content:'';position:absolute;top:0;left:0;width:100%;height:4px;background:linear-gradient(90deg,var(--brand-1) 0%,var(--brand-2) 100%);transform:scaleX(0);transform-origin:left;transition:transform .45s ease}
+.feature-card:hover{transform:translateY(-8px);box-shadow:0 20px 50px rgba(11,37,64,0.12)}
+.feature-card:hover::before{transform:scaleX(1)}
+
+.feature-icon-wrapper{display:flex;align-items:center;justify-content:center;width:82px;height:82px;border-radius:12px;background:linear-gradient(135deg, rgba(32,201,151,0.12), rgba(13,202,240,0.12));margin:0 auto 18px;transition:all .35s ease}
+.feature-icon{font-size:1.9rem;color:var(--brand-1);transition:color .3s ease}
+.feature-card:hover .feature-icon-wrapper{background:linear-gradient(135deg,var(--brand-1),var(--brand-2));transform:scale(1.05) rotate(-4deg)}
+.feature-card:hover .feature-icon{color:#fff}
+
+.feature-card h4{font-family:'Lora',serif;font-size:1.3rem;font-weight:700;color:var(--accent);margin-bottom:6px}
+.post-meta{color:var(--muted);font-size:0.86rem}
+.post-meta .tag{display:inline-block;padding:3px 8px;border-radius:999px;background:rgba(13,110,253,0.06);color:var(--brand-2);font-weight:600;margin-left:8px}
+.feature-card p{font-size:.95rem;color:var(--muted);line-height:1.7;margin-bottom:16px}
+.feature-link{display:inline-flex;align-items:center;color:var(--brand-2);text-decoration:none;font-weight:600;gap:8px}
+.feature-link:hover{gap:12px}
+
+/* Explore button (more beautiful) */
+.btn-explore{background:transparent;border:2px solid rgba(255,255,255,0.12);color:#fff;padding:10px 18px;border-radius:10px;font-weight:700;backdrop-filter:blur(6px);transition:all .36s ease;box-shadow:0 6px 18px rgba(11,37,64,0.12)}
+.btn-explore i{color:rgba(255,255,255,0.95)}
+.btn-explore:hover{background:rgba(255,255,255,0.12);transform:translateY(-4px);box-shadow:0 20px 40px rgba(11,37,64,0.18)}
+.btn-explore:active{transform:translateY(-2px)}
+
+/* subtle pulse animation on explore to draw attention */
+.btn-explore.animate-pulse{animation:pulse 2.6s infinite}
+@keyframes pulse{0%{transform:scale(1)}50%{transform:scale(1.02)}100%{transform:scale(1)}}
+
+/* Donate now button style (distinct from NGO login) */
+.btn-donate{background:linear-gradient(90deg,#ff7a18,#ffb347);color:#fff;border:none;padding:10px 22px;border-radius:10px;font-weight:800;box-shadow:0 10px 30px rgba(255,122,24,0.12);transition:transform .2s ease,box-shadow .2s ease}
+.btn-donate:hover{transform:translateY(-3px);box-shadow:0 22px 50px rgba(255,122,24,0.18)}
+
+/* Thumbnail inside feature cards */
+.feature-thumb{width:100%;height:160px;overflow:hidden;border-radius:10px;margin-bottom:14px}
+.feature-thumb img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s ease}
+.feature-card:hover .feature-thumb img{transform:scale(1.06)}
+
+/* Featured article block */
+.featured-article{display:grid;grid-template-columns:1fr 420px;gap:28px;align-items:stretch;margin-bottom:40px}
+.featured-article .fa-thumb{border-radius:12px;overflow:hidden}
+.featured-article .featured-content{padding:28px;background:#fff;border-radius:12px;box-shadow:0 12px 30px rgba(11,37,64,0.06)}
+.featured-article h3{font-family:'Lora',serif;color:var(--accent);margin-top:0}
+.featured-article p.lead{color:var(--muted);margin-bottom:16px}
+.featured-article .meta{color:var(--muted);font-size:0.9rem}
+
+/* subtle floating accent */
+.float-accent{position:absolute;right:-40px;top:20px;width:140px;height:140px;border-radius:50%;background:linear-gradient(135deg,rgba(32,201,151,0.08),rgba(13,202,240,0.06));filter:blur(10px);transform:translateY(0);animation:floatY 6s ease-in-out infinite}
+@keyframes floatY{0%{transform:translateY(0)}50%{transform:translateY(8px)}100%{transform:translateY(0)}}
+
+/* Benefits */
+.benefits-section{padding:80px 0;background:#fff}
+.benefits-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:28px;margin-top:30px}
+.benefit-item{display:flex;gap:16px;align-items:flex-start;background:linear-gradient(180deg,rgba(255,255,255,0.9),#f8f9fa);padding:16px;border-radius:10px;box-shadow:0 6px 18px rgba(11,37,64,0.03);opacity:0;animation:fadeInUp .6s ease forwards}
+@keyframes fadeInUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+.benefit-icon{width:56px;height:56px;border-radius:10px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,var(--brand-1),var(--brand-2));color:#fff;font-size:1.2rem}
+.benefit-content h5{font-size:1.05rem;color:var(--accent);margin-bottom:6px}
+.benefit-content p{margin:0;color:var(--muted);font-size:.95rem}
+
+/* CTA */
+.cta-section{background:linear-gradient(135deg,var(--brand-1),var(--brand-2));padding:50px 20px;color:#fff;text-align:center;border-radius:16px;margin:60px 0}
+.cta-section h2{font-size:2rem;font-weight:800;margin-bottom:0.5rem}
+.cta-button{display:inline-block;padding:12px 34px;border-radius:10px;background:#fff;color:var(--brand-1);font-weight:700;text-decoration:none;border:2px solid rgba(255,255,255,0.12);box-shadow:0 8px 30px rgba(32,201,151,0.08);transition:transform .22s ease,box-shadow .22s ease}
+.cta-button[style]{background:transparent;border-color:#fff;color:#fff}
+.cta-button.primary-action{background:linear-gradient(90deg,#fff,#f8f9fa);color:var(--accent);box-shadow:0 12px 40px rgba(32,201,151,0.12);border:none}
+.cta-button.secondary-action{background:transparent;border:2px solid rgba(255,255,255,0.18);color:#fff}
+.cta-button:hover{transform:translateY(-4px);box-shadow:0 20px 50px rgba(11,37,64,0.12)}
+
+/* make CTA section more like donate page hero */
+.cta-section{background:linear-gradient(135deg,#007bff 0%, #20c997 50%, #0dcaf0 100%);padding:60px 20px;border-radius:14px}
+.cta-section p{font-size:1.05rem;opacity:0.95;margin-bottom:1.2rem}
+.cta-anim{opacity:0;transform:translateY(10px);animation:fadeInUp .7s forwards;animation-delay:.12s}
+
+/* Footer tweaks */
+footer .footer-section h5, footer .footer-section h6{color:#fff}
+footer .social-links a{display:inline-block;margin-right:8px;color:#fff}
+
+/* Navbar polish */
+.fixed-top.bg-white{backdrop-filter:blur(6px);box-shadow:0 6px 20px rgba(11,37,64,0.06)}
+.navbar-brand img{filter:drop-shadow(0 6px 18px rgba(11,37,64,0.08))}
+.btn-ngo-login{background:linear-gradient(90deg,var(--brand-1),var(--brand-2));color:#fff;border:none}
+.btn-ngo-login:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(32,201,151,0.12)}
+
+/* Responsive */
+@media (max-width:768px){
+  .feature-hero{padding:60px 0}
+  .feature-hero h1{font-size:2rem}
+  .features-section{padding:40px 0}
+  .section-title h2{font-size:1.6rem}
+  .feature-card{padding:20px}
+  .benefits-grid{grid-template-columns:1fr;gap:18px}
+  .cta-section{padding:36px 16px;margin:40px 0}
+}
