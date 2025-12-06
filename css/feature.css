@@ -135,8 +135,9 @@ footer .social-links a{display:inline-block;margin-right:8px;color:#fff}
 /* Navbar polish */
 .fixed-top.bg-white{backdrop-filter:blur(6px);box-shadow:0 6px 20px rgba(11,37,64,0.06)}
 .navbar-brand img{filter:drop-shadow(0 6px 18px rgba(11,37,64,0.08))}
-.btn-ngo-login{background:linear-gradient(90deg,var(--brand-1),var(--brand-2));color:#fff;border:none}
-.btn-ngo-login:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(32,201,151,0.12)}
+/* Ensure NGO login button matches site-wide red styling */
+.btn-ngo-login{background:#dc3545;color:#fff;border:none}
+.btn-ngo-login:hover{background:#c82333;transform:translateY(-2px);box-shadow:0 12px 30px rgba(220,53,69,0.12)}
 
 /* Responsive */
 @media (max-width:768px){
