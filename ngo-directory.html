@@ -466,27 +466,100 @@
     </div>
 
     <main class="container" style="margin-top:100px;">
-        <h1 class="mt-4">NGO Directory</h1>
-        <p class="lead">Find registered NGOs in your area. If you are an NGO and want to register, click "Register as NGO".</p>
-
-        <div class="row g-3">
-            <div class="col-md-6">
-                <div class="card p-3">
-                    <h5>Helping Hands Pune</h5>
-                    <p class="mb-1">Location: Narhe, Pune</p>
-                    <p class="mb-1">Phone: +91 8530932462</p>
-                    <p class="mb-0">Services: Food distribution, items collection</p>
-                </div>
+        <div class="d-flex align-items-center justify-content-between mb-3">
+            <div>
+                <h1 class="mt-0 mb-1">NGO Directory</h1>
+                <p class="lead mb-0">Find registered NGOs in your area. If you are an NGO and want to register, click "Register as NGO".</p>
             </div>
-            <div class="col-md-6">
-                <div class="card p-3">
-                    <h5>Community Care</h5>
-                    <p class="mb-1">Location: Pune</p>
-                    <p class="mb-1">Phone: +91 9876543210</p>
-                    <p class="mb-0">Services: Shelter and food assistance</p>
-                </div>
+            <div class="text-end">
+                <a class="btn btn-outline-primary btn-sm" href="register-ngo.html">Register as NGO</a>
             </div>
         </div>
+
+        <div class="row g-3 mb-3">
+            <div class="col-md-6">
+                <input id="ngoSearch" class="form-control" placeholder="Search by name, location or service (e.g. food, clothes)" aria-label="Search NGOs">
+            </div>
+            <div class="col-md-3">
+                <select id="ngoCityFilter" class="form-select">
+                    <option value="">All Cities</option>
+                </select>
+            </div>
+            <div class="col-md-3 text-end">
+                <small class="text-muted">Showing <span id="ngoCount">0</span> NGOs</small>
+            </div>
+        </div>
+
+        <div id="ngoGrid" class="row g-3">
+            <!-- NGO cards will be rendered here -->
+        </div>
+
+        <!-- Embedded NGO data (rendered by script) -->
+        <script id="ngoData" type="application/json">[
+    {"id":1,"name":"Mumbai Roti Bank","location":"1701, One World Centre, Tower 2B, Floor 17, 841, Senapati Bapat Marg, Elphinstone Road, Mumbai 400013, India","phone":"+91 86555 80001","email":"teamrotibank@gmail.com","services":"Surplus Food Collection, Direct Distribution, Monetary Donations"},
+    {"id":2,"name":"Apna Shelter India Foundation","location":"303, 3rd Floor, Krishna Plaza, Near Thane Railway Station, Thane West 400602","phone":"+91 70211 56564","email":"","services":"Food Help, Child Education, Women Support, Health Care, Environment Care, Social Help"},
+    {"id":3,"name":"Goodwill India Upkaram","location":"More Petrol Pump, Shivane, Pune, Maharashtra","phone":"020 25290909 / 9011013330","email":"goodwillpune01@gmail.com","services":"Clothes Donation, Toys Donation, Computer Donation, Goodwill Thali"},
+    {"id":4,"name":"Pephands Foundation","location":"Pune","phone":"+91 7305009919","email":"info@pephands.org","services":"Food Donation, Nutrition Kits, Grocery Kits, Student Education"},
+    {"id":5,"name":"Sahyadri Jankalyan Sanstha","location":"Katraj, Pune","phone":"9823679878","email":"","services":"Clothes, Used Items, Essentials Redistribution"},
+    {"id":6,"name":"Akanksha Organization","location":"Bhalekar Chawl, Erandwane, Pune 411004","phone":"020 660513801","email":"","services":"Community Service / Public Utility"},
+    {"id":7,"name":"S N Shirke Charitable Foundation","location":"Office No. 11, Navrang Plaza, Air Port Road, Vishrantwadi, Pune 411015","phone":"+91 9421230510 / +91 7304348160","email":"","services":"Donations (Clothes, Food, Essentials)"},
+    {"id":8,"name":"Global Vision NGO","location":"Office No. 513/515, 5th Floor, Sterling Center, Opp. Hotel Arora Tower, MG Road, Camp, Pune 411001","phone":"022 4127 0773","email":"","services":"Community Service, Potential Donations"},
+    {"id":9,"name":"Children’s Future India","location":"Prashant Nagar, Lokamanya Nagar, Navi Peth / Sadashiv Peth, Pune 411030","phone":"090280 03613","email":"","services":"Child Welfare, Clothes, Essentials, Food"},
+    {"id":10,"name":"Chetana Mahila Vikas Kendra","location":"9 NPS Line, Behind Wonder Car Garage, Pulgate, Pune 411001","phone":"020 2635 4946","email":"","services":"Women’s & Community Welfare, Clothes & Essentials"},
+    {"id":11,"name":"Bharatiya Samaj Seva Kendra","location":"Plot 373, 6th Lane, North Main Road, Koregaon Park, Pune 411001","phone":"020 2615 9314","email":"","services":"Social Service, Donations"},
+    {"id":12,"name":"Mukul Madhav Foundation","location":"Harmony, 5, off Ganeshkhind Road, ICS Colony, Ashok Nagar, Pune 411007","phone":"020 2552 8075","email":"","services":"Education, Rural Development, Farmer & Animal Welfare, Food Donations"},
+    {"id":13,"name":"Save The Humanity Organisation","location":"C Block, Sector 6, Noida, Uttar Pradesh 201301","phone":"093159 46703","email":"","services":"Animal Welfare, Child Welfare, Disaster Relief, Education"},
+    {"id":14,"name":"Marpu Foundation (NGO)","location":"10-82, Gaondevi Marg, NL - 1 Type, Sector 20, Nerul, Navi Mumbai, Maharashtra 400706","phone":"079978 01001","email":"","services":"Environment, Veteran & Women Empowerment, Women Education"},
+    {"id":15,"name":"Manpravah Foundation","location":"502 Tulsi Height, Sector 10E, Plot 8, Near Dmart, Roadpali, Kalamboli, Navi Mumbai 410218","phone":"+91 9987987557","email":"","services":"Orphanage Food Donation, Feeding the Hungry"},
+    {"id":16,"name":"Uday Foundation","location":"D-233 (LGF, Block D), Sarvodaya Enclave, New Delhi 110017","phone":"011 2656 1333","email":"info@udayfoundation.org","services":"Clothes, Medicine, Environmental & Homeless Support, Human Rights, Skill Development"},
+    {"id":17,"name":"SevaDeep","location":"14th, SKY ONE, Relfor Foundation, Kalyani Nagar, Pune, Maharashtra 411006","phone":"095185 41719","email":"","services":"Old Toys, Clothes, Stationery, Furniture"},
+    {"id":18,"name":"Farmers Needs Help Foundation","location":"Shivangan Society, Lokmanya Tilak Rd, Jaihind Colony, Tata Colony, Mulund East, Mumbai 400081","phone":"096641 18631","email":"","services":"Clothes, Food, Miscellaneous Donations"},
+    {"id":19,"name":"Roadside Family Foundation","location":"CEO 95 122, Unit 29, Box A4, Aarey Milk Colony, Goregaon, Mumbai 400065","phone":"086574 57237","email":"","services":"Animal Welfare, Child Welfare, Education, Donations"},
+    {"id":20,"name":"SYJ Organization","location":"Mega Center, C-511, Magarpatta, Hadapsar, Pune 411013","phone":"074700 59595","email":"","services":"Animal Welfare, Child Welfare, Donations, Education"},
+    {"id":21,"name":"FilledTummy Pune","location":"Flat 2, Shangrila Apt, Shantisheela Society, Law College Rd, Pune 411038","phone":"095615 51292","email":"","services":"Food Donation"},
+    {"id":22,"name":"Sanjivani NGO","location":"SR NO 59/1A, Sulai Complex, Flat No 17, near Desai Hospital, Mohammed Wadi, Pune 411060","phone":"089562 53672","email":"","services":"Food, Medical, Education Support"},
+    {"id":23,"name":"Abhisree Foundation","location":"Road 13, Shanti Nagar, Uppal, Hyderabad, Telangana 500039","phone":"080089 62108","email":"","services":"Disability & Women Empowerment"},
+    {"id":24,"name":"Abhilasha Foundation NGO","location":"Laxmi Chhaya Bungalow, Plot No. 27-27, RSC 11, Gorai 2, Borivali West, Mumbai 400091","phone":"097699 86440","email":"","services":"Child Welfare, Skill Development"},
+    {"id":25,"name":"Ratna Nidhi Charitable Trust","location":"16-A, 12th Ln, Opp. Pavari School, Khetwadi, Girgaon, Mumbai 400004","phone":"085304 85324","email":"","services":"Books, Tablets, Toys, Clothes Distribution"},
+    {"id":26,"name":"SAAD Foundation","location":"Bungalow No. 62E, Kamgar Nagar Rd, Kurla, Mumbai 400024","phone":"080820 54301","email":"","services":"Education, Health, Community & Rural Development"},
+    {"id":27,"name":"Responsible Charity","location":"Shop No. 15, Sunshine Greens, Opp. Khadki Station, Off Aundh Rd, Pune 411020","phone":"020 2580 6256","email":"","services":"Clothes & Food Donation"},
+    {"id":28,"name":"A Ray Of Hope Charitable Trust","location":"B4, Sheikh Safa Complex, 2, Waghmare Rd, Shankar Kalat Nagar, Wakad, Pune, Pimpri-Chinchwad 411057","phone":"097302 55167","email":"","services":"Child Welfare, Animal Welfare, Education, Donations"},
+    {"id":29,"name":"VARA Foundations (R)","location":"No.7, 5th Main Rd, Jagruthi Colony, Puttenahalli, JP Nagar 7th Phase, Bengaluru 560078","phone":"099002 27171","email":"","services":"Child Welfare, Donation, Skill Development"},
+    {"id":30,"name":"Helping Hand Foundation","location":"Near Army Garden, Shivdatta Nagar, Pimpri Gaon, Pimpri Colony, Pimpri-Chinchwad 411017","phone":"070380 16790","email":"","services":"Children, Disability, Homeless, Social Services"},
+    {"id":31,"name":"Aarogya Social Welfare International Foundation","location":"24-3-271, Main Road, FCI Colony, Police Colony, Subedari, Hanamkonda, Telangana 506001","phone":"","email":"","services":"Education"},
+    {"id":32,"name":"Eric Boys Welfare Association","location":"Block No - 5, R/2, 17, Block Number 7, Transit Camp, Rajiv Gandhi Nagar, Dharavi, Mumbai 400017","phone":"","email":"","services":"Education, Skill Development"},
+    {"id":33,"name":"Snehwan - Official","location":"Snehwan, Koyali Phata, Near Koyali Forest, Chakan, Khed, Maharashtra 410501","phone":"082372 77615","email":"","services":"Child & Girls Education, Food & Grocery Donation"},
+    {"id":34,"name":"KIDS Foundation","location":"Manas Mandir, Rashtrasant Tukdoji Maharaj Square, Old SBI Colony, Pratapnagar, Wardha 442001","phone":"095955 40771","email":"","services":"Children Charities, Education, Skill Development"},
+    {"id":35,"name":"Child Safe Foundation","location":"G/50, Arihant Shopping Centre, Achole Rd, near Anita Palace, Nalasopara East, Maharashtra 401209","phone":"084839 68879","email":"","services":"Animal Welfare, Child Welfare, Donations, Education, Homeless"},
+    {"id":36,"name":"Sparsh Shelter Home","location":"Sparsh House, Shrushti Chowk, Lane No. 2, near Mamta Sweet, Prabhat Nagar, Pimple Gurav, Pune, Pimpri-Chinchwad 411061","phone":"076200 40230","email":"","services":"Education, Old Age Home, Health Care"},
+    {"id":37,"name":"Ghar - Sant Ishwar Foundation","location":"Plot No. 30 179, Deccan College Rd, Opposite Dashmesh Gurudwara, Jai Jawan Nagar, Ranjeet Nagar, Yerawada, Pune 411006","phone":"093724 68457","email":"","services":"Child Care, Orphanage for Girls"},
+    {"id":38,"name":"RESQ Charitable Trust","location":"Plot No. 3906, Paud, 115, Mulshi Rd, Hill Town, Chandani Chowk, Bavdhan, Pune 411023","phone":"098909 99111","email":"","services":"Dog Adoption, Medical Care, Aid, Treatment"},
+    {"id":39,"name":"Majha Ghar Foundation","location":"Plot No.50, Behind Gurukrupa Hospital, Near Brahma PG, Laxmi Chowk, Marunji Road, Hinjawadi, Pune 411057","phone":"074985 50554","email":"","services":"Child Welfare, Homeless, Donation, Skill Development"},
+    {"id":40,"name":"Riddhi Siddhi Charitable Trust","location":"Office No. 20, Swapnadeep Apartment, Poonam Sagar Complex, Mira Road East, Mumbai 401107","phone":"098207 37415","email":"","services":"Food Donation"},
+    {"id":41,"name":"Happy Faces Vadodara","location":"309, Vinayak Commercial Complex, Next to Saraswati Complex, Vaishnavdevi Society, Manjalpur, Vadodara, Gujarat 390011","phone":"098795 40744","email":"","services":"Nonprofit, Social Services"}
+]</script>
+
+        <style>
+        /* NGO card styles and reveal animation */
+        .ngo-card { border-radius: 12px; overflow: hidden; transition: transform .35s ease, box-shadow .35s ease, opacity .4s ease; border: 1px solid #e9ecef; background: linear-gradient(180deg,#fff,#fbfdff); }
+        .ngo-card:hover { transform: translateY(-8px) scale(1.01); box-shadow: 0 20px 40px rgba(13,110,253,0.14); }
+        .ngo-card .card-body { padding: 16px; }
+        @keyframes pulseBadge { 0%{ transform: scale(1);}50%{ transform: scale(1.05);}100%{ transform: scale(1);} }
+        .ngo-badge { font-size: .78rem; padding: 6px 10px; border-radius: 999px; background: rgba(13,110,253,0.08); color: #0d6efd; font-weight:700; animation: pulseBadge 3.6s ease-in-out infinite; }
+        .ngo-actions { display:flex; gap:8px; flex-wrap:wrap; }
+        .ngo-actions .btn { font-weight:600; }
+        .reveal { opacity: 0; transform: translateY(18px) rotateX(4deg); transition: all .55s cubic-bezier(.2,.9,.2,1); will-change: transform, opacity; }
+        .reveal.visible { opacity: 1; transform: none; }
+        .service-list { font-size: .9rem; color:#495057; }
+        .ngo-meta { font-size: .85rem; color:#6c757d; }
+        @media (max-width:576px){ .ngo-card .card-body{padding:12px;} }
+
+        /* Modal customization */
+        .modal-content { border-radius: 12px; overflow: hidden; }
+        .modal-header { background: linear-gradient(90deg,#0d6efd,#10b981); color: white; border-bottom: none; }
+        .modal-body .lead { font-size: .98rem; }
+        .modal .btn { min-width: 96px; }
+        </style>
     </main>
 
     <!-- Footer -->
@@ -566,6 +639,161 @@
         </div>
     </footer>
 
+    <script>
+    (function(){
+        const raw = document.getElementById('ngoData')?.textContent || '[]';
+        let ngos = [];
+        try{ ngos = JSON.parse(raw); }catch(e){ ngos = []; console.error('Invalid NGO JSON', e);} 
+
+        const grid = document.getElementById('ngoGrid');
+        const searchInput = document.getElementById('ngoSearch');
+        const cityFilter = document.getElementById('ngoCityFilter');
+        const countEl = document.getElementById('ngoCount');
+
+        function detectCity(loc){
+            const keys = ['Mumbai','Pune','Thane','Navi Mumbai','Noida','New Delhi','Delhi','Hyderabad','Bengaluru','Bengaluru','Vadodara','Wardha','Pimpri','Kalamboli','Mira Road','Goregaon'];
+            for(const k of keys){ if(loc && loc.toLowerCase().includes(k.toLowerCase())) return k; }
+            return 'Other';
+        }
+
+        function createCard(ngo, idx){
+            const col = document.createElement('div'); col.className = 'col-lg-4 col-md-6';
+            const card = document.createElement('div'); card.className = 'card ngo-card reveal';
+            card.setAttribute('data-name', (ngo.name||'').toLowerCase());
+            card.setAttribute('data-location', (ngo.location||'').toLowerCase());
+            card.setAttribute('data-services', (ngo.services||'').toLowerCase());
+            card.setAttribute('data-idx', idx);
+
+            const city = detectCity(ngo.location || '');
+
+            const body = document.createElement('div'); body.className = 'card-body';
+            body.innerHTML = `
+                <div class="d-flex justify-content-between align-items-start mb-2">
+                    <div style="flex:1">
+                        <h5 class="mb-1" style="line-height:1.1">${escapeHtml(ngo.name)}</h5>
+                        <div class="text-muted small">${escapeHtml(shorten(ngo.location,80))}</div>
+                    </div>
+                    <div class="ms-2 text-end">
+                        <div class="ngo-badge">${escapeHtml(city)}</div>
+                    </div>
+                </div>
+                <div class="mt-2 mb-2 service-list">${escapeHtml(ngo.services)}</div>
+                <div class="d-flex justify-content-between align-items-center mt-3">
+                    <div class="ngo-actions">
+                        ${ngo.phone?`<a class="btn btn-sm btn-outline-primary" href="tel:${encodeURI(ngo.phone)}" title="Call"><i class="fas fa-phone"></i> Call</a>`:''}
+                        ${ngo.email?`<a class="btn btn-sm btn-outline-secondary" href="mailto:${encodeURIComponent(ngo.email)}" title="Email"><i class="fas fa-envelope"></i> Email</a>`:''}
+                        <button class="btn btn-sm btn-light btn-copy" data-copy="${escapeAttr(ngo.phone||ngo.location)}" title="Copy"><i class="fas fa-copy"></i> Copy</button>
+                        <a class="btn btn-sm btn-outline-success" target="_blank" rel="noopener" href="https://www.google.com/maps/search/${encodeURIComponent(ngo.location)}" title="Directions"><i class="fas fa-map-marker-alt"></i> Directions</a>
+                    </div>
+                    <div>
+                        <button class="btn btn-sm btn-link text-decoration-none ngo-more" data-idx="${idx}">More <i class="fas fa-chevron-right"></i></button>
+                    </div>
+                </div>
+            `;
+
+            // open modal when clicking .ngo-more or card title
+            body.querySelector('.ngo-more')?.addEventListener('click', (e)=>{ e.preventDefault(); openNgoModal(ngo); });
+            body.querySelector('h5')?.addEventListener('click', ()=> openNgoModal(ngo));
+
+            card.appendChild(body);
+            col.appendChild(card);
+            return col;
+        }
+
+        function escapeHtml(s){ if(!s) return ''; return s.replace(/[&<>\"]/g, function(t){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[t];}); }
+        function escapeAttr(s){ if(!s) return ''; return s.replace(/"/g,'\"'); }
+        function shorten(s,len){ if(!s) return ''; return s.length>len? s.slice(0,len-1)+'…': s; }
+
+        function render(list){
+            grid.innerHTML = '';
+            list.forEach((ngo, i)=>{
+                const el = createCard(ngo,i);
+                grid.appendChild(el);
+            });
+            countEl.textContent = list.length;
+            observeRevealsStagger();
+        }
+
+        function buildCityOptions(list){
+            const cities = new Set();
+            list.forEach(n=> cities.add(detectCity(n.location||'')));
+            const arr = Array.from(cities).sort();
+            arr.forEach(c => { if(!Array.from(cityFilter.options).some(o=>o.value===c)){ const opt = document.createElement('option'); opt.value = c; opt.textContent = c; cityFilter.appendChild(opt); } });
+        }
+
+        function filterList(){
+            const q = (searchInput.value||'').trim().toLowerCase();
+            const city = cityFilter.value;
+            const filtered = ngos.filter(n=>{
+                if(city && detectCity(n.location||'')!==city) return false;
+                if(!q) return true;
+                return (n.name||'').toLowerCase().includes(q) || (n.location||'').toLowerCase().includes(q) || (n.services||'').toLowerCase().includes(q);
+            });
+            render(filtered);
+        }
+
+        function observeRevealsStagger(){
+            const items = document.querySelectorAll('.reveal');
+            if('IntersectionObserver' in window){
+                const io = new IntersectionObserver((entries, obs)=>{
+                    entries.forEach((entry)=>{
+                        if(entry.isIntersecting){
+                            const idx = parseInt(entry.target.getAttribute('data-idx')||0,10);
+                            setTimeout(()=> entry.target.classList.add('visible'), Math.min(3000, idx*80));
+                            obs.unobserve(entry.target);
+                        }
+                    });
+                },{threshold:0.12});
+                items.forEach((it)=> io.observe(it));
+            } else {
+                items.forEach((it, i)=> setTimeout(()=> it.classList.add('visible'), i*60));
+            }
+        }
+
+        // copy button handler
+        document.addEventListener('click', function(e){
+            const btn = e.target.closest('.btn-copy');
+            if(!btn) return;
+            const text = btn.getAttribute('data-copy') || '';
+            if(!text) return;
+            if(navigator.clipboard && navigator.clipboard.writeText){
+                navigator.clipboard.writeText(text).then(()=>{ btn.innerHTML = '<i class="fas fa-check"></i> Copied'; setTimeout(()=> btn.innerHTML = '<i class="fas fa-copy"></i> Copy',1500); });
+            } else {
+                const ta = document.createElement('textarea'); ta.value = text; document.body.appendChild(ta); ta.select(); try{ document.execCommand('copy'); btn.innerHTML = '<i class="fas fa-check"></i> Copied'; }catch(e){} ta.remove(); setTimeout(()=> btn.innerHTML = '<i class="fas fa-copy"></i> Copy',1500);
+            }
+        });
+
+        // modal open
+        function openNgoModal(ngo){
+            const modalEl = document.getElementById('ngoModal');
+            if(!modalEl) return;
+            modalEl.querySelector('.modal-title').textContent = ngo.name || 'NGO Details';
+            modalEl.querySelector('.modal-location').textContent = ngo.location || '—';
+            modalEl.querySelector('.modal-phone').textContent = ngo.phone || '—';
+            modalEl.querySelector('.modal-email').textContent = ngo.email || '—';
+            modalEl.querySelector('.modal-services').textContent = ngo.services || '—';
+            // update action links
+            const phoneLink = modalEl.querySelector('.modal-call');
+            if(phoneLink){ if(ngo.phone) { phoneLink.href = 'tel:'+ngo.phone; phoneLink.classList.remove('disabled'); } else { phoneLink.removeAttribute('href'); phoneLink.classList.add('disabled'); } }
+            const emailLink = modalEl.querySelector('.modal-email-link');
+            if(emailLink){ if(ngo.email){ emailLink.href = 'mailto:'+ngo.email; emailLink.classList.remove('disabled'); } else { emailLink.removeAttribute('href'); emailLink.classList.add('disabled'); } }
+
+            const bootstrapModal = new bootstrap.Modal(modalEl);
+            bootstrapModal.show();
+        }
+
+        // init
+        ngos = ngos.map(n=>({ ...n }));
+        buildCityOptions(ngos);
+        render(ngos);
+
+        searchInput.addEventListener('input', debounce(filterList,180));
+        cityFilter.addEventListener('change', filterList);
+
+        function debounce(fn,wait){ let t; return function(){ clearTimeout(t); t = setTimeout(()=> fn.apply(this, arguments), wait); }; }
+
+    })();
+    </script>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>document.querySelectorAll('.nav-link').forEach(a=>{if(a.href===location.href) a.classList.add('active')});</script>
@@ -753,6 +981,29 @@
             </button>
         </div>
     </div>
+
+        <!-- NGO Details Modal -->
+        <div class="modal fade" id="ngoModal" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">NGO Details</h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p class="modal-location mb-2"><strong>Location:</strong> <span class="text-muted"></span></p>
+                        <p class="modal-phone mb-2"><strong>Phone:</strong> <span class="text-muted"></span></p>
+                        <p class="modal-email mb-2"><strong>Email:</strong> <span class="text-muted"></span></p>
+                        <p class="modal-services mb-0"><strong>Services:</strong> <span class="text-muted"></span></p>
+                    </div>
+                    <div class="modal-footer">
+                        <a class="btn btn-primary modal-call" href="#"><i class="fas fa-phone"></i> Call</a>
+                        <a class="btn btn-secondary modal-email-link" href="#"><i class="fas fa-envelope"></i> Email</a>
+                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
     <script>
         // Email sending removed. Keep globals for profile behavior.
