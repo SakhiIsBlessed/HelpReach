@@ -692,11 +692,11 @@ footer.bg-dark {
         font-size: 0.9rem;
     }
 }
-    display:flex;
+    /* display:flex;
     align-items: flex-start;
     margin-bottom: 15px;
     color: #b0b0b0;
-}
+} */
 
 .contact-info i {
     color: #28a745;
