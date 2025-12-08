@@ -25,10 +25,10 @@
     <!-- Site Styles -->
     <link href="css/style.css" rel="stylesheet">
     <style>
-            /* temporary small fix: ensure body leaves space for fixed navbar */
-            body {
-                padding-top: 72px;
-            }
+        /* temporary small fix: ensure body leaves space for fixed navbar */
+        body {
+            padding-top: 72px;
+        }
 
 
         /* Registration Modal & Profile Styles */
@@ -67,6 +67,7 @@
                 transform: translateY(50px);
                 opacity: 0;
             }
+
             to {
                 transform: translateY(0);
                 opacity: 1;
@@ -167,7 +168,7 @@
             display: none;
         }
 
-        .user-type-option input:checked + label {
+        .user-type-option input:checked+label {
             color: #0d6efd;
             font-weight: 700;
         }
@@ -274,7 +275,8 @@
             transform: translateY(-3px);
             box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
         }
-            .profile-sidebar {
+
+        .profile-sidebar {
             position: fixed;
             right: -400px;
             top: 0;
@@ -456,10 +458,8 @@
                 grid-template-columns: 1fr;
             }
         }
-
-
-        </style>
-    </head>
+    </style>
+</head>
 
 <body>
 
@@ -505,7 +505,8 @@
                         <div class="hero-ctas mt-4 wow fadeInUp" data-wow-delay="0.3s">
                             <a id="donate" class="btn btn-lg btn-success me-3 glass-btn" href="donate.html">Donate
                                 Now</a>
-                            <a id="register" class="btn btn-lg btn-register-ngo glass-btn" href="register-ngo.html">Register
+                            <a id="register" class="btn btn-lg btn-register-ngo glass-btn"
+                                href="register-ngo.html">Register
                                 NGO</a>
                         </div>
                     </div>
@@ -847,12 +848,16 @@
                 <!-- About Section -->
                 <div class="col-lg-3 col-md-6 footer-section">
                     <h5 class="fw-bold">HelpReach</h5>
-                    <p class="small">A platform connecting donors and NGOs to reduce food and item wastage while helping communities in need.</p>
+                    <p class="small">A platform connecting donors and NGOs to reduce food and item wastage while helping
+                        communities in need.</p>
                     <div class="social-links">
-                        <a href="#" title="Facebook" aria-label="Follow us on Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" title="Facebook" aria-label="Follow us on Facebook"><i
+                                class="fab fa-facebook-f"></i></a>
                         <a href="#" title="Twitter" aria-label="Follow us on Twitter"><i class="fab fa-twitter"></i></a>
-                        <a href="#" title="Instagram" aria-label="Follow us on Instagram"><i class="fab fa-instagram"></i></a>
-                        <a href="#" title="LinkedIn" aria-label="Follow us on LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" title="Instagram" aria-label="Follow us on Instagram"><i
+                                class="fab fa-instagram"></i></a>
+                        <a href="#" title="LinkedIn" aria-label="Follow us on LinkedIn"><i
+                                class="fab fa-linkedin-in"></i></a>
                     </div>
                 </div>
 
@@ -907,10 +912,12 @@
             <div class="footer-bottom">
                 <div class="row align-items-center">
                     <div class="col-md-6 text-center text-md-start">
-                        <p class="small mb-0">&copy; <span id="year"></span> <strong>HelpReach</strong>. All rights reserved.</p>
+                        <p class="small mb-0">&copy; <span id="year"></span> <strong>HelpReach</strong>. All rights
+                            reserved.</p>
                     </div>
                     <div class="col-md-6 text-center text-md-end">
-                        <p class="small mb-0">Made with <i class="fas fa-heart text-danger"></i> to make a difference</p>
+                        <p class="small mb-0">Made with <i class="fas fa-heart text-danger"></i> to make a difference
+                        </p>
                     </div>
                 </div>
             </div>
@@ -976,7 +983,7 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }));
     </script>
-    
+
     <!-- Registration Modal -->
     <div class="registration-overlay" id="registrationOverlay">
         <div class="registration-modal">
@@ -1072,7 +1079,7 @@
     <!-- Profile Sidebar -->
     <div class="profile-sidebar" id="profileSidebar">
         <button class="sidebar-close" onclick="closeProfileSidebar()">✕</button>
-        
+
         <div class="profile-header">
             <div class="profile-avatar">
                 <i class="fas fa-user-circle"></i>
@@ -1169,17 +1176,17 @@
         // Show registration form on page load: show once per session when navigating, and also show on reload
         window.addEventListener('load', () => {
             const userProfile = localStorage.getItem('userProfile');
-            const icon = document.getElementById('profileIcon'); if(icon) icon.classList.add('show');
-            const fillBtn = document.getElementById('fillFormBtn'); if(fillBtn) fillBtn.classList.add('show');
+            const icon = document.getElementById('profileIcon'); if (icon) icon.classList.add('show');
+            const fillBtn = document.getElementById('fillFormBtn'); if (fillBtn) fillBtn.classList.add('show');
 
-            function getNavType(){
-                try{
+            function getNavType() {
+                try {
                     const entries = performance.getEntriesByType && performance.getEntriesByType('navigation');
-                    if(entries && entries.length) return entries[0].type; // 'navigate'|'reload'|'back_forward'
-                    if(performance.navigation && typeof performance.navigation.type !== 'undefined'){
+                    if (entries && entries.length) return entries[0].type; // 'navigate'|'reload'|'back_forward'
+                    if (performance.navigation && typeof performance.navigation.type !== 'undefined') {
                         return (performance.navigation.type === 1) ? 'reload' : 'navigate';
                     }
-                }catch(e){}
+                } catch (e) { }
                 return 'navigate';
             }
 
@@ -1190,14 +1197,14 @@
                 isLoggedIn = true;
                 const userData = JSON.parse(userProfile);
                 updateProfileDisplay(userData);
-                if(fillBtn) fillBtn.classList.remove('show');
+                if (fillBtn) fillBtn.classList.remove('show');
                 return;
             }
 
             // Show modal if this is a reload OR we haven't shown it yet this session
             if (navType === 'reload' || !sessionShown) {
-                const overlay = document.getElementById('registrationOverlay'); if(overlay) overlay.classList.add('show');
-                try{ sessionStorage.setItem('registrationShown','true'); }catch(e){}
+                const overlay = document.getElementById('registrationOverlay'); if (overlay) overlay.classList.add('show');
+                try { sessionStorage.setItem('registrationShown', 'true'); } catch (e) { }
             }
         });
 
@@ -1250,25 +1257,25 @@
                 alert('Error: Form not found');
                 return;
             }
-        
+
             const userType = document.querySelector('input[name="userType"]:checked');
             if (!userType) {
                 alert('Please select a user type');
                 return;
             }
-            
+
             // Get form inputs using more specific selectors to avoid NGO field confusion
             const formGroups = form.querySelectorAll('.form-group');
             console.log('Form groups found:', formGroups.length);
-        
+
             const nameInput = formGroups[0]?.querySelector('input[type="text"]');
             const emailInput = formGroups[1]?.querySelector('input[type="email"]');
             const phoneInput = formGroups[2]?.querySelector('input[type="tel"]');
             const locationInput = formGroups[4]?.querySelector('input[type="text"]');
             const termsCheckbox = form.querySelector('input[type="checkbox"]');
-        
+
             console.log('Name:', nameInput?.value, 'Email:', emailInput?.value, 'Phone:', phoneInput?.value, 'Location:', locationInput?.value);
-            
+
             // Validate all fields
             if (!nameInput || !nameInput.value.trim()) {
                 alert('Please enter your full name');
@@ -1340,7 +1347,7 @@
             const donationCount = document.getElementById('donationCount');
             const claimedCount = document.getElementById('claimedCount');
             const activityLevel = document.getElementById('activityLevel');
-            
+
             if (profileName) profileName.textContent = userData.name;
             if (profileType) profileType.textContent = userData.userType.charAt(0).toUpperCase() + userData.userType.slice(1);
             if (profileEmail) profileEmail.textContent = userData.email;

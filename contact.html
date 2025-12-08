@@ -14,7 +14,8 @@
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500&family=Lora:wght@600;700&display=swap" rel="stylesheet"> 
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500&family=Lora:wght@600;700&display=swap"
+        rel="stylesheet">
 
     <!-- Icon Font Stylesheet -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
@@ -65,6 +66,7 @@
                 transform: translateY(50px);
                 opacity: 0;
             }
+
             to {
                 transform: translateY(0);
                 opacity: 1;
@@ -165,7 +167,7 @@
             display: none;
         }
 
-        .user-type-option input:checked + label {
+        .user-type-option input:checked+label {
             color: #0d6efd;
             font-weight: 700;
         }
@@ -272,7 +274,8 @@
             transform: translateY(-3px);
             box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
         }
-            .profile-sidebar {
+
+        .profile-sidebar {
             position: fixed;
             right: -400px;
             top: 0;
@@ -512,6 +515,7 @@
                 opacity: 0;
                 transform: translateY(30px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -523,6 +527,7 @@
                 opacity: 0;
                 transform: scale(0.95);
             }
+
             to {
                 opacity: 1;
                 transform: scale(1);
@@ -534,6 +539,7 @@
                 opacity: 0;
                 transform: translateX(-30px);
             }
+
             to {
                 opacity: 1;
                 transform: translateX(0);
@@ -545,6 +551,7 @@
                 opacity: 0;
                 transform: translateX(30px);
             }
+
             to {
                 opacity: 1;
                 transform: translateX(0);
@@ -556,6 +563,7 @@
                 opacity: 0;
                 transform: translateY(20px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -563,9 +571,12 @@
         }
 
         @keyframes pulse {
-            0%, 100% {
+
+            0%,
+            100% {
                 transform: scale(1);
             }
+
             50% {
                 transform: scale(1.02);
             }
@@ -683,10 +694,21 @@
         }
 
         /* Animation delays for staggered effect */
-        .row.g-4 > div:nth-child(1) { animation-delay: 0.1s; }
-        .row.g-4 > div:nth-child(2) { animation-delay: 0.2s; }
-        .row.g-4 > div:nth-child(3) { animation-delay: 0.3s; }
-        .row.g-4 > div:nth-child(4) { animation-delay: 0.4s; }
+        .row.g-4>div:nth-child(1) {
+            animation-delay: 0.1s;
+        }
+
+        .row.g-4>div:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .row.g-4>div:nth-child(3) {
+            animation-delay: 0.3s;
+        }
+
+        .row.g-4>div:nth-child(4) {
+            animation-delay: 0.4s;
+        }
 
         /* Map section styling */
         iframe {
@@ -718,48 +740,130 @@
         }
 
         /* Decorative floating blobs */
-        .blob-wrap { position: absolute; inset: 0; pointer-events: none; overflow: visible; }
+        .blob-wrap {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            overflow: visible;
+        }
+
         .blob {
             position: absolute;
             border-radius: 50%;
             filter: blur(30px);
             opacity: 0.18;
-            transform: translate3d(0,0,0);
+            transform: translate3d(0, 0, 0);
             animation: floatY 6s ease-in-out infinite;
         }
-        .blob.b1 { width: 260px; height: 260px; background: #10b981; left: -40px; top: -40px; }
-        .blob.b2 { width: 200px; height: 200px; background: #0d6efd; right: -50px; top: 30px; animation-duration: 7s; }
-        .blob.b3 { width: 160px; height: 160px; background: #7dd3fc; left: 20%; bottom: -40px; animation-duration: 5.5s; }
+
+        .blob.b1 {
+            width: 260px;
+            height: 260px;
+            background: #10b981;
+            left: -40px;
+            top: -40px;
+        }
+
+        .blob.b2 {
+            width: 200px;
+            height: 200px;
+            background: #0d6efd;
+            right: -50px;
+            top: 30px;
+            animation-duration: 7s;
+        }
+
+        .blob.b3 {
+            width: 160px;
+            height: 160px;
+            background: #7dd3fc;
+            left: 20%;
+            bottom: -40px;
+            animation-duration: 5.5s;
+        }
 
         @keyframes floatY {
-            0% { transform: translateY(0) scale(1); }
-            50% { transform: translateY(-18px) scale(1.03); }
-            100% { transform: translateY(0) scale(1); }
+            0% {
+                transform: translateY(0) scale(1);
+            }
+
+            50% {
+                transform: translateY(-18px) scale(1.03);
+            }
+
+            100% {
+                transform: translateY(0) scale(1);
+            }
         }
 
         /* WhatsApp CTA pulse effect */
-        .pulse { animation: pulse 2s infinite; }
+        .pulse {
+            animation: pulse 2s infinite;
+        }
 
         @keyframes pulse {
-            0% { box-shadow: 0 0 0 0 rgba(37,211,102,0.6); transform: translateY(0); }
-            70% { box-shadow: 0 0 0 18px rgba(37,211,102,0); transform: translateY(-3px); }
-            100% { box-shadow: 0 0 0 0 rgba(37,211,102,0); transform: translateY(0); }
+            0% {
+                box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.6);
+                transform: translateY(0);
+            }
+
+            70% {
+                box-shadow: 0 0 0 18px rgba(37, 211, 102, 0);
+                transform: translateY(-3px);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
+                transform: translateY(0);
+            }
         }
 
         /* Success overlay for WhatsApp redirect */
         .wa-overlay {
-            position: fixed; inset: 0; display: flex; align-items: center; justify-content: center;
-            background: rgba(0,0,0,0.45); z-index: 2000; visibility: hidden; opacity: 0; transition: all 0.25s ease;
+            position: fixed;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.45);
+            z-index: 2000;
+            visibility: hidden;
+            opacity: 0;
+            transition: all 0.25s ease;
         }
-        .wa-overlay.show { visibility: visible; opacity: 1; }
-        .wa-box { background: white; padding: 30px 36px; border-radius: 12px; text-align: center; width: 340px; }
-        .checkmark { width: 72px; height: 72px; border-radius: 50%; display: inline-block; background: linear-gradient(135deg,#10b981,#0d6efd); color: white; font-size: 36px; line-height: 72px; margin-bottom: 12px; animation: scaleIn 0.5s ease-out; }
+
+        .wa-overlay.show {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .wa-box {
+            background: white;
+            padding: 30px 36px;
+            border-radius: 12px;
+            text-align: center;
+            width: 340px;
+        }
+
+        .checkmark {
+            width: 72px;
+            height: 72px;
+            border-radius: 50%;
+            display: inline-block;
+            background: linear-gradient(135deg, #10b981, #0d6efd);
+            color: white;
+            font-size: 36px;
+            line-height: 72px;
+            margin-bottom: 12px;
+            animation: scaleIn 0.5s ease-out;
+        }
     </style>
 </head>
 
 <body>
     <!-- Spinner Start -->
-    <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+    <div id="spinner"
+        class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
         <div class="spinner-border text-primary" role="status"></div>
     </div>
     <!-- Spinner End -->
@@ -772,7 +876,8 @@
                 <img src="logo.svg" alt="HelpReach Logo" class="me-2">
                 HelpReach
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
+                aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
@@ -805,9 +910,13 @@
                     <span class="blob b2"></span>
                     <span class="blob b3"></span>
                 </div>
-                <div class="section-header text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 720px; position: relative; z-index: 2;">
-                    <h1 class="display-5 mb-3">Get in Touch with <span style="background:linear-gradient(90deg,#0d6efd,#10b981);-webkit-background-clip:text;color:transparent;">HelpReach</span></h1>
-                    <p class="lead">We're here to help — donate, claim, volunteer, or ask questions. Our team responds fast.</p>
+                <div class="section-header text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s"
+                    style="max-width: 720px; position: relative; z-index: 2;">
+                        <h1 class="display-5 mb-3">Get in Touch with <span
+                            style="background:linear-gradient(90deg,#0d6efd,#10b981);background-clip:text;-webkit-background-clip:text;-webkit-text-fill-color:transparent;color:transparent;">HelpReach</span>
+                    </h1>
+                    <p class="lead">We're here to help — donate, claim, volunteer, or ask questions. Our team responds
+                        fast.</p>
                 </div>
             </div>
 
@@ -819,9 +928,11 @@
                             <i class="fas fa-phone-alt text-primary" style="font-size: 2.5rem;"></i>
                         </div>
                         <h5 class="mb-3">Call Us</h5>
-                        <p class="text-muted mb-4">Mon-Fri, 9 AM - 6 PM<br><small class="text-muted">24/7 Emergency Available</small></p>
+                        <p class="text-muted mb-4">Mon-Fri, 9 AM - 6 PM<br><small class="text-muted">24/7 Emergency
+                                Available</small></p>
                         <div class="d-grid gap-2">
-                            <a href="tel:+918530932462" class="btn btn-primary btn-lg"><i class="fas fa-phone me-2"></i>+91 8530932462</a>
+                            <a href="tel:+918530932462" class="btn btn-primary btn-lg"><i
+                                    class="fas fa-phone me-2"></i>+91 8530932462</a>
                         </div>
                     </div>
                 </div>
@@ -831,9 +942,11 @@
                             <i class="fas fa-envelope text-success" style="font-size: 2.5rem;"></i>
                         </div>
                         <h5 class="mb-3">Email Us</h5>
-                        <p class="text-muted mb-4">We respond within 24 hours<br><small class="text-muted">info@helpreach.org</small></p>
+                        <p class="text-muted mb-4">We respond within 24 hours<br><small
+                                class="text-muted">info@helpreach.org</small></p>
                         <div class="d-grid gap-2">
-                            <a href="mailto:info@helpreach.org" class="btn btn-success btn-lg"><i class="fas fa-envelope me-2"></i>Send Email</a>
+                            <a href="mailto:info@helpreach.org" class="btn btn-success btn-lg"><i
+                                    class="fas fa-envelope me-2"></i>Send Email</a>
                         </div>
                     </div>
                 </div>
@@ -848,15 +961,18 @@
                             <div class="row g-4">
                                 <div class="col-md-6">
                                     <label class="form-label fw-600">Your Name *</label>
-                                    <input type="text" class="form-control form-control-lg" id="contactName" required placeholder="Enter your full name">
+                                    <input type="text" class="form-control form-control-lg" id="contactName" required
+                                        placeholder="Enter your full name">
                                 </div>
                                 <div class="col-md-6">
                                     <label class="form-label fw-600">Email Address *</label>
-                                    <input type="email" class="form-control form-control-lg" id="contactEmail" required placeholder="your@email.com">
+                                    <input type="email" class="form-control form-control-lg" id="contactEmail" required
+                                        placeholder="your@email.com">
                                 </div>
                                 <div class="col-md-6">
                                     <label class="form-label fw-600">Phone Number</label>
-                                    <input type="tel" class="form-control form-control-lg" id="contactPhone" placeholder="+91 9876 543 210">
+                                    <input type="tel" class="form-control form-control-lg" id="contactPhone"
+                                        placeholder="+91 9876 543 210">
                                 </div>
                                 <div class="col-md-6">
                                     <label class="form-label fw-600">Inquiry Type *</label>
@@ -871,7 +987,8 @@
                                 </div>
                                 <div class="col-12">
                                     <label class="form-label fw-600">Message *</label>
-                                    <textarea class="form-control" id="contactMessage" rows="6" required placeholder="Tell us how we can help..."></textarea>
+                                    <textarea class="form-control" id="contactMessage" rows="6" required
+                                        placeholder="Tell us how we can help..."></textarea>
                                 </div>
                                 <div class="col-12">
                                     <button type="submit" class="btn btn-primary btn-lg w-100 py-3">
@@ -900,7 +1017,8 @@
                     <div class="card border-0 shadow p-5 text-center special-card volunteer-card">
                         <i class="fas fa-hands-helping text-success mb-4" style="font-size: 3rem;"></i>
                         <h4 class="mb-3">Become a Volunteer</h4>
-                        <p class="text-muted mb-4">Join our community and make a difference. Register to volunteer today!</p>
+                        <p class="text-muted mb-4">Join our community and make a difference. Register to volunteer
+                            today!</p>
                         <a href="tel:+919607340088" class="btn btn-success btn-lg w-100">
                             <i class="fas fa-heart me-2"></i>+91 9607340088
                         </a>
@@ -919,61 +1037,71 @@
                     <div class="accordion" id="contactFAQ">
                         <div class="accordion-item">
                             <h2 class="accordion-header">
-                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#faq1">
                                     How can I donate food or items?
                                 </button>
                             </h2>
                             <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#contactFAQ">
                                 <div class="accordion-body">
-                                    You can register on our platform, create a donation listing with details and photos of the items, and our NGO partners will claim them. It's that simple!
+                                    You can register on our platform, create a donation listing with details and photos
+                                    of the items, and our NGO partners will claim them. It's that simple!
                                 </div>
                             </div>
                         </div>
                         <div class="accordion-item">
                             <h2 class="accordion-header">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#faq2">
                                     What items can I donate?
                                 </button>
                             </h2>
                             <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#contactFAQ">
                                 <div class="accordion-body">
-                                    You can donate food (prepared or unopened), clothing, books, electronics, and other useful items. Check our donation guidelines for specific categories.
+                                    You can donate food (prepared or unopened), clothing, books, electronics, and other
+                                    useful items. Check our donation guidelines for specific categories.
                                 </div>
                             </div>
                         </div>
                         <div class="accordion-item">
                             <h2 class="accordion-header">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#faq3">
                                     Is my donation tax-deductible?
                                 </button>
                             </h2>
                             <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#contactFAQ">
                                 <div class="accordion-body">
-                                    Yes! HelpReach is a registered non-profit. You'll receive a tax certificate for your donations. Contact us for details on tax deduction procedures.
+                                    Yes! HelpReach is a registered non-profit. You'll receive a tax certificate for your
+                                    donations. Contact us for details on tax deduction procedures.
                                 </div>
                             </div>
                         </div>
                         <div class="accordion-item">
                             <h2 class="accordion-header">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq4">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#faq4">
                                     How do I become an NGO partner?
                                 </button>
                             </h2>
                             <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#contactFAQ">
                                 <div class="accordion-body">
-                                    NGOs can apply through our partner registration form. We verify your credentials and documentation before approval. Visit the NGO Directory page for more information.
+                                    NGOs can apply through our partner registration form. We verify your credentials and
+                                    documentation before approval. Visit the NGO Directory page for more information.
                                 </div>
                             </div>
                         </div>
                         <div class="accordion-item">
                             <h2 class="accordion-header">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq5">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#faq5">
                                     Can I volunteer with HelpReach?
                                 </button>
                             </h2>
                             <div id="faq5" class="accordion-collapse collapse" data-bs-parent="#contactFAQ">
                                 <div class="accordion-body">
-                                    Absolutely! Call our Volunteer Hotline at +91 8888 888 888 to register. We have opportunities for logistics, distribution, and community outreach.
+                                    Absolutely! Call our Volunteer Hotline at +91 8888 888 888 to register. We have
+                                    opportunities for logistics, distribution, and community outreach.
                                 </div>
                             </div>
                         </div>
@@ -1027,9 +1155,378 @@
                     <div class="whatsapp-banner p-6 rounded text-white text-center">
                         <h3 class="mb-3 fw-bold">Chat with Us on WhatsApp</h3>
                         <p class="mb-4 fs-5">Get instant responses and support from our team</p>
-                        <a href="https://wa.me/919607340088" target="_blank" rel="noopener noreferrer" class="btn btn-success btn-lg px-5 py-3 whatsapp-btn pulse">
+                        <a href="https://wa.me/919607340088" target="_blank" rel="noopener noreferrer"
+                            class="btn btn-success btn-lg px-5 py-3 whatsapp-btn pulse">
                             <i class="fab fa-whatsapp me-2" style="font-size: 1.5rem;"></i>Start Instant Chat
                         </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Meet the Team Section -->
+            <style>
+                .team-section {
+                    margin-top: 100px;
+                    margin-bottom: 80px;
+                }
+
+                .team-heading {
+                    text-align: center;
+                    margin-bottom: 70px;
+                }
+
+                .team-heading h2 {
+                    font-size: 3rem;
+                    font-weight: 900;
+                    background: linear-gradient(135deg, #0d6efd, #10b981);
+                    -webkit-background-clip: text;
+                    -webkit-text-fill-color: transparent;
+                    background-clip: text;
+                    margin-bottom: 16px;
+                }
+
+                .team-heading p {
+                    font-size: 1.1rem;
+                    color: #6c757d;
+                    max-width: 650px;
+                    margin: 0 auto;
+                    line-height: 1.6;
+                }
+
+                .team-member-card {
+                    position: relative;
+                    background: white;
+                    border-radius: 20px;
+                    overflow: hidden;
+                    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+                    transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+                    height: 100%;
+                    display: flex;
+                    flex-direction: column;
+                }
+
+                .team-member-card::before {
+                    content: '';
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    height: 4px;
+                    background: linear-gradient(90deg, #0d6efd, #10b981);
+                    transform: scaleX(0);
+                    transform-origin: left;
+                    transition: transform 0.5s ease;
+                }
+
+                .team-member-card:hover::before {
+                    transform: scaleX(1);
+                }
+
+                .team-member-card:hover {
+                    transform: translateY(-16px);
+                    box-shadow: 0 20px 48px rgba(0, 0, 0, 0.15);
+                }
+
+                .team-member-image {
+                    position: relative;
+                    width: 100%;
+                    height: 320px;
+                    overflow: hidden;
+                    background: linear-gradient(135deg, #0d6efd 0%, #10b981 100%);
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                }
+
+                .team-member-image::after {
+                    content: '';
+                    position: absolute;
+                    inset: 0;
+                    background: rgba(0, 0, 0, 0);
+                    transition: background 0.4s ease;
+                }
+
+                .team-member-card:hover .team-member-image::after {
+                    background: rgba(0, 0, 0, 0.1);
+                }
+
+                .team-member-image img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                    transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+                    position: relative;
+                    z-index: 1;
+                }
+
+                .team-member-card:hover .team-member-image img {
+                    transform: scale(1.12) rotate(2deg);
+                }
+
+                .team-member-info {
+                    padding: 36px 28px 32px;
+                    flex-grow: 1;
+                    display: flex;
+                    flex-direction: column;
+                }
+
+                .team-member-name {
+                    font-size: 1.5rem;
+                    font-weight: 800;
+                    color: #212529;
+                    margin-bottom: 8px;
+                    letter-spacing: -0.5px;
+                }
+
+                .team-member-role {
+                    font-size: 0.9rem;
+                    font-weight: 700;
+                    color: #0d6efd;
+                    margin-bottom: 24px;
+                    display: inline-block;
+                    background: linear-gradient(135deg, rgba(13, 110, 253, 0.08), rgba(16, 185, 129, 0.08));
+                    padding: 6px 14px;
+                    border-radius: 24px;
+                    border-left: 3px solid #0d6efd;
+                }
+
+                .team-member-responsibilities {
+                    font-size: 0.85rem;
+                    color: #6c757d;
+                    line-height: 1.8;
+                    flex-grow: 1;
+                }
+
+                .team-member-responsibilities ul {
+                    margin: 0;
+                    padding-left: 18px;
+                    list-style-position: inside;
+                }
+
+                .team-member-responsibilities li {
+                    margin-bottom: 10px;
+                    position: relative;
+                    padding-left: 8px;
+                }
+
+                .team-member-responsibilities li::marker {
+                    color: #0d6efd;
+                    font-weight: bold;
+                }
+
+                .team-member-badge {
+                    margin-top: 20px;
+                    padding-top: 20px;
+                    border-top: 1px solid #f0f0f0;
+                    display: flex;
+                    align-items: center;
+                    gap: 12px;
+                }
+
+                .team-member-badge-icon {
+                    width: 50px;
+                    height: 50px;
+                    border-radius: 12px;
+                    background: linear-gradient(135deg, rgba(13, 110, 253, 0.1), rgba(16, 185, 129, 0.1));
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    font-size: 1.8rem;
+                    transition: all 0.3s ease;
+                }
+
+                .team-member-card:hover .team-member-badge-icon {
+                    transform: scale(1.15) rotate(-8deg);
+                    background: linear-gradient(135deg, #0d6efd, #10b981);
+                    color: white;
+                }
+
+                .team-member-badge-text {
+                    display: flex;
+                    flex-direction: column;
+                }
+
+                .team-member-badge-label {
+                    font-size: 0.75rem;
+                    color: #9ca3af;
+                    font-weight: 600;
+                    text-transform: uppercase;
+                    letter-spacing: 0.5px;
+                }
+
+                .team-member-badge-value {
+                    font-size: 0.95rem;
+                    color: #212529;
+                    font-weight: 700;
+                }
+
+                @keyframes slideInUp {
+                    from {
+                        opacity: 0;
+                        transform: translateY(40px);
+                    }
+
+                    to {
+                        opacity: 1;
+                        transform: translateY(0);
+                    }
+                }
+
+                @keyframes float {
+
+                    0%,
+                    100% {
+                        transform: translateY(0px);
+                    }
+
+                    50% {
+                        transform: translateY(-8px);
+                    }
+                }
+
+                .team-member-card {
+                    animation: slideInUp 0.6s ease-out forwards;
+                }
+
+                .team-member-card:nth-child(1) {
+                    animation-delay: 0.1s;
+                }
+
+                .team-member-card:nth-child(2) {
+                    animation-delay: 0.2s;
+                }
+
+                .team-member-card:nth-child(3) {
+                    animation-delay: 0.3s;
+                }
+
+                .team-member-card:nth-child(4) {
+                    animation-delay: 0.4s;
+                }
+            </style>
+
+            <div class="team-section">
+                <div class="team-heading wow fadeInUp" data-wow-delay="0.1s">
+                    <h2>Meet Our Team ⭐</h2>
+                    <p>A passionate group of developers, designers, and strategists dedicated to making HelpReach a
+                        platform that truly makes a difference</p>
+                </div>
+
+                <div class="row g-4 wow fadeInUp" data-wow-delay="0.2s">
+                    <!-- Team Member 1 -->
+                    <div class="col-lg-3 col-md-6">
+                        <div class="team-member-card">
+                            <div class="team-member-image">
+                                <img src="img/Sakhi.jpg" alt="Sakhi Tapre"
+                                    onerror="this.parentElement.innerHTML='<i class=\'fas fa-user-circle\' style=\'font-size:6rem;opacity:0.6;color:white;\'></i>'">
+                            </div>
+                            <div class="team-member-info">
+                                <div class="team-member-name">Sakhi Tapre</div>
+                                <span class="team-member-role">💻 Frontend Developer</span>
+                                <div class="team-member-responsibilities">
+                                    <ul>
+                                        <li>UI Design for all pages</li>
+                                        <li>Responsive layouts</li>
+                                        <li>Interactive components</li>
+                                        <li>Testing & debugging</li>
+                                    </ul>
+                                </div>
+                                <div class="team-member-badge">
+                                    <div class="team-member-badge-icon">🎨</div>
+                                    <div class="team-member-badge-text">
+                                        <span class="team-member-badge-label">Expertise</span>
+                                        <span class="team-member-badge-value">Frontend & UI</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Team Member 2 -->
+                    <div class="col-lg-3 col-md-6">
+                        <div class="team-member-card">
+                            <div class="team-member-image">
+                                <img src="img/Prachi.jpg" alt="Prachi Pawar"
+                                    onerror="this.parentElement.innerHTML='<i class=\'fas fa-user-circle\' style=\'font-size:6rem;opacity:0.6;color:white;\'></i>'">
+                            </div>
+                            <div class="team-member-info">
+                                <div class="team-member-name">Prachi Pawar</div>
+                                <span class="team-member-role">⚙️ Backend Developer</span>
+                                <div class="team-member-responsibilities">
+                                    <ul>
+                                        <li>PHP backend logic</li>
+                                        <li>Database design</li>
+                                        <li>API development</li>
+                                        <li>Quality assurance</li>
+                                    </ul>
+                                </div>
+                                <div class="team-member-badge">
+                                    <div class="team-member-badge-icon">🔧</div>
+                                    <div class="team-member-badge-text">
+                                        <span class="team-member-badge-label">Expertise</span>
+                                        <span class="team-member-badge-value">Backend & Database</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Team Member 3 -->
+                    <div class="col-lg-3 col-md-6">
+                        <div class="team-member-card">
+                            <div class="team-member-image">
+                                <img src="img/Sujata.jpg" alt="Sujata Vitkar"
+                                    onerror="this.parentElement.innerHTML='<i class=\'fas fa-user-circle\' style=\'font-size:6rem;opacity:0.6;color:white;\'></i>'">
+                            </div>
+                            <div class="team-member-info">
+                                <div class="team-member-name">Sujata Vitkar</div>
+                                <span class="team-member-role">🎭 UI/UX Designer</span>
+                                <div class="team-member-responsibilities">
+                                    <ul>
+                                        <li>Visual design & icons</li>
+                                        <li>User interface design</li>
+                                        <li>Experience enhancement</li>
+                                        <li>Design systems</li>
+                                    </ul>
+                                </div>
+                                <div class="team-member-badge">
+                                    <div class="team-member-badge-icon">✨</div>
+                                    <div class="team-member-badge-text">
+                                        <span class="team-member-badge-label">Expertise</span>
+                                        <span class="team-member-badge-value">Design & Visuals</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Team Member 4 -->
+                    <div class="col-lg-3 col-md-6">
+                        <div class="team-member-card">
+                            <div class="team-member-image">
+                                <img src="img/Payal.jpg" alt="Payal Yadav"
+                                    onerror="this.parentElement.innerHTML='<i class=\'fas fa-user-circle\' style=\'font-size:6rem;opacity:0.6;color:white;\'></i>'">
+                            </div>
+                            <div class="team-member-info">
+                                <div class="team-member-name">Payal Yadav</div>
+                                <span class="team-member-role">📊 Research Lead</span>
+                                <div class="team-member-responsibilities">
+                                    <ul>
+                                        <li>Project presentation</li>
+                                        <li>Research & analysis</li>
+                                        <li>Documentation</li>
+                                        <li>Architecture design</li>
+                                    </ul>
+                                </div>
+                                <div class="team-member-badge">
+                                    <div class="team-member-badge-icon">📈</div>
+                                    <div class="team-member-badge-text">
+                                        <span class="team-member-badge-label">Expertise</span>
+                                        <span class="team-member-badge-value">Research & Strategy</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1038,19 +1535,15 @@
     <!-- Contact End -->
 
 
- <!-- Google Map Start -->
-<div class="container-xxl px-0 wow fadeIn" data-wow-delay="0.1s" style="margin-bottom: -6px;">
-    <iframe 
-        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3782.8330431342097!2d73.8429945!3d18.4361161!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc2eb2ba876eec9%3A0x6c83c368d3543fe7!2sSnehadhar%20Sankul!5e0!3m2!1sen!2sin!4v1733403000000!5m2!1sen!2sin" 
-        width="100%" 
-        height="450" 
-        style="border:0;" 
-        allowfullscreen="" 
-        loading="lazy" 
-        referrerpolicy="no-referrer-when-downgrade">
-    </iframe>
-</div>
-<!-- Google Map End -->
+    <!-- Google Map Start -->
+    <div class="container-xxl px-0 wow fadeIn" data-wow-delay="0.1s" style="margin-bottom: -6px;">
+        <iframe width="100%" height="450" style="border:0;" loading="lazy" allowfullscreen=""
+            referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3! …"
+            width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade">
+
+    </div>
+    <!-- Google Map End -->
 
 
 
@@ -1061,12 +1554,16 @@
                 <!-- About Section -->
                 <div class="col-lg-3 col-md-6 footer-section">
                     <h5 class="fw-bold">HelpReach</h5>
-                    <p class="small">A platform connecting donors and NGOs to reduce food and item wastage while helping communities in need.</p>
+                    <p class="small">A platform connecting donors and NGOs to reduce food and item wastage while helping
+                        communities in need.</p>
                     <div class="social-links">
-                        <a href="#" title="Facebook" aria-label="Follow us on Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" title="Facebook" aria-label="Follow us on Facebook"><i
+                                class="fab fa-facebook-f"></i></a>
                         <a href="#" title="Twitter" aria-label="Follow us on Twitter"><i class="fab fa-twitter"></i></a>
-                        <a href="#" title="Instagram" aria-label="Follow us on Instagram"><i class="fab fa-instagram"></i></a>
-                        <a href="#" title="LinkedIn" aria-label="Follow us on LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" title="Instagram" aria-label="Follow us on Instagram"><i
+                                class="fab fa-instagram"></i></a>
+                        <a href="#" title="LinkedIn" aria-label="Follow us on LinkedIn"><i
+                                class="fab fa-linkedin-in"></i></a>
                     </div>
                 </div>
 
@@ -1121,10 +1618,12 @@
             <div class="footer-bottom">
                 <div class="row align-items-center">
                     <div class="col-md-6 text-center text-md-start">
-                        <p class="small mb-0">&copy; <span id="year"></span> <strong>HelpReach</strong>. All rights reserved.</p>
+                        <p class="small mb-0">&copy; <span id="year"></span> <strong>HelpReach</strong>. All rights
+                            reserved.</p>
                     </div>
                     <div class="col-md-6 text-center text-md-end">
-                        <p class="small mb-0">Made with <i class="fas fa-heart text-danger"></i> to make a difference</p>
+                        <p class="small mb-0">Made with <i class="fas fa-heart text-danger"></i> to make a difference
+                        </p>
                     </div>
                 </div>
             </div>
@@ -1133,7 +1632,8 @@
 
 
     <!-- Back to Top -->
-    <a href="#" class="btn btn-lg btn-primary btn-lg-square rounded-circle back-to-top"><i class="bi bi-arrow-up"></i></a>
+    <a href="#" class="btn btn-lg btn-primary btn-lg-square rounded-circle back-to-top"><i
+            class="bi bi-arrow-up"></i></a>
 
 
     <!-- JavaScript Libraries -->
@@ -1146,7 +1646,7 @@
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
-    
+
     <!-- Registration Modal -->
     <div class="registration-overlay" id="registrationOverlay">
         <div class="registration-modal">
@@ -1242,7 +1742,7 @@
     <!-- Profile Sidebar -->
     <div class="profile-sidebar" id="profileSidebar">
         <button class="sidebar-close" onclick="closeProfileSidebar()">✕</button>
-        
+
         <div class="profile-header">
             <div class="profile-avatar">
                 <i class="fas fa-user-circle"></i>
@@ -1339,17 +1839,17 @@
         // Show registration form on page load: show once per session when navigating, and also show on reload
         window.addEventListener('load', () => {
             const userProfile = localStorage.getItem('userProfile');
-            const icon = document.getElementById('profileIcon'); if(icon) icon.classList.add('show');
-            const fillBtn = document.getElementById('fillFormBtn'); if(fillBtn) fillBtn.classList.add('show');
+            const icon = document.getElementById('profileIcon'); if (icon) icon.classList.add('show');
+            const fillBtn = document.getElementById('fillFormBtn'); if (fillBtn) fillBtn.classList.add('show');
 
-            function getNavType(){
-                try{
+            function getNavType() {
+                try {
                     const entries = performance.getEntriesByType && performance.getEntriesByType('navigation');
-                    if(entries && entries.length) return entries[0].type;
-                    if(performance.navigation && typeof performance.navigation.type !== 'undefined'){
+                    if (entries && entries.length) return entries[0].type;
+                    if (performance.navigation && typeof performance.navigation.type !== 'undefined') {
                         return (performance.navigation.type === 1) ? 'reload' : 'navigate';
                     }
-                }catch(e){}
+                } catch (e) { }
                 return 'navigate';
             }
 
@@ -1360,13 +1860,13 @@
                 isLoggedIn = true;
                 const userData = JSON.parse(userProfile);
                 updateProfileDisplay(userData);
-                if(fillBtn) fillBtn.classList.remove('show');
+                if (fillBtn) fillBtn.classList.remove('show');
                 return;
             }
 
             if (navType === 'reload' || !sessionShown) {
-                const overlay = document.getElementById('registrationOverlay'); if(overlay) overlay.classList.add('show');
-                try{ sessionStorage.setItem('registrationShown','true'); }catch(e){}
+                const overlay = document.getElementById('registrationOverlay'); if (overlay) overlay.classList.add('show');
+                try { sessionStorage.setItem('registrationShown', 'true'); } catch (e) { }
             }
         });
 
@@ -1419,25 +1919,25 @@
                 alert('Error: Form not found');
                 return;
             }
-        
+
             const userType = document.querySelector('input[name="userType"]:checked');
             if (!userType) {
                 alert('Please select a user type');
                 return;
             }
-            
+
             // Get form inputs using more specific selectors to avoid NGO field confusion
             const formGroups = form.querySelectorAll('.form-group');
             console.log('Form groups found:', formGroups.length);
-        
+
             const nameInput = formGroups[0]?.querySelector('input[type="text"]');
             const emailInput = formGroups[1]?.querySelector('input[type="email"]');
             const phoneInput = formGroups[2]?.querySelector('input[type="tel"]');
             const locationInput = formGroups[4]?.querySelector('input[type="text"]');
             const termsCheckbox = form.querySelector('input[type="checkbox"]');
-        
+
             console.log('Name:', nameInput?.value, 'Email:', emailInput?.value, 'Phone:', phoneInput?.value, 'Location:', locationInput?.value);
-            
+
             // Validate all fields
             if (!nameInput || !nameInput.value.trim()) {
                 alert('Please enter your full name');
@@ -1509,7 +2009,7 @@
             const donationCount = document.getElementById('donationCount');
             const claimedCount = document.getElementById('claimedCount');
             const activityLevel = document.getElementById('activityLevel');
-            
+
             if (profileName) profileName.textContent = userData.name;
             if (profileType) profileType.textContent = userData.userType.charAt(0).toUpperCase() + userData.userType.slice(1);
             if (profileEmail) profileEmail.textContent = userData.email;
