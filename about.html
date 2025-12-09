@@ -550,20 +550,50 @@
 
         /* Entrance animation when card enters viewport */
         @keyframes why-pop {
-            0% { opacity: 0; transform: translateY(18px); }
-            60% { opacity: 1; transform: translateY(-6px); }
-            100% { opacity: 1; transform: translateY(0); }
+            0% {
+                opacity: 0;
+                transform: translateY(18px);
+            }
+
+            60% {
+                opacity: 1;
+                transform: translateY(-6px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
-        .why-card.in-view { animation: why-pop 620ms cubic-bezier(.2, .85, .2, 1) forwards; }
+        .why-card.in-view {
+            animation: why-pop 620ms cubic-bezier(.2, .85, .2, 1) forwards;
+        }
 
         /* Staggered delays based on column position (kept for row animation) */
-        .why-row>.col-md-4:nth-child(1) .why-card.in-view { animation-delay: 0.06s; }
-        .why-row>.col-md-4:nth-child(2) .why-card.in-view { animation-delay: 0.12s; }
-        .why-row>.col-md-4:nth-child(3) .why-card.in-view { animation-delay: 0.18s; }
-        .why-row>.col-md-4:nth-child(4) .why-card.in-view { animation-delay: 0.24s; }
-        .why-row>.col-md-4:nth-child(5) .why-card.in-view { animation-delay: 0.30s; }
-        .why-row>.col-md-4:nth-child(6) .why-card.in-view { animation-delay: 0.36s; }
+        .why-row>.col-md-4:nth-child(1) .why-card.in-view {
+            animation-delay: 0.06s;
+        }
+
+        .why-row>.col-md-4:nth-child(2) .why-card.in-view {
+            animation-delay: 0.12s;
+        }
+
+        .why-row>.col-md-4:nth-child(3) .why-card.in-view {
+            animation-delay: 0.18s;
+        }
+
+        .why-row>.col-md-4:nth-child(4) .why-card.in-view {
+            animation-delay: 0.24s;
+        }
+
+        .why-row>.col-md-4:nth-child(5) .why-card.in-view {
+            animation-delay: 0.30s;
+        }
+
+        .why-row>.col-md-4:nth-child(6) .why-card.in-view {
+            animation-delay: 0.36s;
+        }
 
         /* Icon container - centered and green tint */
         .why-icon {
@@ -583,7 +613,7 @@
             position: absolute;
             inset: -6px;
             border-radius: 50%;
-            background: radial-gradient(circle at 30% 30%, rgba(16,185,129,0.10), rgba(255,255,255,0));
+            background: radial-gradient(circle at 30% 30%, rgba(16, 185, 129, 0.10), rgba(255, 255, 255, 0));
             filter: blur(6px);
             opacity: 0.9;
             pointer-events: none;
@@ -591,21 +621,46 @@
 
         .why-icon i {
             font-size: 1.6rem;
-            color: #d9a74b; /* green icon */
+            color: #e5a965;
+            /* green icon */
         }
 
-        .why-card:hover { transform: translateY(-8px); box-shadow: 0 30px 80px rgba(15,23,30,0.08); }
+        .why-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 30px 80px rgba(15, 23, 30, 0.08);
+        }
 
-        .why-choose .why-title { color: #3b2460; font-weight: 700; margin-bottom: 12px; }
+        .why-choose .why-title {
+            color: #3b2460;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
 
-        .why-choose .why-title::after { display: none; }
+        .why-choose .why-title::after {
+            display: none;
+        }
 
-        .why-choose .why-desc { color: #5b5b5b; font-size: 0.95rem; margin: 0; }
+        .why-choose .why-desc {
+            color: #5b5b5b;
+            font-size: 0.95rem;
+            margin: 0;
+        }
 
         /* Respect reduced motion */
         @media (prefers-reduced-motion: reduce) {
-            .why-card, .why-icon, .why-card.in-view, .why-card:hover { animation: none !important; transition: none !important; transform: none !important; }
-            .why-icon::after { display: none; }
+
+            .why-card,
+            .why-icon,
+            .why-card.in-view,
+            .why-card:hover {
+                animation: none !important;
+                transition: none !important;
+                transform: none !important;
+            }
+
+            .why-icon::after {
+                display: none;
+            }
         }
 
         /* Stagger for why cards */
@@ -1343,186 +1398,253 @@
     </div>
 
 
- <!-- Moments of Change Section -->
-<style>
-    .moments-section {
-        padding: 60px 0;
-        background: #f8f9fa;
-    }
+    <!-- Moments of Change Section -->
+    <style>
+        .moments-section {
+            padding: 60px 0;
+            background: #f8f9fa;
+        }
 
-    .moments-heading {
-        color: #0066cc;
-        font-size: 2.8rem;
-        font-weight: 900;
-        margin-bottom: 8px;
-        line-height: 1.05;
-    }
+        .moments-heading {
+            color: #0066cc;
+            font-size: 2.8rem;
+            font-weight: 900;
+            margin-bottom: 8px;
+            line-height: 1.05;
+        }
 
-    .moments-description {
-        color: #9ca3af;
-        font-size: 0.95rem;
-        line-height: 1.7;
-        margin-bottom: 32px;
-        max-width: 100%;
-        padding-right: 20px;
-        border-right: 4px solid #0066cc;
-        margin-right:470px ;
-    }
+        .moments-description {
+            color: #9ca3af;
+            font-size: 0.95rem;
+            line-height: 1.7;
+            margin-bottom: 32px;
+            max-width: 100%;
+            padding-right: 20px;
+            border-right: 4px solid #0066cc;
+            margin-right: 470px;
+        }
 
-    /* Main container: grid left + impact right */
-    .moments-wrapper {
-        display: grid;
-        grid-template-columns: 2fr 1fr;
-        gap: 28px;
-        align-items: start;
-    }
+        /* Main container: grid left + impact right */
+        .moments-wrapper {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 28px;
+            align-items: start;
+        }
 
-    /* IMAGE GRID */
-    .moments-grid {
-        display: grid;
-        grid-template-columns: 1fr 1fr 1fr;
-        gap: 16px;
-    }
+        /* IMAGE GRID */
+        .moments-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 16px;
+        }
 
-    .moments-grid .item {
-        border-radius: 12px;
-        overflow: hidden;
-        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
-        transition: transform .35s ease, box-shadow .35s ease;
-    }
+        .moments-grid .item {
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+            transition: transform .35s ease, box-shadow .35s ease;
+        }
 
-    .moments-grid .item:hover {
-        transform: translateY(-6px);
-        box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
-    }
+        .moments-grid .item:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
+        }
 
-    .moments-grid .item img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        display: block;
-    }
+        .moments-grid .item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
 
-    /* Row 1: 3 images */
-    .moments-grid .item:nth-child(1) { grid-column: 1; grid-row: 1; height: 140px; }
-    .moments-grid .item:nth-child(2) { grid-column: 2; grid-row: 1; height: 140px; }
-    .moments-grid .item:nth-child(3) { grid-column: 3; grid-row: 1; height: 140px; }
+        /* Row 1: 3 images */
+        .moments-grid .item:nth-child(1) {
+            grid-column: 1;
+            grid-row: 1;
+            height: 140px;
+        }
 
-    /* Row 2–3: Tall left image */
-    .moments-grid .item:nth-child(4) { grid-column: 1; grid-row: 2 / 4; height: 308px; }
+        .moments-grid .item:nth-child(2) {
+            grid-column: 2;
+            grid-row: 1;
+            height: 140px;
+        }
 
-    /* Journey Box spanning 2 columns on right */
-    .moments-journey {
-        grid-column: 2 / 4;
-        grid-row: 2 / 4;
-        background: linear-gradient(135deg, #0077d4 0%, #00a8e8 100%);
-        border-radius: 12px;
-        padding: 48px 32px;
-        color: white;
-        text-align: center;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-    }
+        .moments-grid .item:nth-child(3) {
+            grid-column: 3;
+            grid-row: 1;
+            height: 140px;
+        }
 
-    .moments-journey i {
-        font-size: 3.2rem;
-        margin-bottom: 16px;
-    }
+        /* Row 2–3: Tall left image */
+        .moments-grid .item:nth-child(4) {
+            grid-column: 1;
+            grid-row: 2 / 4;
+            height: 308px;
+        }
 
-    .moments-journey h4 {
-        font-size: 1.3rem;
-        font-weight: 800;
-        line-height: 1.4;
-    }
+        /* Journey Box spanning 2 columns on right */
+        .moments-journey {
+            grid-column: 2 / 4;
+            grid-row: 2 / 4;
+            background: linear-gradient(135deg, #0077d4 0%, #00a8e8 100%);
+            border-radius: 12px;
+            padding: 48px 32px;
+            color: white;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
 
-    /* Row 4: 3 bottom images */
-    .moments-grid .item:nth-child(5) { grid-column: 1; grid-row: 4; height: 160px; }
-    .moments-grid .item:nth-child(6) { grid-column: 2; grid-row: 4; height: 160px; }
-    .moments-grid .item:nth-child(7) { grid-column: 3; grid-row: 4; height: 160px; }
+        .moments-journey i {
+            font-size: 3.2rem;
+            margin-bottom: 16px;
+        }
 
-    /* Right Side Impact Card with background image + light blue overlay */
-    .impact-card {
-        position: relative;
-        background: url("img/impactbackground.jpg") center/cover no-repeat;
-        color: white;
-        border-radius: 12px;
-        padding: 48px 36px;
-        text-align: center;
-        box-shadow: 0 16px 48px rgba(0, 119, 212, 0.22);
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        min-height: 600px;
-        width: 100%;
-        overflow: hidden;
-        margin-top: -100px;
-    }
+        .moments-journey h4 {
+            font-size: 1.3rem;
+            font-weight: 800;
+            line-height: 1.4;
+        }
 
-    .impact-card::before {
-        content: "";
-        position: absolute;
-        inset: 0;
-        background: rgba(0, 153, 255, 0.45); /* Light blue overlay */
-        backdrop-filter: blur(1px);
-    }
+        /* Row 4: 3 bottom images */
+        .moments-grid .item:nth-child(5) {
+            grid-column: 1;
+            grid-row: 4;
+            height: 160px;
+        }
 
-    .impact-card > * { position: relative; z-index: 2; }
+        .moments-grid .item:nth-child(6) {
+            grid-column: 2;
+            grid-row: 4;
+            height: 160px;
+        }
 
-    .impact-card h3 { font-size: 2.2rem; margin-bottom: 12px; font-weight: 900; }
-    .impact-card p { font-size: 1.1rem; margin-bottom: 32px; opacity: 0.95; font-weight: 500; }
-    .impact-card .btn { border-radius: 50px; padding: 12px 32px; font-weight: 700; margin: 8px; display: inline-block; }
-    .impact-card .btn-light { color: #0077d4; background: white; }
-    .impact-card .btn-outline { border: 2px solid rgba(255, 255, 255, 0.8); color: white; }
+        .moments-grid .item:nth-child(7) {
+            grid-column: 3;
+            grid-row: 4;
+            height: 160px;
+        }
 
-    @media (max-width: 1024px) {
-        .moments-wrapper { grid-template-columns: 1fr; }
-        .impact-card { min-height: 500px; }
-    }
-</style>
+        /* Right Side Impact Card with background image + light blue overlay */
+        .impact-card {
+            position: relative;
+            background: url("img/impactbackground.jpg") center/cover no-repeat;
+            color: white;
+            border-radius: 12px;
+            padding: 48px 36px;
+            text-align: center;
+            box-shadow: 0 16px 48px rgba(0, 119, 212, 0.22);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 600px;
+            width: 100%;
+            overflow: hidden;
+            margin-top: -100px;
+        }
 
-<div class="moments-section container-fluid">
-    <div class="container">
-        <h2 class="moments-heading">Moments<br>of change</h2>
-        <p class="moments-description">
-            Witness the transformative power of compassion through our work. These moments capture the lives we've touched.
-        </p>
+        .impact-card::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 153, 255, 0.45);
+            /* Light blue overlay */
+            backdrop-filter: blur(1px);
+        }
 
-        <div class="moments-wrapper">
-            <!-- LEFT GRID -->
-            <div class="moments-grid">
-                <!-- Row 1: 3 IMAGES -->
-                <div class="item reveal"><img src="img/Community gathering.jpg" alt=""></div>
-                <div class="item reveal"><img src="img/Donation event.jpg" alt=""></div>
-                <div class="item reveal"><img src="img/Food distribution.webp" alt=""></div>
+        .impact-card>* {
+            position: relative;
+            z-index: 2;
+        }
 
-                <!-- Tall Image -->
-                <div class="item reveal"><img src="img/Team event.jpg" alt=""></div>
+        .impact-card h3 {
+            font-size: 2.2rem;
+            margin-bottom: 12px;
+            font-weight: 900;
+        }
 
-                <!-- Journey Box -->
-                <div class="moments-journey reveal">
-                    <i class="fas fa-building"></i>
-                    <h4>OUR JOURNEY<br>IN FRAMES</h4>
+        .impact-card p {
+            font-size: 1.1rem;
+            margin-bottom: 32px;
+            opacity: 0.95;
+            font-weight: 500;
+        }
+
+        .impact-card .btn {
+            border-radius: 50px;
+            padding: 12px 32px;
+            font-weight: 700;
+            margin: 8px;
+            display: inline-block;
+        }
+
+        .impact-card .btn-light {
+            color: #0077d4;
+            background: white;
+        }
+
+        .impact-card .btn-outline {
+            border: 2px solid rgba(255, 255, 255, 0.8);
+            color: white;
+        }
+
+        @media (max-width: 1024px) {
+            .moments-wrapper {
+                grid-template-columns: 1fr;
+            }
+
+            .impact-card {
+                min-height: 500px;
+            }
+        }
+    </style>
+
+    <div class="moments-section container-fluid">
+        <div class="container">
+            <h2 class="moments-heading">Moments<br>of change</h2>
+            <p class="moments-description">
+                Witness the transformative power of compassion through our work. These moments capture the lives we've
+                touched.
+            </p>
+
+            <div class="moments-wrapper">
+                <!-- LEFT GRID -->
+                <div class="moments-grid">
+                    <!-- Row 1: 3 IMAGES -->
+                    <div class="item reveal"><img src="img/Community gathering.jpg" alt=""></div>
+                    <div class="item reveal"><img src="img/Donation event.jpg" alt=""></div>
+                    <div class="item reveal"><img src="img/Food distribution.webp" alt=""></div>
+
+                    <!-- Tall Image -->
+                    <div class="item reveal"><img src="img/Team event.jpg" alt=""></div>
+
+                    <!-- Journey Box -->
+                    <div class="moments-journey reveal">
+                        <i class="fas fa-building"></i>
+                        <h4>OUR JOURNEY<br>IN FRAMES</h4>
+                    </div>
+
+                    <!-- Row 4: 3 Bottom Images -->
+                    <div class="item reveal"><img src="img/Relief work.jpeg" alt=""></div>
+                    <div class="item reveal"><img src="img/food drive1.webp" alt=""></div>
+                    <div class="item reveal"><img src="img/clothing donation.webp" alt=""></div>
                 </div>
 
-                <!-- Row 4: 3 Bottom Images -->
-                <div class="item reveal"><img src="img/Relief work.jpeg" alt=""></div>
-                <div class="item reveal"><img src="img/food drive1.webp" alt=""></div>
-                <div class="item reveal"><img src="img/clothing donation.webp" alt=""></div>
-            </div>
-
-            <!-- RIGHT IMPACT CARD -->
-            <div class="impact-card reveal">
-                <h3>Impact<br>In Action</h3>
-                <p>Want To Shape A Life ?</p>
-                <a href="blog.html" class="btn btn-light">READ MORE</a>
-                <a href="donate.html" class="btn btn-outline">DONATE</a>
+                <!-- RIGHT IMPACT CARD -->
+                <div class="impact-card reveal">
+                    <h3>Impact<br>In Action</h3>
+                    <p>Want To Shape A Life ?</p>
+                    <a href="blog.html" class="btn btn-light">READ MORE</a>
+                    <a href="donate.html" class="btn btn-outline">DONATE</a>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
 
 
@@ -1557,8 +1679,8 @@
         })();
     </script>
 
-    
-   
+
+
 
     <!-- Our Focus Start -->
     <div class="container-xxl py-5">
@@ -1694,12 +1816,15 @@
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <div class="why-card wow fadeInUp">
+                    <div class="why-card d-flex align-items-start wow fadeInUp">
                         <div class="why-icon">
                             <i class="bi bi-ui-checks" aria-hidden="true"></i>
                         </div>
-                        <div class="why-title">Simple user interface</div>
-                        <p class="why-desc">A clean, easy-to-use interface that makes listing and claiming effortless.</p>
+                        <div>
+                            <div class="why-title">Simple user interface</div>
+                            <p class="why-desc">A clean, easy-to-use interface that makes listing and claiming
+                                effortless.</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1710,7 +1835,7 @@
     <!-- Testimonials Start -->
     <style>
         .testimonial-section {
-            background: linear-gradient(135deg, #ffba5a 0%, #5af7ff 100%);
+            background: linear-gradient(135deg, #5ae9ff 0%, #ffb380 100%);
             padding: 80px 0;
         }
 
@@ -1793,6 +1918,7 @@
                 opacity: 0;
                 transform: translateX(40px);
             }
+
             to {
                 opacity: 1;
                 transform: translateX(0);
@@ -1804,6 +1930,7 @@
                 opacity: 1;
                 transform: translateX(0);
             }
+
             to {
                 opacity: 0;
                 transform: translateX(-40px);
@@ -1906,21 +2033,25 @@
                         <!-- Testimonial Cards (auto-rotates, only 1 visible) -->
                         <div class="testimonial-card active" data-index="0">
                             <div class="testimonial-stars">⭐⭐⭐⭐⭐</div>
-                            <p class="testimonial-text">"After every family dinner, I used to feel bad about leftovers. Now, with HelpReach, I know my food goes to someone who truly needs it. It's simple, respectful, and deeply fulfilling."</p>
+                            <p class="testimonial-text">"After every family dinner, I used to feel bad about leftovers.
+                                Now, with HelpReach, I know my food goes to someone who truly needs it. It's simple,
+                                respectful, and deeply fulfilling."</p>
                             <div class="testimonial-author">Ritika</div>
                             <div class="testimonial-author-role">Home Chef</div>
                         </div>
 
                         <div class="testimonial-card" data-index="1">
                             <div class="testimonial-stars">⭐⭐⭐⭐⭐</div>
-                            <p class="testimonial-text">"As an event organizer, listing leftover food took minutes. The pickup was coordinated smoothly. HelpReach made it so easy!"</p>
+                            <p class="testimonial-text">"As an event organizer, listing leftover food took minutes. The
+                                pickup was coordinated smoothly. HelpReach made it so easy!"</p>
                             <div class="testimonial-author">Raj</div>
                             <div class="testimonial-author-role">Event Organizer</div>
                         </div>
 
                         <div class="testimonial-card" data-index="2">
                             <div class="testimonial-stars">⭐⭐⭐⭐⭐</div>
-                            <p class="testimonial-text">"Donating clothes after our community drive was simple — they reached families the next day. The impact was incredible!"</p>
+                            <p class="testimonial-text">"Donating clothes after our community drive was simple — they
+                                reached families the next day. The impact was incredible!"</p>
                             <div class="testimonial-author">Meera</div>
                             <div class="testimonial-author-role">Donor</div>
                         </div>
@@ -1928,13 +2059,16 @@
                         <!-- Avatar Selectors (stacked on right) -->
                         <div class="testimonial-avatars">
                             <div class="avatar active" data-index="0">
-                                <img src="img/donor1.jpg" alt="Ritika" onerror="this.parentElement.innerHTML='<i class=\'fas fa-user\' style=\'font-size:24px;color:white;\'></i>'">
+                                <img src="img/donor1.jpg" alt="Ritika"
+                                    onerror="this.parentElement.innerHTML='<i class=\'fas fa-user\' style=\'font-size:24px;color:white;\'></i>'">
                             </div>
                             <div class="avatar" data-index="1">
-                                <img src="img/donor2.jpg" alt="Raj" onerror="this.parentElement.innerHTML='<i class=\'fas fa-user\' style=\'font-size:24px;color:white;\'></i>'">
+                                <img src="img/donor2.jpg" alt="Raj"
+                                    onerror="this.parentElement.innerHTML='<i class=\'fas fa-user\' style=\'font-size:24px;color:white;\'></i>'">
                             </div>
                             <div class="avatar" data-index="2">
-                                <img src="img/donor3.jpg" alt="Meera" onerror="this.parentElement.innerHTML='<i class=\'fas fa-user\' style=\'font-size:24px;color:white;\'></i>'">
+                                <img src="img/donor3.jpg" alt="Meera"
+                                    onerror="this.parentElement.innerHTML='<i class=\'fas fa-user\' style=\'font-size:24px;color:white;\'></i>'">
                             </div>
                         </div>
                     </div>
@@ -1944,14 +2078,14 @@
     </div>
 
     <script>
-        (function() {
+        (function () {
             const cards = document.querySelectorAll('.testimonial-card');
             const avatars = document.querySelectorAll('.testimonial-avatars .avatar');
             let currentIndex = 0;
 
             function showTestimonial(index) {
                 const previousIndex = currentIndex;
-                
+
                 // Exit animation on old card
                 if (previousIndex !== index) {
                     cards[previousIndex].classList.add('exit');
@@ -1987,7 +2121,7 @@
         })();
     </script>
     <!-- Testimonials End -->
-     
+
 
     <!-- NGO Verification & Safety Start -->
     <div class="container-xxl py-5">
@@ -2012,85 +2146,85 @@
         </div>
     </div>
     <!-- NGO Verification & Safety End -->
-     <!-- BLOG & NEWS SECTION -->
-<section class="blog-section">
-    <div class="blog-container">
+    <!-- BLOG & NEWS SECTION -->
+    <section class="blog-section">
+        <div class="blog-container">
 
-        <div class="blog-header">
-            <h5>Blog & News</h5>
-            <h2>Our Latest Blog Posts</h2>
-            <a href="blog.html" class="view-all">View All →</a>
+            <div class="blog-header">
+                <h5>Blog & News</h5>
+                <h2>Our Latest Blog Posts</h2>
+                <a href="blog.html" class="view-all">View All →</a>
+            </div>
+
+            <!-- Blog cards removed, section remains clean -->
+            <div class="blog-row">
+                <!-- No blog cards here -->
+            </div>
+
         </div>
+    </section>
 
-        <!-- Blog cards removed, section remains clean -->
-        <div class="blog-row">
-            <!-- No blog cards here -->
-        </div>
+    <style>
+        /* BLOG SECTION */
+        .blog-section {
+            padding: 70px 20px;
+            background: #f7f9fc;
+            font-family: Arial, sans-serif;
+        }
 
-    </div>
-</section>
+        .blog-container {
+            max-width: 1300px;
+            margin: auto;
+        }
 
-<style>
+        /* HEADER */
+        .blog-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
 
-/* BLOG SECTION */
-.blog-section {
-    padding: 70px 20px;
-    background: #f7f9fc;
-    font-family: Arial, sans-serif;
-}
+        .blog-header h5 {
+            font-size: 16px;
+            color: #0a7ed6;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
 
-.blog-container {
-    max-width: 1300px;
-    margin: auto;
-}
+        .blog-header h2 {
+            font-size: 38px;
+            margin-bottom: 10px;
+        }
 
-/* HEADER */
-.blog-header {
-    text-align: center;
-    margin-bottom: 40px;
-}
+        .view-all {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 8px 18px;
+            border-radius: 50px;
+            background: #0a7ed6;
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+        }
 
-.blog-header h5 {
-    font-size: 16px;
-    color: #0a7ed6;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    margin-bottom: 10px;
-}
+        /* BLOG ROW */
+        .blog-row {
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+            /* Centered since no cards */
+        }
 
-.blog-header h2 {
-    font-size: 38px;
-    margin-bottom: 10px;
-}
+        /* RESPONSIVE */
+        @media (max-width: 900px) {
+            .blog-row {
+                flex-direction: column;
+                gap: 20px;
+            }
+        }
+    </style>
 
-.view-all {
-    display: inline-block;
-    margin-top: 10px;
-    padding: 8px 18px;
-    border-radius: 50px;
-    background: #0a7ed6;
-    color: #fff;
-    text-decoration: none;
-    font-weight: 600;
-}
 
-/* BLOG ROW */
-.blog-row {
-    display: flex;
-    gap: 30px;
-    justify-content: center; /* Centered since no cards */
-}
-
-/* RESPONSIVE */
-@media (max-width: 900px) {
-    .blog-row {
-        flex-direction: column;
-        gap: 20px;
-    }
-}
-</style>
-
-     
 
     <!-- Footer -->
     <footer class="container-fluid bg-dark text-light py-5">
@@ -2115,7 +2249,7 @@
                         </a>
                     </div>
                 </div>
-                
+
 
                 <!-- Quick Links -->
                 <div class="col-lg-3 col-md-6 footer-section">

@@ -516,35 +516,100 @@
     </header>
 
     <!-- What We Do -->
-    <section class="container py-5" id="what-we-do">
-        <div class="section-header text-center mx-auto mb-4" style="max-width:720px;">
-            <h2 class="mb-2">What We Do</h2>
-            <p class="small">A simple platform to post donations and coordinate safe pickups with local NGOs.</p>
-        </div>
-        <div class="row g-4">
-            <div class="col-md-4 wow fadeInUp" data-wow-delay="0.1s">
-                <div class="feature-card p-4 h-100 text-center">
-                    <i class="fas fa-utensils fa-2x text-success mb-3"></i>
-                    <h5>Food Donation</h5>
-                    <p class="small">Post leftover meals from events, catering, and gatherings for quick pickup.</p>
+<section class="container py-5" id="what-we-do">
+    <div class="section-header text-center mx-auto mb-4" style="max-width:720px;">
+        <h2 class="mb-2 fw-bold">What We Do</h2>
+        <p class="small text-muted">A simple platform to post donations and coordinate safe pickups with local NGOs.</p>
+    </div>
+
+    <div class="row g-4 justify-content-center">
+
+        <!-- Card 1 -->
+        <div class="col-md-4 wow fadeInUp" data-wow-delay="0.1s">
+            <div class="feature-card enhanced-card text-center p-4 h-100">
+                <div class="icon-wrapper mb-3">
+                    <i class="fas fa-utensils"></i>
                 </div>
-            </div>
-            <div class="col-md-4 wow fadeInUp" data-wow-delay="0.2s">
-                <div class="feature-card p-4 h-100 text-center">
-                    <i class="fas fa-box-open fa-2x text-success mb-3"></i>
-                    <h5>Item Donation</h5>
-                    <p class="small">Donate usable items such as clothes, blankets and household goods.</p>
-                </div>
-            </div>
-            <div class="col-md-4 wow fadeInUp" data-wow-delay="0.3s">
-                <div class="feature-card p-4 h-100 text-center">
-                    <i class="fas fa-truck-loading fa-2x text-success mb-3"></i>
-                    <h5>Pickup Coordination</h5>
-                    <p class="small">Coordinate safe handovers between donors and NGOs with clear pickup times.</p>
-                </div>
+                <h5 class="fw-semibold">Food Donation</h5>
+                <p class="small text-muted">
+                    Post leftover meals from events, catering, and gatherings for quick pickup.
+                </p>
             </div>
         </div>
-    </section>
+
+        <!-- Card 2 -->
+        <div class="col-md-4 wow fadeInUp" data-wow-delay="0.2s">
+            <div class="feature-card enhanced-card text-center p-4 h-100">
+                <div class="icon-wrapper mb-3">
+                    <i class="fas fa-box-open"></i>
+                </div>
+                <h5 class="fw-semibold">Item Donation</h5>
+                <p class="small text-muted">
+                    Donate usable items such as clothes, blankets and household goods.
+                </p>
+            </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="col-md-4 wow fadeInUp" data-wow-delay="0.3s">
+            <div class="feature-card enhanced-card text-center p-4 h-100">
+                <div class="icon-wrapper mb-3">
+                    <i class="fas fa-truck-loading"></i>
+                </div>
+                <h5 class="fw-semibold">Pickup Coordination</h5>
+                <p class="small text-muted">
+                    Coordinate safe handovers between donors and NGOs with clear pickup times.
+                </p>
+            </div>
+        </div>
+
+    </div>
+</section>
+<style>
+    /* Stylish Feature Cards */
+.enhanced-card {
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 30px;
+    transition: all 0.35s ease;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Hover animation */
+.enhanced-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.12);
+}
+
+/* Icon Circle */
+.icon-wrapper {
+    width: 75px;
+    height: 75px;
+    border-radius: 50%;
+    margin: 0 auto;
+    background: linear-gradient(135deg, #28a745, #7ed957);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 28px;
+    transition: 0.35s;
+}
+
+/* Icon hover effect */
+.enhanced-card:hover .icon-wrapper {
+    transform: scale(1.12) rotate(8deg);
+}
+
+/* Title styling */
+#what-we-do h5 {
+    margin-top: 10px;
+    font-size: 1.1rem;
+}
+
+</style>
 
     <!-- HOW REPLATE WORKS -->
     <section class="how-replate-works py-5" style="background:#eefaf7;">
@@ -712,84 +777,159 @@
 
 
     <!-- Why Our Platform -->
-    <section class="container py-5" id="why-us">
-        <div class="section-header text-center mx-auto mb-4" style="max-width:720px;">
-            <h2 class="mb-2">Why Our Platform</h2>
-            <p class="small">Simple, fast, and community-focused — designed to get donations where they matter.</p>
-        </div>
-        <div class="row g-4">
-            <div class="col-md-4 wow fadeInUp" data-wow-delay="0.12s">
-                <div class="feature-card p-4 h-100 text-center">
-                    <i class="fas fa-leaf fa-2x text-success mb-3"></i>
-                    <h5>Reduce Wastage</h5>
-                    <p class="small">Keep good food and items out of the landfill and in the hands of people who need
-                        them.</p>
-                </div>
-            </div>
-            <div class="col-md-4 wow fadeInUp" data-wow-delay="0.18s">
-                <div class="feature-card p-4 h-100 text-center">
-                    <i class="fas fa-hands-helping fa-2x text-success mb-3"></i>
-                    <h5>Empower NGOs</h5>
-                    <p class="small">Help NGOs reach more people quickly with reliable notifications and coordination
-                        tools.</p>
-                </div>
-            </div>
-            <div class="col-md-4 wow fadeInUp" data-wow-delay="0.24s">
-                <div class="feature-card p-4 h-100 text-center">
-                    <i class="fas fa-stopwatch fa-2x text-success mb-3"></i>
-                    <h5>Fast &amp; Simple</h5>
-                    <p class="small">Post a donation in seconds and let nearby NGOs claim it immediately.</p>
-                </div>
-            </div>
-        </div>
-    </section>
+<section id="why-us" class="py-5 why-section">
+    <div class="container">
+        <div class="row align-items-center g-5">
 
-    <!-- Who Can Donate Section -->
-    <section class="container py-5" id="who-can-donate">
-        <div class="section-header text-center mx-auto mb-5" style="max-width:720px;">
-            <h2 class="mb-2">Who Can Donate?</h2>
-            <p class="small">Anyone can make a difference! HelpReach welcomes donations from individuals, businesses,
-                events, and organizations.</p>
+            <!-- LEFT CONTENT -->
+            <div class="col-lg-6">
+                <h2 class="fw-bold mb-3">Why Our Platform?</h2>
+                <p class="text-muted mb-4">
+                    Our platform ensures your donations create real social impact. Whether you're donating 
+                    food, clothing, or essentials, everything reaches verified NGOs quickly and safely.
+                </p>
+            </div>
+
+            <!-- RIGHT: IMAGE CARDS -->
+            <div class="col-lg-6">
+                <div class="why-card">
+                    <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c" alt="">
+                    <div class="why-card-text">
+                        <h5>Reduce Waste</h5>
+                        <p class="small">Redirect edible food and usable items from landfills.</p>
+                    </div>
+                </div>
+
+                <div class="why-card">
+                    <img src="https://images.unsplash.com/photo-1581578017427-ec6fe3d8ad89" alt="">
+                    <div class="why-card-text">
+                        <h5>Empower NGOs</h5>
+                        <p class="small">Help NGOs reach communities faster through easy coordination.</p>
+                    </div>
+                </div>
+
+                <div class="why-card">
+                    <img src="https://images.unsplash.com/photo-1526256262350-7da7584cf5eb" alt="">
+                    <div class="why-card-text">
+                        <h5>Fast & Simple</h5>
+                        <p class="small">Post donations instantly and let nearby NGOs claim them.</p>
+                    </div>
+                </div>
+            </div>
+
         </div>
-        <div class="row g-4">
-            <div class="col-md-3 wow fadeInUp" data-wow-delay="0.1s">
-                <div class="donor-card text-center">
-                    <div class="donor-icon">
-                        <i class="fas fa-home fa-3x text-success"></i>
-                    </div>
-                    <h5 class="mt-3 mb-2">Households</h5>
-                    <p class="small">Donate extra food and household items from your home.</p>
-                </div>
-            </div>
-            <div class="col-md-3 wow fadeInUp" data-wow-delay="0.15s">
-                <div class="donor-card text-center">
-                    <div class="donor-icon">
-                        <i class="fas fa-utensils fa-3x text-success"></i>
-                    </div>
-                    <h5 class="mt-3 mb-2">Restaurants & Caterers</h5>
-                    <p class="small">Post excess prepared meals from catering events.</p>
-                </div>
-            </div>
-            <div class="col-md-3 wow fadeInUp" data-wow-delay="0.2s">
-                <div class="donor-card text-center">
-                    <div class="donor-icon">
-                        <i class="fas fa-store fa-3x text-success"></i>
-                    </div>
-                    <h5 class="mt-3 mb-2">Retailers & Businesses</h5>
-                    <p class="small">Donate surplus stock and unsold merchandise.</p>
-                </div>
-            </div>
-            <div class="col-md-3 wow fadeInUp" data-wow-delay="0.25s">
-                <div class="donor-card text-center">
-                    <div class="donor-icon">
-                        <i class="fas fa-calendar-alt fa-3x text-success"></i>
-                    </div>
-                    <h5 class="mt-3 mb-2">Event Organizers</h5>
-                    <p class="small">Post leftover food and items after events.</p>
-                </div>
+    </div>
+</section>
+<style>
+    /* Section background */
+.why-section {
+    background: #eef9f3;
+    border-radius: 20px;
+}
+
+/* Card container */
+.why-card {
+    display: flex;
+    gap: 18px;
+    align-items: center;
+    background: #fff;
+    padding: 12px;
+    border-radius: 14px;
+    margin-bottom: 18px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+    transition: 0.3s ease;
+    animation: fadeUp 1s ease;
+}
+
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.why-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 26px rgba(0,0,0,0.1);
+}
+
+/* Images */
+.why-card img {
+    width: 85px;
+    height: 85px;
+    border-radius: 12px;
+    object-fit: cover;
+}
+
+/* Text */
+.why-card-text h5 {
+    margin: 0;
+    font-weight: 600;
+}
+
+.why-card-text p {
+    margin: 3px 0 0;
+    color: #6c757d;
+}
+</style>
+    <!-- Who Can Donate Section (feature rows) -->
+<section class="container py-5" id="who-can-donate">
+    <div class="section-header text-center mx-auto mb-5" style="max-width:720px;">
+        <h2 class="mb-2">Who Can Donate?</h2>
+        <p class="small">Anyone can make a difference! HelpReach welcomes donations from households, restaurants, businesses and event organisers.</p>
+    </div>
+
+    <!-- Row A: Households (image left, card right) -->
+    <div class="who-feature row align-items-center mb-5">
+        <div class="col-lg-7 wow fadeInLeft" data-wow-delay="0.08s">
+            <img src="img/clothing donation.webp" alt="Household donations" class="img-fluid rounded who-feature-image shadow-lg">
+        </div>
+        <div class="col-lg-5">
+            <div class="who-feature-card p-4 bg-white rounded shadow wow fadeInUp" data-wow-delay="0.16s">
+                <h3 class="mb-2">Households</h3>
+                <p class="small text-muted mb-3">Donate extra food and household items from your home</p>
+                <p class="mb-0">If you have leftover meals, clean clothes or usable household items, schedule a doorstep pickup and we'll connect you with nearby NGOs that can put your donations to immediate use.</p>
             </div>
         </div>
-    </section>
+    </div>
+
+    <!-- Row B: Restaurants & Caterers (card left, image right) -->
+    <div class="who-feature row align-items-center mb-5 flex-lg-row-reverse">
+        <div class="col-lg-7 wow fadeInRight" data-wow-delay="0.08s">
+            <img src="img/Food distribution.webp" alt="Restaurant donations" class="img-fluid rounded who-feature-image shadow-lg">
+        </div>
+        <div class="col-lg-5">
+            <div class="who-feature-card p-4 bg-white rounded shadow wow fadeInUp" data-wow-delay="0.16s">
+                <h3 class="mb-2">Restaurants & Caterers</h3>
+                <p class="small text-muted mb-3">Post excess prepared meals from catering events</p>
+                <p class="mb-0">Quickly list surplus cooked meals or unopened food packages so NGOs can claim and collect them while they're fresh and safe to serve.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Row C: Retailers & Events (image left, card right) -->
+    <div class="who-feature row align-items-center mb-5">
+        <div class="col-lg-7 wow fadeInLeft" data-wow-delay="0.08s">
+            <img src="img/feature.jpg" alt="Retail donations" class="img-fluid rounded who-feature-image shadow-lg">
+        </div>
+        <div class="col-lg-5">
+            <div class="who-feature-card p-4 bg-white rounded shadow wow fadeInUp" data-wow-delay="0.16s">
+                <h3 class="mb-2">Retailers & Event Organizers</h3>
+                <p class="small text-muted mb-3">Donate surplus stock, event leftovers and reusable items</p>
+                <p class="mb-0">Whether you're a store with unsold merchandise or an event organizer with leftovers, list items for pickup and help us match them with NGOs in need.</p>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .who-feature-image { width:100%; height:100%; object-fit:cover; border-radius:8px; }
+        .who-feature-card { margin-top: -40px; }
+        .who-feature .who-feature-card { margin-left: 30px; }
+        .who-feature.flex-lg-row-reverse .who-feature-card { margin-left: 0; margin-right: 30px; }
+        @media (max-width: 991px) {
+            .who-feature-card { margin-top: 20px; }
+            .who-feature .who-feature-card, .who-feature.flex-lg-row-reverse .who-feature-card { margin: 0; }
+        }
+    </style>
+</section>
 
     <!-- Types of Donations We Accept Section -->
     <section class="container-fluid py-5 bg-light" id="donation-types">
@@ -1125,9 +1265,7 @@
             }
         }
     </style>
-    </head>
-
-    <body>
+    
 
         <section class="foundation-section">
             <div class="foundation-container">
@@ -1176,12 +1314,7 @@
                     <img src="img/happy children food.avif" class="img-box">
                 </div>
 
-                <!-- FLOATING BOX -->
-                <!-- <div class="help-box">
-                    <p>Help Them</p>
-                    <a href="donate.html" class="donate-btn">Donate ↗</a>
-                </div> -->
-
+                
             </div>
         </section>
 
@@ -1189,7 +1322,7 @@
 
 
         <!-- Final CTA -->
-        <section class="container-fluid py-5 final-cta">
+        <!-- <section class="container-fluid py-5 final-cta">
             <div class="container text-center">
                 <div class="p-4 rounded-lg cta-panel wow fadeInUp" data-wow-delay="0.12s">
                     <h2 class="mb-2">Ready to make a difference?</h2>
@@ -1200,7 +1333,7 @@
                     <a class="btn btn-lg btn-register-ngo" href="register-ngo.html">Register as NGO</a>
                 </div>
             </div>
-        </section>
+        </section> -->
 
         <!-- Footer -->
         <footer class="container-fluid bg-dark text-light py-5">

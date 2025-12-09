@@ -1302,783 +1302,918 @@
             }
         }
     </style>
-    </head>
 
-    <body>
 
-        <section class="feature-container">
+    <section class="feature-container">
 
-            <!-- LEFT SIDE -->
-            <div class="left-side">
-                <h1>Explore Our Powerful<br>Features</h1>
-                <p>Designed to make your experience simple, efficient, and impactful.</p>
+        <!-- LEFT SIDE -->
+        <div class="left-side">
+            <h1>Explore Our Powerful<br>Features</h1>
+            <p>Designed to make your experience simple, efficient, and impactful.</p>
+        </div>
+
+        <!-- RIGHT SIDE -->
+        <div class="right-side">
+
+            <!-- BOX 1 -->
+            <div class="feature-box">
+                <a href="feature.html#smart-dashboard">
+                    <h3>Smart Dashboard <span class="arrow">→</span></h3>
+                    <p>Track activity, monitor progress, and get insights in one place.</p>
+                </a>
             </div>
 
-            <!-- RIGHT SIDE -->
-            <div class="right-side">
-
-                <!-- BOX 1 -->
-                <div class="feature-box">
-                    <a href="feature.html#smart-dashboard">
-                        <h3>Smart Dashboard <span class="arrow">→</span></h3>
-                        <p>Track activity, monitor progress, and get insights in one place.</p>
-                    </a>
-                </div>
-
-                <!-- BOX 2 -->
-                <div class="feature-box">
-                    <a href="feature.html#real-time-updates">
-                        <h3>Real-Time Updates <span class="arrow">→</span></h3>
-                        <p>Stay informed instantly with live notifications and alerts.</p>
-                    </a>
-                </div>
-
+            <!-- BOX 2 -->
+            <div class="feature-box">
+                <a href="feature.html#real-time-updates">
+                    <h3>Real-Time Updates <span class="arrow">→</span></h3>
+                    <p>Stay informed instantly with live notifications and alerts.</p>
+                </a>
             </div>
 
-        </section>
+        </div>
 
-    </body>
-
-</html>
+    </section>
 
 
 
+<!-- How It Works Section -->
+<div class="how-process-container">
+    <h3 class="how-process-title">How the Process Works</h3>
 
+    <div class="how-process-steps">
 
-<!-- How It Works -->
-<div class="container">
-    <h3 class="text-center mb-5 wow fadeInUp" data-wow-delay="0.1s" style="font-weight: 700;">How the Process
-        Works
-    </h3>
-    <div class="process-steps">
-        <div class="step-item wow fadeInUp" data-wow-delay="0.1s">
-            <div class="step-number">1</div>
+        <div class="how-step-item">
+            <div class="how-icon-circle">
+                <svg fill="none" stroke-width="2" stroke="currentColor">
+                    <circle cx="20" cy="20" r="4"></circle>
+                    <circle cx="50" cy="20" r="4"></circle>
+                    <circle cx="35" cy="45" r="4"></circle>
+                    <line x1="20" y1="20" x2="35" y2="45"></line>
+                    <line x1="35" y1="45" x2="50" y2="20"></line>
+                </svg>
+            </div>
             <h5>Fill the Form</h5>
             <p>Select donation type, add details about what you're donating, and provide pickup information.</p>
         </div>
-        <div class="step-item wow fadeInUp" data-wow-delay="0.2s">
-            <div class="step-number">2</div>
+
+        <div class="how-step-item">
+            <div class="how-icon-circle">
+                <svg fill="none" stroke-width="2" stroke="currentColor">
+                    <path d="M30 15 L45 30"></path>
+                    <circle cx="25" cy="10" r="8"></circle>
+                    <circle cx="50" cy="35" r="8"></circle>
+                </svg>
+            </div>
             <h5>NGOs Get Notified</h5>
             <p>Nearby registered NGOs instantly receive notifications about your donation listing.</p>
         </div>
-        <div class="step-item wow fadeInUp" data-wow-delay="0.3s">
-            <div class="step-number">3</div>
+
+        <div class="how-step-item">
+            <div class="how-icon-circle">
+                <svg fill="none" stroke-width="2" stroke="currentColor">
+                    <path d="M20 35 Q35 45 50 32" />
+                    <path d="M20 35 L20 20" />
+                    <rect x="25" y="10" width="15" height="15" rx="3"></rect>
+                </svg>
+            </div>
             <h5>Coordination</h5>
             <p>An NGO claims your donation and coordinates pickup at your specified time and location.</p>
         </div>
-        <div class="step-item wow fadeInUp" data-wow-delay="0.4s">
-            <div class="step-number">4</div>
+
+        <div class="how-step-item how-center-last">
+            <div class="how-icon-circle">
+                <svg fill="none" stroke-width="2" stroke="currentColor">
+                    <rect x="18" y="22" width="35" height="25" rx="4"></rect>
+                    <line x1="35" y1="22" x2="35" y2="47"></line>
+                    <path d="M22 22 C18 10, 32 10, 30 22" />
+                    <path d="M48 22 C52 10, 38 10, 40 22" />
+                </svg>
+            </div>
             <h5>Impact Created</h5>
             <p>Your donation reaches people in need and creates positive change in the community.</p>
         </div>
+
     </div>
 </div>
+<style>
+    /* HOW PROCESS CUSTOM SECTION */
+.how-process-container {
+    width: 90%;
+    max-width: 1200px;
+    margin: auto;
+    padding: 60px 0;
+    text-align: center;
+    /* background-color: #f7f3b0; */
+}
 
-<!-- Donation Form -->
-<div class="container">
-    <div class="donate-form-container wow fadeInUp" data-wow-delay="0.2s">
-        <h2>✨ Submit Your Donation</h2>
-        <p>Share what you'd like to donate. We'll connect you with nearby NGOs instantly!</p>
-        <form id="donateForm">
-            <div class="form-group-wrapper">
-                <label class="form-label">
-                    <i class="fas fa-cube"></i>
-                    Donation Type
-                </label>
-                <select id="donType" class="form-select" required>
-                    <option value="">Select a donation type</option>
-                    <option value="food">🍱 Food Donation</option>
-                    <option value="clothes">👕 Clothes Donation</option>
-                    <option value="other">📦 Other Essential Donations</option>
-                </select>
-            </div>
+.how-process-title {
+    font-size: 34px;
+    font-weight: 700;
+    color: #4b1b1b;
+    margin-bottom: 100px;
+}
 
-            <div class="form-row-divider">
-                <div class="form-group-wrapper">
-                    <label class="form-label">
-                        <i class="fas fa-tag"></i>
-                        Item Type
-                    </label>
-                    <input class="form-control" name="item_type" placeholder="e.g., Biryani, T-shirts" required>
-                </div>
-                <div class="form-group-wrapper">
-                    <label class="form-label">
-                        <i class="fas fa-calculator"></i>
-                        Quantity (approx.)
-                    </label>
-                    <input type="number" class="form-control" name="quantity" placeholder="e.g., 50" min="1" required>
-                </div>
-            </div>
+.how-process-title::after {
+    content: "";
+    width: 120px;
+    height: 3px;
+    background: #4b1b1b;
+    display: block;
+    margin: 15px auto 40px;
+    border-radius: 2px;
+}
 
-            <div class="form-group-wrapper">
-                <label class="form-label">
-                    <i class="fas fa-map-marker-alt"></i>
-                    Pickup Address / Event Location
-                </label>
-                <input class="form-control" name="address" placeholder="Enter complete address for pickup" required>
-            </div>
+.how-process-steps {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 20px;
+}
 
-            <div class="form-row-divider">
-                <div class="form-group-wrapper">
-                    <label class="form-label">
-                        <i class="fas fa-calendar-alt"></i>
-                        Pickup Date
-                    </label>
-                    <input type="date" class="form-control" name="date" required>
-                </div>
-                <div class="form-group-wrapper">
-                    <label class="form-label">
-                        <i class="fas fa-clock"></i>
-                        Pickup Time
-                    </label>
-                    <input type="time" class="form-control" name="time" required>
-                </div>
-            </div>
+.how-step-item {
+    width: 30%;
+    background: #ffffff;
+    padding: 40px 25px 50px;
+    border-radius: 14px;
+    border: 1px solid #ddd;
+    text-align: center;
+    position: relative;
+    transition: 0.3s ease;
+    animation: howFadeUp 1s ease forwards;
+    opacity: 0;
+}
 
-            <div class="file-input-wrapper">
-                <label class="file-input-label" for="photos">
-                    <i class="fas fa-cloud-upload-alt"></i>
-                    <div>Click to upload photos (Optional)</div>
-                    <small>Helps NGOs understand your donation better</small>
-                </label>
-                <input type="file" id="photos" name="photos" accept="image/*" multiple>
-            </div>
+.how-step-item:nth-child(2) { animation-delay: .2s; }
+.how-step-item:nth-child(3) { animation-delay: .4s; }
+.how-step-item:nth-child(4) { animation-delay: .6s; }
 
-            <div class="form-buttons">
-                <button class="btn-submit-donation" type="submit">
-                    <i class="fas fa-check-circle me-2"></i>Submit Donation
-                </button>
-                <a class="btn-view-listings" href="listings.html">
-                    <i class="fas fa-list me-2"></i>View Active
-                </a>
-            </div>
-        </form>
-        <div id="donMsg" class="alert mt-3" style="display:none;"></div>
-    </div>
-</div>
+/* Center last card */
+.how-center-last {
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
 
-<!-- Final CTA Section -->
-<div class="container mb-5">
-    <div class="cta-final wow fadeInUp" data-wow-delay="0.2s">
-        <h3>🤝 Questions about donating?</h3>
-        <p>Explore our <strong>FAQs</strong> for quick answers, or <strong>reach out to our support
-                team</strong>
-            directly. We're here to make your donation journey smooth and rewarding!</p>
-        <a href="contact.html" class="btn-get-touch">
-            <i class="fas fa-envelope"></i>
-            Get in Touch
-        </a>
-    </div>
-</div>
+@keyframes howFadeUp {
+    from { opacity: 0; transform: translateY(40px); }
+    to { opacity: 1; transform: translateY(0); }
+}
 
-<!-- Footer -->
-<footer class="container-fluid bg-dark text-light py-5">
+.how-step-item:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+}
+
+.how-icon-circle {
+    width: 120px;
+    height: 120px;
+    background: #f5f5f5;
+    border-radius: 50%;
+    border: 3px solid #ccc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: -90px auto 25px;
+}
+
+.how-icon-circle svg {
+    width: 55px;
+    height: 55px;
+    stroke: #666;
+}
+
+.h5 {
+    font-size: 24px;
+    margin-bottom: 12px;
+    color: #333;
+}
+
+.how-step-item p {
+    font-size: 15px;
+    color: #555;
+    line-height: 1.6;
+}
+
+@media (max-width: 900px) {
+    .how-step-item { width: 45%; }
+}
+
+@media (max-width: 600px) {
+    .how-step-item { width: 100%; }
+}
+</style>
+
+
+
+
+
+
+    <!-- Donation Form -->
     <div class="container">
-        <div class="row g-4">
-            <!-- About Section -->
-            <div class="col-lg-3 col-md-6 footer-section">
-                <h5 class="fw-bold">HelpReach</h5>
-                <p class="small">A platform connecting donors and NGOs to reduce food and item wastage while
-                    helping
-                    communities in need.</p>
-                <div class="social-links">
-                    <a href="#" title="Facebook" aria-label="Follow us on Facebook"><i
-                            class="fab fa-facebook-f"></i></a>
-                    <a href="#" title="Twitter" aria-label="Follow us on Twitter"><i class="fab fa-twitter"></i></a>
-                    <a href="#" title="Instagram" aria-label="Follow us on Instagram"><i
-                            class="fab fa-instagram"></i></a>
-                    <a href="#" title="LinkedIn" aria-label="Follow us on LinkedIn"><i
-                            class="fab fa-linkedin-in"></i></a>
-                </div>
-            </div>
-
-            <!-- Quick Links -->
-            <div class="col-lg-3 col-md-6 footer-section">
-                <h6>Quick Links</h6>
-                <ul class="list-unstyled">
-                    <li><a class="text-decoration-none" href="index.html">Home</a></li>
-                    <li><a class="text-decoration-none" href="about.html">About Us</a></li>
-                    <li><a class="text-decoration-none" href="donate.html">Donate Now</a></li>
-                    <li><a class="text-decoration-none" href="listings.html">Active Donations</a></li>
-                    <li><a class="text-decoration-none" href="dashboard.html">Dashboard</a></li>
-                </ul>
-            </div>
-
-            <!-- Important Links -->
-            <div class="col-lg-2 col-md-6 footer-section">
-                <h6>Resources</h6>
-                <ul class="list-unstyled">
-                    <li><a class="text-decoration-none" href="blog.html">Blog</a></li>
-                    <li><a class="text-decoration-none" href="feature.html">Features</a></li>
-                    <li><a class="text-decoration-none" href="ngo-directory.html">NGO Directory</a></li>
-                    <li><a class="text-decoration-none" href="contact.html">Contact</a></li>
-                </ul>
-            </div>
-
-            <!-- Contact Info -->
-            <div class="col-lg-4 col-md-6 footer-section">
-                <h6>Get In Touch</h6>
-                <div class="contact-info">
-                    <i class="fas fa-map-marker-alt"></i>
-                    <span>411 041 Narhe Road, Pune, India</span>
-                </div>
-                <div class="contact-info">
-                    <i class="fas fa-envelope"></i>
-                    <a href="mailto:info@helpreach.org" class="text-decoration-none">info@helpreach.org</a>
-                </div>
-                <div class="contact-info">
-                    <i class="fas fa-phone"></i>
-                    <div>
-                        <div><a href="tel:+918530932462" class="text-decoration-none">+91 8530932462</a></div>
-                        <div><a href="tel:+919607340088" class="text-decoration-none">+91 9607340088</a></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Footer Divider -->
-        <div class="footer-divider"></div>
-
-        <!-- Footer Bottom -->
-        <div class="footer-bottom">
-            <div class="row align-items-center">
-                <div class="col-md-6 text-center text-md-start">
-                    <p class="small mb-0">&copy; <span id="year"></span> <strong>HelpReach</strong>. All rights
-                        reserved.</p>
-                </div>
-                <div class="col-md-6 text-center text-md-end">
-                    <p class="small mb-0">Made with <i class="fas fa-heart text-danger"></i> to make a
-                        difference
-                    </p>
-                </div>
-            </div>
-        </div>
-    </div>
-</footer>
-
-<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-<script src="lib/wow/wow.min.js"></script>
-<script>
-    // Initialize WOW.js animations
-    new WOW().init();
-
-    // Typing and removing animation
-    const typingText = document.getElementById('typingText');
-    const textArray = ['Make Your Impact Today', 'Donate With Purpose', 'Change Lives Today', 'Make Your Impact Today'];
-    let textIndex = 0;
-    let charIndex = 0;
-    let isDeleting = false;
-
-    function typeEffect() {
-        const currentText = textArray[textIndex];
-
-        if (isDeleting) {
-            typingText.textContent = currentText.substring(0, charIndex - 1);
-            charIndex--;
-        } else {
-            typingText.textContent = currentText.substring(0, charIndex + 1);
-            charIndex++;
-        }
-
-        if (!isDeleting && charIndex === currentText.length) {
-            isDeleting = true;
-            setTimeout(typeEffect, 2000); // Pause before deleting
-            return;
-        }
-
-        if (isDeleting && charIndex === 0) {
-            isDeleting = false;
-            textIndex = (textIndex + 1) % textArray.length;
-            setTimeout(typeEffect, 500); // Pause before typing
-            return;
-        }
-
-        const speed = isDeleting ? 50 : 80; // Faster deletion, slower typing
-        setTimeout(typeEffect, speed);
-    }
-
-    // Start typing animation after a short delay
-    setTimeout(typeEffect, 500);
-
-    document.getElementById('donateForm').addEventListener('submit', function (e) {
-        e.preventDefault();
-        const data = new FormData(this);
-        // Simulate sending request to NGOs
-        const msg = document.getElementById('donMsg');
-        msg.style.display = 'block';
-        msg.className = 'alert alert-success';
-        msg.textContent = '✓ Donation request sent to nearby NGOs. Listing will appear in active donations.';
-        // Save to localStorage for listings simulation
-        const donations = JSON.parse(localStorage.getItem('donations') || '[]');
-        donations.unshift({
-            id: Date.now(),
-            type: data.get('item_type'),
-            donType: data.get('donType') || document.getElementById('donType').value,
-            quantity: data.get('quantity'),
-            address: data.get('address'),
-            date: data.get('date'),
-            time: data.get('time'),
-            status: 'Available'
-        });
-        localStorage.setItem('donations', JSON.stringify(donations));
-        setTimeout(() => window.location.href = 'listings.html', 1500);
-    });
-
-    // Update year
-    document.getElementById('year').textContent = new Date().getFullYear();
-</script>
-
-<!-- Registration Modal -->
-<div class="registration-overlay" id="registrationOverlay">
-    <div class="registration-modal">
-        <div class="registration-header">
-            <h3>Join HelpReach</h3>
-            <button class="close-btn" onclick="closeRegistration()">❌</button>
-        </div>
-        <div class="registration-body">
-            <form id="registrationForm">
-                <div class="form-group">
-                    <label>Full Name</label>
-                    <input type="text" placeholder="Enter your full name" required>
-                </div>
-
-                <div class="form-group">
-                    <label>Email</label>
-                    <input type="email" placeholder="Enter your email" required>
-                </div>
-
-                <div class="form-group">
-                    <label>Phone</label>
-                    <input type="tel" placeholder="Enter your phone number" required>
-                </div>
-
-                <div class="form-group">
-                    <label>User Type</label>
-                    <div class="user-type-selector">
-                        <div class="user-type-option active" onclick="selectUserType('donor', this)">
-                            <input type="radio" name="userType" value="donor" checked>
-                            <label><i class="fas fa-gift"></i><br>Donor</label>
-                        </div>
-                        <div class="user-type-option" onclick="selectUserType('organizer', this)">
-                            <input type="radio" name="userType" value="organizer">
-                            <label><i class="fas fa-calendar"></i><br>Organizer</label>
-                        </div>
-                        <div class="user-type-option" onclick="selectUserType('ngo', this)">
-                            <input type="radio" name="userType" value="ngo">
-                            <label><i class="fas fa-handshake"></i><br>NGO</label>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label>Location</label>
-                    <input type="text" placeholder="Enter your city/location" required>
-                </div>
-
-                <div class="ngo-fields" id="ngoFields">
-                    <div class="form-group">
-                        <label>NGO Name</label>
-                        <input type="text" placeholder="Organization name">
-                    </div>
-                    <div class="form-group">
-                        <label>Registration Number</label>
-                        <input type="text" placeholder="NGO registration number">
-                    </div>
-                    <div class="form-group">
-                        <label>Service Area</label>
-                        <input type="text" placeholder="Area of operation">
-                    </div>
-                    <div class="form-group">
-                        <label>Upload Documents</label>
-                        <input type="file" multiple>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label>
-                        <input type="checkbox" required> I agree to the terms and conditions
+        <div class="donate-form-container wow fadeInUp" data-wow-delay="0.2s">
+            <h2>✨ Submit Your Donation</h2>
+            <p>Share what you'd like to donate. We'll connect you with nearby NGOs instantly!</p>
+            <form id="donateForm">
+                <div class="form-group-wrapper">
+                    <label class="form-label">
+                        <i class="fas fa-cube"></i>
+                        Donation Type
                     </label>
+                    <select id="donType" class="form-select" required>
+                        <option value="">Select a donation type</option>
+                        <option value="food">🍱 Food Donation</option>
+                        <option value="clothes">👕 Clothes Donation</option>
+                        <option value="other">📦 Other Essential Donations</option>
+                    </select>
+                </div>
+
+                <div class="form-row-divider">
+                    <div class="form-group-wrapper">
+                        <label class="form-label">
+                            <i class="fas fa-tag"></i>
+                            Item Type
+                        </label>
+                        <input class="form-control" name="item_type" placeholder="e.g., Biryani, T-shirts" required>
+                    </div>
+                    <div class="form-group-wrapper">
+                        <label class="form-label">
+                            <i class="fas fa-calculator"></i>
+                            Quantity (approx.)
+                        </label>
+                        <input type="number" class="form-control" name="quantity" placeholder="e.g., 50" min="1"
+                            required>
+                    </div>
+                </div>
+
+                <div class="form-group-wrapper">
+                    <label class="form-label">
+                        <i class="fas fa-map-marker-alt"></i>
+                        Pickup Address / Event Location
+                    </label>
+                    <input class="form-control" name="address" placeholder="Enter complete address for pickup" required>
+                </div>
+
+                <div class="form-row-divider">
+                    <div class="form-group-wrapper">
+                        <label class="form-label">
+                            <i class="fas fa-calendar-alt"></i>
+                            Pickup Date
+                        </label>
+                        <input type="date" class="form-control" name="date" required>
+                    </div>
+                    <div class="form-group-wrapper">
+                        <label class="form-label">
+                            <i class="fas fa-clock"></i>
+                            Pickup Time
+                        </label>
+                        <input type="time" class="form-control" name="time" required>
+                    </div>
+                </div>
+
+                <div class="file-input-wrapper">
+                    <label class="file-input-label" for="photos">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <div>Click to upload photos (Optional)</div>
+                        <small>Helps NGOs understand your donation better</small>
+                    </label>
+                    <input type="file" id="photos" name="photos" accept="image/*" multiple>
+                </div>
+
+                <div class="form-buttons">
+                    <button class="btn-submit-donation" type="submit">
+                        <i class="fas fa-check-circle me-2"></i>Submit Donation
+                    </button>
+                    <a class="btn-view-listings" href="listings.html">
+                        <i class="fas fa-list me-2"></i>View Active
+                    </a>
                 </div>
             </form>
-        </div>
-        <div class="registration-footer">
-            <button class="btn-register" onclick="submitRegistration()">Register</button>
-        </div>
-    </div>
-</div>
-
-<!-- Profile Icon (appears after registration) -->
-<button class="profile-icon" id="profileIcon" onclick="openProfileSidebar()">
-    <i class="fas fa-user"></i>
-</button>
-
-<!-- Fill Form Button (appears when form is closed) -->
-<button class="fill-form-btn show" id="fillFormBtn" onclick="openRegistration()">
-    <i class="fas fa-edit"></i> Fill Form
-</button>
-
-<!-- Profile Overlay -->
-<div class="profile-overlay" id="profileOverlay" onclick="closeProfileSidebar()"></div>
-
-<!-- Profile Sidebar -->
-<div class="profile-sidebar" id="profileSidebar">
-    <button class="sidebar-close" onclick="closeProfileSidebar()">✕</button>
-
-    <div class="profile-header">
-        <div class="profile-avatar">
-            <i class="fas fa-user-circle"></i>
-        </div>
-        <div class="profile-name" id="profileName">John Doe</div>
-        <div class="profile-type" id="profileType">Donor</div>
-        <div class="verify-badge">
-            <i class="fas fa-check-circle"></i> VerifiedC
+            <div id="donMsg" class="alert mt-3" style="display:none;"></div>
         </div>
     </div>
 
-    <!-- Contact Info -->
-    <div class="profile-section">
-        <div class="profile-section-title">
-            <i class="fas fa-phone"></i> Contact Info
-        </div>
-        <div class="profile-item">
-            <span class="profile-item-label">Email:</span>
-            <span class="profile-item-value" id="profileEmail">john@example.com</span>
-        </div>
-        <div class="profile-item">
-            <span class="profile-item-label">Phone:</span>
-            <span class="profile-item-value" id="profilePhone">+91 98765 43210</span>
-        </div>
-        <div class="profile-item">
-            <span class="profile-item-label">Location:</span>
-            <span class="profile-item-value" id="profileLocation">Pune, India</span>
+    <!-- Final CTA Section -->
+    <div class="container mb-5">
+        <div class="cta-final wow fadeInUp" data-wow-delay="0.2s">
+            <h3>🤝 Questions about donating?</h3>
+            <p>Explore our <strong>FAQs</strong> for quick answers, or <strong>reach out to our support
+                    team</strong>
+                directly. We're here to make your donation journey smooth and rewarding!</p>
+            <a href="contact.html" class="btn-get-touch">
+                <i class="fas fa-envelope"></i>
+                Get in Touch
+            </a>
         </div>
     </div>
 
-    <!-- Account Info -->
-    <div class="profile-section">
-        <div class="profile-section-title">
-            <i class="fas fa-chart-bar"></i> Account Info
+    <!-- Footer -->
+    <footer class="container-fluid bg-dark text-light py-5">
+        <div class="container">
+            <div class="row g-4">
+                <!-- About Section -->
+                <div class="col-lg-3 col-md-6 footer-section">
+                    <h5 class="fw-bold">HelpReach</h5>
+                    <p class="small">A platform connecting donors and NGOs to reduce food and item wastage while
+                        helping
+                        communities in need.</p>
+                    <div class="social-links">
+                        <a href="#" title="Facebook" aria-label="Follow us on Facebook"><i
+                                class="fab fa-facebook-f"></i></a>
+                        <a href="#" title="Twitter" aria-label="Follow us on Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" title="Instagram" aria-label="Follow us on Instagram"><i
+                                class="fab fa-instagram"></i></a>
+                        <a href="#" title="LinkedIn" aria-label="Follow us on LinkedIn"><i
+                                class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+
+                <!-- Quick Links -->
+                <div class="col-lg-3 col-md-6 footer-section">
+                    <h6>Quick Links</h6>
+                    <ul class="list-unstyled">
+                        <li><a class="text-decoration-none" href="index.html">Home</a></li>
+                        <li><a class="text-decoration-none" href="about.html">About Us</a></li>
+                        <li><a class="text-decoration-none" href="donate.html">Donate Now</a></li>
+                        <li><a class="text-decoration-none" href="listings.html">Active Donations</a></li>
+                        <li><a class="text-decoration-none" href="dashboard.html">Dashboard</a></li>
+                    </ul>
+                </div>
+
+                <!-- Important Links -->
+                <div class="col-lg-2 col-md-6 footer-section">
+                    <h6>Resources</h6>
+                    <ul class="list-unstyled">
+                        <li><a class="text-decoration-none" href="blog.html">Blog</a></li>
+                        <li><a class="text-decoration-none" href="feature.html">Features</a></li>
+                        <li><a class="text-decoration-none" href="ngo-directory.html">NGO Directory</a></li>
+                        <li><a class="text-decoration-none" href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact Info -->
+                <div class="col-lg-4 col-md-6 footer-section">
+                    <h6>Get In Touch</h6>
+                    <div class="contact-info">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>411 041 Narhe Road, Pune, India</span>
+                    </div>
+                    <div class="contact-info">
+                        <i class="fas fa-envelope"></i>
+                        <a href="mailto:info@helpreach.org" class="text-decoration-none">info@helpreach.org</a>
+                    </div>
+                    <div class="contact-info">
+                        <i class="fas fa-phone"></i>
+                        <div>
+                            <div><a href="tel:+918530932462" class="text-decoration-none">+91 8530932462</a></div>
+                            <div><a href="tel:+919607340088" class="text-decoration-none">+91 9607340088</a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer Divider -->
+            <div class="footer-divider"></div>
+
+            <!-- Footer Bottom -->
+            <div class="footer-bottom">
+                <div class="row align-items-center">
+                    <div class="col-md-6 text-center text-md-start">
+                        <p class="small mb-0">&copy; <span id="year"></span> <strong>HelpReach</strong>. All rights
+                            reserved.</p>
+                    </div>
+                    <div class="col-md-6 text-center text-md-end">
+                        <p class="small mb-0">Made with <i class="fas fa-heart text-danger"></i> to make a
+                            difference
+                        </p>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="profile-item">
-            <span class="profile-item-label">Donations:</span>
-            <span class="profile-item-value" id="donationCount">24</span>
-        </div>
-        <div class="profile-item">
-            <span class="profile-item-label">Claimed:</span>
-            <span class="profile-item-value" id="claimedCount">12</span>
-        </div>
-        <div class="profile-item">
-            <span class="profile-item-label">Activity:</span>
-            <span class="profile-item-value" id="activityLevel">Very Active</span>
-        </div>
-    </div>
+    </footer>
 
-    <!-- NGO Extra Info (hidden by default) -->
-    <div class="profile-section" id="ngoInfoSection" style="display: none;">
-        <div class="profile-section-title">
-            <i class="fas fa-building"></i> NGO Info
-        </div>
-        <div class="profile-item">
-            <span class="profile-item-label">Reg. Number:</span>
-            <span class="profile-item-value" id="ngoRegNumber">NGO-2024-001</span>
-        </div>
-        <div class="profile-item">
-            <span class="profile-item-label">Service Area:</span>
-            <span class="profile-item-value" id="ngoServiceArea">Pune</span>
-        </div>
-        <div class="profile-item">
-            <span class="profile-item-label">Documents:</span>
-            <span class="profile-item-value" id="ngoDocuments">3 files</span>
-        </div>
-    </div>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="lib/wow/wow.min.js"></script>
+    <script>
+        // Initialize WOW.js animations
+        new WOW().init();
 
-    <!-- Quick Actions -->
-    <div class="quick-actions">
-        <button class="action-btn" onclick="editProfile()">
-            <i class="fas fa-edit"></i> Edit
-        </button>
-        <button class="action-btn" onclick="myDonations()">
-            <i class="fas fa-heart"></i> Donations
-        </button>
-        <button class="action-btn" onclick="notifications()">
-            <i class="fas fa-bell"></i> Alerts
-        </button>
-        <button class="action-btn" onclick="myAccount()">
-            <i class="fas fa-cog"></i> Account
-        </button>
-        <button class="action-btn logout" onclick="logoutUser()">
-            <i class="fas fa-sign-out-alt"></i> Logout
-        </button>
-    </div>
-</div>
+        // Typing and removing animation
+        const typingText = document.getElementById('typingText');
+        const textArray = ['Make Your Impact Today', 'Donate With Purpose', 'Change Lives Today', 'Make Your Impact Today'];
+        let textIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
 
-<script>
-    // Email sending removed. Keep globals for profile behavior.
-    var guestNumber = Math.floor(Math.random() * 10000);
-    var isLoggedIn = false;
+        function typeEffect() {
+            const currentText = textArray[textIndex];
 
-    // Show registration form on page load: show once per session when navigating, and also show on reload
-    window.addEventListener('load', () => {
-        const userProfile = localStorage.getItem('userProfile');
-        const icon = document.getElementById('profileIcon'); if (icon) icon.classList.add('show');
-        const fillBtn = document.getElementById('fillFormBtn'); if (fillBtn) fillBtn.classList.add('show');
-
-        function getNavType() {
-            try {
-                const entries = performance.getEntriesByType && performance.getEntriesByType('navigation');
-                if (entries && entries.length) return entries[0].type;
-                if (performance.navigation && typeof performance.navigation.type !== 'undefined') {
-                    return (performance.navigation.type === 1) ? 'reload' : 'navigate';
-                }
-            } catch (e) { }
-            return 'navigate';
-        }
-
-        const navType = getNavType();
-        const sessionShown = sessionStorage.getItem('registrationShown');
-
-        if (userProfile) {
-            isLoggedIn = true;
-            const userData = JSON.parse(userProfile);
-            updateProfileDisplay(userData);
-            if (fillBtn) fillBtn.classList.remove('show');
-            return;
-        }
-
-        if (navType === 'reload' || !sessionShown) {
-            const overlay = document.getElementById('registrationOverlay'); if (overlay) overlay.classList.add('show');
-            try { sessionStorage.setItem('registrationShown', 'true'); } catch (e) { }
-        }
-    });
-
-    function closeRegistration() {
-        document.getElementById('registrationOverlay').classList.remove('show');
-        document.getElementById('fillFormBtn').classList.add('show');
-        if (!isLoggedIn) {
-            showGuestProfile();
-        }
-    }
-
-    function openRegistration() {
-        document.getElementById('registrationOverlay').classList.add('show');
-        document.getElementById('fillFormBtn').classList.remove('show');
-    }
-
-    function showGuestProfile() {
-        isLoggedIn = false;
-        document.getElementById('profileName').textContent = 'Guest #' + guestNumber;
-        document.getElementById('profileType').textContent = 'Guest';
-        document.getElementById('profileEmail').textContent = 'guest@helpreach.org';
-        document.getElementById('profilePhone').textContent = '---';
-        document.getElementById('profileLocation').textContent = 'Not specified';
-        document.getElementById('donationCount').textContent = '0';
-        document.getElementById('claimedCount').textContent = '0';
-        document.getElementById('activityLevel').textContent = 'Inactive';
-        document.getElementById('ngoInfoSection').style.display = 'none';
-        document.getElementById('profileIcon').classList.add('show');
-    }
-
-    function selectUserType(type, element) {
-        document.querySelectorAll('.user-type-option').forEach(opt => opt.classList.remove('active'));
-        element.classList.add('active');
-        element.querySelector('input').checked = true;
-
-        // Show/hide NGO fields
-        const ngoFields = document.getElementById('ngoFields');
-        if (type === 'ngo') {
-            ngoFields.classList.add('show');
-        } else {
-            ngoFields.classList.remove('show');
-        }
-    }
-
-    function submitRegistration() {
-        console.log('submitRegistration() called');
-        const form = document.getElementById('registrationForm');
-        if (!form) {
-            console.error('Form not found!');
-            alert('Error: Form not found');
-            return;
-        }
-
-        const userType = document.querySelector('input[name="userType"]:checked');
-        if (!userType) {
-            alert('Please select a user type');
-            return;
-        }
-
-        // Get form inputs using more specific selectors to avoid NGO field confusion
-        const formGroups = form.querySelectorAll('.form-group');
-        console.log('Form groups found:', formGroups.length);
-
-        const nameInput = formGroups[0]?.querySelector('input[type="text"]');
-        const emailInput = formGroups[1]?.querySelector('input[type="email"]');
-        const phoneInput = formGroups[2]?.querySelector('input[type="tel"]');
-        const locationInput = formGroups[4]?.querySelector('input[type="text"]');
-        const termsCheckbox = form.querySelector('input[type="checkbox"]');
-
-        console.log('Name:', nameInput?.value, 'Email:', emailInput?.value, 'Phone:', phoneInput?.value, 'Location:', locationInput?.value);
-
-        // Validate all fields
-        if (!nameInput || !nameInput.value.trim()) {
-            alert('Please enter your full name');
-            console.error('Name input missing or empty');
-            return;
-        }
-        if (!emailInput || !emailInput.value.trim()) {
-            alert('Please enter your email');
-            console.error('Email input missing or empty');
-            return;
-        }
-        if (!phoneInput || !phoneInput.value.trim()) {
-            alert('Please enter your phone number');
-            console.error('Phone input missing or empty');
-            return;
-        }
-        if (!locationInput || !locationInput.value.trim()) {
-            alert('Please enter your location');
-            console.error('Location input missing or empty');
-            return;
-        }
-        if (!termsCheckbox || !termsCheckbox.checked) {
-            alert('Please agree to the terms and conditions');
-            console.error('Terms not accepted');
-            return;
-        }
-
-        // Store user data
-        const userData = {
-            userType: userType.value,
-            name: nameInput.value.trim(),
-            email: emailInput.value.trim(),
-            phone: phoneInput.value.trim(),
-            location: locationInput.value.trim()
-        };
-
-        console.log('User data:', userData);
-        localStorage.setItem('userProfile', JSON.stringify(userData));
-        isLoggedIn = true;
-
-        // Show profile icon and hide fill form button
-        const profileIcon = document.getElementById('profileIcon');
-        const fillFormBtn = document.getElementById('fillFormBtn');
-        if (profileIcon) {
-            profileIcon.classList.add('show');
-            console.log('Profile icon shown');
-        }
-        if (fillFormBtn) {
-            fillFormBtn.classList.remove('show');
-            console.log('Fill form button hidden');
-        }
-
-        // Email sending disabled — just show success message
-        alert('Registration successful!');
-        closeRegistration();
-
-        // Update profile with user data
-        updateProfileDisplay(userData);
-    }
-
-    // Email sending removed. sendConfirmationEmail() intentionally omitted.
-
-    function updateProfileDisplay(userData) {
-        const profileName = document.getElementById('profileName');
-        const profileType = document.getElementById('profileType');
-        const profileEmail = document.getElementById('profileEmail');
-        const profilePhone = document.getElementById('profilePhone');
-        const profileLocation = document.getElementById('profileLocation');
-        const donationCount = document.getElementById('donationCount');
-        const claimedCount = document.getElementById('claimedCount');
-        const activityLevel = document.getElementById('activityLevel');
-
-        if (profileName) profileName.textContent = userData.name;
-        if (profileType) profileType.textContent = userData.userType.charAt(0).toUpperCase() + userData.userType.slice(1);
-        if (profileEmail) profileEmail.textContent = userData.email;
-        if (profilePhone) profilePhone.textContent = userData.phone;
-        if (profileLocation) profileLocation.textContent = userData.location;
-        if (donationCount) donationCount.textContent = '0';
-        if (claimedCount) claimedCount.textContent = '0';
-        if (activityLevel) activityLevel.textContent = 'New';
-
-        // Ensure profile icon is visible
-        const profileIcon = document.getElementById('profileIcon');
-        const fillFormBtn = document.getElementById('fillFormBtn');
-        if (profileIcon) profileIcon.classList.add('show');
-        if (fillFormBtn) fillFormBtn.classList.remove('show');
-
-        // Show NGO section if user type is NGO
-        const ngoInfoSection = document.getElementById('ngoInfoSection');
-        if (ngoInfoSection) {
-            if (userData.userType === 'ngo') {
-                ngoInfoSection.style.display = 'block';
+            if (isDeleting) {
+                typingText.textContent = currentText.substring(0, charIndex - 1);
+                charIndex--;
             } else {
-                ngoInfoSection.style.display = 'none';
+                typingText.textContent = currentText.substring(0, charIndex + 1);
+                charIndex++;
             }
+
+            if (!isDeleting && charIndex === currentText.length) {
+                isDeleting = true;
+                setTimeout(typeEffect, 2000); // Pause before deleting
+                return;
+            }
+
+            if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                textIndex = (textIndex + 1) % textArray.length;
+                setTimeout(typeEffect, 500); // Pause before typing
+                return;
+            }
+
+            const speed = isDeleting ? 50 : 80; // Faster deletion, slower typing
+            setTimeout(typeEffect, speed);
         }
-    }
 
-    function openProfileSidebar() {
-        document.getElementById('profileSidebar').classList.add('open');
-        document.getElementById('profileOverlay').classList.add('show');
-    }
+        // Start typing animation after a short delay
+        setTimeout(typeEffect, 500);
 
-    function closeProfileSidebar() {
-        document.getElementById('profileSidebar').classList.remove('open');
-        document.getElementById('profileOverlay').classList.remove('show');
-    }
+        document.getElementById('donateForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const data = new FormData(this);
+            // Simulate sending request to NGOs
+            const msg = document.getElementById('donMsg');
+            msg.style.display = 'block';
+            msg.className = 'alert alert-success';
+            msg.textContent = '✓ Donation request sent to nearby NGOs. Listing will appear in active donations.';
+            // Save to localStorage for listings simulation
+            const donations = JSON.parse(localStorage.getItem('donations') || '[]');
+            donations.unshift({
+                id: Date.now(),
+                type: data.get('item_type'),
+                donType: data.get('donType') || document.getElementById('donType').value,
+                quantity: data.get('quantity'),
+                address: data.get('address'),
+                date: data.get('date'),
+                time: data.get('time'),
+                status: 'Available'
+            });
+            localStorage.setItem('donations', JSON.stringify(donations));
+            setTimeout(() => window.location.href = 'listings.html', 1500);
+        });
 
-    function editProfile() {
-        if (isLoggedIn) {
-            alert('Edit Profile: Redirect to profile edit page');
-            // window.location.href = 'edit-profile.html';
-        } else {
-            alert('Please register or login to edit profile');
-        }
-    }
+        // Update year
+        document.getElementById('year').textContent = new Date().getFullYear();
+    </script>
 
-    function myDonations() {
-        if (isLoggedIn) {
-            alert('My Donations: View all your donations');
-            // window.location.href = 'my-donations.html';
-        } else {
-            alert('Please register or login to view donations');
-        }
-    }
+    <!-- Registration Modal -->
+    <div class="registration-overlay" id="registrationOverlay">
+        <div class="registration-modal">
+            <div class="registration-header">
+                <h3>Join HelpReach</h3>
+                <button class="close-btn" onclick="closeRegistration()">❌</button>
+            </div>
+            <div class="registration-body">
+                <form id="registrationForm">
+                    <div class="form-group">
+                        <label>Full Name</label>
+                        <input type="text" placeholder="Enter your full name" required>
+                    </div>
 
-    function notifications() {
-        if (isLoggedIn) {
-            alert('Notifications: You have no new notifications');
-        } else {
-            alert('Please register or login to view notifications');
-        }
-    }
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" placeholder="Enter your email" required>
+                    </div>
 
-    function myAccount() {
-        if (isLoggedIn) {
-            alert('Account Settings: Manage your account');
-            // window.location.href = 'account-settings.html';
-        } else {
-            alert('Please register or login to access account settings');
-        }
-    }
+                    <div class="form-group">
+                        <label>Phone</label>
+                        <input type="tel" placeholder="Enter your phone number" required>
+                    </div>
 
-    function logoutUser() {
-        if (isLoggedIn) {
-            if (confirm('Are you sure you want to logout?')) {
-                localStorage.removeItem('userProfile');
-                isLoggedIn = false;
+                    <div class="form-group">
+                        <label>User Type</label>
+                        <div class="user-type-selector">
+                            <div class="user-type-option active" onclick="selectUserType('donor', this)">
+                                <input type="radio" name="userType" value="donor" checked>
+                                <label><i class="fas fa-gift"></i><br>Donor</label>
+                            </div>
+                            <div class="user-type-option" onclick="selectUserType('organizer', this)">
+                                <input type="radio" name="userType" value="organizer">
+                                <label><i class="fas fa-calendar"></i><br>Organizer</label>
+                            </div>
+                            <div class="user-type-option" onclick="selectUserType('ngo', this)">
+                                <input type="radio" name="userType" value="ngo">
+                                <label><i class="fas fa-handshake"></i><br>NGO</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Location</label>
+                        <input type="text" placeholder="Enter your city/location" required>
+                    </div>
+
+                    <div class="ngo-fields" id="ngoFields">
+                        <div class="form-group">
+                            <label>NGO Name</label>
+                            <input type="text" placeholder="Organization name">
+                        </div>
+                        <div class="form-group">
+                            <label>Registration Number</label>
+                            <input type="text" placeholder="NGO registration number">
+                        </div>
+                        <div class="form-group">
+                            <label>Service Area</label>
+                            <input type="text" placeholder="Area of operation">
+                        </div>
+                        <div class="form-group">
+                            <label>Upload Documents</label>
+                            <input type="file" multiple>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" required> I agree to the terms and conditions
+                        </label>
+                    </div>
+                </form>
+            </div>
+            <div class="registration-footer">
+                <button class="btn-register" onclick="submitRegistration()">Register</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Profile Icon (appears after registration) -->
+    <button class="profile-icon" id="profileIcon" onclick="openProfileSidebar()">
+        <i class="fas fa-user"></i>
+    </button>
+
+    <!-- Fill Form Button (appears when form is closed) -->
+    <button class="fill-form-btn show" id="fillFormBtn" onclick="openRegistration()">
+        <i class="fas fa-edit"></i> Fill Form
+    </button>
+
+    <!-- Profile Overlay -->
+    <div class="profile-overlay" id="profileOverlay" onclick="closeProfileSidebar()"></div>
+
+    <!-- Profile Sidebar -->
+    <div class="profile-sidebar" id="profileSidebar">
+        <button class="sidebar-close" onclick="closeProfileSidebar()">✕</button>
+
+        <div class="profile-header">
+            <div class="profile-avatar">
+                <i class="fas fa-user-circle"></i>
+            </div>
+            <div class="profile-name" id="profileName">John Doe</div>
+            <div class="profile-type" id="profileType">Donor</div>
+            <div class="verify-badge">
+                <i class="fas fa-check-circle"></i> VerifiedC
+            </div>
+        </div>
+
+        <!-- Contact Info -->
+        <div class="profile-section">
+            <div class="profile-section-title">
+                <i class="fas fa-phone"></i> Contact Info
+            </div>
+            <div class="profile-item">
+                <span class="profile-item-label">Email:</span>
+                <span class="profile-item-value" id="profileEmail">john@example.com</span>
+            </div>
+            <div class="profile-item">
+                <span class="profile-item-label">Phone:</span>
+                <span class="profile-item-value" id="profilePhone">+91 98765 43210</span>
+            </div>
+            <div class="profile-item">
+                <span class="profile-item-label">Location:</span>
+                <span class="profile-item-value" id="profileLocation">Pune, India</span>
+            </div>
+        </div>
+
+        <!-- Account Info -->
+        <div class="profile-section">
+            <div class="profile-section-title">
+                <i class="fas fa-chart-bar"></i> Account Info
+            </div>
+            <div class="profile-item">
+                <span class="profile-item-label">Donations:</span>
+                <span class="profile-item-value" id="donationCount">24</span>
+            </div>
+            <div class="profile-item">
+                <span class="profile-item-label">Claimed:</span>
+                <span class="profile-item-value" id="claimedCount">12</span>
+            </div>
+            <div class="profile-item">
+                <span class="profile-item-label">Activity:</span>
+                <span class="profile-item-value" id="activityLevel">Very Active</span>
+            </div>
+        </div>
+
+        <!-- NGO Extra Info (hidden by default) -->
+        <div class="profile-section" id="ngoInfoSection" style="display: none;">
+            <div class="profile-section-title">
+                <i class="fas fa-building"></i> NGO Info
+            </div>
+            <div class="profile-item">
+                <span class="profile-item-label">Reg. Number:</span>
+                <span class="profile-item-value" id="ngoRegNumber">NGO-2024-001</span>
+            </div>
+            <div class="profile-item">
+                <span class="profile-item-label">Service Area:</span>
+                <span class="profile-item-value" id="ngoServiceArea">Pune</span>
+            </div>
+            <div class="profile-item">
+                <span class="profile-item-label">Documents:</span>
+                <span class="profile-item-value" id="ngoDocuments">3 files</span>
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="quick-actions">
+            <button class="action-btn" onclick="editProfile()">
+                <i class="fas fa-edit"></i> Edit
+            </button>
+            <button class="action-btn" onclick="myDonations()">
+                <i class="fas fa-heart"></i> Donations
+            </button>
+            <button class="action-btn" onclick="notifications()">
+                <i class="fas fa-bell"></i> Alerts
+            </button>
+            <button class="action-btn" onclick="myAccount()">
+                <i class="fas fa-cog"></i> Account
+            </button>
+            <button class="action-btn logout" onclick="logoutUser()">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Email sending removed. Keep globals for profile behavior.
+        var guestNumber = Math.floor(Math.random() * 10000);
+        var isLoggedIn = false;
+
+        // Show registration form on page load: show once per session when navigating, and also show on reload
+        window.addEventListener('load', () => {
+            const userProfile = localStorage.getItem('userProfile');
+            const icon = document.getElementById('profileIcon'); if (icon) icon.classList.add('show');
+            const fillBtn = document.getElementById('fillFormBtn'); if (fillBtn) fillBtn.classList.add('show');
+
+            function getNavType() {
+                try {
+                    const entries = performance.getEntriesByType && performance.getEntriesByType('navigation');
+                    if (entries && entries.length) return entries[0].type;
+                    if (performance.navigation && typeof performance.navigation.type !== 'undefined') {
+                        return (performance.navigation.type === 1) ? 'reload' : 'navigate';
+                    }
+                } catch (e) { }
+                return 'navigate';
+            }
+
+            const navType = getNavType();
+            const sessionShown = sessionStorage.getItem('registrationShown');
+
+            if (userProfile) {
+                isLoggedIn = true;
+                const userData = JSON.parse(userProfile);
+                updateProfileDisplay(userData);
+                if (fillBtn) fillBtn.classList.remove('show');
+                return;
+            }
+
+            if (navType === 'reload' || !sessionShown) {
+                const overlay = document.getElementById('registrationOverlay'); if (overlay) overlay.classList.add('show');
+                try { sessionStorage.setItem('registrationShown', 'true'); } catch (e) { }
+            }
+        });
+
+        function closeRegistration() {
+            document.getElementById('registrationOverlay').classList.remove('show');
+            document.getElementById('fillFormBtn').classList.add('show');
+            if (!isLoggedIn) {
                 showGuestProfile();
-                closeProfileSidebar();
-                alert('Logged out successfully! You are now viewing as Guest #' + guestNumber);
             }
-        } else {
-            alert('You are currently browsing as Guest #' + guestNumber);
         }
-    }
 
-    // Check if user is already logged in on page load (moved to window load event above)
-</script>
+        function openRegistration() {
+            document.getElementById('registrationOverlay').classList.add('show');
+            document.getElementById('fillFormBtn').classList.remove('show');
+        }
+
+        function showGuestProfile() {
+            isLoggedIn = false;
+            document.getElementById('profileName').textContent = 'Guest #' + guestNumber;
+            document.getElementById('profileType').textContent = 'Guest';
+            document.getElementById('profileEmail').textContent = 'guest@helpreach.org';
+            document.getElementById('profilePhone').textContent = '---';
+            document.getElementById('profileLocation').textContent = 'Not specified';
+            document.getElementById('donationCount').textContent = '0';
+            document.getElementById('claimedCount').textContent = '0';
+            document.getElementById('activityLevel').textContent = 'Inactive';
+            document.getElementById('ngoInfoSection').style.display = 'none';
+            document.getElementById('profileIcon').classList.add('show');
+        }
+
+        function selectUserType(type, element) {
+            document.querySelectorAll('.user-type-option').forEach(opt => opt.classList.remove('active'));
+            element.classList.add('active');
+            element.querySelector('input').checked = true;
+
+            // Show/hide NGO fields
+            const ngoFields = document.getElementById('ngoFields');
+            if (type === 'ngo') {
+                ngoFields.classList.add('show');
+            } else {
+                ngoFields.classList.remove('show');
+            }
+        }
+
+        function submitRegistration() {
+            console.log('submitRegistration() called');
+            const form = document.getElementById('registrationForm');
+            if (!form) {
+                console.error('Form not found!');
+                alert('Error: Form not found');
+                return;
+            }
+
+            const userType = document.querySelector('input[name="userType"]:checked');
+            if (!userType) {
+                alert('Please select a user type');
+                return;
+            }
+
+            // Get form inputs using more specific selectors to avoid NGO field confusion
+            const formGroups = form.querySelectorAll('.form-group');
+            console.log('Form groups found:', formGroups.length);
+
+            const nameInput = formGroups[0]?.querySelector('input[type="text"]');
+            const emailInput = formGroups[1]?.querySelector('input[type="email"]');
+            const phoneInput = formGroups[2]?.querySelector('input[type="tel"]');
+            const locationInput = formGroups[4]?.querySelector('input[type="text"]');
+            const termsCheckbox = form.querySelector('input[type="checkbox"]');
+
+            console.log('Name:', nameInput?.value, 'Email:', emailInput?.value, 'Phone:', phoneInput?.value, 'Location:', locationInput?.value);
+
+            // Validate all fields
+            if (!nameInput || !nameInput.value.trim()) {
+                alert('Please enter your full name');
+                console.error('Name input missing or empty');
+                return;
+            }
+            if (!emailInput || !emailInput.value.trim()) {
+                alert('Please enter your email');
+                console.error('Email input missing or empty');
+                return;
+            }
+            if (!phoneInput || !phoneInput.value.trim()) {
+                alert('Please enter your phone number');
+                console.error('Phone input missing or empty');
+                return;
+            }
+            if (!locationInput || !locationInput.value.trim()) {
+                alert('Please enter your location');
+                console.error('Location input missing or empty');
+                return;
+            }
+            if (!termsCheckbox || !termsCheckbox.checked) {
+                alert('Please agree to the terms and conditions');
+                console.error('Terms not accepted');
+                return;
+            }
+
+            // Store user data
+            const userData = {
+                userType: userType.value,
+                name: nameInput.value.trim(),
+                email: emailInput.value.trim(),
+                phone: phoneInput.value.trim(),
+                location: locationInput.value.trim()
+            };
+
+            console.log('User data:', userData);
+            localStorage.setItem('userProfile', JSON.stringify(userData));
+            isLoggedIn = true;
+
+            // Show profile icon and hide fill form button
+            const profileIcon = document.getElementById('profileIcon');
+            const fillFormBtn = document.getElementById('fillFormBtn');
+            if (profileIcon) {
+                profileIcon.classList.add('show');
+                console.log('Profile icon shown');
+            }
+            if (fillFormBtn) {
+                fillFormBtn.classList.remove('show');
+                console.log('Fill form button hidden');
+            }
+
+            // Email sending disabled — just show success message
+            alert('Registration successful!');
+            closeRegistration();
+
+            // Update profile with user data
+            updateProfileDisplay(userData);
+        }
+
+        // Email sending removed. sendConfirmationEmail() intentionally omitted.
+
+        function updateProfileDisplay(userData) {
+            const profileName = document.getElementById('profileName');
+            const profileType = document.getElementById('profileType');
+            const profileEmail = document.getElementById('profileEmail');
+            const profilePhone = document.getElementById('profilePhone');
+            const profileLocation = document.getElementById('profileLocation');
+            const donationCount = document.getElementById('donationCount');
+            const claimedCount = document.getElementById('claimedCount');
+            const activityLevel = document.getElementById('activityLevel');
+
+            if (profileName) profileName.textContent = userData.name;
+            if (profileType) profileType.textContent = userData.userType.charAt(0).toUpperCase() + userData.userType.slice(1);
+            if (profileEmail) profileEmail.textContent = userData.email;
+            if (profilePhone) profilePhone.textContent = userData.phone;
+            if (profileLocation) profileLocation.textContent = userData.location;
+            if (donationCount) donationCount.textContent = '0';
+            if (claimedCount) claimedCount.textContent = '0';
+            if (activityLevel) activityLevel.textContent = 'New';
+
+            // Ensure profile icon is visible
+            const profileIcon = document.getElementById('profileIcon');
+            const fillFormBtn = document.getElementById('fillFormBtn');
+            if (profileIcon) profileIcon.classList.add('show');
+            if (fillFormBtn) fillFormBtn.classList.remove('show');
+
+            // Show NGO section if user type is NGO
+            const ngoInfoSection = document.getElementById('ngoInfoSection');
+            if (ngoInfoSection) {
+                if (userData.userType === 'ngo') {
+                    ngoInfoSection.style.display = 'block';
+                } else {
+                    ngoInfoSection.style.display = 'none';
+                }
+            }
+        }
+
+        function openProfileSidebar() {
+            document.getElementById('profileSidebar').classList.add('open');
+            document.getElementById('profileOverlay').classList.add('show');
+        }
+
+        function closeProfileSidebar() {
+            document.getElementById('profileSidebar').classList.remove('open');
+            document.getElementById('profileOverlay').classList.remove('show');
+        }
+
+        function editProfile() {
+            if (isLoggedIn) {
+                alert('Edit Profile: Redirect to profile edit page');
+                // window.location.href = 'edit-profile.html';
+            } else {
+                alert('Please register or login to edit profile');
+            }
+        }
+
+        function myDonations() {
+            if (isLoggedIn) {
+                alert('My Donations: View all your donations');
+                // window.location.href = 'my-donations.html';
+            } else {
+                alert('Please register or login to view donations');
+            }
+        }
+
+        function notifications() {
+            if (isLoggedIn) {
+                alert('Notifications: You have no new notifications');
+            } else {
+                alert('Please register or login to view notifications');
+            }
+        }
+
+        function myAccount() {
+            if (isLoggedIn) {
+                alert('Account Settings: Manage your account');
+                // window.location.href = 'account-settings.html';
+            } else {
+                alert('Please register or login to access account settings');
+            }
+        }
+
+        function logoutUser() {
+            if (isLoggedIn) {
+                if (confirm('Are you sure you want to logout?')) {
+                    localStorage.removeItem('userProfile');
+                    isLoggedIn = false;
+                    showGuestProfile();
+                    closeProfileSidebar();
+                    alert('Logged out successfully! You are now viewing as Guest #' + guestNumber);
+                }
+            } else {
+                alert('You are currently browsing as Guest #' + guestNumber);
+            }
+        }
+
+        // Check if user is already logged in on page load (moved to window load event above)
+    </script>
 </body>
 
 </html>
