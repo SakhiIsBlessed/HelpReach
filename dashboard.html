@@ -1,14 +1,21 @@
 <!doctype html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Dashboard — HelpReach</title>
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <style>.card-compact{box-shadow:0 6px 18px rgba(0,0,0,.05);border-radius:8px;transition:all 0.3s ease;}
-       /* Registration Modal & Profile Styles */
+    <style>
+        .card-compact {
+            box-shadow: 0 6px 18px rgba(0, 0, 0, .05);
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        /* Registration Modal & Profile Styles */
         .registration-overlay {
             position: fixed;
             inset: 0;
@@ -44,6 +51,7 @@
                 transform: translateY(50px);
                 opacity: 0;
             }
+
             to {
                 transform: translateY(0);
                 opacity: 1;
@@ -144,7 +152,7 @@
             display: none;
         }
 
-        .user-type-option input:checked + label {
+        .user-type-option input:checked+label {
             color: #0d6efd;
             font-weight: 700;
         }
@@ -251,7 +259,8 @@
             transform: translateY(-3px);
             box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
         }
-            .profile-sidebar {
+
+        .profile-sidebar {
             position: fixed;
             right: -400px;
             top: 0;
@@ -434,8 +443,9 @@
             }
         }
     </style>
-  </head>
-  <body> <!-- Navbar Start -->
+</head>
+
+<body> <!-- Navbar Start -->
     <div class="container-fluid fixed-top bg-white">
         <nav class="navbar navbar-expand-lg navbar-light container">
             <a class="navbar-brand fw-bold" href="index.html">
@@ -462,31 +472,31 @@
     </div>
     <!-- Navbar End -->
     <div class="container" style="margin-top:80px;">
-      <div class="d-flex justify-content-between align-items-center mb-3">
-        <div>
-          <h2 class="mb-0"><i class="fas fa-tachometer-alt text-success me-2"></i>Your Dashboard</h2>
-          <p class="text-muted small mt-1">Manage your donations and NGO claims with ease</p>
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <div>
+                <h2 class="mb-0"><i class="fas fa-tachometer-alt text-success me-2"></i>Your Dashboard</h2>
+                <p class="text-muted small mt-1">Manage your donations and NGO claims with ease</p>
+            </div>
+            <div>
+                <a class="btn btn-danger-gradient me-2" href="listings.html">
+                    <i class="fas fa-eye me-2"></i>Active Donations
+                </a>
+                <a class="btn btn-primary" href="donate.html">
+                    <i class="fas fa-gift me-2"></i>Donate Now
+                </a>
+            </div>
         </div>
-        <div>
-          <a class="btn btn-danger-gradient me-2" href="listings.html">
-            <i class="fas fa-eye me-2"></i>Active Donations
-          </a>
-          <a class="btn btn-primary" href="donate.html">
-            <i class="fas fa-gift me-2"></i>Donate Now
-          </a>
-        </div>
-      </div>
 
-      <div class="row mt-5">
-        <div class="col-lg-6">
-          <h5><i class="fas fa-heart text-success me-2"></i>Donor — Your Posted Donations</h5>
-          <div id="donorArea"></div>
+        <div class="row mt-5">
+            <div class="col-lg-6">
+                <h5><i class="fas fa-heart text-success me-2"></i>Donor — Your Posted Donations</h5>
+                <div id="donorArea"></div>
+            </div>
+            <div class="col-lg-6">
+                <h5><i class="fas fa-hands-helping text-success me-2"></i>NGO — Your Claimed Donations</h5>
+                <div id="ngoArea"></div>
+            </div>
         </div>
-        <div class="col-lg-6">
-          <h5><i class="fas fa-hands-helping text-success me-2"></i>NGO — Your Claimed Donations</h5>
-          <div id="ngoArea"></div>
-        </div>
-      </div>
     </div>
 
     <!-- Footer -->
@@ -496,12 +506,16 @@
                 <!-- About Section -->
                 <div class="col-lg-3 col-md-6 footer-section">
                     <h5 class="fw-bold">HelpReach</h5>
-                    <p class="small">A platform connecting donors and NGOs to reduce food and item wastage while helping communities in need.</p>
+                    <p class="small">A platform connecting donors and NGOs to reduce food and item wastage while helping
+                        communities in need.</p>
                     <div class="social-links">
-                        <a href="#" title="Facebook" aria-label="Follow us on Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" title="Facebook" aria-label="Follow us on Facebook"><i
+                                class="fab fa-facebook-f"></i></a>
                         <a href="#" title="Twitter" aria-label="Follow us on Twitter"><i class="fab fa-twitter"></i></a>
-                        <a href="#" title="Instagram" aria-label="Follow us on Instagram"><i class="fab fa-instagram"></i></a>
-                        <a href="#" title="LinkedIn" aria-label="Follow us on LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" title="Instagram" aria-label="Follow us on Instagram"><i
+                                class="fab fa-instagram"></i></a>
+                        <a href="#" title="LinkedIn" aria-label="Follow us on LinkedIn"><i
+                                class="fab fa-linkedin-in"></i></a>
                     </div>
                 </div>
 
@@ -556,10 +570,12 @@
             <div class="footer-bottom">
                 <div class="row align-items-center">
                     <div class="col-md-6 text-center text-md-start">
-                        <p class="small mb-0">&copy; <span id="year"></span> <strong>HelpReach</strong>. All rights reserved.</p>
+                        <p class="small mb-0">&copy; <span id="year"></span> <strong>HelpReach</strong>. All rights
+                            reserved.</p>
                     </div>
                     <div class="col-md-6 text-center text-md-end">
-                        <p class="small mb-0">Made with <i class="fas fa-heart text-danger"></i> to make a difference</p>
+                        <p class="small mb-0">Made with <i class="fas fa-heart text-danger"></i> to make a difference
+                        </p>
                     </div>
                 </div>
             </div>
@@ -567,27 +583,27 @@
     </footer>
 
     <script>
-      function render(){
-        const list = JSON.parse(localStorage.getItem('donations')||'[]');
-        const donorArea = document.getElementById('donorArea'); donorArea.innerHTML='';
-        const ngoArea = document.getElementById('ngoArea'); ngoArea.innerHTML='';
-        if(!list.length){ 
-          donorArea.innerHTML='<div class="alert alert-info"><i class="fas fa-info-circle me-2"></i>No donations posted yet. <a href="donate.html" class="alert-link">Start donating</a> to make a difference!</div>'; 
-          ngoArea.innerHTML='<div class="alert alert-info"><i class="fas fa-info-circle me-2"></i>No claims yet. <a href="ngo-directory.html" class="alert-link">Browse available donations</a>!</div>'; 
-          return; 
-        }
-        list.forEach((d, idx)=>{
-          const card = document.createElement('div'); 
-          card.className='card p-3 mb-3 card-compact';
-          card.style.animationDelay = (idx * 0.1) + 's';
-          
-          // Get status badge color
-          let statusBadgeColor = '#28a745';
-          if(d.status === 'Open') statusBadgeColor = '#0056b3';
-          if(d.status === 'Fully Assigned') statusBadgeColor = '#ffc107';
-          if(d.status === 'Delivered') statusBadgeColor = '#20c997';
-          
-          card.innerHTML = `<div class="d-flex justify-content-between align-items-start">
+        function render() {
+            const list = JSON.parse(localStorage.getItem('donations') || '[]');
+            const donorArea = document.getElementById('donorArea'); donorArea.innerHTML = '';
+            const ngoArea = document.getElementById('ngoArea'); ngoArea.innerHTML = '';
+            if (!list.length) {
+                donorArea.innerHTML = '<div class="alert alert-info"><i class="fas fa-info-circle me-2"></i>No donations posted yet. <a href="donate.html" class="alert-link">Start donating</a> to make a difference!</div>';
+                ngoArea.innerHTML = '<div class="alert alert-info"><i class="fas fa-info-circle me-2"></i>No claims yet. <a href="ngo-directory.html" class="alert-link">Browse available donations</a>!</div>';
+                return;
+            }
+            list.forEach((d, idx) => {
+                const card = document.createElement('div');
+                card.className = 'card p-3 mb-3 card-compact';
+                card.style.animationDelay = (idx * 0.1) + 's';
+
+                // Get status badge color
+                let statusBadgeColor = '#28a745';
+                if (d.status === 'Open') statusBadgeColor = '#0056b3';
+                if (d.status === 'Fully Assigned') statusBadgeColor = '#ffc107';
+                if (d.status === 'Delivered') statusBadgeColor = '#20c997';
+
+                card.innerHTML = `<div class="d-flex justify-content-between align-items-start">
             <div class="flex-grow-1">
               <div class="d-flex align-items-center mb-2">
                 <h6 class="mb-0">${d.type}</h6>
@@ -597,56 +613,56 @@
               <p class="small mb-1"><i class="fas fa-map-marker-alt text-primary me-2"></i><strong>Location:</strong> ${d.address}</p>
             </div>
           </div>`;
-          
-          // Donor view: show edit/cancel when owner
-          const donorActions = document.createElement('div'); 
-          donorActions.className='mt-3 d-flex gap-2';
-          donorActions.innerHTML = `<button class="btn btn-sm btn-outline-primary flex-grow-1" onclick="edit(${d.id})"><i class="fas fa-edit me-1"></i>Edit</button><button class="btn btn-sm btn-danger flex-grow-1" onclick="cancel(${d.id})"><i class="fas fa-trash me-1"></i>Cancel</button>`;
-          const donorCard = card.cloneNode(true);
-          donorCard.appendChild(donorActions);
-          donorArea.appendChild(donorCard);
 
-          // NGO area: show claimed items only
-          if (d.status==='Fully Assigned' || d.status==='Split Between 2 NGOs' || d.status==='Delivered'){
-            const ngoCard = card.cloneNode(true);
-            const ngoActions = document.createElement('div'); 
-            ngoActions.className='mt-3';
-            ngoActions.innerHTML = d.status === 'Delivered' 
-              ? `<span class="badge bg-success w-100 text-center p-2"><i class="fas fa-check-circle me-1"></i>Delivered</span>`
-              : `<button class="btn btn-sm btn-success w-100" onclick="markDelivered(${d.id})"><i class="fas fa-check me-1"></i>Mark as Delivered</button>`;
-            ngoCard.appendChild(ngoActions);
-            ngoArea.appendChild(ngoCard);
-          }
-        });
-      }
-      function edit(id){ alert('Edit not implemented in this prototype. But you can cancel and create a new donation!'); }
-      function cancel(id){
-        if(confirm('Are you sure you want to cancel this donation?')){
-          let list = JSON.parse(localStorage.getItem('donations')||'[]');
-          list = list.filter(x=>x.id!==id);
-          localStorage.setItem('donations', JSON.stringify(list));
-          render();
+                // Donor view: show edit/cancel when owner
+                const donorActions = document.createElement('div');
+                donorActions.className = 'mt-3 d-flex gap-2';
+                donorActions.innerHTML = `<button class="btn btn-sm btn-outline-primary flex-grow-1" onclick="edit(${d.id})"><i class="fas fa-edit me-1"></i>Edit</button><button class="btn btn-sm btn-danger flex-grow-1" onclick="cancel(${d.id})"><i class="fas fa-trash me-1"></i>Cancel</button>`;
+                const donorCard = card.cloneNode(true);
+                donorCard.appendChild(donorActions);
+                donorArea.appendChild(donorCard);
+
+                // NGO area: show claimed items only
+                if (d.status === 'Fully Assigned' || d.status === 'Split Between 2 NGOs' || d.status === 'Delivered') {
+                    const ngoCard = card.cloneNode(true);
+                    const ngoActions = document.createElement('div');
+                    ngoActions.className = 'mt-3';
+                    ngoActions.innerHTML = d.status === 'Delivered'
+                        ? `<span class="badge bg-success w-100 text-center p-2"><i class="fas fa-check-circle me-1"></i>Delivered</span>`
+                        : `<button class="btn btn-sm btn-success w-100" onclick="markDelivered(${d.id})"><i class="fas fa-check me-1"></i>Mark as Delivered</button>`;
+                    ngoCard.appendChild(ngoActions);
+                    ngoArea.appendChild(ngoCard);
+                }
+            });
         }
-      }
-      function markDelivered(id){
-        if(confirm('Mark this donation as delivered?')){
-          let list = JSON.parse(localStorage.getItem('donations')||'[]');
-          const idx = list.findIndex(x=>x.id===id); if (idx===-1) return;
-          list[idx].status = 'Delivered';
-          localStorage.setItem('donations', JSON.stringify(list));
-          render();
+        function edit(id) { alert('Edit not implemented in this prototype. But you can cancel and create a new donation!'); }
+        function cancel(id) {
+            if (confirm('Are you sure you want to cancel this donation?')) {
+                let list = JSON.parse(localStorage.getItem('donations') || '[]');
+                list = list.filter(x => x.id !== id);
+                localStorage.setItem('donations', JSON.stringify(list));
+                render();
+            }
         }
-      }
-      render();
+        function markDelivered(id) {
+            if (confirm('Mark this donation as delivered?')) {
+                let list = JSON.parse(localStorage.getItem('donations') || '[]');
+                const idx = list.findIndex(x => x.id === id); if (idx === -1) return;
+                list[idx].status = 'Delivered';
+                localStorage.setItem('donations', JSON.stringify(list));
+                render();
+            }
+        }
+        render();
     </script>
-    
+
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-    
+
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
-    
+
     <!-- Registration Modal -->
     <div class="registration-overlay" id="registrationOverlay">
         <div class="registration-modal">
@@ -742,7 +758,7 @@
     <!-- Profile Sidebar -->
     <div class="profile-sidebar" id="profileSidebar">
         <button class="sidebar-close" onclick="closeProfileSidebar()">✕</button>
-        
+
         <div class="profile-header">
             <div class="profile-avatar">
                 <i class="fas fa-user-circle"></i>
@@ -839,17 +855,17 @@
         // Show registration form on page load: show once per session when navigating, and also show on reload
         window.addEventListener('load', () => {
             const userProfile = localStorage.getItem('userProfile');
-            const icon = document.getElementById('profileIcon'); if(icon) icon.classList.add('show');
-            const fillBtn = document.getElementById('fillFormBtn'); if(fillBtn) fillBtn.classList.add('show');
+            const icon = document.getElementById('profileIcon'); if (icon) icon.classList.add('show');
+            const fillBtn = document.getElementById('fillFormBtn'); if (fillBtn) fillBtn.classList.add('show');
 
-            function getNavType(){
-                try{
+            function getNavType() {
+                try {
                     const entries = performance.getEntriesByType && performance.getEntriesByType('navigation');
-                    if(entries && entries.length) return entries[0].type;
-                    if(performance.navigation && typeof performance.navigation.type !== 'undefined'){
+                    if (entries && entries.length) return entries[0].type;
+                    if (performance.navigation && typeof performance.navigation.type !== 'undefined') {
                         return (performance.navigation.type === 1) ? 'reload' : 'navigate';
                     }
-                }catch(e){}
+                } catch (e) { }
                 return 'navigate';
             }
 
@@ -860,13 +876,13 @@
                 isLoggedIn = true;
                 const userData = JSON.parse(userProfile);
                 updateProfileDisplay(userData);
-                if(fillBtn) fillBtn.classList.remove('show');
+                if (fillBtn) fillBtn.classList.remove('show');
                 return;
             }
 
             if (navType === 'reload' || !sessionShown) {
-                const overlay = document.getElementById('registrationOverlay'); if(overlay) overlay.classList.add('show');
-                try{ sessionStorage.setItem('registrationShown','true'); }catch(e){}
+                const overlay = document.getElementById('registrationOverlay'); if (overlay) overlay.classList.add('show');
+                try { sessionStorage.setItem('registrationShown', 'true'); } catch (e) { }
             }
         });
 
@@ -919,25 +935,25 @@
                 alert('Error: Form not found');
                 return;
             }
-        
+
             const userType = document.querySelector('input[name="userType"]:checked');
             if (!userType) {
                 alert('Please select a user type');
                 return;
             }
-            
+
             // Get form inputs using more specific selectors to avoid NGO field confusion
             const formGroups = form.querySelectorAll('.form-group');
             console.log('Form groups found:', formGroups.length);
-        
+
             const nameInput = formGroups[0]?.querySelector('input[type="text"]');
             const emailInput = formGroups[1]?.querySelector('input[type="email"]');
             const phoneInput = formGroups[2]?.querySelector('input[type="tel"]');
             const locationInput = formGroups[4]?.querySelector('input[type="text"]');
             const termsCheckbox = form.querySelector('input[type="checkbox"]');
-        
+
             console.log('Name:', nameInput?.value, 'Email:', emailInput?.value, 'Phone:', phoneInput?.value, 'Location:', locationInput?.value);
-            
+
             // Validate all fields
             if (!nameInput || !nameInput.value.trim()) {
                 alert('Please enter your full name');
@@ -1009,7 +1025,7 @@
             const donationCount = document.getElementById('donationCount');
             const claimedCount = document.getElementById('claimedCount');
             const activityLevel = document.getElementById('activityLevel');
-            
+
             if (profileName) profileName.textContent = userData.name;
             if (profileType) profileType.textContent = userData.userType.charAt(0).toUpperCase() + userData.userType.slice(1);
             if (profileEmail) profileEmail.textContent = userData.email;
@@ -1097,5 +1113,6 @@
 
         // Check if user is already logged in on page load (moved to window load event above)
     </script>
-  </body>
+</body>
+
 </html>

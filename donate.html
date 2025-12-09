@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
     <title>Donate — HelpReach</title>
@@ -11,8 +12,10 @@
     <link href="css/style.css" rel="stylesheet">
     <style>
         /* Donate Page Specific Styles */
-        body { padding-top: 72px; }
-        
+        body {
+            padding-top: 72px;
+        }
+
         .donate-hero {
             background: linear-gradient(135deg, #007bff 0%, #20c997 50%, #0dcaf0 100%);
             color: white;
@@ -22,7 +25,7 @@
             position: relative;
             overflow: hidden;
         }
-        
+
         .donate-hero::before {
             content: '';
             position: absolute;
@@ -30,16 +33,16 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: radial-gradient(circle at 20% 50%, rgba(255,255,255,0.1) 0%, transparent 50%),
-                        radial-gradient(circle at 80% 80%, rgba(255,255,255,0.05) 0%, transparent 50%);
+            background: radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.05) 0%, transparent 50%);
             pointer-events: none;
         }
-        
+
         .donate-hero .container {
             position: relative;
             z-index: 1;
         }
-        
+
         .donate-hero h1 {
             font-size: 3rem;
             font-weight: 800;
@@ -51,7 +54,7 @@
             text-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             letter-spacing: -1px;
         }
-        
+
         .donate-hero p {
             font-size: 1.3rem;
             margin-bottom: 0;
@@ -59,7 +62,7 @@
             font-weight: 500;
             text-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
         }
-        
+
         /* Glow effect for hero text */
         .donate-hero h1::before {
             content: attr(data-text);
@@ -73,7 +76,7 @@
             background-clip: text;
             filter: blur(2px);
         }
-        
+
         /* Typing animation styles */
         .typing-container {
             position: relative;
@@ -103,10 +106,14 @@
         }
 
         @keyframes blink-cursor {
-            0%, 49% {
+
+            0%,
+            49% {
                 opacity: 1;
             }
-            50%, 100% {
+
+            50%,
+            100% {
                 opacity: 0;
             }
         }
@@ -115,6 +122,7 @@
             from {
                 width: 0;
             }
+
             to {
                 width: 100%;
             }
@@ -126,14 +134,14 @@
             white-space: nowrap;
             animation: type 3s steps(40, end), blink 0.5s step-end infinite;
         }
-        
+
         .donation-types-guide {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 2rem;
             margin-bottom: 4rem;
         }
-        
+
         .donation-guide-card {
             background: white;
             padding: 2rem;
@@ -143,12 +151,12 @@
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             border-top: 4px solid #007bff;
         }
-        
+
         .donation-guide-card:hover {
             transform: translateY(-6px);
             box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
         }
-        
+
         .donation-guide-card i {
             font-size: 2.5rem;
             color: #20c997;
@@ -157,13 +165,13 @@
             height: 60px;
             line-height: 60px;
         }
-        
+
         .donation-guide-card h5 {
             font-weight: 700;
             color: #111;
             margin-bottom: 0.5rem;
         }
-        
+
         .donate-form-container {
             max-width: 700px;
             margin: 0 auto 60px;
@@ -172,7 +180,7 @@
             border-radius: 12px;
             box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
         }
-        
+
         .donate-form-container h2 {
             font-size: 2rem;
             font-weight: 700;
@@ -183,18 +191,18 @@
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
-        
-        .donate-form-container > p {
+
+        .donate-form-container>p {
             color: #666;
             margin-bottom: 2rem;
             font-size: 0.95rem;
         }
-        
+
         .form-group-wrapper {
             position: relative;
             margin-bottom: 1.5rem;
         }
-        
+
         .form-label {
             font-weight: 600;
             color: #111;
@@ -203,13 +211,14 @@
             align-items: center;
             gap: 6px;
         }
-        
+
         .form-label i {
             color: #007bff;
             font-size: 1rem;
         }
-        
-        .form-control, .form-select {
+
+        .form-control,
+        .form-select {
             border: 2px solid #e0e0e0;
             border-radius: 10px;
             padding: 0.85rem 1rem;
@@ -217,32 +226,33 @@
             transition: all 0.3s ease;
             background: #fafbfc;
         }
-        
-        .form-control:focus, .form-select:focus {
+
+        .form-control:focus,
+        .form-select:focus {
             border-color: #007bff;
             background: white;
             box-shadow: 0 0 0 4px rgba(0, 123, 255, 0.1);
             outline: none;
         }
-        
+
         .form-control::placeholder {
             color: #aaa;
             font-style: italic;
         }
-        
+
         .form-row-divider {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 1.5rem;
         }
-        
+
         .form-buttons {
             display: flex;
             gap: 1rem;
             margin-top: 2rem;
             flex-wrap: wrap;
         }
-        
+
         .btn-submit-donation {
             background: linear-gradient(135deg, #20c997, #00b884);
             border: none;
@@ -258,14 +268,14 @@
             letter-spacing: 0.5px;
             box-shadow: 0 4px 12px rgba(32, 201, 151, 0.2);
         }
-        
+
         .btn-submit-donation:hover {
             color: white;
             transform: translateY(-3px);
             box-shadow: 0 8px 20px rgba(32, 201, 151, 0.4);
             background: linear-gradient(135deg, #1aa179, #009970);
         }
-        
+
         .btn-view-listings {
             background: white;
             border: 2px solid #007bff;
@@ -280,19 +290,19 @@
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
-        
+
         .btn-view-listings:hover {
             background: #007bff;
             color: white;
             transform: translateY(-3px);
             box-shadow: 0 8px 20px rgba(0, 123, 255, 0.3);
         }
-        
+
         .file-input-wrapper {
             position: relative;
             margin-bottom: 1.5rem;
         }
-        
+
         .file-input-label {
             display: inline-block;
             padding: 1rem;
@@ -306,23 +316,23 @@
             color: #007bff;
             font-weight: 600;
         }
-        
+
         .file-input-label:hover {
             border-color: #20c997;
             background: linear-gradient(135deg, rgba(0, 123, 255, 0.1), rgba(32, 201, 151, 0.1));
             color: #20c997;
         }
-        
+
         .file-input-label i {
             display: block;
             font-size: 1.8rem;
             margin-bottom: 0.5rem;
         }
-        
+
         input[type="file"] {
             display: none;
         }
-        
+
         .small-helper-text {
             color: #999;
             font-size: 0.85rem;
@@ -331,12 +341,12 @@
             align-items: center;
             gap: 4px;
         }
-        
+
         .small-helper-text i {
             color: #20c997;
             font-size: 0.8rem;
         }
-        
+
         .btn-submit-donation {
             background: linear-gradient(135deg, #20c997, #00b884);
             border: none;
@@ -346,13 +356,13 @@
             border-radius: 8px;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
-        
+
         .btn-submit-donation:hover {
             color: white;
             transform: translateY(-2px);
             box-shadow: 0 6px 18px rgba(32, 201, 151, 0.3);
         }
-        
+
         .process-steps {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -362,12 +372,12 @@
             padding: 4rem 2rem;
             border-radius: 12px;
         }
-        
+
         .step-item {
             position: relative;
             padding-left: 50px;
         }
-        
+
         .step-number {
             position: absolute;
             left: 0;
@@ -383,19 +393,19 @@
             font-weight: 700;
             font-size: 1.2rem;
         }
-        
+
         .step-item h5 {
             font-weight: 700;
             color: #111;
             margin-bottom: 0.5rem;
         }
-        
+
         .step-item p {
             color: #666;
             margin-bottom: 0;
             font-size: 0.95rem;
         }
-        
+
         .cta-final {
             background: linear-gradient(135deg, #007bff 0%, #20c997 100%);
             color: white;
@@ -404,7 +414,7 @@
             text-align: center;
             margin: 60px 0;
         }
-        
+
         .cta-final h3 {
             font-size: 1.8rem;
             font-weight: 700;
@@ -415,7 +425,7 @@
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
-        
+
         .cta-final p {
             font-size: 1.1rem;
             margin-bottom: 1.5rem;
@@ -423,13 +433,13 @@
             line-height: 1.6;
             font-weight: 500;
         }
-        
+
         .cta-final p strong {
             font-weight: 700;
             color: #fffacd;
             text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
-        
+
         .btn-get-touch {
             background: white;
             color: #007bff;
@@ -446,7 +456,7 @@
             position: relative;
             overflow: hidden;
         }
-        
+
         .btn-get-touch::before {
             content: '';
             position: absolute;
@@ -459,29 +469,37 @@
             z-index: -1;
             border-radius: 50px;
         }
-        
+
         .btn-get-touch:hover {
             transform: translateY(-3px);
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
             color: white;
         }
-        
+
         .btn-get-touch:hover::before {
             left: 0;
         }
-        
+
         .alert {
             border-radius: 8px;
             border: none;
         }
-        
+
         @media (max-width: 768px) {
-            .donate-hero h1 { font-size: 1.8rem; }
-            .donate-form-container { padding: 1.5rem; }
-            .process-steps { grid-template-columns: 1fr; }
+            .donate-hero h1 {
+                font-size: 1.8rem;
+            }
+
+            .donate-form-container {
+                padding: 1.5rem;
+            }
+
+            .process-steps {
+                grid-template-columns: 1fr;
+            }
         }
 
-         /* Registration Modal & Profile Styles */
+        /* Registration Modal & Profile Styles */
         .registration-overlay {
             position: fixed;
             inset: 0;
@@ -517,6 +535,7 @@
                 transform: translateY(50px);
                 opacity: 0;
             }
+
             to {
                 transform: translateY(0);
                 opacity: 1;
@@ -617,7 +636,7 @@
             display: none;
         }
 
-        .user-type-option input:checked + label {
+        .user-type-option input:checked+label {
             color: #0d6efd;
             font-weight: 700;
         }
@@ -724,7 +743,8 @@
             transform: translateY(-3px);
             box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
         }
-            .profile-sidebar {
+
+        .profile-sidebar {
             position: fixed;
             right: -400px;
             top: 0;
@@ -908,6 +928,7 @@
         }
     </style>
 </head>
+
 <body>
     <!-- Navbar Start -->
     <div class="container-fluid fixed-top bg-white">
@@ -940,15 +961,18 @@
     <div class="donate-hero">
         <div class="container">
             <div class="typing-container wow fadeInDown" data-wow-delay="0.1s">
-                <h1><span class="typing-text" id="typingText">Make Your Impact Today</span><span class="typing-cursor"></span></h1>
+                <h1><span class="typing-text" id="typingText">Make Your Impact Today</span><span
+                        class="typing-cursor"></span></h1>
             </div>
-            <p class="wow fadeInUp" data-wow-delay="0.3s">Donate food, clothes, and essentials to reach people in need. It takes just a few minutes!</p>
+            <p class="wow fadeInUp" data-wow-delay="0.3s">Donate food, clothes, and essentials to reach people in need.
+                It takes just a few minutes!</p>
         </div>
     </div>
 
     <!-- Donation Types Guide -->
     <div class="container">
-        <div class="section-header text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width:720px;">
+        <div class="section-header text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s"
+            style="max-width:720px;">
             <h2 class="mb-2">What You Can Donate</h2>
             <p class="small">Quick guide to the types of donations we accept most.</p>
         </div>
@@ -973,7 +997,8 @@
 
     <!-- How It Works -->
     <div class="container">
-        <h3 class="text-center mb-5 wow fadeInUp" data-wow-delay="0.1s" style="font-weight: 700;">How the Process Works</h3>
+        <h3 class="text-center mb-5 wow fadeInUp" data-wow-delay="0.1s" style="font-weight: 700;">How the Process Works
+        </h3>
         <div class="process-steps">
             <div class="step-item wow fadeInUp" data-wow-delay="0.1s">
                 <div class="step-number">1</div>
@@ -1016,7 +1041,7 @@
                         <option value="other">📦 Other Essential Donations</option>
                     </select>
                 </div>
-                
+
                 <div class="form-row-divider">
                     <div class="form-group-wrapper">
                         <label class="form-label">
@@ -1030,10 +1055,11 @@
                             <i class="fas fa-calculator"></i>
                             Quantity (approx.)
                         </label>
-                        <input type="number" class="form-control" name="quantity" placeholder="e.g., 50" min="1" required>
+                        <input type="number" class="form-control" name="quantity" placeholder="e.g., 50" min="1"
+                            required>
                     </div>
                 </div>
-                
+
                 <div class="form-group-wrapper">
                     <label class="form-label">
                         <i class="fas fa-map-marker-alt"></i>
@@ -1041,7 +1067,7 @@
                     </label>
                     <input class="form-control" name="address" placeholder="Enter complete address for pickup" required>
                 </div>
-                
+
                 <div class="form-row-divider">
                     <div class="form-group-wrapper">
                         <label class="form-label">
@@ -1058,7 +1084,7 @@
                         <input type="time" class="form-control" name="time" required>
                     </div>
                 </div>
-                
+
                 <div class="file-input-wrapper">
                     <label class="file-input-label" for="photos">
                         <i class="fas fa-cloud-upload-alt"></i>
@@ -1067,7 +1093,7 @@
                     </label>
                     <input type="file" id="photos" name="photos" accept="image/*" multiple>
                 </div>
-                
+
                 <div class="form-buttons">
                     <button class="btn-submit-donation" type="submit">
                         <i class="fas fa-check-circle me-2"></i>Submit Donation
@@ -1085,7 +1111,8 @@
     <div class="container mb-5">
         <div class="cta-final wow fadeInUp" data-wow-delay="0.2s">
             <h3>🤝 Questions about donating?</h3>
-            <p>Explore our <strong>FAQs</strong> for quick answers, or <strong>reach out to our support team</strong> directly. We're here to make your donation journey smooth and rewarding!</p>
+            <p>Explore our <strong>FAQs</strong> for quick answers, or <strong>reach out to our support team</strong>
+                directly. We're here to make your donation journey smooth and rewarding!</p>
             <a href="contact.html" class="btn-get-touch">
                 <i class="fas fa-envelope"></i>
                 Get in Touch
@@ -1100,12 +1127,16 @@
                 <!-- About Section -->
                 <div class="col-lg-3 col-md-6 footer-section">
                     <h5 class="fw-bold">HelpReach</h5>
-                    <p class="small">A platform connecting donors and NGOs to reduce food and item wastage while helping communities in need.</p>
+                    <p class="small">A platform connecting donors and NGOs to reduce food and item wastage while helping
+                        communities in need.</p>
                     <div class="social-links">
-                        <a href="#" title="Facebook" aria-label="Follow us on Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" title="Facebook" aria-label="Follow us on Facebook"><i
+                                class="fab fa-facebook-f"></i></a>
                         <a href="#" title="Twitter" aria-label="Follow us on Twitter"><i class="fab fa-twitter"></i></a>
-                        <a href="#" title="Instagram" aria-label="Follow us on Instagram"><i class="fab fa-instagram"></i></a>
-                        <a href="#" title="LinkedIn" aria-label="Follow us on LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" title="Instagram" aria-label="Follow us on Instagram"><i
+                                class="fab fa-instagram"></i></a>
+                        <a href="#" title="LinkedIn" aria-label="Follow us on LinkedIn"><i
+                                class="fab fa-linkedin-in"></i></a>
                     </div>
                 </div>
 
@@ -1160,10 +1191,12 @@
             <div class="footer-bottom">
                 <div class="row align-items-center">
                     <div class="col-md-6 text-center text-md-start">
-                        <p class="small mb-0">&copy; <span id="year"></span> <strong>HelpReach</strong>. All rights reserved.</p>
+                        <p class="small mb-0">&copy; <span id="year"></span> <strong>HelpReach</strong>. All rights
+                            reserved.</p>
                     </div>
                     <div class="col-md-6 text-center text-md-end">
-                        <p class="small mb-0">Made with <i class="fas fa-heart text-danger"></i> to make a difference</p>
+                        <p class="small mb-0">Made with <i class="fas fa-heart text-danger"></i> to make a difference
+                        </p>
                     </div>
                 </div>
             </div>
@@ -1176,7 +1209,7 @@
     <script>
         // Initialize WOW.js animations
         new WOW().init();
-        
+
         // Typing and removing animation
         const typingText = document.getElementById('typingText');
         const textArray = ['Make Your Impact Today', 'Donate With Purpose', 'Change Lives Today', 'Make Your Impact Today'];
@@ -1186,7 +1219,7 @@
 
         function typeEffect() {
             const currentText = textArray[textIndex];
-            
+
             if (isDeleting) {
                 typingText.textContent = currentText.substring(0, charIndex - 1);
                 charIndex--;
@@ -1214,8 +1247,8 @@
 
         // Start typing animation after a short delay
         setTimeout(typeEffect, 500);
-        
-        document.getElementById('donateForm').addEventListener('submit', function(e){
+
+        document.getElementById('donateForm').addEventListener('submit', function (e) {
             e.preventDefault();
             const data = new FormData(this);
             // Simulate sending request to NGOs
@@ -1224,11 +1257,11 @@
             msg.className = 'alert alert-success';
             msg.textContent = '✓ Donation request sent to nearby NGOs. Listing will appear in active donations.';
             // Save to localStorage for listings simulation
-            const donations = JSON.parse(localStorage.getItem('donations')||'[]');
+            const donations = JSON.parse(localStorage.getItem('donations') || '[]');
             donations.unshift({
                 id: Date.now(),
                 type: data.get('item_type'),
-                donType: data.get('donType')||document.getElementById('donType').value,
+                donType: data.get('donType') || document.getElementById('donType').value,
                 quantity: data.get('quantity'),
                 address: data.get('address'),
                 date: data.get('date'),
@@ -1236,13 +1269,13 @@
                 status: 'Available'
             });
             localStorage.setItem('donations', JSON.stringify(donations));
-            setTimeout(()=> window.location.href='listings.html',1500);
+            setTimeout(() => window.location.href = 'listings.html', 1500);
         });
-        
+
         // Update year
         document.getElementById('year').textContent = new Date().getFullYear();
     </script>
-    
+
     <!-- Registration Modal -->
     <div class="registration-overlay" id="registrationOverlay">
         <div class="registration-modal">
@@ -1338,7 +1371,7 @@
     <!-- Profile Sidebar -->
     <div class="profile-sidebar" id="profileSidebar">
         <button class="sidebar-close" onclick="closeProfileSidebar()">✕</button>
-        
+
         <div class="profile-header">
             <div class="profile-avatar">
                 <i class="fas fa-user-circle"></i>
@@ -1435,17 +1468,17 @@
         // Show registration form on page load: show once per session when navigating, and also show on reload
         window.addEventListener('load', () => {
             const userProfile = localStorage.getItem('userProfile');
-            const icon = document.getElementById('profileIcon'); if(icon) icon.classList.add('show');
-            const fillBtn = document.getElementById('fillFormBtn'); if(fillBtn) fillBtn.classList.add('show');
+            const icon = document.getElementById('profileIcon'); if (icon) icon.classList.add('show');
+            const fillBtn = document.getElementById('fillFormBtn'); if (fillBtn) fillBtn.classList.add('show');
 
-            function getNavType(){
-                try{
+            function getNavType() {
+                try {
                     const entries = performance.getEntriesByType && performance.getEntriesByType('navigation');
-                    if(entries && entries.length) return entries[0].type;
-                    if(performance.navigation && typeof performance.navigation.type !== 'undefined'){
+                    if (entries && entries.length) return entries[0].type;
+                    if (performance.navigation && typeof performance.navigation.type !== 'undefined') {
                         return (performance.navigation.type === 1) ? 'reload' : 'navigate';
                     }
-                }catch(e){}
+                } catch (e) { }
                 return 'navigate';
             }
 
@@ -1456,13 +1489,13 @@
                 isLoggedIn = true;
                 const userData = JSON.parse(userProfile);
                 updateProfileDisplay(userData);
-                if(fillBtn) fillBtn.classList.remove('show');
+                if (fillBtn) fillBtn.classList.remove('show');
                 return;
             }
 
             if (navType === 'reload' || !sessionShown) {
-                const overlay = document.getElementById('registrationOverlay'); if(overlay) overlay.classList.add('show');
-                try{ sessionStorage.setItem('registrationShown','true'); }catch(e){}
+                const overlay = document.getElementById('registrationOverlay'); if (overlay) overlay.classList.add('show');
+                try { sessionStorage.setItem('registrationShown', 'true'); } catch (e) { }
             }
         });
 
@@ -1515,25 +1548,25 @@
                 alert('Error: Form not found');
                 return;
             }
-        
+
             const userType = document.querySelector('input[name="userType"]:checked');
             if (!userType) {
                 alert('Please select a user type');
                 return;
             }
-            
+
             // Get form inputs using more specific selectors to avoid NGO field confusion
             const formGroups = form.querySelectorAll('.form-group');
             console.log('Form groups found:', formGroups.length);
-        
+
             const nameInput = formGroups[0]?.querySelector('input[type="text"]');
             const emailInput = formGroups[1]?.querySelector('input[type="email"]');
             const phoneInput = formGroups[2]?.querySelector('input[type="tel"]');
             const locationInput = formGroups[4]?.querySelector('input[type="text"]');
             const termsCheckbox = form.querySelector('input[type="checkbox"]');
-        
+
             console.log('Name:', nameInput?.value, 'Email:', emailInput?.value, 'Phone:', phoneInput?.value, 'Location:', locationInput?.value);
-            
+
             // Validate all fields
             if (!nameInput || !nameInput.value.trim()) {
                 alert('Please enter your full name');
@@ -1605,7 +1638,7 @@
             const donationCount = document.getElementById('donationCount');
             const claimedCount = document.getElementById('claimedCount');
             const activityLevel = document.getElementById('activityLevel');
-            
+
             if (profileName) profileName.textContent = userData.name;
             if (profileType) profileType.textContent = userData.userType.charAt(0).toUpperCase() + userData.userType.slice(1);
             if (profileEmail) profileEmail.textContent = userData.email;
@@ -1694,4 +1727,5 @@
         // Check if user is already logged in on page load (moved to window load event above)
     </script>
 </body>
+
 </html>

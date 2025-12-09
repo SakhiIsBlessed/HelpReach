@@ -1507,13 +1507,245 @@
     </div>
 
 
+ <!-- Moments of Change Section -->
+<style>
+    .moments-section {
+        padding: 60px 0;
+        background: #f8f9fa;
+    }
+
+    .moments-heading {
+        color: #0066cc;
+        font-size: 2.8rem;
+        font-weight: 900;
+        margin-bottom: 8px;
+        line-height: 1.05;
+    }
+
+    .moments-description {
+        color: #9ca3af;
+        font-size: 0.95rem;
+        line-height: 1.7;
+        margin-bottom: 32px;
+        max-width: 100%;
+        padding-right: 20px;
+        border-right: 4px solid #0066cc;
+        margin-right:470px ;
+    }
+
+    /* Main container: grid left + impact right */
+    .moments-wrapper {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: 28px;
+        align-items: start;
+    }
+
+    /* IMAGE GRID */
+    .moments-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 16px;
+    }
+
+    .moments-grid .item {
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+        transition: transform .35s ease, box-shadow .35s ease;
+    }
+
+    .moments-grid .item:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
+    }
+
+    .moments-grid .item img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+    }
+
+    /* Row 1: 3 images */
+    .moments-grid .item:nth-child(1) { grid-column: 1; grid-row: 1; height: 140px; }
+    .moments-grid .item:nth-child(2) { grid-column: 2; grid-row: 1; height: 140px; }
+    .moments-grid .item:nth-child(3) { grid-column: 3; grid-row: 1; height: 140px; }
+
+    /* Row 2–3: Tall left image */
+    .moments-grid .item:nth-child(4) { grid-column: 1; grid-row: 2 / 4; height: 308px; }
+
+    /* Journey Box spanning 2 columns on right */
+    .moments-journey {
+        grid-column: 2 / 4;
+        grid-row: 2 / 4;
+        background: linear-gradient(135deg, #0077d4 0%, #00a8e8 100%);
+        border-radius: 12px;
+        padding: 48px 32px;
+        color: white;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .moments-journey i {
+        font-size: 3.2rem;
+        margin-bottom: 16px;
+    }
+
+    .moments-journey h4 {
+        font-size: 1.3rem;
+        font-weight: 800;
+        line-height: 1.4;
+    }
+
+    /* Row 4: 3 bottom images */
+    .moments-grid .item:nth-child(5) { grid-column: 1; grid-row: 4; height: 160px; }
+    .moments-grid .item:nth-child(6) { grid-column: 2; grid-row: 4; height: 160px; }
+    .moments-grid .item:nth-child(7) { grid-column: 3; grid-row: 4; height: 160px; }
+
+    /* Right Side Impact Card with background image + light blue overlay */
+    .impact-card {
+        position: relative;
+        background: url("img/impactbackground.jpg") center/cover no-repeat;
+        color: white;
+        border-radius: 12px;
+        padding: 48px 36px;
+        text-align: center;
+        box-shadow: 0 16px 48px rgba(0, 119, 212, 0.22);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        min-height: 600px;
+        width: 100%;
+        overflow: hidden;
+        margin-top: -100px;
+    }
+
+    .impact-card::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: rgba(0, 153, 255, 0.45); /* Light blue overlay */
+        backdrop-filter: blur(1px);
+    }
+
+    .impact-card > * { position: relative; z-index: 2; }
+
+    .impact-card h3 { font-size: 2.2rem; margin-bottom: 12px; font-weight: 900; }
+    .impact-card p { font-size: 1.1rem; margin-bottom: 32px; opacity: 0.95; font-weight: 500; }
+    .impact-card .btn { border-radius: 50px; padding: 12px 32px; font-weight: 700; margin: 8px; display: inline-block; }
+    .impact-card .btn-light { color: #0077d4; background: white; }
+    .impact-card .btn-outline { border: 2px solid rgba(255, 255, 255, 0.8); color: white; }
+
+    @media (max-width: 1024px) {
+        .moments-wrapper { grid-template-columns: 1fr; }
+        .impact-card { min-height: 500px; }
+    }
+</style>
+
+<div class="moments-section container-fluid">
+    <div class="container">
+        <h2 class="moments-heading">Moments<br>of change</h2>
+        <p class="moments-description">
+            Witness the transformative power of compassion through our work. These moments capture the lives we've touched.
+        </p>
+
+        <div class="moments-wrapper">
+            <!-- LEFT GRID -->
+            <div class="moments-grid">
+                <!-- Row 1: 3 IMAGES -->
+                <div class="item reveal"><img src="img/Community gathering.jpg" alt=""></div>
+                <div class="item reveal"><img src="img/Donation event.jpg" alt=""></div>
+                <div class="item reveal"><img src="img/Food distribution.webp" alt=""></div>
+
+                <!-- Tall Image -->
+                <div class="item reveal"><img src="img/Team event.jpg" alt=""></div>
+
+                <!-- Journey Box -->
+                <div class="moments-journey reveal">
+                    <i class="fas fa-building"></i>
+                    <h4>OUR JOURNEY<br>IN FRAMES</h4>
+                </div>
+
+                <!-- Row 4: 3 Bottom Images -->
+                <div class="item reveal"><img src="img/Relief work.jpeg" alt=""></div>
+                <div class="item reveal"><img src="img/food drive1.webp" alt=""></div>
+                <div class="item reveal"><img src="img/clothing donation.webp" alt=""></div>
+            </div>
+
+            <!-- RIGHT IMPACT CARD -->
+            <div class="impact-card reveal">
+                <h3>Impact<br>In Action</h3>
+                <p>Want To Shape A Life ?</p>
+                <a href="blog.html" class="btn btn-light">READ MORE</a>
+                <a href="donate.html" class="btn btn-outline">DONATE</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
     <!-- Impact Stats Start -->
+    <script>
+        // Reveal moments tiles on scroll with stagger
+        (function () {
+            function initReveal() {
+                const items = document.querySelectorAll('.moments-grid .reveal');
+                if (!items.length) return;
+                if ('IntersectionObserver' in window) {
+                    const io = new IntersectionObserver((entries, obs) => {
+                        entries.forEach((entry, i) => {
+                            if (entry.isIntersecting) {
+                                const idx = Array.from(items).indexOf(entry.target);
+                                setTimeout(() => entry.target.classList.add('visible'), Math.min(3000, idx * 100));
+                                obs.unobserve(entry.target);
+                            }
+                        });
+                    }, { threshold: 0.1 });
+                    items.forEach(it => io.observe(it));
+                } else {
+                    items.forEach((it, i) => setTimeout(() => it.classList.add('visible'), i * 80));
+                }
+            }
+            // Wait for DOM ready
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', initReveal);
+            } else {
+                initReveal();
+            }
+        })();
+    </script>
+
+    
     <style>
         /* Make impact stat items blend with background and ensure labels are visible */
-        .impact-bg .stat-item { background: transparent !important; box-shadow: none !important; border: 1px solid rgba(255,255,255,0.04); }
-        .impact-bg .stat { color: #fff !important; font-weight:700; font-size:1.6rem; }
+        .impact-bg .stat-item {
+            background: transparent !important;
+            box-shadow: none !important;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+        }
+
+        .impact-bg .stat {
+            color: #fff !important;
+            font-weight: 700;
+            font-size: 1.6rem;
+        }
+
         /* stat labels should be black per design request */
-        .impact-bg .stat-label { color: #000 !important; }
+        .impact-bg .stat-label {
+            color: #000 !important;
+        }
+
+        .stat-icon img {
+            width: 60px;
+            height: 60px;
+            object-fit: contain;
+        }
     </style>
     <div class="container-fluid py-5 impact-bg">
         <div class="container">
@@ -1521,16 +1753,16 @@
                 <div class="col-md-3 wow fadeInUp" data-wow-delay="0.1s">
                     <div class="p-4 rounded stat-item">
                         <div class="stat-icon mb-2">
-                            <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                                <defs>
-                                    <linearGradient id="s1" x1="0" x2="1">
-                                        <stop offset="0" stop-color="#0d6efd" />
-                                        <stop offset="1" stop-color="#10b981" />
-                                    </linearGradient>
-                                </defs>
-                                <circle cx="32" cy="32" r="30" fill="url(#s1)" opacity="0.12" />
-                                <path d="M32 18a8 8 0 100 16 8 8 0 000-16zM12 50c2-6 10-10 20-10s18 4 20 10H12z"
-                                    fill="#0d6efd" />
+                            <img src="img/Meals Redirected.gif" alt="Meals Redirected">
+                            <defs>
+                                <linearGradient id="s1" x1="0" x2="1">
+                                    <stop offset="0" stop-color="#0d6efd" />
+                                    <stop offset="1" stop-color="#10b981" />
+                                </linearGradient>
+                            </defs>
+                            <circle cx="32" cy="32" r="30" fill="url(#s1)" opacity="0.12" />
+                            <path d="M32 18a8 8 0 100 16 8 8 0 000-16zM12 50c2-6 10-10 20-10s18 4 20 10H12z"
+                                fill="#0d6efd" />
                             </svg>
                         </div>
                         <div class="stat" data-target="12450">0</div>
@@ -1540,15 +1772,15 @@
                 <div class="col-md-3 wow fadeInUp" data-wow-delay="0.2s">
                     <div class="p-4 rounded stat-item">
                         <div class="stat-icon mb-2">
-                            <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                                <defs>
-                                    <linearGradient id="s2" x1="0" x2="1">
-                                        <stop offset="0" stop-color="#ff7a59" />
-                                        <stop offset="1" stop-color="#ffb86b" />
-                                    </linearGradient>
-                                </defs>
-                                <rect x="6" y="16" width="52" height="36" rx="6" fill="url(#s2)" opacity="0.12" />
-                                <path d="M20 22h24v14H20z" fill="#ff7a59" />
+                            <img src="img/Items Donated.gif" alt="Meals Redirected">
+                            <defs>
+                                <linearGradient id="s2" x1="0" x2="1">
+                                    <stop offset="0" stop-color="#ff7a59" />
+                                    <stop offset="1" stop-color="#ffb86b" />
+                                </linearGradient>
+                            </defs>
+                            <rect x="6" y="16" width="52" height="36" rx="6" fill="url(#s2)" opacity="0.12" />
+                            <path d="M20 22h24v14H20z" fill="#ff7a59" />
                             </svg>
                         </div>
                         <div class="stat" data-target="3420">0</div>
@@ -1558,15 +1790,15 @@
                 <div class="col-md-3 wow fadeInUp" data-wow-delay="0.3s">
                     <div class="p-4 rounded stat-item">
                         <div class="stat-icon mb-2">
-                            <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                                <defs>
-                                    <linearGradient id="s3" x1="0" x2="1">
-                                        <stop offset="0" stop-color="#8b5cf6" />
-                                        <stop offset="1" stop-color="#06b6d4" />
-                                    </linearGradient>
-                                </defs>
-                                <circle cx="32" cy="32" r="30" fill="url(#s3)" opacity="0.12" />
-                                <path d="M18 26h28v4H18zM22 34h20v10H22z" fill="#8b5cf6" />
+                            <img src="img/Active Ngo Partners.gif" alt="Active Ngo Partners">
+                            <defs>
+                                <linearGradient id="s3" x1="0" x2="1">
+                                    <stop offset="0" stop-color="#8b5cf6" />
+                                    <stop offset="1" stop-color="#06b6d4" />
+                                </linearGradient>
+                            </defs>
+                            <circle cx="32" cy="32" r="30" fill="url(#s3)" opacity="0.12" />
+                            <path d="M18 26h28v4H18zM22 34h20v10H22z" fill="#8b5cf6" />
                             </svg>
                         </div>
                         <div class="stat" data-target="680">0</div>
@@ -1576,16 +1808,15 @@
                 <div class="col-md-3 wow fadeInUp" data-wow-delay="0.4s">
                     <div class="p-4 rounded stat-item">
                         <div class="stat-icon mb-2">
-                            <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                                <defs>
-                                    <linearGradient id="s4" x1="0" x2="1">
-                                        <stop offset="0" stop-color="#06b6d4" />
-                                        <stop offset="1" stop-color="#60a5fa" />
-                                    </linearGradient>
-                                </defs>
-                                <rect x="8" y="10" width="48" height="44" rx="6" fill="url(#s4)" opacity="0.12" />
-                                <path d="M32 18c-6 10-12 12-12 18 0 4 4 6 12 6s12-2 12-6c0-6-6-8-12-18z"
-                                    fill="#06b6d4" />
+                            <img src="img/Events Supported.gif" alt="Events Supported">
+                            <defs>
+                                <linearGradient id="s4" x1="0" x2="1">
+                                    <stop offset="0" stop-color="#06b6d4" />
+                                    <stop offset="1" stop-color="#60a5fa" />
+                                </linearGradient>
+                            </defs>
+                            <rect x="8" y="10" width="48" height="44" rx="6" fill="url(#s4)" opacity="0.12" />
+                            <path d="M32 18c-6 10-12 12-12 18 0 4 4 6 12 6s12-2 12-6c0-6-6-8-12-18z" fill="#06b6d4" />
                             </svg>
                         </div>
                         <div class="stat" data-target="980">0</div>
@@ -2273,22 +2504,22 @@
     <script>
         // Email sending removed. Keep globals for profile behavior.
         var guestNumber = Math.floor(Math.random() * 10000);
-        var isLoggedIn = false;c
+        var isLoggedIn = false; c
 
         // Show registration form on page load: show once per session when navigating, and also show on reload
         window.addEventListener('load', () => {
             const userProfile = localStorage.getItem('userProfile');
-            const icon = document.getElementById('profileIcon'); if(icon) icon.classList.add('show');
-            const fillBtn = document.getElementById('fillFormBtn'); if(fillBtn) fillBtn.classList.add('show');
+            const icon = document.getElementById('profileIcon'); if (icon) icon.classList.add('show');
+            const fillBtn = document.getElementById('fillFormBtn'); if (fillBtn) fillBtn.classList.add('show');
 
-            function getNavType(){
-                try{
+            function getNavType() {
+                try {
                     const entries = performance.getEntriesByType && performance.getEntriesByType('navigation');
-                    if(entries && entries.length) return entries[0].type; // 'navigate'|'reload'|'back_forward'
-                    if(performance.navigation && typeof performance.navigation.type !== 'undefined'){
+                    if (entries && entries.length) return entries[0].type; // 'navigate'|'reload'|'back_forward'
+                    if (performance.navigation && typeof performance.navigation.type !== 'undefined') {
                         return (performance.navigation.type === 1) ? 'reload' : 'navigate';
                     }
-                }catch(e){}
+                } catch (e) { }
                 return 'navigate';
             }
 
@@ -2299,14 +2530,14 @@
                 isLoggedIn = true;
                 const userData = JSON.parse(userProfile);
                 updateProfileDisplay(userData);
-                if(fillBtn) fillBtn.classList.remove('show');
+                if (fillBtn) fillBtn.classList.remove('show');
                 return;
             }
 
             // Show modal if this is a reload OR we haven't shown it yet this session
             if (navType === 'reload' || !sessionShown) {
-                const overlay = document.getElementById('registrationOverlay'); if(overlay) overlay.classList.add('show');
-                try{ sessionStorage.setItem('registrationShown','true'); }catch(e){}
+                const overlay = document.getElementById('registrationOverlay'); if (overlay) overlay.classList.add('show');
+                try { sessionStorage.setItem('registrationShown', 'true'); } catch (e) { }
             }
         });
 
