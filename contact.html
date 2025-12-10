@@ -1165,370 +1165,415 @@
 
             <!-- Meet the Team Section -->
             <style>
-                .team-section {
-                    margin-top: 100px;
-                    margin-bottom: 80px;
-                }
+/* ===================== */
+/*     SECTION TITLE     */
+/* ===================== */
 
-                .team-heading {
-                    text-align: center;
-                    margin-bottom: 70px;
-                }
+.team-title-wrapper {
+  text-align: center;
+  margin-bottom: 50px;
+}
 
-                .team-heading h2 {
-                    font-size: 3rem;
-                    font-weight: 900;
-                    background: linear-gradient(135deg, #0d6efd, #10b981);
-                    -webkit-background-clip: text;
-                    -webkit-text-fill-color: transparent;
-                    background-clip: text;
-                    margin-bottom: 16px;
-                }
+.team-title {
+  font-size: 2.6rem;
+  font-weight: 800;
+  color: #0066cc;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  animation: slideInDown 0.6s ease-out;
+}
 
-                .team-heading p {
-                    font-size: 1.1rem;
-                    color: #6c757d;
-                    max-width: 650px;
-                    margin: 0 auto;
-                    line-height: 1.6;
-                }
+.team-subtitle {
+  font-size: 1rem;
+  color: #666;
+  margin-top: 8px;
+  animation: slideInUp 0.6s ease-out 0.1s both;
+}
 
-                .team-member-card {
-                    position: relative;
-                    background: white;
-                    border-radius: 20px;
-                    overflow: hidden;
-                    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
-                    transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-                    height: 100%;
-                    display: flex;
-                    flex-direction: column;
-                }
+/* ===================== */
+/* TEAM GALLERY STYLING */
+/* ===================== */
 
-                .team-member-card::before {
-                    content: '';
-                    position: absolute;
-                    top: 0;
-                    left: 0;
-                    right: 0;
-                    height: 4px;
-                    background: linear-gradient(90deg, #0d6efd, #10b981);
-                    transform: scaleX(0);
-                    transform-origin: left;
-                    transition: transform 0.5s ease;
-                }
+.gallery-section {
+  display: flex;
+  flex-direction: column;
+  gap: 60px;
+  padding: 40px;
+}
 
-                .team-member-card:hover::before {
-                    transform: scaleX(1);
-                }
+.gallery-card {
+  display: flex;
+  animation: fadeInUp 0.8s ease-out;
+}
 
-                .team-member-card:hover {
-                    transform: translateY(-16px);
-                    box-shadow: 0 20px 48px rgba(0, 0, 0, 0.15);
-                }
+.gallery-card:nth-child(1) { animation-delay: 0.1s; }
+.gallery-card:nth-child(2) { animation-delay: 0.2s; }
+.gallery-card:nth-child(3) { animation-delay: 0.3s; }
+.gallery-card:nth-child(4) { animation-delay: 0.4s; }
 
-                .team-member-image {
-                    position: relative;
-                    width: 100%;
-                    height: 320px;
-                    overflow: hidden;
-                    background: linear-gradient(135deg, #0d6efd 0%, #10b981 100%);
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                }
+.left-card { 
+  justify-content: flex-start;
+}
 
-                .team-member-image::after {
-                    content: '';
-                    position: absolute;
-                    inset: 0;
-                    background: rgba(0, 0, 0, 0);
-                    transition: background 0.4s ease;
-                }
+.right-card { 
+  justify-content: flex-end;
+}
 
-                .team-member-card:hover .team-member-image::after {
-                    background: rgba(0, 0, 0, 0.1);
-                }
+/* Card */
+.team-latest-card {
+  display: flex;
+  background: #fff;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  border-radius: 20px;
+  padding: 30px;
+  gap: 35px;
+  max-width: 850px;
+  width: 100%;
+  transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  border: 1px solid rgba(0, 102, 204, 0.05);
+  position: relative;
+  overflow: hidden;
+}
 
-                .team-member-image img {
-                    width: 100%;
-                    height: 100%;
-                    object-fit: cover;
-                    transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-                    position: relative;
-                    z-index: 1;
-                }
+.team-latest-card::before {
+  content: '';
+  position: absolute;
+  top: -100%;
+  right: -100%;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(0, 102, 204, 0.08), transparent);
+  animation: float 6s ease-in-out infinite;
+  pointer-events: none;
+}
 
-                .team-member-card:hover .team-member-image img {
-                    transform: scale(1.12) rotate(2deg);
-                }
+@keyframes float {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(-30px, -30px); }
+}
 
-                .team-member-info {
-                    padding: 36px 28px 32px;
-                    flex-grow: 1;
-                    display: flex;
-                    flex-direction: column;
-                }
+.team-latest-card:hover {
+  transform: translateY(-12px) scale(1.02);
+  box-shadow: 0 20px 48px rgba(0, 102, 204, 0.2);
+}
 
-                .team-member-name {
-                    font-size: 1.5rem;
-                    font-weight: 800;
-                    color: #212529;
-                    margin-bottom: 8px;
-                    letter-spacing: -0.5px;
-                }
+/* Reverse card for right section */
+.right-card .team-latest-card { 
+  flex-direction: row-reverse;
+}
 
-                .team-member-role {
-                    font-size: 0.9rem;
-                    font-weight: 700;
-                    color: #0d6efd;
-                    margin-bottom: 24px;
-                    display: inline-block;
-                    background: linear-gradient(135deg, rgba(13, 110, 253, 0.08), rgba(16, 185, 129, 0.08));
-                    padding: 6px 14px;
-                    border-radius: 24px;
-                    border-left: 3px solid #0d6efd;
-                }
+/* Image */
+.team-image {
+  width: 240px;
+  height: 240px;
+  border-radius: 18px;
+  overflow: hidden;
+  flex-shrink: 0;
+  background: linear-gradient(135deg, #0066cc, #00a3ff);
+  box-shadow: 0 10px 30px rgba(0, 102, 204, 0.2);
+  position: relative;
+  transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
 
-                .team-member-responsibilities {
-                    font-size: 0.85rem;
-                    color: #6c757d;
-                    line-height: 1.8;
-                    flex-grow: 1;
-                }
+.team-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
 
-                .team-member-responsibilities ul {
-                    margin: 0;
-                    padding-left: 18px;
-                    list-style-position: inside;
-                }
+.team-latest-card:hover .team-image {
+  transform: scale(1.05);
+}
 
-                .team-member-responsibilities li {
-                    margin-bottom: 10px;
-                    position: relative;
-                    padding-left: 8px;
-                }
+.team-latest-card:hover .team-image img {
+  transform: scale(1.1);
+}
 
-                .team-member-responsibilities li::marker {
-                    color: #0d6efd;
-                    font-weight: bold;
-                }
+/* Content */
+.team-content { 
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 12px;
+}
 
-                .team-member-badge {
-                    margin-top: 20px;
-                    padding-top: 20px;
-                    border-top: 1px solid #f0f0f0;
-                    display: flex;
-                    align-items: center;
-                    gap: 12px;
-                }
+.team-name {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: #0066cc;
+  letter-spacing: -0.5px;
+  margin: 0;
+}
 
-                .team-member-badge-icon {
-                    width: 50px;
-                    height: 50px;
-                    border-radius: 12px;
-                    background: linear-gradient(135deg, rgba(13, 110, 253, 0.1), rgba(16, 185, 129, 0.1));
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    font-size: 1.8rem;
-                    transition: all 0.3s ease;
-                }
+.team-role {
+  font-size: 1rem;
+  color: #666;
+  font-weight: 600;
+  display: block;
+  margin-bottom: 8px;
+}
 
-                .team-member-card:hover .team-member-badge-icon {
-                    transform: scale(1.15) rotate(-8deg);
-                    background: linear-gradient(135deg, #0d6efd, #10b981);
-                    color: white;
-                }
+.team-content ul {
+  padding-left: 20px;
+  margin: 12px 0;
+  list-style: none;
+}
 
-                .team-member-badge-text {
-                    display: flex;
-                    flex-direction: column;
-                }
+.team-content li {
+  color: #555;
+  font-size: 0.95rem;
+  line-height: 1.7;
+  margin-bottom: 8px;
+  padding-left: 0;
+  position: relative;
+}
 
-                .team-member-badge-label {
-                    font-size: 0.75rem;
-                    color: #9ca3af;
-                    font-weight: 600;
-                    text-transform: uppercase;
-                    letter-spacing: 0.5px;
-                }
+.team-content li::before {
+  content: '✓';
+  color: #0066cc;
+  font-weight: bold;
+  margin-right: 10px;
+}
 
-                .team-member-badge-value {
-                    font-size: 0.95rem;
-                    color: #212529;
-                    font-weight: 700;
-                }
+/* Badge */
+.team-badge {
+  display: flex;
+  align-items: flex-end;
+  background: linear-gradient(135deg, rgba(0, 102, 204, 0.08), rgba(0, 163, 255, 0.08));
+  padding: 14px 16px;
+  margin-top: 16px;
+  border-radius: 12px;
+  gap: 12px;
+  border-left: 4px solid #0066cc;
+  transition: all 0.3s ease;
+}
 
-                @keyframes slideInUp {
-                    from {
-                        opacity: 0;
-                        transform: translateY(40px);
-                    }
+.team-badge:hover {
+  background: linear-gradient(135deg, rgba(0, 102, 204, 0.15), rgba(0, 163, 255, 0.15));
+}
 
-                    to {
-                        opacity: 1;
-                        transform: translateY(0);
-                    }
-                }
+.team-badge > div:first-child {
+  font-size: 1.8rem;
+  line-height: 1;
+  animation: iconBounce 2s ease-in-out infinite;
+}
 
-                @keyframes float {
+.team-badge > div:first-child:hover {
+  animation: none;
+}
 
-                    0%,
-                    100% {
-                        transform: translateY(0px);
-                    }
+@keyframes iconBounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
 
-                    50% {
-                        transform: translateY(-8px);
-                    }
-                }
+.team-badge > div:last-child {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
 
-                .team-member-card {
-                    animation: slideInUp 0.6s ease-out forwards;
-                }
+.team-badge b {
+  color: #0066cc;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
 
-                .team-member-card:nth-child(1) {
-                    animation-delay: 0.1s;
-                }
+/* Animations */
+@keyframes slideInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 
-                .team-member-card:nth-child(2) {
-                    animation-delay: 0.2s;
-                }
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 
-                .team-member-card:nth-child(3) {
-                    animation-delay: 0.3s;
-                }
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 
-                .team-member-card:nth-child(4) {
-                    animation-delay: 0.4s;
-                }
+/* Responsive */
+@media (max-width: 1024px) {
+  .gallery-card {
+    justify-content: center !important;
+  }
+  
+  .right-card .team-latest-card {
+    flex-direction: row;
+  }
+}
+
+@media (max-width: 768px) {
+  .team-latest-card {
+    flex-direction: column !important;
+    padding: 20px;
+    gap: 20px;
+    max-width: 100%;
+  }
+  
+  .team-image {
+    width: 100%;
+    max-width: 200px;
+    height: 200px;
+    margin: 0 auto;
+  }
+  
+  .team-title {
+    font-size: 2rem;
+  }
+  
+  .gallery-section {
+    padding: 20px;
+    gap: 40px;
+  }
+}
             </style>
 
-            <div class="team-section">
-                <div class="team-heading wow fadeInUp" data-wow-delay="0.1s">
-                    <h2>Meet Our Team ⭐</h2>
-                    <p>A passionate group of developers, designers, and strategists dedicated to making HelpReach a
-                        platform that truly makes a difference</p>
+            <!-- ⭐ MEET OUR TEAM TITLE -->
+            <div class="team-title-wrapper">
+                <h2 class="team-title">Meet Our Team</h2>
+                <p class="team-subtitle">The passionate minds behind this project</p>
+            </div>
+
+            <!-- TEAM SECTION -->
+            <div class="gallery-section">
+
+              <!-- TEAM CARD 1 — LEFT -->
+              <div class="gallery-card left-card">
+                <div class="team-latest-card">
+
+                  <div class="team-image">
+                    <img src="img/Sakhi.jpg" alt="Sakhi Tapre">
+                  </div>
+
+                  <div class="team-content">
+                    <div class="team-name">Sakhi Tapre</div>
+                    <span class="team-role">💻 Frontend Developer & Backend</span>
+
+                    <ul>
+                      <li>UI Design for all pages</li>
+                      <li>Responsive layouts</li>
+                      <li>Interactive components</li>
+                      <li>Testing & debugging</li>
+                    </ul>
+
+                    <div class="team-badge">
+                      <div>🎨</div>
+                      <div><b>Expertise:</b> Frontend, UI & Backend</div>
+                    </div>
+                  </div>
+
                 </div>
+              </div>
 
-                <div class="row g-4 wow fadeInUp" data-wow-delay="0.2s">
-                    <!-- Team Member 1 -->
-                    <div class="col-lg-3 col-md-6">
-                        <div class="team-member-card">
-                            <div class="team-member-image">
-                                <img src="img/Sakhi.jpg" alt="Sakhi Tapre"
-                                    onerror="this.parentElement.innerHTML='<i class=\'fas fa-user-circle\' style=\'font-size:6rem;opacity:0.6;color:white;\'></i>'">
-                            </div>
-                            <div class="team-member-info">
-                                <div class="team-member-name">Sakhi Tapre</div>
-                                <span class="team-member-role">💻 Frontend Developer</span>
-                                <div class="team-member-responsibilities">
-                                    <ul>
-                                        <li>UI Design for all pages</li>
-                                        <li>Responsive layouts</li>
-                                        <li>Interactive components</li>
-                                        <li>Testing & debugging</li>
-                                    </ul>
-                                </div>
-                                <div class="team-member-badge">
-                                    <div class="team-member-badge-icon">🎨</div>
-                                    <div class="team-member-badge-text">
-                                        <span class="team-member-badge-label">Expertise</span>
-                                        <span class="team-member-badge-value">Frontend & UI</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+              <!-- TEAM CARD 2 — RIGHT -->
+              <div class="gallery-card right-card">
+                <div class="team-latest-card">
 
-                    <!-- Team Member 2 -->
-                    <div class="col-lg-3 col-md-6">
-                        <div class="team-member-card">
-                            <div class="team-member-image">
-                                <img src="img/Prachi.jpg" alt="Prachi Pawar"
-                                    onerror="this.parentElement.innerHTML='<i class=\'fas fa-user-circle\' style=\'font-size:6rem;opacity:0.6;color:white;\'></i>'">
-                            </div>
-                            <div class="team-member-info">
-                                <div class="team-member-name">Prachi Pawar</div>
-                                <span class="team-member-role">⚙️ Backend Developer</span>
-                                <div class="team-member-responsibilities">
-                                    <ul>
-                                        <li>PHP backend logic</li>
-                                        <li>Database design</li>
-                                        <li>API development</li>
-                                        <li>Quality assurance</li>
-                                    </ul>
-                                </div>
-                                <div class="team-member-badge">
-                                    <div class="team-member-badge-icon">🔧</div>
-                                    <div class="team-member-badge-text">
-                                        <span class="team-member-badge-label">Expertise</span>
-                                        <span class="team-member-badge-value">Backend & Database</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                  <div class="team-image">
+                    <img src="img/Prachi.jpg" alt="Prachi Pawar">
+                  </div>
 
-                    <!-- Team Member 3 -->
-                    <div class="col-lg-3 col-md-6">
-                        <div class="team-member-card">
-                            <div class="team-member-image">
-                                <img src="img/Sujata.jpg" alt="Sujata Vitkar"
-                                    onerror="this.parentElement.innerHTML='<i class=\'fas fa-user-circle\' style=\'font-size:6rem;opacity:0.6;color:white;\'></i>'">
-                            </div>
-                            <div class="team-member-info">
-                                <div class="team-member-name">Sujata Vitkar</div>
-                                <span class="team-member-role">🎭 UI/UX Designer</span>
-                                <div class="team-member-responsibilities">
-                                    <ul>
-                                        <li>Visual design & icons</li>
-                                        <li>User interface design</li>
-                                        <li>Experience enhancement</li>
-                                        <li>Design systems</li>
-                                    </ul>
-                                </div>
-                                <div class="team-member-badge">
-                                    <div class="team-member-badge-icon">✨</div>
-                                    <div class="team-member-badge-text">
-                                        <span class="team-member-badge-label">Expertise</span>
-                                        <span class="team-member-badge-value">Design & Visuals</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                  <div class="team-content">
+                    <div class="team-name">Prachi Pawar</div>
+                    <span class="team-role">⚙️ Backend Developer & Frontend</span>
 
-                    <!-- Team Member 4 -->
-                    <div class="col-lg-3 col-md-6">
-                        <div class="team-member-card">
-                            <div class="team-member-image">
-                                <img src="img/Payal.jpg" alt="Payal Yadav"
-                                    onerror="this.parentElement.innerHTML='<i class=\'fas fa-user-circle\' style=\'font-size:6rem;opacity:0.6;color:white;\'></i>'">
-                            </div>
-                            <div class="team-member-info">
-                                <div class="team-member-name">Payal Yadav</div>
-                                <span class="team-member-role">📊 Research Lead</span>
-                                <div class="team-member-responsibilities">
-                                    <ul>
-                                        <li>Project presentation</li>
-                                        <li>Research & analysis</li>
-                                        <li>Documentation</li>
-                                        <li>Architecture design</li>
-                                    </ul>
-                                </div>
-                                <div class="team-member-badge">
-                                    <div class="team-member-badge-icon">📈</div>
-                                    <div class="team-member-badge-text">
-                                        <span class="team-member-badge-label">Expertise</span>
-                                        <span class="team-member-badge-value">Research & Strategy</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                    <ul>
+                      <li>PHP backend logic</li>
+                      <li>Database design</li>
+                      <li>API development</li>
+                      <li>Quality assurance</li>
+                    </ul>
+
+                    <div class="team-badge">
+                      <div>🔧</div>
+                      <div><b>Expertise:</b> Backend & Database</div>
                     </div>
+                  </div>
+
                 </div>
+              </div>
+
+              <!-- TEAM CARD 3 — LEFT -->
+              <div class="gallery-card left-card">
+                <div class="team-latest-card">
+
+                  <div class="team-image">
+                    <img src="img/Sujata.jpg" alt="Sujata Vitkar">
+                  </div>
+
+                  <div class="team-content">
+                    <div class="team-name">Sujata Vitkar</div>
+                    <span class="team-role">🎭 UI/UX Designer</span>
+
+                    <ul>
+                      <li>Visual design & icons</li>
+                      <li>User interface design</li>
+                      <li>Experience enhancement</li>
+                      <li>Design systems</li>
+                    </ul>
+
+                    <div class="team-badge">
+                      <div>✨</div>
+                      <div><b>Expertise:</b> Design & Visuals</div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+
+              <!-- TEAM CARD 4 — RIGHT -->
+              <div class="gallery-card right-card">
+                <div class="team-latest-card">
+
+                  <div class="team-image">
+                    <img src="img/Payal.jpg" alt="Payal Yadav">
+                  </div>
+
+                  <div class="team-content">
+                    <div class="team-name">Payal Yadav</div>
+                    <span class="team-role">📊 Research Lead</span>
+
+                    <ul>
+                      <li>Project presentation</li>
+                      <li>Research & analysis</li>
+                      <li>Documentation</li>
+                      <li>Architecture design</li>
+                    </ul>
+
+                    <div class="team-badge">
+                      <div>📈</div>
+                      <div><b>Expertise:</b> Research & Strategy</div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+
             </div>
         </div>
     </div>

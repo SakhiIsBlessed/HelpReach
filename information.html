@@ -489,1192 +489,215 @@
             </div>
         </nav>
     </div>
+    <div class="gallery-section">
 
-    <!-- HERO -->
-    <header id="hero" class="container-fluid hero-bg py-6">
-        <div class="hero-blob b1" aria-hidden="true"></div>
-        <div class="hero-blob b2" aria-hidden="true"></div>
-        <div class="hero-blob b3" aria-hidden="true"></div>
-        <div class="container hero-inner text-center">
-            <div class="row justify-content-center">
-                <div class="col-lg-8">
-                    <div class="glass-panel wow fadeInUp" data-wow-delay="0.12s">
-                        <h1 class="display-4 hero-title">Connecting Donors &amp; NGOs to Reduce Waste</h1>
-                        <p class="lead hero-lead">Donate leftover food, clothes, and essential items so they reach
-                            people in need — instantly.</p>
-                        <div class="hero-ctas mt-4 wow fadeInUp" data-wow-delay="0.3s">
-                            <a id="donate" class="btn btn-lg btn-success me-3 glass-btn" href="donate.html">Donate
-                                Now</a>
-                            <a id="register" class="btn btn-lg btn-register-ngo glass-btn"
-                                href="register-ngo.html">Register
-                                NGO</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </header>
+  <!-- TEAM CARD 1 — LEFT -->
+  <div class="gallery-card left-card">
+    <div class="team-latest-card">
 
-    <!-- What We Do — redesigned to match your example layout -->
-    <section id="what-we-do" class="py-5" style="background-color: #ffffff;">
-        <div class="container">
-            <div class="text-center mb-5">
-                <h2 class="fw-bold" style="color:#000;">What We Do</h2>
-                <p class="small" style="color:#000;">A simple platform to post donations and coordinate safe pickups
-                    with local NGOs.</p>
-            </div>
-
-            <div class="row justify-content-center g-4">
-
-                <!-- Card 1 -->
-                <div class="col-lg-4 col-md-6">
-                    <div class="help-card text-center p-4 h-100">
-                        <div class="icon-top">
-                            <i class="fas fa-utensils"></i>
-                        </div>
-                        <h5 class="fw-semibold mt-4" style="color:#000;">Food Donation</h5>
-                        <p class="small mt-2" style="color:#000;">
-                            Post leftover meals from events, catering, and gatherings for quick pickup.
-                        </p>
-                    </div>
-                </div>
-
-                <!-- Card 2 -->
-                <div class="col-lg-4 col-md-6">
-                    <div class="help-card text-center p-4 h-100">
-                        <div class="icon-top">
-                            <i class="fas fa-box-open"></i>
-                        </div>
-                        <h5 class="fw-semibold mt-4" style="color:#000;">Item Donation</h5>
-                        <p class="small mt-2" style="color:#000;">
-                            Donate usable items such as clothes, blankets and household goods.
-                        </p>
-                    </div>
-                </div>
-
-                <!-- Card 3 -->
-                <div class="col-lg-4 col-md-6">
-                    <div class="help-card text-center p-4 h-100">
-                        <div class="icon-top">
-                            <i class="fas fa-truck-loading"></i>
-                        </div>
-                        <h5 class="fw-semibold mt-4" style="color:#000;">Pickup Coordination</h5>
-                        <p class="small mt-2" style="color:#000;">
-                            Coordinate safe handovers between donors and NGOs with clear pickup times.
-                        </p>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </section>
-
-    <style>
-        /* Card styling to match example layout */
-        .help-card {
-            border: 2px solid #ff914d;
-            border-radius: 12px;
-            background: transparent;
-            position: relative;
-            overflow: visible;
-        }
-
-        .help-card .icon-top {
-            position: absolute;
-            top: -20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: #ffffff;
-            padding: 0 10px;
-            color: #ff914d;
-            font-size: 28px;
-        }
-
-        .help-card h5,
-        .help-card p {
-            color: #000000 !important;
-        }
-
-        /* Spacing fix for mobile / small screens */
-        @media (max-width: 767px) {
-            .help-card {
-                margin-top: 20px;
-            }
-        }
-    </style>
-
-
-
-    <!-- HOW REPLATE WORKS -->
-    <section class="how-replate-works py-5" style="background:#eefaf7;">
-        <div class="container">
-
-            <!-- Header -->
-            <div class="text-center mb-5" style="max-width:750px; margin:auto;">
-                <h2 class="fw-bold" style="color:#0d3b36; font-size:34px;">How Replate Works</h2>
-                <p style="color:#4b5f5f; font-size:17px;">
-                    Replate’s platform makes it easy for donors and nonprofits to coordinate food and item pickups with
-                    just a few clicks.
-                </p>
-            </div>
-
-            <!-- Main Layout -->
-            <div class="row align-items-start justify-content-center">
-
-                <!-- LEFT TABS -->
-                <div class="col-md-3 mb-4">
-                    <div class="tabs-box p-3">
-                        <p class="tab active" id="businessTab"> — For Businesses</p>
-                        <p class="tab" id="nonprofitTab"> — For Nonprofits</p>
-                    </div>
-                </div>
-
-                <!-- RIGHT CONTENT -->
-                <div class="col-md-7">
-
-                    <!-- BUSINESS CONTENT -->
-                    <div id="businessContent">
-
-                        <div class="d-flex mb-4">
-                            <div class="icon-box me-3">
-                                <i class="fa fa-map-marker fa-2x" style="color:#23b083;"></i>
-                            </div>
-                            <div>
-                                <h5 class="fw-semibold" style="color:#0d3b36;">Request a pickup</h5>
-                                <p style="color:#4b5f5f; font-size:15px; max-width:430px;">
-                                    Schedule a pickup for surplus food or items from your dashboard.
-                                </p>
-                            </div>
-                        </div>
-
-                        <div class="d-flex mb-4">
-                            <div class="icon-box me-3">
-                                <i class="fa fa-truck fa-2x" style="color:#23b083;"></i>
-                            </div>
-                            <div>
-                                <h5 class="fw-semibold" style="color:#0d3b36;">Track your driver</h5>
-                                <p style="color:#4b5f5f; font-size:15px; max-width:430px;">
-                                    Our on-ground volunteers collect and deliver your donation safely.
-                                </p>
-                            </div>
-                        </div>
-
-                        <div class="d-flex">
-                            <div class="icon-box me-3">
-                                <i class="fa fa-globe fa-2x" style="color:#23b083;"></i>
-                            </div>
-                            <div>
-                                <h5 class="fw-semibold" style="color:#0d3b36;">See your impact</h5>
-                                <p style="color:#4b5f5f; font-size:15px; max-width:430px;">
-                                    View real-time impact stats on how your donations help the community.
-                                </p>
-                            </div>
-                        </div>
-
-                    </div>
-
-                    <!-- NONPROFIT CONTENT -->
-                    <div id="nonprofitContent" style="display:none;">
-
-                        <div class="d-flex mb-4">
-                            <div class="icon-box me-3">
-                                <i class="fas fa-user-plus fa-2x" style="color:#23b083;"></i>
-                            </div>
-                            <div>
-                                <h5 class="fw-semibold" style="color:#0d3b36;">Signup</h5>
-                                <p style="color:#4b5f5f; font-size:15px; max-width:430px;">
-                                    Sign up to receive food and cloth donations for your NGO or community center.
-                                </p>
-                            </div>
-                        </div>
-
-                        <div class="d-flex mb-4">
-                            <div class="icon-box me-3">
-                                <i class="fas fa-calendar-check fa-2x" style="color:#23b083;"></i>
-                            </div>
-                            <div>
-                                <h5 class="fw-semibold" style="color:#0d3b36;">Schedule</h5>
-                                <p style="color:#4b5f5f; font-size:15px; max-width:430px;">
-                                    Our team helps schedule your first donation dropoff based on your needs.
-                                </p>
-                            </div>
-                        </div>
-
-                        <div class="d-flex">
-                            <div class="icon-box me-3">
-                                <i class="fas fa-smile fa-2x" style="color:#23b083;"></i>
-                            </div>
-                            <div>
-                                <h5 class="fw-semibold" style="color:#0d3b36;">Enjoy!</h5>
-                                <p style="color:#4b5f5f; font-size:15px; max-width:430px;">
-                                    Receive food and clothing donations regularly to support your community.
-                                </p>
-                            </div>
-                        </div>
-
-                    </div>
-
-
-                </div>
-            </div>
-
-        </div>
-    </section>
-
-    <style>
-        /* Tabs Left */
-        .tabs-box .tab {
-            font-size: 18px;
-            margin: 10px 0;
-            cursor: pointer;
-            color: #6c7a7a;
-            transition: 0.3s;
-        }
-
-        .tabs-box .active {
-            font-weight: bold;
-            color: #23b083;
-        }
-
-        /* Icon spacing */
-        .icon-box {
-            min-width: 45px;
-            text-align: center;
-        }
-    </style>
-
-    <script>
-        // TAB LOGIC
-        const businessTab = document.getElementById("businessTab");
-        const nonprofitTab = document.getElementById("nonprofitTab");
-
-        const businessContent = document.getElementById("businessContent");
-        const nonprofitContent = document.getElementById("nonprofitContent");
-
-        businessTab.addEventListener("click", () => {
-            businessTab.classList.add("active");
-            nonprofitTab.classList.remove("active");
-
-            businessContent.style.display = "block";
-            nonprofitContent.style.display = "none";
-        });
-
-        nonprofitTab.addEventListener("click", () => {
-            nonprofitTab.classList.add("active");
-            businessTab.classList.remove("active");
-
-            businessContent.style.display = "none";
-            nonprofitContent.style.display = "block";
-        });
-    </script>
-
-
-
-   <section class="who-donate-section"> 
-    <div style="max-width: 1200px; margin: 0 auto;">
-
-      <!-- Header -->
-      <div class="who-donate-header">
-        <h3 class="wow fadeInLeft" data-wow-delay="0.1s">WHO CAN DONATE?</h3>
-       
+      <div class="team-image">
+        <img src="img/Sakhi.jpg" alt="Sakhi Tapre">
       </div>
 
-      <!-- Cards Wrapper -->
-      <div class="who-donate-cards">
+      <div class="team-content">
+        <div class="team-name">Sakhi Tapre</div>
+        <span class="team-role">💻 Frontend Developer & Backend</span>
 
-        <!-- Card 1 -->
-        <div class="who-donate-card wow fadeInUp" data-wow-delay="0.15s">
-          <div class="who-donate-text">
-            <p class="upper">HOUSEHOLDS</p>
-            <h4>Donate extra food and household items from your home.</h4>
-            <p>
-              If you have leftover meals, clean clothes or usable home items, schedule a pickup
-              and we’ll connect you with nearby NGOs that can immediately use your donation.
-            </p>
-          </div>
-          <img src="img/clothing donation.webp" alt="Household donations">
+        <ul>
+          <li>UI Design for all pages</li>
+          <li>Responsive layouts</li>
+          <li>Interactive components</li>
+          <li>Testing & debugging</li>
+        </ul>
+
+        <div class="team-badge">
+          <div>🎨</div>
+          <div><b>Expertise:</b> Frontend,UI & Backend</div>
         </div>
-
-        <!-- Card 2 -->
-        <div class="who-donate-card wow fadeInUp" data-wow-delay="0.2s">
-          <div class="who-donate-text">
-            <p class="upper">RESTAURANTS & CATERERS</p>
-            <h4>Post excess prepared meals from catering events.</h4>
-            <p>
-              Quickly list surplus cooked meals or unopened food packages so NGOs can claim and
-              collect them while they’re fresh and safe to serve.
-            </p>
-          </div>
-          <img src="img/Food distribution.webp" alt="Restaurant donations">
-        </div>
-
-        <!-- Card 3 -->
-        <div class="who-donate-card wow fadeInUp" data-wow-delay="0.25s">
-          <div class="who-donate-text">
-            <p class="upper">RETAILERS & EVENTS</p>
-            <h4>Donate surplus stock, leftovers & reusable items.</h4>
-            <p>
-              Whether you're a store with unsold merchandise or an event organizer with leftover
-              items, list your donation for pickup and support NGOs in need.
-            </p>
-          </div>
-          <img src="img\Team event.jpg" alt="Retail donations">
-        </div>
-
       </div>
+
     </div>
-</section>
+  </div>
+
+  <!-- TEAM CARD 2 — RIGHT -->
+  <div class="gallery-card right-card">
+    <div class="team-latest-card">
+
+      <div class="team-image">
+        <img src="img/Prachi.jpg" alt="Prachi Pawar">
+      </div>
+
+      <div class="team-content">
+        <div class="team-name">Prachi Pawar</div>
+        <span class="team-role">⚙️ Backend Developer & Frontend</span>
+
+        <ul>
+          <li>PHP backend logic</li>
+          <li>Database design</li>
+          <li>API development</li>
+          <li>Quality assurance</li>
+        </ul>
+
+        <div class="team-badge">
+          <div>🔧</div>
+          <div><b>Expertise:</b> Backend & Database</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- TEAM CARD 3 — LEFT -->
+  <div class="gallery-card left-card">
+    <div class="team-latest-card">
+
+      <div class="team-image">
+        <img src="img/Sujata.jpg" alt="Sujata Vitkar">
+      </div>
+
+      <div class="team-content">
+        <div class="team-name">Sujata Vitkar</div>
+        <span class="team-role">🎭 UI/UX Designer</span>
+
+        <ul>
+          <li>Visual design & icons</li>
+          <li>User interface design</li>
+          <li>Experience enhancement</li>
+          <li>Design systems</li>
+        </ul>
+
+        <div class="team-badge">
+          <div>✨</div>
+          <div><b>Expertise:</b> Design & Visuals</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- TEAM CARD 4 — RIGHT -->
+  <div class="gallery-card right-card">
+    <div class="team-latest-card">
+
+      <div class="team-image">
+        <img src="img/Payal.jpg" alt="Payal Yadav">
+      </div>
+
+      <div class="team-content">
+        <div class="team-name">Payal Yadav</div>
+        <span class="team-role">📊 Research Lead</span>
+
+        <ul>
+          <li>Project presentation</li>
+          <li>Research & analysis</li>
+          <li>Documentation</li>
+          <li>Architecture design</li>
+        </ul>
+
+        <div class="team-badge">
+          <div>📈</div>
+          <div><b>Expertise:</b> Research & Strategy</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
 <style>
-    /* Who Can Donate Section */
-.who-donate-section {
-  background-color: #f9f8ee;
-  padding: 70px 10px;
-  font-family: 'Inter', sans-serif;
-}
-
-.who-donate-header {
+    /* Container for alternating layout */
+.gallery-section {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 40px;
+  flex-direction: column;
+  gap: 60px;
+  padding: 40px;
 }
 
-.who-donate-header h3 {
-  font-size: 28px;
-  font-weight: 800;
-  color: #1E3D2F;
-  margin: 0;
-}
-
-.who-donate-header a {
-  color: #1E3D2F;
-  font-size: 14px;
-  text-decoration: none;
-  font-weight: 500;
-}
-
-.who-donate-cards {
+/* Wrapper each card */
+.gallery-card {
   display: flex;
-  flex-wrap: wrap;
-  gap: 24px;
 }
 
-/* Individual Card */
-.who-donate-card {
-  flex: 1 1 30%;
-  min-width: 280px;
+/* Left image, right content */
+.left-card {
+  justify-content: flex-start;
+}
+
+/* Right image, left content */
+.right-card {
+  justify-content: flex-end;
+}
+
+/* Card layout */
+.team-latest-card {
   display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  padding: 20px;
-  border-radius: 16px;
-  background: linear-gradient(135deg, rgba(255, 224, 236, 0.8), rgba(60, 122, 94, 0.08));
-  transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-  border: 1px solid rgba(30, 61, 47, 0.08);
-  position: relative;
+  background: #fff;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  border-radius: 15px;
+  padding: 25px;
+  gap: 30px;
+  max-width: 800px;
+  width: 100%;
+}
+
+/* Reverse layout when card is on right side */
+.right-card .team-latest-card {
+  flex-direction: row-reverse;
+}
+
+/* Image box */
+.team-image {
+  width: 230px;
+  height: 230px;
+  border-radius: 15px;
   overflow: hidden;
-}
-
-.who-donate-card::before {
-    content: '';
-    position: absolute;
-    top: -50%;
-    right: -50%;
-    width: 200px;
-    height: 200px;
-    background: radial-gradient(circle, rgba(209, 122, 66, 0.1), transparent);
-    animation: float-bubble 6s ease-in-out infinite;
-}
-
-@keyframes float-bubble {
-    0%, 100% { transform: translate(0, 0); }
-    50% { transform: translate(-20px, -20px); }
-}
-
-.who-donate-card:hover {
-  transform: translateY(-12px) scale(1.02);
-  background: linear-gradient(135deg, rgba(255, 224, 236, 1), rgba(60, 122, 94, 0.15));
-  box-shadow: 0 16px 40px rgba(30, 61, 47, 0.12);
-}
-
-.who-donate-card img {
-  width: 120px;
-  height: 120px;
-  object-fit: cover;
-  border-radius: 12px;
-  margin-left: 15px;
-  margin-top: 5px;
-  transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
   flex-shrink: 0;
+  background: #eee;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.who-donate-card:hover img {
-  transform: scale(1.1) rotate(-2deg);
+.team-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
-/* Text Area */
-.who-donate-text {
+/* Content style */
+.team-content {
   flex: 1;
-  position: relative;
-  z-index: 1;
 }
 
-.who-donate-card .upper {
-  font-size: 11px;
-  text-transform: uppercase;
+.team-name {
+  font-size: 1.4rem;
   font-weight: 700;
-  letter-spacing: 0.5px;
-  margin-bottom: 8px;
-  color: #1E3D2F;
 }
 
-.who-donate-card h4 {
-  font-size: 16px;
-  font-weight: 700;
-  margin: 8px 0;
-  color: #1E3D2F;
+.team-role {
+  font-size: 0.95rem;
+  color: #777;
+  margin-bottom: 10px;
+  display: block;
 }
 
-.who-donate-card p {
-  font-size: 13px;
-  color: #555;
-  line-height: 1.5;
+/* Responsibilities list */
+.team-content ul {
+  padding-left: 18px;
 }
 
-.who-donate-card p:last-child {
-  margin-top: 8px;
-  margin-bottom: 0;
-}
-
-@media (max-width: 768px) {
-    .who-donate-cards {
-        flex-direction: column;
-    }
-    
-    .who-donate-card {
-        min-width: unset;
-    }
-    
-    .who-donate-header h3 {
-        font-size: 22px;
-    }
+.team-badge {
+  display: flex;
+  align-items: center;
+  background: #f5f5f5;
+  padding: 12px 15px;
+  margin-top: 12px;
+  border-radius: 10px;
+  gap: 10px;
 }
 
 </style>
-
-    <!-- Why Our Platform -->
-    <section class="container py-5" id="why-our-platform">
-
-        <!-- Section Heading -->
-        <div class="text-center mb-5">
-            <h2 class="fw-bold mb-2 wow fadeInDown" data-wow-delay="0.1s">Why Our Platform</h2>
-            <div class="line mx-auto wow fadeInUp" data-wow-delay="0.15s"></div>
-        </div>
-
-        <!-- CARD 1 -->
-        <div class="row align-items-center mb-5">
-            <div class="col-lg-7">
-                <img src="img/pict_large.jpg" class="img-fluid rounded shadow-lg section-img wow fadeInLeft" data-wow-delay="0.1s">
-            </div>
-
-            <div class="col-lg-5">
-                <div class="white-card shadow-lg p-4 wow fadeInRight" data-wow-delay="0.15s">
-                    <h3 class="fw-bold">Donate old goods</h3>
-                    <div class="underline"></div>
-                    <p class="small text-muted mb-2">Book doorstep donation pick up</p>
-                    <p>
-                        Donate old goods in usable condition; clothes, toys, utensils, furniture,
-                        appliances, books, bicycles, and sports items. We ensure pickup directly from
-                        your home and deliver the items safely to our grassroots NGO partners.
-                    </p>
-                    <p>
-                        You will also receive updates about the impact created through your donation.
-                    </p>
-                </div>
-            </div>
-        </div>
-
-        <!-- CARD 2 -->
-        <div class="row align-items-center mb-5 flex-lg-row-reverse">
-            <div class="col-lg-7">
-                <img src="img/creative reuse and upcycling.jpg" class="img-fluid rounded shadow-lg section-img wow fadeInRight" data-wow-delay="0.1s">
-            </div>
-
-            <div class="col-lg-5">
-                <div class="white-card shadow-lg p-4 wow fadeInLeft" data-wow-delay="0.15s">
-                    <h3 class="fw-bold">NGO Bazaar</h3>
-                    <div class="underline"></div>
-                    <p class="small text-muted mb-2">Buy handmade products from NGOs</p>
-                    <p>
-                        When you shop here, you spread happiness in the lives of people supported by
-                        grassroots NGOs, artisans, sustainability ventures, and underprivileged
-                        communities. Every purchase helps create sustainable income.
-                    </p>
-                    <p><strong>Coming soon.</strong></p>
-                </div>
-            </div>
-        </div>
-
-        <!-- CARD 3 -->
-        <div class="row align-items-center mb-3">
-            <div class="col-lg-7">
-                <img src="img/istockphoto-870402320-612x612.jpg" class="img-fluid rounded shadow-lg section-img wow fadeInLeft" data-wow-delay="0.1s">
-            </div>
-
-            <div class="col-lg-5">
-                <div class="white-card shadow-lg p-4 wow fadeInRight" data-wow-delay="0.15s">
-                    <h3 class="fw-bold">Spend time at an NGO</h3>
-                    <div class="underline"></div>
-                    <p class="small text-muted mb-2">Donate your time to make someone smile</p>
-                    <p>
-                        Your time creates a lasting impression. Spend time volunteering with our
-                        partnered NGOs and share joyful moments with children, seniors, or communities
-                        in need.
-                    </p>
-                    <p>
-                        Time is your greatest gift—spend it wisely and make the most of it!
-                    </p>
-                </div>
-            </div>
-        </div>
-
-    </section>
-
-    <style>
-        .section-img {
-            width: 100%;
-            height: 320px;
-            object-fit: cover;
-            border-radius: 10px;
-        }
-
-        .white-card {
-            background: white;
-            border-radius: 10px;
-            margin-top: -40px;
-        }
-
-        .underline {
-            width: 60px;
-            height: 3px;
-            background-color: #d17a42;
-            margin: 8px 0 15px 0;
-        }
-
-        .line {
-            width: 90px;
-            height: 3px;
-            background: #d17a42;
-            margin-top: 5px;
-            border-radius: 5px;
-        }
-
-        @media(max-width: 992px) {
-            .white-card {
-                margin-top: 20px;
-            }
-
-            .section-img {
-                height: 240px;
-            }
-        }
-    </style>
-
-
-   <section class="donation-type-alt py-5">
-    <div class="container">
-        <h2 class="text-center mb-5 donation-title wow fadeInDown" data-wow-delay="0.1s">Types of Donations We Accept</h2>
-
-        <!-- Item 1 -->
-        <div class="donation-row wow fadeInLeft" data-wow-delay="0.15s">
-            <div class="donation-icon">
-                <div class="donation-icon-badge"><i class="fas fa-utensils"></i></div>
-                <img src="img/Food Drive.jpg" alt="Leftover Food Donations">
-            </div>
-            <div class="donation-text">
-                <h4>Leftover Food Donations</h4>
-                <p>Unopened, unexpired leftover food from events, catering, and businesses can help feed the hungry. Every meal makes a difference in someone’s life, reducing food waste and spreading compassion.</p>
-            </div>
-        </div>
-
-        <!-- Item 2 (reversed) -->
-        <div class="donation-row reverse wow fadeInRight" data-wow-delay="0.2s">
-            <div class="donation-icon">
-                <div class="donation-icon-badge"><i class="fas fa-box"></i></div>
-                <img src="img/Meals Redirected.gif" alt="Ready-to-Eat Meals">
-            </div>
-            <div class="donation-text">
-                <h4>Ready-to-Eat Meals</h4>
-                <p>Packed meals that are ready-to-eat and safely prepared by restaurants, caterers, and households are a lifeline for the needy, ensuring they receive nutritious meals without delay.</p>
-            </div>
-        </div>
-
-        <!-- Item 3 -->
-        <div class="donation-row wow fadeInLeft" data-wow-delay="0.25s">
-            <div class="donation-icon">
-                <div class="donation-icon-badge"><i class="fas fa-tshirt"></i></div>
-                <img src="img/clothing donation.webp" alt="Clothing Donations">
-            </div>
-            <div class="donation-text">
-                <h4>Clothing Donations</h4>
-                <p>Clean, usable clothes provide warmth and dignity to families who cannot afford new clothing. Your old clothes can transform someone’s day and offer comfort during tough times.</p>
-            </div>
-        </div>
-
-        <!-- Item 4 (reversed) -->
-        <div class="donation-row reverse wow fadeInRight" data-wow-delay="0.3s">
-            <div class="donation-icon">
-                <div class="donation-icon-badge"><i class="fas fa-blanket"></i></div>
-                <img src="img/relief-supplies.jpg" alt="Blankets & Bedding">
-            </div>
-            <div class="donation-text">
-                <h4>Blankets & Bedding</h4>
-                <p>Donations of blankets, bedding, and warm clothing support winter relief programs for homeless and underprivileged people. Small acts of warmth can have huge impacts.</p>
-            </div>
-        </div>
-
-        <!-- Item 5 -->
-        <div class="donation-row wow fadeInLeft" data-wow-delay="0.35s">
-            <div class="donation-icon">
-                <div class="donation-icon-badge"><i class="fas fa-book"></i></div>
-                <img src="img/education.jpg" alt="Educational Materials">
-            </div>
-            <div class="donation-text">
-                <h4>Educational Materials</h4>
-                <p>Books, notebooks, and stationery empower children from low-income communities. Supporting their education opens doors to brighter futures and endless possibilities.</p>
-            </div>
-        </div>
-
-        <!-- Item 6 (reversed) -->
-        <div class="donation-row reverse wow fadeInRight" data-wow-delay="0.4s">
-            <div class="donation-icon">
-                <div class="donation-icon-badge"><i class="fas fa-gamepad"></i></div>
-                <img src="img/toys.jpg" alt="Toys & Games">
-            </div>
-            <div class="donation-text">
-                <h4>Toys & Games</h4>
-                <p>Safe, clean toys bring joy to children who rarely receive gifts. Your small contribution can light up a child’s day and inspire hope and happiness.</p>
-            </div>
-        </div>
-
-    </div>
-</section>
-<style>
-    .donation-type-alt {
-    background: linear-gradient(135deg, #f9f9fc, #eef1f8);
-    padding: 80px 0;
-}
-
-.donation-title {
-    color: #7e1a3a;
-    font-weight: 800;
-    font-size: 3rem;
-}
-
-.donation-row {
-    display: flex;
-    gap: 30px;
-    background: #ffffff;
-    padding: 30px;
-    border-radius: 20px;
-    margin-bottom: 30px;
-    align-items: center;
-    box-shadow: 0 8px 25px rgba(0,0,0,0.08);
-    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s ease;
-    position: relative;
-    overflow: hidden;
-}
-
-.donation-row::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: rgba(214, 122, 66, 0.04);
-    transition: left 0.5s ease;
-    z-index: -1;
-}
-
-.donation-row:hover::before {
-    left: 100%;
-}
-
-.donation-row:hover {
-    transform: translateY(-8px) scale(1.01);
-    box-shadow: 0 16px 40px rgba(126, 26, 58, 0.15);
-}
-
-.donation-row.reverse {
-    flex-direction: row-reverse;
-}
-
-.donation-icon {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.donation-icon-badge {
-    position: absolute;
-    top: -10px;
-    right: -10px;
-    width: 70px;
-    height: 70px;
-    background: linear-gradient(135deg, #d17a42, #e8a563);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 32px;
-    color: white;
-    box-shadow: 0 6px 20px rgba(209, 122, 66, 0.3);
-    z-index: 2;
-    animation: iconFloat 3s ease-in-out infinite;
-}
-
-@keyframes iconFloat {
-    0%, 100% { transform: translateY(0px); }
-    50% { transform: translateY(-10px); }
-}
-
-.donation-icon img {
-    width: 200px;
-    height: 200px;
-    object-fit: cover;
-    padding: 15px;
-    border-radius: 20px;
-    background: #fafafa;
-    transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-.donation-row:hover .donation-icon img {
-    transform: scale(1.08) rotate(2deg);
-}
-
-@media (max-width: 768px) {
-    .donation-row {
-        flex-direction: column !important;
-        padding: 20px;
-    }
-    
-    .donation-icon img {
-        width: 160px;
-        height: 160px;
-    }
-    
-    .donation-icon-badge {
-        width: 60px;
-        height: 60px;
-        font-size: 28px;
-    }
-}
-
-.donation-text h4 {
-    margin: 0 0 10px;
-    color: #7e1a3a;
-    font-size: 1.4rem;
-    font-weight: 700;
-}
-
-.donation-text p {
-    margin: 0;
-    font-size: 15.5px;
-    color: #444;
-    line-height: 1.7;
-    font-weight: 500;
-}
-
-/* Fade animation */
-.fade-up {
-    opacity: 0;
-    transform: translateY(25px);
-    animation: fadeUp 0.8s ease forwards;
-}
-
-@keyframes fadeUp {
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* Responsive */
-@media (max-width: 992px) {
-    .donation-row, .donation-row.reverse {
-        flex-direction: column;
-        text-align: center;
-        padding: 25px;
-    }
-    .donation-icon img {
-        width: 90px;
-        height: 90px;
-    }
-}
-@media (max-width: 576px) {
-    .donation-title {
-        font-size: 2.4rem;
-    }
-    .donation-text h4 {
-        font-size: 1.2rem;
-    }
-    .donation-text p {
-        font-size: 14px;
-    }
-}
-
-</style>
-
-    <!-- Impact Metrics Section -->
-    <section class="container py-5" id="impact-metrics">
-        <div class="section-header text-center mx-auto mb-5" style="max-width:720px;">
-            <h2 class="mb-2">Our Impact by the Numbers</h2>
-            <p class="small">Real results from our community-driven platform.</p>
-        </div>
-        <div class="row g-4">
-            <div class="col-md-6 col-lg-3 wow fadeInUp" data-wow-delay="0.1s">
-                <div class="metric-card text-center">
-                    <div class="metric-number" data-target="12500">0</div>
-                    <div class="metric-label">Donations Served</div>
-                    <p class="small">Active donations matched with NGOs</p>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-3 wow fadeInUp" data-wow-delay="0.15s">
-                <div class="metric-card text-center">
-                    <div class="metric-number" data-target="85000">0</div>
-                    <div class="metric-label">Kg of Food Saved</div>
-                    <p class="small">From waste to tables that matter</p>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-3 wow fadeInUp" data-wow-delay="0.2s">
-                <div class="metric-card text-center">
-                    <div class="metric-number" data-target="45000">0</div>
-                    <div class="metric-label">Families Helped</div>
-                    <p class="small">Direct beneficiaries of donations</p>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-3 wow fadeInUp" data-wow-delay="0.25s">
-                <div class="metric-card text-center">
-                    <div class="metric-number" data-target="325">0</div>
-                    <div class="metric-label">Partner NGOs</div>
-                    <p class="small">Working together for change</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-
-    <!-- Health & Wellness Section -->
-    <section class="container py-5" id="health-wellness">
-        <div class="row align-items-center g-5">
-            <div class="col-md-6 wow fadeInLeft" data-wow-delay="0.12s">
-                <div class="health-image-wrapper">
-                    <img src="img/Health.jpg" class="img-fluid rounded-lg shadow-lg" alt="Health & Wellness Programs" />
-                </div>
-            </div>
-            <div class="col-md-6 wow fadeInRight" data-wow-delay="0.16s">
-                <div class="health-content">
-                    <h2 class="health-title mb-3">Supporting Health & Wellness</h2>
-                    <p class="health-lead mb-4">Beyond just donations, we support community health and well-being
-                        through nutritious food distribution and essential wellness items.</p>
-                    <ul class="health-list">
-                        <li><i class="fas fa-apple-alt text-success me-2"></i>Nutritious food programs for
-                            underprivileged families</li>
-                        <li><i class="fas fa-heartbeat text-success me-2"></i>Health awareness and wellness initiatives
-                        </li>
-                        <li><i class="fas fa-hands-helping text-success me-2"></i>Emergency relief during crises</li>
-                        <li><i class="fas fa-book text-success me-2"></i>Education and skill development support</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Impact Section with Women Empowerment Image -->
-    <section class="impact-section py-6" id="impact-section">
-        <div class="container">
-            <div class="row align-items-center g-4">
-
-                <!-- Content column first (Left side) -->
-                <div class="col-md-6 wow fadeInLeft" data-wow-delay="0.12s">
-                    <div class="impact-content">
-                        <h2 class="impact-title mb-3">Make an impact with every donation</h2>
-                        <p class="impact-lead mb-4">
-                            Your contributions — whether meals or usable items — create immediate relief and
-                            longer-term community support. Together, we help reduce waste, support families, and
-                            empower communities for a brighter, more sustainable future.
-                        </p>
-
-                        <div class="impact-highlights">
-                            <div class="highlight-item">
-                                <i class="fas fa-check-circle text-success me-2"></i>
-                                <span>Immediate help for vulnerable communities</span>
-                            </div>
-                            <div class="highlight-item">
-                                <i class="fas fa-check-circle text-success me-2"></i>
-                                <span>Reduce waste and environmental impact</span>
-                            </div>
-                            <div class="highlight-item">
-                                <i class="fas fa-check-circle text-success me-2"></i>
-                                <span>Build stronger local networks and partnerships</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Image column second (Right side) -->
-                <div class="col-md-6 wow fadeInRight" data-wow-delay="0.16s">
-                    <div class="impact-image-wrapper">
-                        <img src="img/Women-Empowerment-5.jpg" class="img-fluid rounded-lg shadow-lg"
-                            alt="Women Empowerment & Community Support" />
-                        <div class="impact-image-overlay"></div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </section>
-
-    <!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Foundation of Our Work</title> -->
-
-    <style>
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-        }
-
-        /* MAIN SECTION WITH BG IMAGE + BLUE OVERLAY */
-        .foundation-section {
-            background: url('img/background happy children.jpg') center/cover no-repeat;
-            position: relative;
-            padding: 70px 20px;
-        }
-
-        /* Light blue overlay */
-        .foundation-section::before {
-            content: "";
-            position: absolute;
-            inset: 0;
-            background: rgba(92, 165, 255, 0.70);
-            /* light blue overlay */
-            backdrop-filter: blur(2px);
-        }
-
-        .foundation-container {
-            position: relative;
-            max-width: 1300px;
-            margin: auto;
-            display: flex;
-            justify-content: space-between;
-            gap: 40px;
-        }
-
-        .foundation-left {
-            width: 50%;
-            color: #fff;
-            z-index: 2;
-        }
-
-        .small-title {
-            font-size: 14px;
-            font-weight: bold;
-            letter-spacing: 2px;
-            margin-bottom: 10px;
-            text-transform: uppercase;
-        }
-
-        .foundation-left h2 {
-            font-size: 42px;
-            font-weight: 700;
-            margin-bottom: 20px;
-            line-height: 1.2;
-        }
-
-        .foundation-left .text {
-            font-size: 16px;
-            line-height: 1.7;
-            margin-bottom: 30px;
-        }
-
-        /* ICON SECTION */
-        .icon-row {
-            display: flex;
-            gap: 35px;
-            margin-bottom: 20px;
-        }
-
-        .icon-box {
-            text-align: center;
-            color: #fff;
-        }
-
-        /* Nice round icons */
-        .icon-circle {
-            width: 60px;
-            height: 60px;
-            background: rgba(255, 255, 255, 0.25);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 28px;
-            margin: auto;
-            margin-bottom: 8px;
-            border: 2px solid rgba(255, 255, 255, 0.5);
-        }
-
-        .read-more {
-            display: inline-block;
-            padding: 10px 25px;
-            border-radius: 50px;
-            background: #0769d6;
-            color: #fff;
-            text-decoration: none;
-            font-weight: 600;
-        }
-
-        /* RIGHT IMAGES */
-        .foundation-right {
-            width: 40%;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            z-index: 2;
-        }
-
-        .img-box {
-            width: 100%;
-            height: 330px;
-            border-radius: 20px;
-            object-fit: cover;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
-        }
-
-        /* FLOATING HELP BOX */
-        .help-box {
-            position: absolute;
-            right: 0;
-            bottom: 0;
-            padding: 20px 25px;
-            border-radius: 40px 40px 0 0;
-            text-align: center;
-            color: #fff;
-            width: 180px;
-            background: rgba(0, 102, 204, 0.85);
-            z-index: 3;
-        }
-
-        .donate-btn {
-            display: block;
-            margin-top: 10px;
-            padding: 10px;
-            border-radius: 20px;
-            background: #074c99;
-            color: #fff;
-            text-decoration: none;
-        }
-
-        /* RESPONSIVE */
-        @media (max-width: 900px) {
-            .foundation-container {
-                flex-direction: column;
-                text-align: center;
-            }
-
-            .foundation-left,
-            .foundation-right {
-                width: 100%;
-            }
-
-            .icon-row {
-                justify-content: center;
-            }
-
-            .help-box {
-                position: relative;
-                margin-top: 20px;
-                width: 100%;
-                border-radius: 20px;
-            }
-        }
-    </style>
-
-
-    <section class="foundation-section">
-        <div class="foundation-container">
-
-            <!-- LEFT CONTENT -->
-            <div class="foundation-left">
-                <p class="small-title">OUR PHILOSOPHY</p>
-                <h2>The Foundation of Our Work</h2>
-
-                <p class="text">
-                    At HungerBridge, we believe food is more than sustenance — it’s a symbol of care,
-                    dignity, and shared humanity. <br><br>
-                    Every day, food is wasted while people go hungry. We’re here to change that. By connecting
-                    surplus meals with empty plates, we create a simple, powerful act of justice — not charity.
-                    <br><br>
-                    We don’t just collect food; we carry hope, respect, and compassion in every delivery.
-                    It’s about making sure no meal is wasted and no person is forgotten.
-                    <br><br>
-                    Small actions by everyday people — donors, volunteers, and supporters — come together
-                    to build a meaningful bridge. One meal at a time, we turn waste into warmth.
-                </p>
-
-                <div class="icon-row">
-                    <div class="icon-box">
-                        <div class="icon-circle">💝</div>
-                        <p>Donate Now</p>
-                    </div>
-
-                    <div class="icon-box">
-                        <div class="icon-circle">📦</div>
-                        <p>Sponsor Projects</p>
-                    </div>
-
-                    <div class="icon-box">
-                        <div class="icon-circle">🤝</div>
-                        <p>Be a Volunteer</p>
-                    </div>
-                </div>
-
-                <a href="donate.html" class="read-more">Donate ↗</a>
-            </div>
-
-            <!-- RIGHT IMAGES -->
-            <div class="foundation-right">
-                <img src="img/happy children.jpg" class="img-box">
-                <img src="img/happy children food.avif" class="img-box">
-            </div>
-
-
-        </div>
-    </section>
-
-
-
-
-    <!-- Final CTA -->
-    <!-- <section class="container-fluid py-5 final-cta">
-            <div class="container text-center">
-                <div class="p-4 rounded-lg cta-panel wow fadeInUp" data-wow-delay="0.12s">
-                    <h2 class="mb-2">Ready to make a difference?</h2>
-                    <p class="small mb-3">Post a donation in under a minute or register your NGO to start receiving
-                        claims.
-                    </p>
-                    <a class="btn btn-lg btn-success me-3" href="donate.html">Donate Now</a>
-                    <a class="btn btn-lg btn-register-ngo" href="register-ngo.html">Register as NGO</a>
-                </div>
-            </div>
-        </section> -->
-
     <!-- Footer -->
     <footer class="container-fluid bg-dark text-light py-5">
         <div class="container">
