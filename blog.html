@@ -320,6 +320,8 @@
             font-weight: 800;
             color: var(--primary);
         }
+
+        
     </style>
 </head>
 
@@ -407,31 +409,7 @@
                     </div>
                 </div>
                
-                <!-- <div class="d-flex justify-content-center gap-3 align-items-center mb-4">
-                    <div class="author-card">
-                        <img src="logo.svg" alt="HelpReach Logo" class="me-2">
-                        <div>
-                            <div class="fw-bold">HelpReach Team</div>
-                            <div class="small text-muted">Contributors & Community Volunteers</div>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="counters">
-                            <div class="counter">
-                                <div class="num" data-target="1245">0</div>
-                                <div class="small text-muted">Donations</div>
-                            </div>
-                            <div class="counter">
-                                <div class="num" data-target="348">0</div>
-                                <div class="small text-muted">Volunteers</div>
-                            </div>
-                            <div class="counter">
-                                <div class="num" data-target="98">0</div>
-                                <div class="small text-muted">Partner NGOs</div>
-                            </div>
-                        </div>
-                    </div>
-                </div> -->
+                
             </div>
 
             <!-- Category Filter -->
@@ -564,13 +542,36 @@
                     </div>
                 </div>
                 <div class="col-12 text-center wow fadeInUp" data-wow-delay="0.1s">
-                    <a class="btn btn-primary rounded-pill py-3 px-5" href="">Load More</a>
+                    <a class="btn btn-primary rounded-pill py-3 px-5" href="information.html">Read More</a>
                 </div>
             </div>
         </div>
     </div>
     <!-- Blog End -->
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const buttons = document.querySelectorAll(".category-btn");
+    const parentRow = document.querySelector(".row.g-4");
+    const columns = document.querySelectorAll(".row.g-4 > div"); // select full columns
 
+    buttons.forEach(button => {
+        button.addEventListener("click", function () {
+            buttons.forEach(btn => btn.classList.remove("active"));
+            this.classList.add("active");
+
+            const filter = this.dataset.filter;
+
+            columns.forEach(column => {
+                const post = column.querySelector(".post-card");
+
+                if (filter === "all" || post.dataset.category === filter) {
+                    parentRow.prepend(column); // move entire column
+                }
+            });
+        });
+    });
+});
+</script>
 
     <!-- Footer Start -->
     <script>

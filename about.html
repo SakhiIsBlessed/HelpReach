@@ -1398,440 +1398,473 @@
     </div>
 
 
-   <!-- Moments of Change Section -->
-<style>
-.moments-section {
-    padding: 80px 0;
-    background: linear-gradient(135deg, #f0f4f9 0%, #f9f5f0 100%);
-    position: relative;
-    overflow: hidden;
-}
+    <!-- Moments of Change Section -->
+    <style>
+        .moments-section {
+            padding: 80px 0;
+            background: linear-gradient(135deg, #f0f4f9 0%, #f9f5f0 100%);
+            position: relative;
+            overflow: hidden;
+        }
 
-.moments-section::before {
-    content: '';
-    position: absolute;
-    top: -50%;
-    right: -10%;
-    width: 600px;
-    height: 600px;
-    background: radial-gradient(circle, rgba(0, 102, 204, 0.06), transparent);
-    border-radius: 50%;
-    pointer-events: none;
-}
+        .moments-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(0, 102, 204, 0.06), transparent);
+            border-radius: 50%;
+            pointer-events: none;
+        }
 
-/* Heading + Description */
-.moments-heading {
-    color: #0066cc;
-    font-size: 2.8rem;
-    font-weight: 900;
-    margin-bottom: 8px;
-    line-height: 1.05;
-    animation: slideInLeft 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
+        /* Heading + Description */
+        .moments-heading {
+            color: #0066cc;
+            font-size: 2.8rem;
+            font-weight: 900;
+            margin-bottom: 8px;
+            line-height: 1.05;
+            animation: slideInLeft 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
 
-.moments-description {
-    color: #666;
-    font-size: 0.95rem;
-    line-height: 1.7;
-    margin-bottom: 32px;
-    max-width: 100%;
-    padding-right: 20px;
-    border-right: 4px solid #0066cc;
-    margin-right: 470px;
-    animation: slideInUp 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) 0.1s both;
-}
+        .moments-description {
+            color: #666;
+            font-size: 0.95rem;
+            line-height: 1.7;
+            margin-bottom: 32px;
+            max-width: 100%;
+            padding-right: 20px;
+            border-right: 4px solid #0066cc;
+            margin-right: 470px;
+            animation: slideInUp 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) 0.1s both;
+        }
 
-/* GRID LEFT + IMPACT RIGHT */
-.moments-wrapper {
-    display: grid;
-    grid-template-columns: 2fr 1fr;
-    gap: 28px;
-    align-items: start;
-}
+        /* GRID LEFT + IMPACT RIGHT */
+        .moments-wrapper {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 28px;
+            align-items: start;
+        }
 
-/* LEFT GRID FIXED */
-.moments-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-auto-rows: 170px;
-    gap: 16px;
-}
+        /* LEFT GRID FIXED */
+        .moments-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-auto-rows: 170px;
+            gap: 16px;
+        }
 
-/* Image items */
-.moments-grid .item {
-    border-radius: 14px;
-    overflow: hidden;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
-    transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), 
+        /* Image items */
+        .moments-grid .item {
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+            transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1),
                 box-shadow 0.6s ease,
                 filter 0.6s ease;
-    background: #f0f0f0;
-    opacity: 0;
-    transform: translateY(40px) scale(0.9);
-    filter: blur(5px);
-}
+            background: #f0f0f0;
+            opacity: 0;
+            transform: translateY(40px) scale(0.9);
+            filter: blur(5px);
+        }
 
-.moments-grid .item.visible {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-    filter: blur(0);
-}
+        .moments-grid .item.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            filter: blur(0);
+        }
 
-.moments-grid .item:hover {
-    transform: translateY(-8px) scale(1.05);
-    box-shadow: 0 16px 48px rgba(0, 102, 204, 0.2);
-    filter: brightness(1.1);
-}
+        .moments-grid .item:hover {
+            transform: translateY(-8px) scale(1.05);
+            box-shadow: 0 16px 48px rgba(0, 102, 204, 0.2);
+            filter: brightness(1.1);
+        }
 
-.moments-grid .item img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.5s ease;
-}
+        .moments-grid .item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
 
-.moments-grid .item:hover img {
-    transform: scale(1.1) rotate(1deg);
-}
+        .moments-grid .item:hover img {
+            transform: scale(1.1) rotate(1deg);
+        }
 
-/* TOP ROW → 3 images */
-.moments-grid .item:nth-child(1),
-.moments-grid .item:nth-child(2),
-.moments-grid .item:nth-child(3) {
-    height: 150px;
-}
+        /* TOP ROW → 3 images */
+        .moments-grid .item:nth-child(1),
+        .moments-grid .item:nth-child(2),
+        .moments-grid .item:nth-child(3) {
+            height: 150px;
+        }
 
-.moments-grid .item:nth-child(1) { animation-delay: 0.05s; }
-.moments-grid .item:nth-child(2) { animation-delay: 0.1s; }
-.moments-grid .item:nth-child(3) { animation-delay: 0.15s; }
+        .moments-grid .item:nth-child(1) {
+            animation-delay: 0.05s;
+        }
 
-/* Tall left image (spans 2 rows) */
-.moments-grid .item:nth-child(4) {
-    grid-row: span 2;
-    height: 360px;
-    animation-delay: 0.2s;
-}
+        .moments-grid .item:nth-child(2) {
+            animation-delay: 0.1s;
+        }
 
-/* Journey Box spans 2 rows */
-.moments-journey {
-    grid-column: 2 / 4;
-    grid-row: span 2;
-    background: linear-gradient(135deg, #0066cc 0%, #0088ff 100%);
-    border-radius: 14px;
-    padding: 48px 32px;
-    color: white;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    min-height: 360px;
-    position: relative;
-    overflow: hidden;
-    box-shadow: 0 12px 40px rgba(0, 102, 204, 0.25);
-    opacity: 0;
-    transform: translateY(40px) scale(0.9);
-    filter: blur(5px);
-}
+        .moments-grid .item:nth-child(3) {
+            animation-delay: 0.15s;
+        }
 
-.moments-journey::before {
-    content: '';
-    position: absolute;
-    top: -50%;
-    right: -50%;
-    width: 400px;
-    height: 400px;
-    background: radial-gradient(circle, rgba(255, 255, 255, 0.1), transparent);
-    animation: pulse 4s ease-in-out infinite;
-}
+        /* Tall left image (spans 2 rows) */
+        .moments-grid .item:nth-child(4) {
+            grid-row: span 2;
+            height: 360px;
+            animation-delay: 0.2s;
+        }
 
-@keyframes pulse {
-    0%, 100% { transform: translate(0, 0) scale(1); }
-    50% { transform: translate(-20px, -20px) scale(1.1); }
-}
+        /* Journey Box spans 2 rows */
+        .moments-journey {
+            grid-column: 2 / 4;
+            grid-row: span 2;
+            background: linear-gradient(135deg, #0066cc 0%, #0088ff 100%);
+            border-radius: 14px;
+            padding: 48px 32px;
+            color: white;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 360px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 12px 40px rgba(0, 102, 204, 0.25);
+            opacity: 0;
+            transform: translateY(40px) scale(0.9);
+            filter: blur(5px);
+        }
 
-.moments-journey.visible {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-    filter: blur(0);
-    animation-delay: 0.25s;
-}
+        .moments-journey::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1), transparent);
+            animation: pulse 4s ease-in-out infinite;
+        }
 
-.moments-journey:hover {
-    transform: translateY(-8px) scale(1.02);
-}
+        @keyframes pulse {
 
-.moments-journey i {
-    font-size: 3.2rem;
-    margin-bottom: 16px;
-    animation: float 3s ease-in-out infinite;
-    position: relative;
-    z-index: 1;
-}
+            0%,
+            100% {
+                transform: translate(0, 0) scale(1);
+            }
 
-@keyframes float {
-    0%, 100% { transform: translateY(0px); }
-    50% { transform: translateY(-12px); }
-}
+            50% {
+                transform: translate(-20px, -20px) scale(1.1);
+            }
+        }
 
-.moments-journey h4 {
-    font-size: 1.3rem;
-    font-weight: 800;
-    position: relative;
-    z-index: 1;
-}
+        .moments-journey.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            filter: blur(0);
+            animation-delay: 0.25s;
+        }
 
-/* ------------------------------ */
-/* SEPARATE CSS FOR BOTTOM 3 IMG */
-/* ------------------------------ */
+        .moments-journey:hover {
+            transform: translateY(-8px) scale(1.02);
+        }
 
-.bottom-img {
-    height: 170px !important;
-}
+        .moments-journey i {
+            font-size: 3.2rem;
+            margin-bottom: 16px;
+            animation: float 3s ease-in-out infinite;
+            position: relative;
+            z-index: 1;
+        }
 
-.bottom-img.item:nth-child(7) { animation-delay: 0.3s; }
-.bottom-img.item:nth-child(8) { animation-delay: 0.35s; }
-.bottom-img.item:nth-child(9) { animation-delay: 0.4s; }
+        @keyframes float {
 
-.bottom-img img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
+            0%,
+            100% {
+                transform: translateY(0px);
+            }
 
-/* IMPACT CARD — height matches the left grid */
-.impact-card {
-    position: relative;
-    background: url("img/impactbackground.jpg") center/cover no-repeat;
-    color: white;
-    border-radius: 14px;
-    padding: 48px 36px;
-    text-align: center;
-    box-shadow: 0 16px 48px rgba(0, 102, 204, 0.25);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 130%;
-    min-height: 100%;
-    width: 100%;
-    overflow: hidden;
-    margin-top: -150px;
-    z-index: 1;
-    opacity: 0;
-    transform: translateY(60px) scale(0.95);
-    filter: blur(6px);
-    transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
+            50% {
+                transform: translateY(-12px);
+            }
+        }
 
-.impact-card.visible {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-    filter: blur(0);
-    animation-delay: 0.3s;
-}
+        .moments-journey h4 {
+            font-size: 1.3rem;
+            font-weight: 800;
+            position: relative;
+            z-index: 1;
+        }
 
-.impact-card:hover {
-    transform: translateY(-12px) scale(1.02);
-    box-shadow: 0 24px 60px rgba(0, 102, 204, 0.35);
-}
+        /* ------------------------------ */
+        /* SEPARATE CSS FOR BOTTOM 3 IMG */
+        /* ------------------------------ */
 
-.impact-card::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: rgba(0, 102, 204, 0.5);
-    backdrop-filter: blur(2px);
-    z-index: 0;
-    transition: background 0.4s ease;
-}
+        .bottom-img {
+            height: 170px !important;
+        }
 
-.impact-card:hover::before {
-    background: rgba(0, 102, 204, 0.45);
-}
+        .bottom-img.item:nth-child(7) {
+            animation-delay: 0.3s;
+        }
 
-/* Make all content clickable */
-.impact-card * {
-    position: relative;
-    z-index: 2;
-}
+        .bottom-img.item:nth-child(8) {
+            animation-delay: 0.35s;
+        }
 
-.impact-card h3 {
-    font-size: 2.2rem;
-    margin-bottom: 12px;
-    font-weight: 900;
-    animation: slideInDown 0.8s ease-out 0.4s both;
-}
+        .bottom-img.item:nth-child(9) {
+            animation-delay: 0.4s;
+        }
 
-.impact-card p {
-    font-size: 1.1rem;
-    margin-bottom: 32px;
-    opacity: 0.95;
-    font-weight: 500;
-    animation: slideInUp 0.8s ease-out 0.45s both;
-}
+        .bottom-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
 
-.impact-card .btn {
-    border-radius: 50px;
-    padding: 12px 32px;
-    font-weight: 700;
-    margin: 8px;
-    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-    animation: slideInUp 0.8s ease-out 0.5s both;
-}
+        /* IMPACT CARD — height matches the left grid */
+        .impact-card {
+            position: relative;
+            background: url("img/impactbackground.jpg") center/cover no-repeat;
+            color: white;
+            border-radius: 14px;
+            padding: 48px 36px;
+            text-align: center;
+            box-shadow: 0 16px 48px rgba(0, 102, 204, 0.25);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 130%;
+            min-height: 100%;
+            width: 100%;
+            overflow: hidden;
+            margin-top: -150px;
+            z-index: 1;
+            opacity: 0;
+            transform: translateY(60px) scale(0.95);
+            filter: blur(6px);
+            transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
 
-.impact-card .btn:hover {
-    transform: translateY(-4px) scale(1.05);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
-}
+        .impact-card.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            filter: blur(0);
+            animation-delay: 0.3s;
+        }
 
-.impact-card .btn-light {
-    color: #0066cc;
-    background: white;
-}
+        .impact-card:hover {
+            transform: translateY(-12px) scale(1.02);
+            box-shadow: 0 24px 60px rgba(0, 102, 204, 0.35);
+        }
 
-.impact-card .btn-light:hover {
-    background: #f0f8ff;
-}
+        .impact-card::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 102, 204, 0.5);
+            backdrop-filter: blur(2px);
+            z-index: 0;
+            transition: background 0.4s ease;
+        }
 
-.impact-card .btn-outline {
-    border: 2px solid rgba(255, 255, 255, 0.9);
-    color: white;
-    background: transparent;
-}
+        .impact-card:hover::before {
+            background: rgba(0, 102, 204, 0.45);
+        }
 
-.impact-card .btn-outline:hover {
-    background: rgba(255, 255, 255, 0.15);
-}
+        /* Make all content clickable */
+        .impact-card * {
+            position: relative;
+            z-index: 2;
+        }
 
-/* Animations */
-@keyframes slideInLeft {
-    from {
-        opacity: 0;
-        transform: translateX(-50px);
-    }
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
-}
+        .impact-card h3 {
+            font-size: 2.2rem;
+            margin-bottom: 12px;
+            font-weight: 900;
+            animation: slideInDown 0.8s ease-out 0.4s both;
+        }
 
-@keyframes slideInUp {
-    from {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
+        .impact-card p {
+            font-size: 1.1rem;
+            margin-bottom: 32px;
+            opacity: 0.95;
+            font-weight: 500;
+            animation: slideInUp 0.8s ease-out 0.45s both;
+        }
 
-@keyframes slideInDown {
-    from {
-        opacity: 0;
-        transform: translateY(-30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
+        .impact-card .btn {
+            border-radius: 50px;
+            padding: 12px 32px;
+            font-weight: 700;
+            margin: 8px;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            animation: slideInUp 0.8s ease-out 0.5s both;
+        }
 
-/* Responsive */
-@media (max-width: 1024px) {
-    .moments-wrapper {
-        grid-template-columns: 1fr;
-    }
-    
-    .moments-description {
-        margin-right: 0;
-        border-right: none;
-        border-bottom: 4px solid #0066cc;
-        padding-bottom: 16px;
-        padding-right: 0;
-    }
-    
-    .impact-card {
-        margin-top: 0;
-    }
-}
+        .impact-card .btn:hover {
+            transform: translateY(-4px) scale(1.05);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+        }
 
-@media (max-width: 768px) {
-    .moments-heading {
-        font-size: 2rem;
-    }
-    
-    .moments-grid {
-        grid-template-columns: repeat(2, 1fr);
-        grid-auto-rows: 150px;
-    }
-    
-    .moments-grid .item:nth-child(4) {
-        grid-column: span 2;
-        height: 200px;
-    }
-    
-    .moments-journey {
-        grid-column: span 2;
-        min-height: 200px;
-        padding: 32px 20px;
-    }
-    
-    .bottom-img {
-        height: 150px !important;
-    }
-}
-</style>
-</style>
+        .impact-card .btn-light {
+            color: #0066cc;
+            background: white;
+        }
+
+        .impact-card .btn-light:hover {
+            background: #f0f8ff;
+        }
+
+        .impact-card .btn-outline {
+            border: 2px solid rgba(255, 255, 255, 0.9);
+            color: white;
+            background: transparent;
+        }
+
+        .impact-card .btn-outline:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        /* Animations */
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .moments-wrapper {
+                grid-template-columns: 1fr;
+            }
+
+            .moments-description {
+                margin-right: 0;
+                border-right: none;
+                border-bottom: 4px solid #0066cc;
+                padding-bottom: 16px;
+                padding-right: 0;
+            }
+
+            .impact-card {
+                margin-top: 0;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .moments-heading {
+                font-size: 2rem;
+            }
+
+            .moments-grid {
+                grid-template-columns: repeat(2, 1fr);
+                grid-auto-rows: 150px;
+            }
+
+            .moments-grid .item:nth-child(4) {
+                grid-column: span 2;
+                height: 200px;
+            }
+
+            .moments-journey {
+                grid-column: span 2;
+                min-height: 200px;
+                padding: 32px 20px;
+            }
+
+            .bottom-img {
+                height: 150px !important;
+            }
+        }
+    </style>
+    </style>
 
 
-<div class="moments-section container-fluid">
-    <div class="container">
-        <h2 class="moments-heading">Moments<br>of change</h2>
+    <div class="moments-section container-fluid">
+        <div class="container">
+            <h2 class="moments-heading">Moments<br>of change</h2>
 
-        <p class="moments-description">
-            Witness the transformative power of compassion through our work.  
-            These moments capture the lives we've touched.
-        </p>
+            <p class="moments-description">
+                Witness the transformative power of compassion through our work.
+                These moments capture the lives we've touched.
+            </p>
 
-        <div class="moments-wrapper">
+            <div class="moments-wrapper">
 
-            <!-- LEFT GRID -->
-            <div class="moments-grid">
+                <!-- LEFT GRID -->
+                <div class="moments-grid">
 
-                <!-- Row 1 -->
-                <div class="item reveal"><img src="img/Community gathering.jpg" alt=""></div>
-                <div class="item reveal"><img src="img/Donation event.jpg" alt=""></div>
-                <div class="item reveal"><img src="img/Food distribution.webp" alt=""></div>
+                    <!-- Row 1 -->
+                    <div class="item reveal"><img src="img/Community gathering.jpg" alt=""></div>
+                    <div class="item reveal"><img src="img/Donation event.jpg" alt=""></div>
+                    <div class="item reveal"><img src="img/Food distribution.webp" alt=""></div>
 
-                <!-- Tall Image -->
-                <div class="item reveal"><img src="img/Team event.jpg" alt=""></div>
+                    <!-- Tall Image -->
+                    <div class="item reveal"><img src="img/Team event.jpg" alt=""></div>
 
-                <!-- Journey Box -->
-                <div class="moments-journey reveal">
-                    <i class="fas fa-building"></i>
-                    <h4>OUR JOURNEY<br>IN FRAMES</h4>
+                    <!-- Journey Box -->
+                    <div class="moments-journey reveal">
+                        <i class="fas fa-building"></i>
+                        <h4>OUR JOURNEY<br>IN FRAMES</h4>
+                    </div>
+
+                    <!-- Row 4: BOTTOM 3 IMAGES (separate CSS applied) -->
+                    <div class="item bottom-img reveal"><img src="img/Relief work.jpeg" alt=""></div>
+                    <div class="item bottom-img reveal"><img src="img/food drive1.webp" alt=""></div>
+                    <div class="item bottom-img reveal"><img src="img/clothing donation.webp" alt=""></div>
+
                 </div>
 
-                <!-- Row 4: BOTTOM 3 IMAGES (separate CSS applied) -->
-                <div class="item bottom-img reveal"><img src="img/Relief work.jpeg" alt=""></div>
-                <div class="item bottom-img reveal"><img src="img/food drive1.webp" alt=""></div>
-                <div class="item bottom-img reveal"><img src="img/clothing donation.webp" alt=""></div>
+                <!-- RIGHT IMPACT CARD -->
+                <div class="impact-card reveal">
+                    <h3>Impact<br>In Action</h3>
+                    <p>Want To Shape A Life ?</p>
+                    <a href="information.html" class="btn btn-light">READ MORE</a>
+                    <a href="donate.html" class="btn btn-outline">DONATE</a>
+                </div>
 
             </div>
-
-            <!-- RIGHT IMPACT CARD -->
-            <div class="impact-card reveal">
-                <h3>Impact<br>In Action</h3>
-                <p>Want To Shape A Life ?</p>
-                <a href="blog.html" class="btn btn-light">READ MORE</a>
-                <a href="donate.html" class="btn btn-outline">DONATE</a>
-            </div>
-
         </div>
     </div>
-</div>
 
 
     <!-- Impact Stats Start -->
@@ -1841,10 +1874,10 @@
             function initMomentsReveal() {
                 const section = document.querySelector('.moments-section');
                 if (!section) return;
-                
+
                 const items = section.querySelectorAll('.reveal');
                 const impactCard = section.querySelector('.impact-card');
-                
+
                 if ('IntersectionObserver' in window) {
                     // Observe all items
                     const io = new IntersectionObserver((entries) => {
@@ -1852,7 +1885,7 @@
                             if (entry.isIntersecting) {
                                 const item = entry.target;
                                 const idx = Array.from(items).indexOf(item);
-                                
+
                                 // Calculate delay based on position
                                 let delay = 0;
                                 if (item.classList.contains('moments-journey')) {
@@ -1860,17 +1893,17 @@
                                 } else {
                                     delay = idx * 50;
                                 }
-                                
+
                                 setTimeout(() => {
                                     item.classList.add('visible');
                                 }, delay);
-                                
+
                                 // Only reveal once
                                 io.unobserve(item);
                             }
                         });
                     }, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
-                    
+
                     // Observe all items including impact card
                     items.forEach(item => io.observe(item));
                     if (impactCard) io.observe(impactCard);
@@ -1882,7 +1915,7 @@
                     if (impactCard) impactCard.classList.add('visible');
                 }
             }
-            
+
             // Initialize when DOM is ready
             if (document.readyState === 'loading') {
                 document.addEventListener('DOMContentLoaded', initMomentsReveal);
@@ -1912,7 +1945,7 @@
                         <h5>Fresh Food Donations</h5>
                         <p class="small mb-3">Redirect surplus meals from events and gatherings directly to people in
                             need, ensuring nutritious food reaches hungry families.</p>
-                        <a href="#" class="read-more-link">Read More <i class="fa fa-arrow-right ms-2"></i></a>
+                        <a href="information.html" class="read-more-link">Read More <i class="fa fa-arrow-right ms-2"></i></a>
                     </div>
                 </div>
                 <div class="col-md-4 text-center wow fadeInUp" data-wow-delay="0.2s">
@@ -1923,7 +1956,7 @@
                         <h5>Clothing Distribution</h5>
                         <p class="small mb-3">Collect and distribute quality clothes to underprivileged communities,
                             providing dignity and warmth to those in need.</p>
-                        <a href="#" class="read-more-link">Read More <i class="fa fa-arrow-right ms-2"></i></a>
+                        <a href="information.html" class="read-more-link">Read More <i class="fa fa-arrow-right ms-2"></i></a>
                     </div>
                 </div>
                 <div class="col-md-4 text-center wow fadeInUp" data-wow-delay="0.3s">
@@ -1934,7 +1967,7 @@
                         <h5>Community Partnership</h5>
                         <p class="small mb-3">Build strong networks between donors, organizers, and NGOs to create a
                             sustainable ecosystem of giving and sharing.</p>
-                        <a href="#" class="read-more-link">Read More <i class="fa fa-arrow-right ms-2"></i></a>
+                        <a href="information.html" class="read-more-link">Read More <i class="fa fa-arrow-right ms-2"></i></a>
                     </div>
                 </div>
                 <div class="col-md-4 text-center wow fadeInUp" data-wow-delay="0.4s">
@@ -1945,7 +1978,7 @@
                         <h5>Quick Logistics</h5>
                         <p class="small mb-3">Ensure swift pickup and delivery of donations, minimizing waste and
                             maximizing impact in real-time.</p>
-                        <a href="#" class="read-more-link">Read More <i class="fa fa-arrow-right ms-2"></i></a>
+                        <a href="information.html" class="read-more-link">Read More <i class="fa fa-arrow-right ms-2"></i></a>
                     </div>
                 </div>
                 <div class="col-md-4 text-center wow fadeInUp" data-wow-delay="0.5s">
@@ -1956,7 +1989,7 @@
                         <h5>Verified NGOs</h5>
                         <p class="small mb-3">Work exclusively with verified and trusted NGO partners to guarantee
                             donations reach the right people responsibly.</p>
-                        <a href="#" class="read-more-link">Read More <i class="fa fa-arrow-right ms-2"></i></a>
+                        <a href="information.html" class="read-more-link">Read More <i class="fa fa-arrow-right ms-2"></i></a>
                     </div>
                 </div>
                 <div class="col-md-4 text-center wow fadeInUp" data-wow-delay="0.6s">
@@ -1967,7 +2000,7 @@
                         <h5>Zero Waste Impact</h5>
                         <p class="small mb-3">Prevent food and clothing waste from reaching landfills, creating a
                             positive environmental and social impact together.</p>
-                        <a href="#" class="read-more-link">Read More <i class="fa fa-arrow-right ms-2"></i></a>
+                        <a href="information.html" class="read-more-link">Read More <i class="fa fa-arrow-right ms-2"></i></a>
                     </div>
                 </div>
             </div>

@@ -1,5 +1,3 @@
-
-
 /********** Template CSS **********/
 :root {
     --primary: #007bff;
@@ -141,7 +139,7 @@
     box-shadow: 0 0 0 0.25rem rgba(40, 167, 69, 0.25);
 }
 
-/* Post Donation Button - Red Gradient (Same as Donate Now style) */
+/* N/* Post Donation Button - Red Gradient (Same as Donate Now style) */
 .btn-danger-gradient {
     background: linear-gradient(135deg, #dc3545 0%, #c82333 100%) !important;
     border: none !important;
@@ -2616,5 +2614,4 @@ body {
     .cta-section h2 {
         font-size: 1.5rem;
     }
-}
-
+    }

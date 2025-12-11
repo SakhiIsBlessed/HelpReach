@@ -770,197 +770,227 @@
 
 
 
-   <section class="who-donate-section"> 
-    <div style="max-width: 1200px; margin: 0 auto;">
+    <section class="who-donate-section">
+        <div style="max-width: 1200px; margin: 0 auto;">
 
-      <!-- Header -->
-      <div class="who-donate-header">
-        <h3 class="wow fadeInLeft" data-wow-delay="0.1s">WHO CAN DONATE?</h3>
-       
-      </div>
+            <!-- Header -->
+            <div class="who-donate-header">
+                <h3 class="wow fadeInLeft" data-wow-delay="0.1s">WHO CAN DONATE?</h3>
+                <a href="information.html">READ MORE →</a>
+            </div>
 
-      <!-- Cards Wrapper -->
-      <div class="who-donate-cards">
+            <!-- Cards Wrapper -->
+            <div class="who-donate-cards">
 
-        <!-- Card 1 -->
-        <div class="who-donate-card wow fadeInUp" data-wow-delay="0.15s">
-          <div class="who-donate-text">
-            <p class="upper">HOUSEHOLDS</p>
-            <h4>Donate extra food and household items from your home.</h4>
-            <p>
-              If you have leftover meals, clean clothes or usable home items, schedule a pickup
-              and we’ll connect you with nearby NGOs that can immediately use your donation.
-            </p>
-          </div>
-          <img src="img/clothing donation.webp" alt="Household donations">
+                <!-- Card 1 -->
+                <div class="who-donate-card wow fadeInUp" data-wow-delay="0.15s">
+                    <div class="who-donate-text">
+                        <p class="upper">HOUSEHOLDS</p>
+                        <h4>Donate extra food and household items from your home.</h4>
+                        <p>
+                            If you have leftover meals, clean clothes or usable home items, schedule a pickup
+                            and we’ll connect you with nearby NGOs that can immediately use your donation.
+                        </p>
+                        <p><a href="information.html" class="review-btn">Read more →</a></p>
+                    </div>
+                    <img src="img/clothing donation.webp" alt="Household donations">
+                </div>
+
+                <!-- Card 2 -->
+                <div class="who-donate-card wow fadeInUp" data-wow-delay="0.2s">
+                    <div class="who-donate-text">
+                        <p class="upper">RESTAURANTS & CATERERS</p>
+                        <h4>Post excess prepared meals from catering events.</h4>
+                        <p>
+                            Quickly list surplus cooked meals or unopened food packages so NGOs can claim and
+                            collect them while they’re fresh and safe to serve.
+                        </p>
+                        <p><a href="information.html" class="review-btn">Read more →</a></p>
+                    </div>
+                    <img src="img/Food distribution.webp" alt="Restaurant donations">
+                </div>
+
+                <!-- Card 3 -->
+                <div class="who-donate-card wow fadeInUp" data-wow-delay="0.25s">
+                    <div class="who-donate-text">
+                        <p class="upper">RETAILERS & EVENTS</p>
+                        <h4>Donate surplus stock, leftovers & reusable items.</h4>
+                        <p>
+                            Whether you're a store with unsold merchandise or an event organizer with leftover
+                            items, list your donation for pickup and support NGOs in need.
+                        </p>
+                        <p><a href="information.html" class="review-btn">Read more →</a></p>
+                    </div>
+                    <img src="img\Team event.jpg" alt="Retail donations">
+                </div>
+
+            </div>
         </div>
-
-        <!-- Card 2 -->
-        <div class="who-donate-card wow fadeInUp" data-wow-delay="0.2s">
-          <div class="who-donate-text">
-            <p class="upper">RESTAURANTS & CATERERS</p>
-            <h4>Post excess prepared meals from catering events.</h4>
-            <p>
-              Quickly list surplus cooked meals or unopened food packages so NGOs can claim and
-              collect them while they’re fresh and safe to serve.
-            </p>
-          </div>
-          <img src="img/Food distribution.webp" alt="Restaurant donations">
-        </div>
-
-        <!-- Card 3 -->
-        <div class="who-donate-card wow fadeInUp" data-wow-delay="0.25s">
-          <div class="who-donate-text">
-            <p class="upper">RETAILERS & EVENTS</p>
-            <h4>Donate surplus stock, leftovers & reusable items.</h4>
-            <p>
-              Whether you're a store with unsold merchandise or an event organizer with leftover
-              items, list your donation for pickup and support NGOs in need.
-            </p>
-          </div>
-          <img src="img\Team event.jpg" alt="Retail donations">
-        </div>
-
-      </div>
-    </div>
-</section>
-<style>
-    /* Who Can Donate Section */
-.who-donate-section {
-  background-color: #f9f8ee;
-  padding: 70px 10px;
-  font-family: 'Inter', sans-serif;
-}
-
-.who-donate-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 40px;
-}
-
-.who-donate-header h3 {
-  font-size: 28px;
-  font-weight: 800;
-  color: #1E3D2F;
-  margin: 0;
-}
-
-.who-donate-header a {
-  color: #1E3D2F;
-  font-size: 14px;
-  text-decoration: none;
-  font-weight: 500;
-}
-
-.who-donate-cards {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 24px;
-}
-
-/* Individual Card */
-.who-donate-card {
-  flex: 1 1 30%;
-  min-width: 280px;
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  padding: 20px;
-  border-radius: 16px;
-  background: linear-gradient(135deg, rgba(255, 224, 236, 0.8), rgba(60, 122, 94, 0.08));
-  transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-  border: 1px solid rgba(30, 61, 47, 0.08);
-  position: relative;
-  overflow: hidden;
-}
-
-.who-donate-card::before {
-    content: '';
-    position: absolute;
-    top: -50%;
-    right: -50%;
-    width: 200px;
-    height: 200px;
-    background: radial-gradient(circle, rgba(209, 122, 66, 0.1), transparent);
-    animation: float-bubble 6s ease-in-out infinite;
-}
-
-@keyframes float-bubble {
-    0%, 100% { transform: translate(0, 0); }
-    50% { transform: translate(-20px, -20px); }
-}
-
-.who-donate-card:hover {
-  transform: translateY(-12px) scale(1.02);
-  background: linear-gradient(135deg, rgba(255, 224, 236, 1), rgba(60, 122, 94, 0.15));
-  box-shadow: 0 16px 40px rgba(30, 61, 47, 0.12);
-}
-
-.who-donate-card img {
-  width: 120px;
-  height: 120px;
-  object-fit: cover;
-  border-radius: 12px;
-  margin-left: 15px;
-  margin-top: 5px;
-  transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-  flex-shrink: 0;
-}
-
-.who-donate-card:hover img {
-  transform: scale(1.1) rotate(-2deg);
-}
-
-/* Text Area */
-.who-donate-text {
-  flex: 1;
-  position: relative;
-  z-index: 1;
-}
-
-.who-donate-card .upper {
-  font-size: 11px;
-  text-transform: uppercase;
-  font-weight: 700;
-  letter-spacing: 0.5px;
-  margin-bottom: 8px;
-  color: #1E3D2F;
-}
-
-.who-donate-card h4 {
-  font-size: 16px;
-  font-weight: 700;
-  margin: 8px 0;
-  color: #1E3D2F;
-}
-
-.who-donate-card p {
-  font-size: 13px;
-  color: #555;
-  line-height: 1.5;
-}
-
-.who-donate-card p:last-child {
-  margin-top: 8px;
-  margin-bottom: 0;
-}
-
-@media (max-width: 768px) {
-    .who-donate-cards {
-        flex-direction: column;
+    </section>
+    <style>
+        .who-donate-card  p {
+      font-size: 13px;
+      color: #333;
     }
-    
-    .who-donate-card {
-        min-width: unset;
-    }
-    
-    .who-donate-header h3 {
-        font-size: 22px;
-    }
-}
 
-</style>
+    .who-donate-card  p:last-child {
+      margin-top: 8px;
+    }
+        .who-donate-card .review-btn {
+      margin: 5 16px 16px;
+      font-size: 14px;
+      color: #000000;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .who-donate-card .review-btn:hover {
+      text-decoration: underline;
+    }
+
+
+        /* Who Can Donate Section */
+        .who-donate-section {
+            background-color: #f9f8ee;
+            padding: 70px 10px;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .who-donate-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+
+        .who-donate-header h3 {
+            font-size: 28px;
+            font-weight: 800;
+            color: #1E3D2F;
+            margin: 0;
+        }
+
+        .who-donate-header a {
+            color: #1E3D2F;
+            font-size: 14px;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .who-donate-cards {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 24px;
+        }
+
+        /* Individual Card */
+        .who-donate-card {
+            flex: 1 1 30%;
+            min-width: 280px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            padding: 20px;
+            border-radius: 16px;
+            background: linear-gradient(135deg, rgba(255, 224, 236, 0.8), rgba(60, 122, 94, 0.08));
+            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            border: 1px solid rgba(30, 61, 47, 0.08);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .who-donate-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(209, 122, 66, 0.1), transparent);
+            animation: float-bubble 6s ease-in-out infinite;
+        }
+
+        @keyframes float-bubble {
+
+            0%,
+            100% {
+                transform: translate(0, 0);
+            }
+
+            50% {
+                transform: translate(-20px, -20px);
+            }
+        }
+
+        .who-donate-card:hover {
+            transform: translateY(-12px) scale(1.02);
+            background: linear-gradient(135deg, rgba(255, 224, 236, 1), rgba(60, 122, 94, 0.15));
+            box-shadow: 0 16px 40px rgba(30, 61, 47, 0.12);
+        }
+
+        .who-donate-card img {
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 12px;
+            margin-left: 15px;
+            margin-top: 5px;
+            transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            flex-shrink: 0;
+        }
+
+        .who-donate-card:hover img {
+            transform: scale(1.1) rotate(-2deg);
+        }
+
+        /* Text Area */
+        .who-donate-text {
+            flex: 1;
+            position: relative;
+            z-index: 1;
+        }
+
+        .who-donate-card .upper {
+            font-size: 11px;
+            text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+            color: #1E3D2F;
+        }
+
+        .who-donate-card h4 {
+            font-size: 16px;
+            font-weight: 700;
+            margin: 8px 0;
+            color: #1E3D2F;
+        }
+
+        .who-donate-card p {
+            font-size: 13px;
+            color: #555;
+            line-height: 1.5;
+        }
+
+        .who-donate-card p:last-child {
+            margin-top: 8px;
+            margin-bottom: 0;
+        }
+
+        @media (max-width: 768px) {
+            .who-donate-cards {
+                flex-direction: column;
+            }
+
+            .who-donate-card {
+                min-width: unset;
+            }
+
+            .who-donate-header h3 {
+                font-size: 22px;
+            }
+        }
+    </style>
 
     <!-- Why Our Platform -->
     <section class="container py-5" id="why-our-platform">
@@ -974,7 +1004,8 @@
         <!-- CARD 1 -->
         <div class="row align-items-center mb-5">
             <div class="col-lg-7">
-                <img src="img/pict_large.jpg" class="img-fluid rounded shadow-lg section-img wow fadeInLeft" data-wow-delay="0.1s">
+                <img src="img/pict_large.jpg" class="img-fluid rounded shadow-lg section-img wow fadeInLeft"
+                    data-wow-delay="0.1s">
             </div>
 
             <div class="col-lg-5">
@@ -997,7 +1028,8 @@
         <!-- CARD 2 -->
         <div class="row align-items-center mb-5 flex-lg-row-reverse">
             <div class="col-lg-7">
-                <img src="img/creative reuse and upcycling.jpg" class="img-fluid rounded shadow-lg section-img wow fadeInRight" data-wow-delay="0.1s">
+                <img src="img/creative reuse and upcycling.jpg"
+                    class="img-fluid rounded shadow-lg section-img wow fadeInRight" data-wow-delay="0.1s">
             </div>
 
             <div class="col-lg-5">
@@ -1018,7 +1050,8 @@
         <!-- CARD 3 -->
         <div class="row align-items-center mb-3">
             <div class="col-lg-7">
-                <img src="img/istockphoto-870402320-612x612.jpg" class="img-fluid rounded shadow-lg section-img wow fadeInLeft" data-wow-delay="0.1s">
+                <img src="img/istockphoto-870402320-612x612.jpg"
+                    class="img-fluid rounded shadow-lg section-img wow fadeInLeft" data-wow-delay="0.1s">
             </div>
 
             <div class="col-lg-5">
@@ -1081,251 +1114,261 @@
     </style>
 
 
-   <section class="donation-type-alt py-5">
-    <div class="container">
-        <h2 class="text-center mb-5 donation-title wow fadeInDown" data-wow-delay="0.1s">Types of Donations We Accept</h2>
+    <section class="donation-type-alt py-5">
+        <div class="container">
+            <h2 class="text-center mb-5 donation-title wow fadeInDown" data-wow-delay="0.1s">Types of Donations We
+                Accept</h2>
 
-        <!-- Item 1 -->
-        <div class="donation-row wow fadeInLeft" data-wow-delay="0.15s">
-            <div class="donation-icon">
-                <div class="donation-icon-badge"><i class="fas fa-utensils"></i></div>
-                <img src="img/Food Drive.jpg" alt="Leftover Food Donations">
-            </div>
-            <div class="donation-text">
-                <h4>Leftover Food Donations</h4>
-                <p>Unopened, unexpired leftover food from events, catering, and businesses can help feed the hungry. Every meal makes a difference in someone’s life, reducing food waste and spreading compassion.</p>
-            </div>
-        </div>
-
-        <!-- Item 2 (reversed) -->
-        <div class="donation-row reverse wow fadeInRight" data-wow-delay="0.2s">
-            <div class="donation-icon">
-                <div class="donation-icon-badge"><i class="fas fa-box"></i></div>
-                <img src="img/Meals Redirected.gif" alt="Ready-to-Eat Meals">
-            </div>
-            <div class="donation-text">
-                <h4>Ready-to-Eat Meals</h4>
-                <p>Packed meals that are ready-to-eat and safely prepared by restaurants, caterers, and households are a lifeline for the needy, ensuring they receive nutritious meals without delay.</p>
-            </div>
-        </div>
-
-        <!-- Item 3 -->
-        <div class="donation-row wow fadeInLeft" data-wow-delay="0.25s">
-            <div class="donation-icon">
-                <div class="donation-icon-badge"><i class="fas fa-tshirt"></i></div>
-                <img src="img/clothing donation.webp" alt="Clothing Donations">
-            </div>
-            <div class="donation-text">
-                <h4>Clothing Donations</h4>
-                <p>Clean, usable clothes provide warmth and dignity to families who cannot afford new clothing. Your old clothes can transform someone’s day and offer comfort during tough times.</p>
-            </div>
-        </div>
-
-        <!-- Item 4 (reversed) -->
-        <div class="donation-row reverse wow fadeInRight" data-wow-delay="0.3s">
-            <div class="donation-icon">
-                <div class="donation-icon-badge"><i class="fas fa-blanket"></i></div>
-                <img src="img/relief-supplies.jpg" alt="Blankets & Bedding">
-            </div>
-            <div class="donation-text">
-                <h4>Blankets & Bedding</h4>
-                <p>Donations of blankets, bedding, and warm clothing support winter relief programs for homeless and underprivileged people. Small acts of warmth can have huge impacts.</p>
-            </div>
-        </div>
-
-        <!-- Item 5 -->
-        <div class="donation-row wow fadeInLeft" data-wow-delay="0.35s">
-            <div class="donation-icon">
-                <div class="donation-icon-badge"><i class="fas fa-book"></i></div>
-                <img src="img/education.jpg" alt="Educational Materials">
-            </div>
-            <div class="donation-text">
-                <h4>Educational Materials</h4>
-                <p>Books, notebooks, and stationery empower children from low-income communities. Supporting their education opens doors to brighter futures and endless possibilities.</p>
-            </div>
-        </div>
-
-        <!-- Item 6 (reversed) -->
-        <div class="donation-row reverse wow fadeInRight" data-wow-delay="0.4s">
-            <div class="donation-icon">
-                <div class="donation-icon-badge"><i class="fas fa-gamepad"></i></div>
-                <img src="img/toys.jpg" alt="Toys & Games">
-            </div>
-            <div class="donation-text">
-                <h4>Toys & Games</h4>
-                <p>Safe, clean toys bring joy to children who rarely receive gifts. Your small contribution can light up a child’s day and inspire hope and happiness.</p>
-            </div>
-        </div>
-
+            <!-- Item 1 -->
+<div class="donation-row wow fadeInLeft" data-wow-delay="0.15s">
+    <div class="donation-icon">
+        <div class="donation-icon-badge"><i class="fas fa-utensils"></i></div>
     </div>
-</section>
-<style>
-    .donation-type-alt {
-    background: linear-gradient(135deg, #f9f9fc, #eef1f8);
-    padding: 80px 0;
-}
+    <div class="donation-text">
+        <h4>Leftover Food Donations</h4>
+        <p>Unopened, unexpired leftover food from events, catering, and businesses can help feed the hungry.</p>
+    </div>
+</div>
 
-.donation-title {
-    color: #7e1a3a;
-    font-weight: 800;
-    font-size: 3rem;
-}
+<!-- Item 2 -->
+<div class="donation-row reverse wow fadeInRight" data-wow-delay="0.2s">
+    <div class="donation-icon">
+        <div class="donation-icon-badge"><i class="fas fa-box"></i></div>
+    </div>
+    <div class="donation-text">
+        <h4>Ready-to-Eat Meals</h4>
+        <p>Packed meals that are safely prepared and ready-to-eat ensure nutritious food availability.</p>
+    </div>
+</div>
 
-.donation-row {
-    display: flex;
-    gap: 30px;
-    background: #ffffff;
-    padding: 30px;
-    border-radius: 20px;
-    margin-bottom: 30px;
-    align-items: center;
-    box-shadow: 0 8px 25px rgba(0,0,0,0.08);
-    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s ease;
-    position: relative;
-    overflow: hidden;
-}
+<!-- Item 3 -->
+<div class="donation-row wow fadeInLeft" data-wow-delay="0.25s">
+    <div class="donation-icon">
+        <div class="donation-icon-badge"><i class="fas fa-tshirt"></i></div>
+    </div>
+    <div class="donation-text">
+        <h4>Clothing Donations</h4>
+        <p>Clean and wearable clothes provide comfort and confidence to families facing hardships.</p>
+    </div>
+</div>
 
-.donation-row::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: rgba(214, 122, 66, 0.04);
-    transition: left 0.5s ease;
-    z-index: -1;
-}
+<!-- Item 4 -->
+<div class="donation-row reverse wow fadeInRight" data-wow-delay="0.3s">
+    <div class="donation-icon">
+        <div class="donation-icon-badge"><i class="fas fa-bed"></i></div>
+    </div>
+    <div class="donation-text">
+        <h4>Blankets & Bedding</h4>
+        <p>Warm blankets and bedding help the homeless and needy during cold seasons.</p>
+    </div>
+</div>
 
-.donation-row:hover::before {
-    left: 100%;
-}
+<!-- Item 5 -->
+<div class="donation-row wow fadeInLeft" data-wow-delay="0.35s">
+    <div class="donation-icon">
+        <div class="donation-icon-badge"><i class="fas fa-book"></i></div>
+    </div>
+    <div class="donation-text">
+        <h4>Educational Materials</h4>
+        <p>Books and stationery empower children with knowledge and hope.</p>
+    </div>
+</div>
 
-.donation-row:hover {
-    transform: translateY(-8px) scale(1.01);
-    box-shadow: 0 16px 40px rgba(126, 26, 58, 0.15);
-}
+<!-- Item 6 -->
+<div class="donation-row reverse wow fadeInRight" data-wow-delay="0.4s">
+    <div class="donation-icon">
+        <div class="donation-icon-badge"><i class="fas fa-puzzle-piece"></i></div>
+    </div>
+    <div class="donation-text">
+        <h4>Toys & Games</h4>
+        <p>Safe toys bring joy and emotional comfort to children.</p>
+    </div>
+</div>
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
-.donation-row.reverse {
-    flex-direction: row-reverse;
-}
 
-.donation-icon {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
+        </div>
+    </section>
+    <style>
+        .donation-type-alt {
+            background: linear-gradient(135deg, #f9f9fc, #eef1f8);
+            padding: 80px 0;
+        }
 
-.donation-icon-badge {
-    position: absolute;
-    top: -10px;
-    right: -10px;
-    width: 70px;
-    height: 70px;
-    background: linear-gradient(135deg, #d17a42, #e8a563);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 32px;
-    color: white;
-    box-shadow: 0 6px 20px rgba(209, 122, 66, 0.3);
-    z-index: 2;
-    animation: iconFloat 3s ease-in-out infinite;
-}
+        .donation-title {
+            color: #7e1a3a;
+            font-weight: 800;
+            font-size: 3rem;
+        }
 
-@keyframes iconFloat {
-    0%, 100% { transform: translateY(0px); }
-    50% { transform: translateY(-10px); }
-}
+        .donation-row {
+            /* display: flex; */
+            gap: 30px;
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            align-items: center;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
 
-.donation-icon img {
-    width: 200px;
-    height: 200px;
-    object-fit: cover;
-    padding: 15px;
-    border-radius: 20px;
-    background: #fafafa;
-    transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
+        .donation-row::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 1000%;
+            height: 100%;
+            background: rgba(214, 122, 66, 0.04);
+            transition: left 0.5s ease;
+            z-index: -1;
+        }
 
-.donation-row:hover .donation-icon img {
-    transform: scale(1.08) rotate(2deg);
-}
+        .donation-row:hover::before {
+            left: 100%;
+        }
 
-@media (max-width: 768px) {
-    .donation-row {
-        flex-direction: column !important;
-        padding: 20px;
-    }
-    
-    .donation-icon img {
-        width: 160px;
-        height: 160px;
-    }
-    
-    .donation-icon-badge {
-        width: 60px;
-        height: 60px;
-        font-size: 28px;
-    }
-}
+        .donation-row:hover {
+            transform: translateY(-8px) scale(1.01);
+            box-shadow: 0 16px 40px rgba(126, 26, 58, 0.15);
+        }
 
-.donation-text h4 {
-    margin: 0 0 10px;
-    color: #7e1a3a;
-    font-size: 1.4rem;
-    font-weight: 700;
-}
+        .donation-row.reverse {
+            flex-direction: row-reverse;
+        }
 
-.donation-text p {
-    margin: 0;
-    font-size: 15.5px;
-    color: #444;
-    line-height: 1.7;
-    font-weight: 500;
-}
+        .donation-icon {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
 
-/* Fade animation */
-.fade-up {
-    opacity: 0;
-    transform: translateY(25px);
-    animation: fadeUp 0.8s ease forwards;
-}
+        .donation-icon-badge {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, #d17a42, #e8a563);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            color: white;
+            box-shadow: 0 6px 20px rgba(209, 122, 66, 0.3);
+            z-index: 2;
+            animation: iconFloat 3s ease-in-out infinite;
+        }
 
-@keyframes fadeUp {
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
+        @keyframes iconFloat {
 
-/* Responsive */
-@media (max-width: 992px) {
-    .donation-row, .donation-row.reverse {
-        flex-direction: column;
-        text-align: center;
-        padding: 25px;
-    }
-    .donation-icon img {
-        width: 90px;
-        height: 90px;
-    }
-}
-@media (max-width: 576px) {
-    .donation-title {
-        font-size: 2.4rem;
-    }
-    .donation-text h4 {
-        font-size: 1.2rem;
-    }
-    .donation-text p {
-        font-size: 14px;
-    }
-}
+            0%,
+            100% {
+                transform: translateY(0px);
+            }
 
-</style>
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .donation-icon img {
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+            padding: 15px;
+            border-radius: 20px;
+            background: #fafafa;
+            transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .donation-row:hover .donation-icon img {
+            transform: scale(1.08) rotate(2deg);
+        }
+
+        @media (max-width: 768px) {
+            .donation-row {
+                flex-direction: column !important;
+                padding: 20px;
+            }
+
+            .donation-icon img {
+                width: 160px;
+                height: 160px;
+            }
+
+            .donation-icon-badge {
+                width: 60px;
+                height: 60px;
+                font-size: 28px;
+            }
+        }
+
+        .donation-text h4 {
+            margin: 0 0 10px;
+            color: #7e1a3a;
+            font-size: 1.4rem;
+            font-weight: 700;
+        }
+
+        .donation-text p {
+            margin: 0;
+            font-size: 15.5px;
+            color: #444;
+            line-height: 1.7;
+            font-weight: 500;
+        }
+
+        /* Fade animation */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(25px);
+            animation: fadeUp 0.8s ease forwards;
+        }
+
+        @keyframes fadeUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+
+            .donation-row,
+            .donation-row.reverse {
+                flex-direction: column;
+                text-align: center;
+                padding: 25px;
+            }
+
+            .donation-icon img {
+                width: 90px;
+                height: 90px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .donation-title {
+                font-size: 2.4rem;
+            }
+
+            .donation-text h4 {
+                font-size: 1.2rem;
+            }
+
+            .donation-text p {
+                font-size: 14px;
+            }
+        }
+    </style>
 
     <!-- Impact Metrics Section -->
     <section class="container py-5" id="impact-metrics">
