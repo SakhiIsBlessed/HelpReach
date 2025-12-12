@@ -503,7 +503,7 @@
                         <p class="lead hero-lead">Donate leftover food, clothes, and essential items so they reach
                             people in need — instantly.</p>
                         <div class="hero-ctas mt-4 wow fadeInUp" data-wow-delay="0.3s">
-                            <a id="donate" class="btn btn-lg btn-success me-3 glass-btn" href="donate.html">Donate
+                            <a id="donate" class="btn btn-lg btn-success me-3 glass-btn" href="donate.html#donationFormSection">Donate
                                 Now</a>
                             <a id="register" class="btn btn-lg btn-register-ngo glass-btn"
                                 href="register-ngo.html">Register
@@ -776,7 +776,7 @@
             <!-- Header -->
             <div class="who-donate-header">
                 <h3 class="wow fadeInLeft" data-wow-delay="0.1s">WHO CAN DONATE?</h3>
-                <a href="information.html">READ MORE →</a>
+                <a href="information.html#whoCanDonate">READ MORE →</a>
             </div>
 
             <!-- Cards Wrapper -->
@@ -791,7 +791,7 @@
                             If you have leftover meals, clean clothes or usable home items, schedule a pickup
                             and we’ll connect you with nearby NGOs that can immediately use your donation.
                         </p>
-                        <p><a href="information.html" class="review-btn">Read more →</a></p>
+                        <p><a href="information.html#whoCanDonate" class="review-btn">Read more →</a></p>
                     </div>
                     <img src="img/clothing donation.webp" alt="Household donations">
                 </div>
@@ -805,7 +805,7 @@
                             Quickly list surplus cooked meals or unopened food packages so NGOs can claim and
                             collect them while they’re fresh and safe to serve.
                         </p>
-                        <p><a href="information.html" class="review-btn">Read more →</a></p>
+                        <p><a href="information.html#whoCanDonate" class="review-btn">Read more →</a></p>
                     </div>
                     <img src="img/Food distribution.webp" alt="Restaurant donations">
                 </div>
@@ -819,7 +819,7 @@
                             Whether you're a store with unsold merchandise or an event organizer with leftover
                             items, list your donation for pickup and support NGOs in need.
                         </p>
-                        <p><a href="information.html" class="review-btn">Read more →</a></p>
+                        <p><a href="information.html#whoCanDonate" class="review-btn">Read more →</a></p>
                     </div>
                     <img src="img\Team event.jpg" alt="Retail donations">
                 </div>
@@ -1370,43 +1370,64 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css
         }
     </style>
 
-    <!-- Impact Metrics Section -->
-    <section class="container py-5" id="impact-metrics">
-        <div class="section-header text-center mx-auto mb-5" style="max-width:720px;">
-            <h2 class="mb-2">Our Impact by the Numbers</h2>
-            <p class="small">Real results from our community-driven platform.</p>
-        </div>
-        <div class="row g-4">
-            <div class="col-md-6 col-lg-3 wow fadeInUp" data-wow-delay="0.1s">
-                <div class="metric-card text-center">
-                    <div class="metric-number" data-target="12500">0</div>
-                    <div class="metric-label">Donations Served</div>
-                    <p class="small">Active donations matched with NGOs</p>
+    <section id="impact-metrics" class="impact-bg">
+    <div class="overlay">
+        <div class="container">
+            <div class="row text-center stats-row">
+
+                <div class="col-6 col-md-3">
+                    <h2 class="stat-number" data-target="12500">0</h2>
+                    <p class="stat-label">Donations Served</p>
                 </div>
-            </div>
-            <div class="col-md-6 col-lg-3 wow fadeInUp" data-wow-delay="0.15s">
-                <div class="metric-card text-center">
-                    <div class="metric-number" data-target="85000">0</div>
-                    <div class="metric-label">Kg of Food Saved</div>
-                    <p class="small">From waste to tables that matter</p>
+
+                <div class="col-6 col-md-3">
+                    <h2 class="stat-number" data-target="85000">0</h2>
+                    <p class="stat-label">Kg of Food Saved</p>
                 </div>
-            </div>
-            <div class="col-md-6 col-lg-3 wow fadeInUp" data-wow-delay="0.2s">
-                <div class="metric-card text-center">
-                    <div class="metric-number" data-target="45000">0</div>
-                    <div class="metric-label">Families Helped</div>
-                    <p class="small">Direct beneficiaries of donations</p>
+
+                <div class="col-6 col-md-3">
+                    <h2 class="stat-number" data-target="45000">0</h2>
+                    <p class="stat-label">Families Helped</p>
                 </div>
-            </div>
-            <div class="col-md-6 col-lg-3 wow fadeInUp" data-wow-delay="0.25s">
-                <div class="metric-card text-center">
-                    <div class="metric-number" data-target="325">0</div>
-                    <div class="metric-label">Partner NGOs</div>
-                    <p class="small">Working together for change</p>
+
+                <div class="col-6 col-md-3">
+                    <h2 class="stat-number" data-target="325">0</h2>
+                    <p class="stat-label">Partner NGOs</p>
                 </div>
+
             </div>
         </div>
-    </section>
+    </div>
+</section>
+
+<script>
+function formatWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    const counters = document.querySelectorAll(".stat-number");
+
+    counters.forEach(counter => {
+        let target = +counter.getAttribute("data-target");
+        let start = 0;
+        let duration = 2000;
+        let step = target / (duration / 20);
+
+        let interval = setInterval(() => {
+            start += step;
+            if (start >= target) {
+                clearInterval(interval);
+                counter.innerHTML = formatWithCommas(target);
+            } else {
+                counter.innerHTML = formatWithCommas(Math.floor(start));
+            }
+        }, 20);
+    });
+});
+</script>
+
+
 
 
     <!-- Health & Wellness Section -->
@@ -1480,18 +1501,11 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css
         </div>
     </section>
 
-    <!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Foundation of Our Work</title> -->
-
     <style>
-        body {
+        /* body {
             margin: 0;
             font-family: Arial, sans-serif;
-        }
+        } */
 
         /* MAIN SECTION WITH BG IMAGE + BLUE OVERLAY */
         .foundation-section {
@@ -1578,7 +1592,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css
             padding: 10px 25px;
             border-radius: 50px;
             background: #0769d6;
-            color: #fff;
+            color: #090404;
             text-decoration: none;
             font-weight: 600;
         }
@@ -1620,7 +1634,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css
             padding: 10px;
             border-radius: 20px;
             background: #074c99;
-            color: #fff;
+            color: #0a0606;
             text-decoration: none;
         }
 
@@ -1688,7 +1702,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css
                     </div>
                 </div>
 
-                <a href="donate.html" class="read-more">Donate ↗</a>
+                <a href="donate.html#donationFormSection" class="read-more">Donate ↗</a>
             </div>
 
             <!-- RIGHT IMAGES -->
@@ -1704,19 +1718,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css
 
 
 
-    <!-- Final CTA -->
-    <!-- <section class="container-fluid py-5 final-cta">
-            <div class="container text-center">
-                <div class="p-4 rounded-lg cta-panel wow fadeInUp" data-wow-delay="0.12s">
-                    <h2 class="mb-2">Ready to make a difference?</h2>
-                    <p class="small mb-3">Post a donation in under a minute or register your NGO to start receiving
-                        claims.
-                    </p>
-                    <a class="btn btn-lg btn-success me-3" href="donate.html">Donate Now</a>
-                    <a class="btn btn-lg btn-register-ngo" href="register-ngo.html">Register as NGO</a>
-                </div>
-            </div>
-        </section> -->
+    
 
     <!-- Footer -->
     <footer class="container-fluid bg-dark text-light py-5">

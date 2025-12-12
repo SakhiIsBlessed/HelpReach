@@ -1628,48 +1628,43 @@ body {
     color: #666;
     margin-bottom: 0;
 }
-
-/* Impact Metrics Section */
-#impact-metrics {
-    padding-top: 60px !important;
-    padding-bottom: 60px !important;
-    background: linear-gradient(135deg, #f8fafb 0%, #f0f5fa 100%);
+/* Background Image */
+#impact-metrics.impact-bg {
+    background-image: url("img/backgroundimpact.jpg"); /* Use correct path */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
 }
 
-.metric-card {
-    padding: 2.5rem 2rem;
-    background: white;
-    border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+/* Dark transparent overlay */
+#impact-metrics .overlay {
+    background: rgba(0, 0, 0, 0.5);
+    padding: 80px 0;
 }
 
-.metric-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
-}
-
-.metric-number {
-    font-size: 3rem;
+/* Numbers */
+.stat-number {
+    font-size: 2.8rem;
     font-weight: 800;
-    color: var(--primary);
-    line-height: 1;
-    margin-bottom: 0.5rem;
-    font-variant-numeric: tabular-nums;
+    color: #0099ff;
+    margin-bottom: 8px;
 }
 
-.metric-label {
+/* Labels */
+.stat-label {
+    color: #ffffff;
     font-size: 1.1rem;
-    font-weight: 700;
-    color: #111;
-    margin-bottom: 0.5rem;
+    font-weight: 600;
 }
 
-.metric-card p {
-    font-size: 0.95rem;
-    color: #666;
-    margin-bottom: 0;
-}
+
+/* Responsive */
+/* @media (max-width: 768px) {
+    .stat-number {
+        font-size: 2rem;
+    }
+} */
 
 @media (max-width: 991.98px) {
     .donor-card { padding: 1.5rem 1rem; }
