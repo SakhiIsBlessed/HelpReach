@@ -1,50 +1,21 @@
 <?php
-require_once __DIR__ . '/db.php';
-// Expect POST: name, email, password
-if ($_SERVER['REQUEST_METHOD'] !== 'POST') { http_response_code(405); exit; }
+include "db_connect.php";
 
-$name = trim($_POST['name'] ?? '');
-$email = trim($_POST['email'] ?? '');
-$password = $_POST['password'] ?? '';
+if(isset($_POST['register'])){
+    $name = $_POST['name'];
+    $email = $_POST['email'];
+    $pass = password_hash($_POST['password'], PASSWORD_DEFAULT);
+    $role = "user";
 
-if (!$name || !$email || !$password) {
-    http_response_code(400);
-    json_response(['error' => 'Missing fields']);
-    exit;
+    $q = "INSERT INTO users(name,email,password,role) VALUES('$name','$email','$pass','$role')";
+    mysqli_query($conn, $q);
+    echo "Registration Successful";
 }
-
-// basic validation
-if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-    http_response_code(400);
-    json_response(['error' => 'Invalid email']);
-    exit;
-}
-
-$db = get_db_connection();
-
-// check existing
-$stmt = $db->prepare('SELECT id FROM users WHERE email = ?');
-$stmt->bind_param('s', $email);
-$stmt->execute();
-$stmt->store_result();
-if ($stmt->num_rows > 0) {
-    http_response_code(409);
-    json_response(['error' => 'Email already registered']);
-    exit;
-}
-$stmt->close();
-
-$password_hash = password_hash($password, PASSWORD_DEFAULT);
-$stmt = $db->prepare('INSERT INTO users (name,email,password_hash) VALUES (?,?,?)');
-$stmt->bind_param('sss', $name, $email, $password_hash);
-if ($stmt->execute()) {
-    session_start();
-    $_SESSION['user_id'] = $db->insert_id;
-    json_response(['ok' => true, 'user_id' => $db->insert_id]);
-} else {
-    http_response_code(500);
-    json_response(['error' => 'DB error']);
-}
-$stmt->close();
-
 ?>
+
+<form method="post">
+    <input type="text" name="name" placeholder="Name" required><br><br>
+    <input type="email" name="email" placeholder="Email" required><br><br>
+    <input type="password" name="password" placeholder="Password" required><br><br>
+    <button name="register">Register</button>
+</form>
