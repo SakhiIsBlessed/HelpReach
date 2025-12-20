@@ -253,34 +253,9 @@
             });
 
             form.addEventListener('submit', function(e){
+                // Handled by js/api.js (POST to /api/login). Prevent default here.
                 e.preventDefault();
-                let ok = true;
-                const em = email.value.trim();
-                const pwv = pw.value || '';
-
-                if (!validateEmail(em)){
-                    emailError.textContent = 'Please enter a valid email address.';
-                    emailError.style.display = 'block';
-                    email.setAttribute('aria-invalid','true');
-                    ok = false;
-                } else { emailError.style.display='none'; email.setAttribute('aria-invalid','false') }
-
-                if (pwv.length < 8){
-                    pwError.textContent = 'Password must be at least 8 characters.';
-                    pwError.style.display = 'block';
-                    pw.setAttribute('aria-invalid','true');
-                    ok = false;
-                } else { pwError.style.display='none'; pw.setAttribute('aria-invalid','false') }
-
-                if (!ok) return;
-
-                // Basic visual success state then redirect (placeholder for real auth)
-                submitBtn.disabled = true;
-                submitBtn.textContent = 'Signing in...';
-                setTimeout(()=>{
-                    // simulate successful login
-                    window.location.href = 'dashboard.html';
-                }, 900);
+                return;
             });
 
             // enable/disable submit dynamically
@@ -353,32 +328,9 @@
             }
 
             regForm.addEventListener('submit', function(e){
+                // Handled by js/api.js (POST to /api/register). Prevent default here.
                 e.preventDefault();
-                if (!validateRegForm()) return;
-
-                // Mock: Store registration in localStorage
-                const newNGO = {
-                    id: Date.now(),
-                    orgName: orgName.value,
-                    email: regEmail.value,
-                    phone: regPhone.value,
-                    createdAt: new Date().toISOString()
-                };
-                let ngos = JSON.parse(localStorage.getItem('ngos') || '[]');
-                ngos.push(newNGO);
-                localStorage.setItem('ngos', JSON.stringify(ngos));
-
-                // Show success and close modal
-                registerSubmitBtn.disabled = true;
-                registerSubmitBtn.textContent = 'Account Created!';
-                setTimeout(() => {
-                    const modal = bootstrap.Modal.getInstance(document.getElementById('registerModal'));
-                    modal.hide();
-                    regForm.reset();
-                    updateRegStrengthBar();
-                    registerSubmitBtn.disabled = false;
-                    registerSubmitBtn.textContent = 'Create Account';
-                }, 1200);
+                return;
             });
 
             // Validate on input
@@ -390,5 +342,6 @@
             updateRegStrengthBar();
         })();
     </script>
+    <script src="js/api.js"></script>
 </body>
 </html>
