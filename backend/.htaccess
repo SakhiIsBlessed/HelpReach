@@ -1,6 +1,0 @@
-RewriteEngine On
-# Allow PHP built-in server and Apache
-
-# Basic rules to allow API endpoints
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule ^ index.php [QSA,L]
