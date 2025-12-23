@@ -581,10 +581,50 @@
             </div>
         </div>
     </footer>
+<script>
+async function render() {
+    const donorArea = document.getElementById('donorArea');
+    const ngoArea = document.getElementById('ngoArea');
+
+    donorArea.innerHTML = '';
+    ngoArea.innerHTML = '';
+
+    try {
+        const res = await fetch("http://127.0.0.1:5000/donations");
+        const list = await res.json();
+
+        if (!list.length) {
+            donorArea.innerHTML = `<div class="alert alert-info">No donations yet.</div>`;
+            return;
+        }
+
+        list.forEach(d => {
+            const card = document.createElement('div');
+            card.className = 'card p-3 mb-3 card-compact';
+
+            card.innerHTML = `
+                <h6>${d.title}</h6>
+                <p class="small">${d.description || ''}</p>
+                <p class="small"><strong>Qty:</strong> ${d.quantity}</p>
+                <p class="small"><strong>Pickup:</strong> ${d.pickup_info || ''}</p>
+                <span class="badge bg-success">${d.status}</span>
+            `;
+
+            donorArea.appendChild(card);
+        });
+
+    } catch (err) {
+        donorArea.innerHTML = `<div class="alert alert-danger">Failed to load donations</div>`;
+        console.error(err);
+    }
+}
+
+render();
+</script>
 
     <script>
         function render() {
-            const list = JSON.parse(localStorage.getItem('donations') || '[]');
+            // const list = JSON.parse(localStorage.getItem('donations') || '[]');
             const donorArea = document.getElementById('donorArea'); donorArea.innerHTML = '';
             const ngoArea = document.getElementById('ngoArea'); ngoArea.innerHTML = '';
             if (!list.length) {

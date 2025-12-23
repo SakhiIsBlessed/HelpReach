@@ -135,9 +135,52 @@
         </div>
     </footer>
 
+<script>
+let allDonations = [];
+
+async function render() {
+    try {
+        const res = await fetch("http://127.0.0.1:5000/donations");
+        allDonations = await res.json();
+
+        const container = document.getElementById("listArea");
+        container.innerHTML = "";
+
+        if (allDonations.length === 0) {
+            container.innerHTML = `
+                <div class="alert alert-info">
+                    No donations available
+                </div>`;
+            return;
+        }
+
+        allDonations.forEach(d => {
+            container.innerHTML += `
+                <div class="col-12">
+                    <div class="card p-3 card-compact">
+                        <h5>${d.title}</h5>
+                        <p>${d.description || ""}</p>
+                        <p><b>Quantity:</b> ${d.quantity}</p>
+                        <p><b>Pickup:</b> ${d.pickup_info || "N/A"}</p>
+                        <p><b>Donor:</b> ${d.donor_name}</p>
+                        <span class="badge bg-success">${d.status}</span>
+                    </div>
+                </div>
+            `;
+        });
+
+    } catch (err) {
+        console.error(err);
+        alert("Failed to load donations");
+    }
+}
+
+render();
+</script>
+
     <script>
         function render(){
-            const list = JSON.parse(localStorage.getItem('donations')||'[]');
+            // const list = JSON.parse(localStorage.getItem('donations')||'[]');
             const area = document.getElementById('listArea'); area.innerHTML='';
             if (!list.length){ area.innerHTML='<div class="alert alert-info">No active donations yet.</div>'; return; }
             list.forEach(d => {
@@ -160,14 +203,23 @@
             });
         }
         function view(id){
-            const list = JSON.parse(localStorage.getItem('donations')||'[]');
+            // const list = JSON.parse(localStorage.getItem('donations')||'[]');
             const d = list.find(x=>x.id===id);
             if (!d) return alert('Not found');
             alert(`Donation details:\nItem: ${d.type}\nQuantity: ${d.quantity}\nAddress: ${d.address}\nPickup: ${d.date} ${d.time}`);
         }
         function claim(id){
             // First-come claim simulation: mark claimed by this NGO (localStorage)
-            let list = JSON.parse(localStorage.getItem('donations')||'[]');
+//             async function claim(id) {
+//   await fetch(`http://localhost:3000/api/donations/${id}/claim`, {
+//     method: "PUT"
+//   });
+
+//   alert("Donation claimed!");
+//   render();
+// }
+
+            // let list = JSON.parse(localStorage.getItem('donations')||'[]');
             const idx = list.findIndex(x=>x.id===id);
             if (idx===-1) return alert('Not found');
             const donation = list[idx];
@@ -188,7 +240,7 @@
             // Basic client-side filter (not location-aware, only type and min qty)
             const type = document.getElementById('fType').value;
             const min = Number(document.getElementById('fMinQty').value||0);
-            let list = JSON.parse(localStorage.getItem('donations')||'[]');
+            // let list = JSON.parse(localStorage.getItem('donations')||'[]');
             if (type) list = list.filter(d=> (d.donType||d.type).toLowerCase().includes(type.toLowerCase()));
             if (min) list = list.filter(d=> Number(d.quantity) >= min);
             document.getElementById('listArea').innerHTML='';
@@ -203,5 +255,6 @@
         // initial render
         render();
     </script>
+    
 </body>
 </html>
