@@ -1878,23 +1878,25 @@
                 <form id="registrationForm">
                     <div class="form-group">
                         <label>Full Name</label>
-                        <input type="text" placeholder="Enter your full name" required pattern="[A-Za-z\s]+"
-                            title="Name should contain only letters">
+                        <input type="text" id="regName" placeholder="Enter your full name" required>
                     </div>
 
 
                     <div class="form-group">
                         <label>Email</label>
-                        <input type="email" placeholder="Enter your email" required pattern="^[^@\s]+@[^@\s]+\.[^@\s]+$"
-                            title="Email must contain @ and domain">
+                       <input type="email" id="regEmail" placeholder="Enter your email" required>
                     </div>
 
 
                     <div class="form-group">
                         <label>Phone</label>
-                        <input type="tel" placeholder="Enter your phone number" required pattern="[0-9]{10,}"
-                            minlength="10" maxlength="10"
-                            title="Phone number must contain only digits and minimum 10 numbers">
+<input type="tel" id="regPhone" placeholder="Enter phone number">
+
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" id="regPassword" placeholder="Create a password" required minlength="6">
+
                     </div>
 
 
@@ -1919,7 +1921,7 @@
 
                     <div class="form-group">
                         <label>Location</label>
-                        <input type="text" placeholder="Enter your city/location" required>
+                        <input type="text" id="regLocation" placeholder="Enter your city/location" required>
                     </div>
 
                     <div class="ngo-fields" id="ngoFields">
@@ -2058,6 +2060,52 @@
             </button>
         </div>
     </div>
+    <script>
+        async function submitRegistration() {
+  const name = document.getElementById("regName").value.trim();
+  const email = document.getElementById("regEmail").value.trim();
+  const password = document.getElementById("regPassword").value.trim();
+  const location = document.getElementById("regLocation").value.trim();
+  const phone = document.getElementById("regPhone").value.trim() || "---";
+  const role = document.querySelector('input[name="userType"]:checked').value;
+
+  if (!name || !email || !password || !location) {
+    alert("❌ Please fill all required fields");
+    return;
+  }
+
+  try {
+    const res = await fetch("http://127.0.0.1:5000/register", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name, email, password, role, location })
+    });
+
+    const result = await res.json();
+    if (!res.ok) throw new Error(result.error || "Registration failed");
+
+    const userData = {
+      name,
+      email,
+      location,
+      userType: role,
+      phone
+    };
+
+    localStorage.setItem("userProfile", JSON.stringify(userData));
+    isLoggedIn = true;
+
+    updateProfileDisplay(userData);
+    closeRegistration();
+
+    alert("✅ Registration successful!");
+  } catch (err) {
+    alert("❌ " + err.message);
+  }
+}
+
+
+    </script>
 
     <script>
         // Email sending removed. Keep globals for profile behavior.
@@ -2140,93 +2188,7 @@
             }
         }
 
-        function submitRegistration() {
-            console.log('submitRegistration() called');
-            const form = document.getElementById('registrationForm');
-            if (!form) {
-                console.error('Form not found!');
-                alert('Error: Form not found');
-                return;
-            }
-
-            const userType = document.querySelector('input[name="userType"]:checked');
-            if (!userType) {
-                alert('Please select a user type');
-                return;
-            }
-
-            // Get form inputs using more specific selectors to avoid NGO field confusion
-            const formGroups = form.querySelectorAll('.form-group');
-            console.log('Form groups found:', formGroups.length);
-
-            const nameInput = formGroups[0]?.querySelector('input[type="text"]');
-            const emailInput = formGroups[1]?.querySelector('input[type="email"]');
-            const phoneInput = formGroups[2]?.querySelector('input[type="tel"]');
-            const locationInput = formGroups[4]?.querySelector('input[type="text"]');
-            const termsCheckbox = form.querySelector('input[type="checkbox"]');
-
-            console.log('Name:', nameInput?.value, 'Email:', emailInput?.value, 'Phone:', phoneInput?.value, 'Location:', locationInput?.value);
-
-            // Validate all fields
-            if (!nameInput || !nameInput.value.trim()) {
-                alert('Please enter your full name');
-                console.error('Name input missing or empty');
-                return;
-            }
-            if (!emailInput || !emailInput.value.trim()) {
-                alert('Please enter your email');
-                console.error('Email input missing or empty');
-                return;
-            }
-            if (!phoneInput || !phoneInput.value.trim()) {
-                alert('Please enter your phone number');
-                console.error('Phone input missing or empty');
-                return;
-            }
-            if (!locationInput || !locationInput.value.trim()) {
-                alert('Please enter your location');
-                console.error('Location input missing or empty');
-                return;
-            }
-            if (!termsCheckbox || !termsCheckbox.checked) {
-                alert('Please agree to the terms and conditions');
-                console.error('Terms not accepted');
-                return;
-            }
-
-            // Store user data
-            const userData = {
-                userType: userType.value,
-                name: nameInput.value.trim(),
-                email: emailInput.value.trim(),
-                phone: phoneInput.value.trim(),
-                location: locationInput.value.trim()
-            };
-
-            console.log('User data:', userData);
-            localStorage.setItem('userProfile', JSON.stringify(userData));
-            isLoggedIn = true;
-
-            // Show profile icon and hide fill form button
-            const profileIcon = document.getElementById('profileIcon');
-            const fillFormBtn = document.getElementById('fillFormBtn');
-            if (profileIcon) {
-                profileIcon.classList.add('show');
-                console.log('Profile icon shown');
-            }
-            if (fillFormBtn) {
-                fillFormBtn.classList.remove('show');
-                console.log('Fill form button hidden');
-            }
-
-            // Email sending disabled — just show success message
-            alert('Registration successful!');
-            closeRegistration();
-
-            // Update profile with user data
-            updateProfileDisplay(userData);
-        }
-
+        
         // Email sending removed. sendConfirmationEmail() intentionally omitted.
 
         function updateProfileDisplay(userData) {
@@ -2329,3 +2291,90 @@
 </body>
 
 </html>
+function submitRegistration() {
+            console.log('submitRegistration() called');
+            const form = document.getElementById('registrationForm');
+            if (!form) {
+                console.error('Form not found!');
+                alert('Error: Form not found');
+                return;
+            }
+
+            const userType = document.querySelector('input[name="userType"]:checked');
+            if (!userType) {
+                alert('Please select a user type');
+                return;
+            }
+
+            // Get form inputs using more specific selectors to avoid NGO field confusion
+            const formGroups = form.querySelectorAll('.form-group');
+            console.log('Form groups found:', formGroups.length);
+
+            const nameInput = formGroups[0]?.querySelector('input[type="text"]');
+            const emailInput = formGroups[1]?.querySelector('input[type="email"]');
+            const phoneInput = formGroups[2]?.querySelector('input[type="tel"]');
+            const locationInput = formGroups[4]?.querySelector('input[type="text"]');
+            const termsCheckbox = form.querySelector('input[type="checkbox"]');
+
+            console.log('Name:', nameInput?.value, 'Email:', emailInput?.value, 'Phone:', phoneInput?.value, 'Location:', locationInput?.value);
+
+            // Validate all fields
+            if (!nameInput || !nameInput.value.trim()) {
+                alert('Please enter your full name');
+                console.error('Name input missing or empty');
+                return;
+            }
+            if (!emailInput || !emailInput.value.trim()) {
+                alert('Please enter your email');
+                console.error('Email input missing or empty');
+                return;
+            }
+            if (!phoneInput || !phoneInput.value.trim()) {
+                alert('Please enter your phone number');
+                console.error('Phone input missing or empty');
+                return;
+            }
+            if (!locationInput || !locationInput.value.trim()) {
+                alert('Please enter your location');
+                console.error('Location input missing or empty');
+                return;
+            }
+            if (!termsCheckbox || !termsCheckbox.checked) {
+                alert('Please agree to the terms and conditions');
+                console.error('Terms not accepted');
+                return;
+            }
+
+            // Store user data
+            const userData = {
+                userType: userType.value,
+                name: nameInput.value.trim(),
+                email: emailInput.value.trim(),
+                phone: phoneInput.value.trim(),
+                location: locationInput.value.trim()
+            };
+
+            console.log('User data:', userData);
+            // localStorage.setItem('userProfile', JSON.stringify(userData));
+
+            isLoggedIn = true;
+
+            // Show profile icon and hide fill form button
+            const profileIcon = document.getElementById('profileIcon');
+            const fillFormBtn = document.getElementById('fillFormBtn');
+            if (profileIcon) {
+                profileIcon.classList.add('show');
+                console.log('Profile icon shown');
+            }
+            if (fillFormBtn) {
+                fillFormBtn.classList.remove('show');
+                console.log('Fill form button hidden');
+            }
+
+            // Email sending disabled — just show success message
+            alert('Registration successful!');
+            closeRegistration();
+
+            // Update profile with user data
+            updateProfileDisplay(userData);
+        }
