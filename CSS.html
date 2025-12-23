@@ -1,0 +1,67 @@
+ <!-- <!DOCTYPE html>
+<html>
+
+<head>
+    <title>Hello World Program</title>
+</head>
+
+<body>
+
+    <script>
+
+        console.log("Console = Hello World")
+        document.write("Write = Hello World")
+        alert("Alert = Hellooo World")
+    </script>
+
+</body>
+
+</html>  -->
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Calculator Program</title>
+</head>
+
+<body>
+
+    <form>
+        <input type="text" id="num1" placeholder="Enter First Number">
+        <br><br>
+        <input type="text" id="num2" placeholder="Enter Second Number">
+        <br><br>
+        <input type="button" value="Add +" onclick="add(this)">
+        <input type="button" value="Subtract -" onclick="subtract(this)">
+        <input type="button" value="Multiply *" onclick="multiply(this)">
+        <input type="button" value="Divide /" onclick="divide(this)">
+
+    </form>
+    <script>
+function add(btn){
+    var num1 =parseFloat(document.getElementById("num1").value);
+    var num2 =parseFloat(document.getElementById("num2").value);
+    btn.value=num1+num2;
+    
+}
+function subtract(btn){
+    var num1 =parseFloat(document.getElementById("num1").value);
+    var num2 =parseFloat(document.getElementById("num2").value);
+   btn.value=num1-num2;
+}
+function multiply(btn){
+    var num1 =parseFloat(document.getElementById("num1").value);
+    var num2 =parseFloat(document.getElementById("num2").value);
+    btn.value=num1*num2;
+}
+function divide(btn){
+    var num1 =parseFloat(document.getElementById("num1").value);
+    var num2 =parseFloat(document.getElementById("num2").value);
+    btn.value=num1/num2;
+}
+    </script>
+
+</body>
+
+</html>
