@@ -140,7 +140,8 @@ let allDonations = [];
 
 async function render() {
     try {
-        const res = await fetch("http://127.0.0.1:5000/donations");
+        const res = await fetch("http://127.0.0.1:5000/api/donations")
+
         allDonations = await res.json();
 
         const container = document.getElementById("listArea");

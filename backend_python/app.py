@@ -6,15 +6,19 @@ import hashlib
 app = Flask(__name__)
 CORS(app)
 
-# ---------- TEST ROUTE ----------
+# ---------------- HOME ----------------
 @app.route("/")
 def home():
-    return {"message": " HelpReach Python Backend Running Python backend is running 🚀"}
+    return {"message": "HelpReach backend running 🚀"}
 
-# ---------- REGISTER ----------
-@app.route("/register", methods=["POST"])
+# ---------------- REGISTER ----------------
+@app.route("/api/register", methods=["POST", "OPTIONS"])
 def register():
-    data = request.json
+    if request.method == "OPTIONS":
+        return jsonify({"ok": True}), 200
+
+    data = request.form if request.form else request.json
+
     name = data.get("name")
     email = data.get("email")
     password = data.get("password")
@@ -40,10 +44,14 @@ def register():
         cursor.close()
         db.close()
 
-# ---------- LOGIN ----------
-@app.route("/login", methods=["POST"])
+
+# ---------------- LOGIN ----------------
+@app.route("/api/login", methods=["POST", "OPTIONS"])
 def login():
-    data = request.json
+    if request.method == "OPTIONS":
+        return jsonify({"ok": True}), 200
+
+    data = request.form if request.form else request.json
     email = data.get("email")
     password = data.get("password")
 
@@ -56,45 +64,48 @@ def login():
         "SELECT id, name FROM users WHERE email=%s AND password_hash=%s",
         (email, password_hash)
     )
-    user = cursor.fetchone()
 
+    user = cursor.fetchone()
     cursor.close()
     db.close()
 
     if user:
         return {"ok": True, "user": user}
-    else:
-        return {"error": "Invalid credentials"}, 401
 
-# ---------- GET DONATIONS ----------
-@app.route("/donations", methods=["GET"])
-def get_donations():
-    db = get_db_connection()
-    cursor = db.cursor(dictionary=True)
+    return {"error": "Invalid credentials"}, 401
 
-    cursor.execute("""
-        SELECT d.*, u.name AS donor_name
-        FROM donations d
-        JOIN users u ON u.id = d.donor_id
-        ORDER BY d.created_at DESC
-    """)
 
-    donations = cursor.fetchall()
+# ---------------- DONATIONS ----------------
+@app.route("/api/donations", methods=["GET", "POST", "OPTIONS"])
+def api_donations():
+    if request.method == "OPTIONS":
+        return jsonify({"ok": True}), 200
 
-    cursor.close()
-    db.close()
+    if request.method == "GET":
+        db = get_db_connection()
+        cursor = db.cursor(dictionary=True)
 
-    return jsonify(donations)
+        cursor.execute("""
+            SELECT d.*, u.name AS donor_name
+            FROM donations d
+            JOIN users u ON u.id = d.donor_id
+            ORDER BY d.created_at DESC
+        """)
 
-# ---------- POST DONATION ----------
-@app.route("/donate", methods=["POST"])
-def donate():
-    data = request.json
+        data = cursor.fetchall()
+        cursor.close()
+        db.close()
+
+        return jsonify(data)
+
+    # POST
+    data = request.form if request.form else request.json
+
     title = data.get("title")
     description = data.get("description")
     quantity = data.get("quantity")
     pickup_info = data.get("pickup_info")
-    donor_id = data.get("donor_id")
+    donor_id = data.get("donor_id", 1)
 
     if not title or not donor_id:
         return {"error": "Missing fields"}, 400
@@ -111,8 +122,8 @@ def donate():
     cursor.close()
     db.close()
 
-    return {"ok": True, "message": "Donation added"}
+    return {"ok": True, "message": "Donation added successfully"}
 
-# ---------- RUN SERVER ----------
+
 if __name__ == "__main__":
     app.run(debug=True)

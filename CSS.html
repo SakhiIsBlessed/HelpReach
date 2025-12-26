@@ -65,3 +65,271 @@ function divide(btn){
 </body>
 
 </html>
+function submitRegistration() {
+            console.log('submitRegistration() called');
+            const form = document.getElementById('registrationForm');
+            if (!form) {
+                console.error('Form not found!');
+                alert('Error: Form not found');
+                return;
+            }
+
+            const userType = document.querySelector('input[name="userType"]:checked');
+            if (!userType) {
+                alert('Please select a user type');
+                return;
+            }
+
+            // Get form inputs using more specific selectors to avoid NGO field confusion
+            const formGroups = form.querySelectorAll('.form-group');
+            console.log('Form groups found:', formGroups.length);
+
+            const nameInput = formGroups[0]?.querySelector('input[type="text"]');
+            const emailInput = formGroups[1]?.querySelector('input[type="email"]');
+            const phoneInput = formGroups[2]?.querySelector('input[type="tel"]');
+            const locationInput = formGroups[4]?.querySelector('input[type="text"]');
+            const termsCheckbox = form.querySelector('input[type="checkbox"]');
+
+            console.log('Name:', nameInput?.value, 'Email:', emailInput?.value, 'Phone:', phoneInput?.value, 'Location:', locationInput?.value);
+
+            // Validate all fields
+            if (!nameInput || !nameInput.value.trim()) {
+                alert('Please enter your full name');
+                console.error('Name input missing or empty');
+                return;
+            }
+            if (!emailInput || !emailInput.value.trim()) {
+                alert('Please enter your email');
+                console.error('Email input missing or empty');
+                return;
+            }
+            if (!phoneInput || !phoneInput.value.trim()) {
+                alert('Please enter your phone number');
+                console.error('Phone input missing or empty');
+                return;
+            }
+            if (!locationInput || !locationInput.value.trim()) {
+                alert('Please enter your location');
+                console.error('Location input missing or empty');
+                return;
+            }
+            if (!termsCheckbox || !termsCheckbox.checked) {
+                alert('Please agree to the terms and conditions');
+                console.error('Terms not accepted');
+                return;
+            }
+
+            // Store user data
+            const userData = {
+                userType: userType.value,
+                name: nameInput.value.trim(),
+                email: emailInput.value.trim(),
+                phone: phoneInput.value.trim(),
+                location: locationInput.value.trim()
+            };
+
+            console.log('User data:', userData);
+            localStorage.setItem('userProfile', JSON.stringify(userData));
+            isLoggedIn = true;
+
+            // Show profile icon and hide fill form button
+            const profileIcon = document.getElementById('profileIcon');
+            const fillFormBtn = document.getElementById('fillFormBtn');
+            if (profileIcon) {
+                profileIcon.classList.add('show');
+                console.log('Profile icon shown');
+            }
+            if (fillFormBtn) {
+                fillFormBtn.classList.remove('show');
+                console.log('Fill form button hidden');
+            }
+
+            // Email sending disabled — just show success message
+            alert('Registration successful!');
+            closeRegistration();
+
+            // Update profile with user data
+            updateProfileDisplay(userData);
+        }
+<!-- <script>
+document.getElementById('donateForm').addEventListener('submit', async function (e) {
+    e.preventDefault();
+
+    const msg = document.getElementById('donMsg');
+
+    const donationData = {
+        title: document.querySelector('input[name="item_type"]').value,
+        description: document.getElementById('donType').value,
+        quantity: document.querySelector('input[name="quantity"]').value,
+        pickup_info:
+            document.querySelector('input[name="address"]').value + " | " +
+            document.querySelector('input[name="date"]').value + " " +
+            document.querySelector('input[name="time"]').value,
+        donor_id: 1   // ⚠️ TEMPORARY (use logged-in user id later)
+    };
+
+    try {
+        const response = await fetch("http://127.0.0.1:5000/donate", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(donationData)
+        });
+
+        const result = await response.json();
+
+        if (result.ok) {
+            msg.style.display = 'block';
+            msg.className = 'alert alert-success';
+            msg.textContent = "✅ Donation added successfully!";
+            document.getElementById('donateForm').reset();
+        } else {
+            throw new Error(result.error);
+        }
+
+    } catch (error) {
+        msg.style.display = 'block';
+        msg.className = 'alert alert-danger';
+        msg.textContent = "❌ Error: " + error.message;
+    }
+});
+</script> --> // document.getElementById('donateForm').addEventListener('submit', function (e) {
+        //     e.preventDefault();
+        //     const data = new FormData(this);
+            // Simulate sending request to NGOs
+            // const msg = document.getElementById('donMsg');
+            // msg.style.display = 'block';
+            // msg.className = 'alert alert-success';
+            // msg.textContent = '✓ Donation request sent to nearby NGOs. Listing will appear in active donations.';
+            // Save to localStorage for listings simulation
+        //     const donations = JSON.parse(localStorage.getItem('donations') || '[]');
+        //     donations.unshift({
+        //         id: Date.now(),
+        //         type: data.get('item_type'),
+        //         donType: data.get('donType') || document.getElementById('donType').value,
+        //         quantity: data.get('quantity'),
+        //         address: data.get('address'),
+        //         date: data.get('date'),
+        //         time: data.get('time'),
+        //         status: 'Available'
+        //     });
+        //     localStorage.setItem('donations', JSON.stringify(donations));
+        //     setTimeout(() => window.location.href = 'listings.html', 1500);
+        // });
+
+        // Update year
+
+
+
+         <!-- <script>
+document.getElementById('donateForm').addEventListener('submit', async function (e) {
+    e.preventDefault();
+
+    const msg = document.getElementById('donMsg');
+    msg.style.display = 'none';
+
+    // 🔐 LOGIN CHECK
+    const userProfile = localStorage.getItem("userProfile");
+    if (!userProfile) {
+        msg.style.display = 'block';
+        msg.className = 'alert alert-warning';
+        msg.textContent = "⚠️ Please login or register before submitting a donation.";
+        return;
+    }
+
+    const user = JSON.parse(userProfile);
+
+    const donationData = {
+        title: document.querySelector('input[name="item_type"]').value,
+        description: document.getElementById('donType').value,
+        quantity: document.querySelector('input[name="quantity"]').value,
+        pickup_info:
+            document.querySelector('input[name="address"]').value + " | " +
+            document.querySelector('input[name="date"]').value + " " +
+            document.querySelector('input[name="time"]').value,
+        donor_id: user.id
+    };
+
+    try {
+        const response = await fetch("http://127.0.0.1:5000/donate", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(donationData)
+        });
+
+        if (!response.ok) {
+            throw new Error("Server rejected the request");
+        }
+
+        const result = await response.json();
+
+        msg.style.display = 'block';
+        msg.className = 'alert alert-success';
+        msg.textContent = "🙏 Thank you! Your donation has been submitted successfully.";
+        document.getElementById('donateForm').reset();
+
+    } catch (error) {
+        msg.style.display = 'block';
+        msg.className = 'alert alert-danger';
+        msg.textContent = "❌ Error: " + error.message;
+    }
+});
+</script>
+ -->
+
+ <!-- <script>
+document.getElementById('donateForm').addEventListener('submit', async function (e) {
+    e.preventDefault();
+
+    const msg = document.getElementById('donMsg');
+
+    // 🔐 CHECK LOGIN
+    const userProfile = localStorage.getItem("userProfile");
+
+    if (!userProfile) {
+        msg.style.display = 'block';
+        msg.className = 'alert alert-danger';
+        msg.textContent = "❌ You first have to register or login to submit a donation.";
+        return; // ⛔ STOP here
+    }
+
+    const user = JSON.parse(userProfile);
+
+    // ✅ Prepare donation data
+    const donationData = {
+        title: document.querySelector('input[name="item_type"]').value,
+        description: document.getElementById('donType').value,
+        quantity: document.querySelector('input[name="quantity"]').value,
+        pickup_info:
+            document.querySelector('input[name="address"]').value + " | " +
+            document.querySelector('input[name="date"]').value + " " +
+            document.querySelector('input[name="time"]').value,
+        donor_id: user.id || 1   // use real id when login API returns it
+    };
+
+    try {
+        const response = await fetch("http://127.0.0.1:5000/donate", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(donationData)
+        });
+
+        const result = await response.json();
+
+        if (result.ok) {
+            msg.style.display = 'block';
+            msg.className = 'alert alert-success';
+            msg.textContent = "🙏 Thank you! Your donation has been submitted successfully.";
+            document.getElementById('donateForm').reset();
+        } else {
+            throw new Error(result.error);
+        }
+
+    } catch (error) {
+        msg.style.display = 'block';
+        msg.className = 'alert alert-danger';
+        msg.textContent = "❌ Error: " + error.message;
+    }
+});
+</script> -->
