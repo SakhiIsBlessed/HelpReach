@@ -934,6 +934,34 @@
                 let ngos = JSON.parse(localStorage.getItem('ngos') || '[]');
                 ngos.push(ngoData);
                 localStorage.setItem('ngos', JSON.stringify(ngos));
+//                 fetch("http://127.0.0.1:5000/api/ngos/register", {
+//     method: "POST",
+//     headers: {
+//         "Content-Type": "application/json"
+//     },
+//     body: JSON.stringify({
+//         orgName,
+//         registrationNumber,
+//         category,
+//         description,
+//         contactPerson,
+//         designation,
+//         email: regEmail.value,
+//         phone: regPhone.value,
+//         address
+//     })
+// })
+
+then(res => res.json())
+.then(data => {
+    if (data.ok) {
+        successMessage.classList.add("show");
+        setTimeout(() => window.location.href = "login.html", 2000);
+    } else {
+        alert(data.error || "Registration failed");
+    }
+});
+
 
                 successMessage.classList.add('show');
                 registerSubmitBtn.disabled = true;
