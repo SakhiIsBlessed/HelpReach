@@ -134,20 +134,16 @@
             </div>
         </div>
     </footer>
-
 <script>
-let allDonations = [];
-
-async function render() {
+async function loadDonations() {
     try {
-        const res = await fetch("http://127.0.0.1:5000/api/donations")
-
-        allDonations = await res.json();
+        const res = await fetch("http://127.0.0.1:5000/api/donations");
+        const data = await res.json();
 
         const container = document.getElementById("listArea");
         container.innerHTML = "";
 
-        if (allDonations.length === 0) {
+        if (!data.length) {
             container.innerHTML = `
                 <div class="alert alert-info">
                     No donations available
@@ -155,107 +151,33 @@ async function render() {
             return;
         }
 
-        allDonations.forEach(d => {
-            container.innerHTML += `
-                <div class="col-12">
-                    <div class="card p-3 card-compact">
-                        <h5>${d.title}</h5>
-                        <p>${d.description || ""}</p>
-                        <p><b>Quantity:</b> ${d.quantity}</p>
-                        <p><b>Pickup:</b> ${d.pickup_info || "N/A"}</p>
-                        <p><b>Donor:</b> ${d.donor_name}</p>
-                        <span class="badge bg-success">${d.status}</span>
-                    </div>
+        data.forEach(d => {
+            const card = document.createElement("div");
+            card.className = "col-12";
+
+            card.innerHTML = `
+                <div class="card p-3 card-compact">
+                    <h5>${d.title}</h5>
+                    <p>${d.description || ""}</p>
+                    <p><b>Quantity:</b> ${d.quantity}</p>
+                    <p><b>Pickup:</b> ${d.pickup_info || "N/A"}</p>
+                    <p><b>Donor:</b> ${d.donor_name}</p>
+                    <span class="badge bg-success">${d.status}</span>
                 </div>
             `;
+
+            container.appendChild(card);
         });
 
-    } catch (err) {
-        console.error(err);
-        alert("Failed to load donations");
+    } catch (error) {
+        console.error(error);
+        alert("Failed to load donations.");
     }
 }
 
-render();
+document.addEventListener("DOMContentLoaded", loadDonations);
 </script>
 
-    <script>
-        function render(){
-            // const list = JSON.parse(localStorage.getItem('donations')||'[]');
-            const area = document.getElementById('listArea'); area.innerHTML='';
-            if (!list.length){ area.innerHTML='<div class="alert alert-info">No active donations yet.</div>'; return; }
-            list.forEach(d => {
-                const col = document.createElement('div'); col.className='col-12';
-                col.innerHTML = `
-                    <div class="card p-3 card-compact">
-                        <div class="d-flex justify-content-between align-items-start">
-                            <div>
-                                <h5 class="mb-1">${d.type} <small class="text-muted">(${d.quantity})</small></h5>
-                                <p class="mb-1 small">${d.address} • ${d.date} ${d.time}</p>
-                                <p class="mb-1"><strong>Status:</strong> <span class="badge bg-${d.status==='Available'?'success':'secondary'}">${d.status}</span></p>
-                            </div>
-                            <div class="text-end">
-                                <button class="btn btn-sm btn-outline-primary me-2" onclick="view(${d.id})">View</button>
-                                <button class="btn btn-sm btn-success" onclick="claim(${d.id})" ${d.status!=='Available'?'disabled':''}>Claim</button>
-                            </div>
-                        </div>
-                    </div>`;
-                area.appendChild(col);
-            });
-        }
-        function view(id){
-            // const list = JSON.parse(localStorage.getItem('donations')||'[]');
-            const d = list.find(x=>x.id===id);
-            if (!d) return alert('Not found');
-            alert(`Donation details:\nItem: ${d.type}\nQuantity: ${d.quantity}\nAddress: ${d.address}\nPickup: ${d.date} ${d.time}`);
-        }
-        function claim(id){
-            // First-come claim simulation: mark claimed by this NGO (localStorage)
-//             async function claim(id) {
-//   await fetch(`http://localhost:3000/api/donations/${id}/claim`, {
-//     method: "PUT"
-//   });
 
-//   alert("Donation claimed!");
-//   render();
-// }
-
-            // let list = JSON.parse(localStorage.getItem('donations')||'[]');
-            const idx = list.findIndex(x=>x.id===id);
-            if (idx===-1) return alert('Not found');
-            const donation = list[idx];
-            if (donation.status !== 'Available') return alert('Already claimed');
-            // simulate multiple NGOs racing: pick random chance to split if quantity >5
-            const qty = Number(donation.quantity) || 1;
-            if (qty > 10){
-                // split between 2 NGOs
-                donation.status = 'Split Between 2 NGOs';
-            } else {
-                donation.status = 'Fully Assigned';
-            }
-            localStorage.setItem('donations', JSON.stringify(list));
-            alert('Claim successful. Refreshing list...');
-            render();
-        }
-        document.getElementById('applyFilter').addEventListener('click', ()=>{
-            // Basic client-side filter (not location-aware, only type and min qty)
-            const type = document.getElementById('fType').value;
-            const min = Number(document.getElementById('fMinQty').value||0);
-            // let list = JSON.parse(localStorage.getItem('donations')||'[]');
-            if (type) list = list.filter(d=> (d.donType||d.type).toLowerCase().includes(type.toLowerCase()));
-            if (min) list = list.filter(d=> Number(d.quantity) >= min);
-            document.getElementById('listArea').innerHTML='';
-            if (!list.length) document.getElementById('listArea').innerHTML='<div class="alert alert-warning">No results for filters.</div>';
-            list.forEach(d=>{
-                const col = document.createElement('div'); col.className='col-12';
-                col.innerHTML = `<div class="card p-3 card-compact"><div class="d-flex justify-content-between"><div><h5>${d.type} <small class="text-muted">(${d.quantity})</small></h5><p class="small">${d.address}</p></div><div><button class="btn btn-sm btn-success" onclick="claim(${d.id})">Claim</button></div></div></div>`;
-                document.getElementById('listArea').appendChild(col);
-            });
-        });
-
-        // initial render
-        render();
-    </script>
-    
 </body>
 </html>

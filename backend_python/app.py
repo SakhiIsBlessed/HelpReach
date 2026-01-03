@@ -235,10 +235,11 @@ def api_donations():
     description = data.get("description")
     quantity = data.get("quantity")
     pickup_info = data.get("pickup_info")
-    donor_id = data.get("donor_id", 1)
+    donor_id = data.get("donor_id", 45)
 
     if not title or not donor_id:
-        return {"error": "Missing fields"}, 400
+        return {"error": "user not logged in"}, 401
+        
 
     db = get_db_connection()
     cursor = db.cursor()
