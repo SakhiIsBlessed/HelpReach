@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,7 +9,11 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
-        :root{--accent:#007bff;--accent-dark:#0056b3}
+        :root {
+            --accent: #007bff;
+            --accent-dark: #0056b3
+        }
+
         body {
             background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
             min-height: 100vh;
@@ -18,56 +23,213 @@
             margin-top: 80px;
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
         }
+
         .login-container {
-            background: linear-gradient(180deg, rgba(255,255,255,0.98), #ffffff);
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), #ffffff);
             border-radius: 12px;
-            box-shadow: 0 12px 40px rgba(2,6,23,0.16);
+            box-shadow: 0 12px 40px rgba(2, 6, 23, 0.16);
             padding: 36px;
             width: 100%;
             max-width: 440px;
             animation: fadeIn 550ms ease both;
         }
-        .login-header { text-align: center; margin-bottom: 22px; }
-        .login-brand { display:flex; align-items:center; gap:10px; justify-content:center; }
-        .login-brand img{height:44px}
-        .login-header h2 { color:#0b2540; font-weight:800; margin-bottom:6px; font-size:1.6rem }
-        .login-header p { color:#5b6b78; font-size:0.95rem; margin-bottom:0 }
 
-        .form-label{ color:#223; font-weight:700; font-size:0.9rem }
-        .input-group .form-control { border-radius:8px; padding:12px 12px }
-        .form-control:focus{ box-shadow:0 8px 30px rgba(0,123,255,0.12); border-color:var(--accent) }
+        .login-header {
+            text-align: center;
+            margin-bottom: 22px;
+        }
 
-        .field-help{ font-size:0.85rem; color:#6c757d }
-        .invalid-feedback{ display:block }
+        .login-brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            justify-content: center;
+        }
 
-        .btn-login{ width:100%; padding:11px; font-weight:700; border-radius:10px; background:linear-gradient(135deg,#28a745 0%,#20c997 100%); border:none; color:#fff }
-        .btn-login:disabled{ opacity:0.7; cursor:not-allowed }
+        .login-brand img {
+            height: 44px
+        }
 
-        .alt-actions{ display:flex; gap:10px; align-items:center; justify-content:center; margin-top:14px }
-        .alt-actions a{ color:var(--accent); font-weight:600 }
+        .login-header h2 {
+            color: #0b2540;
+            font-weight: 800;
+            margin-bottom: 6px;
+            font-size: 1.6rem
+        }
 
-        .pw-toggle{ background:transparent; border:none; color:#6c757d }
-        .strength { height:6px; border-radius:6px; overflow:hidden; background:#e9ecef }
-        .strength > i{ display:block; height:6px; transition:width .4s ease }
+        .login-header p {
+            color: #5b6b78;
+            font-size: 0.95rem;
+            margin-bottom: 0
+        }
 
-        @keyframes fadeIn{ from{opacity:0; transform:translateY(8px)} to{opacity:1; transform:none} }
-        @media (max-width:480px){ .login-container{ padding:20px; max-width:360px } }
+        .form-label {
+            color: #223;
+            font-weight: 700;
+            font-size: 0.9rem
+        }
+
+        .input-group .form-control {
+            border-radius: 8px;
+            padding: 12px 12px
+        }
+
+        .form-control:focus {
+            box-shadow: 0 8px 30px rgba(0, 123, 255, 0.12);
+            border-color: var(--accent)
+        }
+
+        .field-help {
+            font-size: 0.85rem;
+            color: #6c757d
+        }
+
+        .invalid-feedback {
+            display: block
+        }
+
+        .btn-login {
+            width: 100%;
+            padding: 11px;
+            font-weight: 700;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            border: none;
+            color: #fff
+        }
+
+        .btn-login:disabled {
+            opacity: 0.7;
+            cursor: not-allowed
+        }
+
+        .alt-actions {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            justify-content: center;
+            margin-top: 14px
+        }
+
+        .alt-actions a {
+            color: var(--accent);
+            font-weight: 600
+        }
+
+        .pw-toggle {
+            background: transparent;
+            border: none;
+            color: #6c757d
+        }
+
+        .strength {
+            height: 6px;
+            border-radius: 6px;
+            overflow: hidden;
+            background: #e9ecef
+        }
+
+        .strength>i {
+            display: block;
+            height: 6px;
+            transition: width .4s ease
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(8px)
+            }
+
+            to {
+                opacity: 1;
+                transform: none
+            }
+        }
+
+        @media (max-width:480px) {
+            .login-container {
+                padding: 20px;
+                max-width: 360px
+            }
+        }
 
         /* Registration Modal Styles */
-        .modal-backdrop { background-color: rgba(2,6,23,0.5) }
-        .modal-content { border:none; border-radius:14px; box-shadow:0 20px 60px rgba(2,6,23,0.3) }
-        .modal-header { border-bottom:1px solid #e9ecef; padding:24px }
-        .modal-title { font-weight:800; color:#0b2540; font-size:1.4rem }
-        .btn-close:focus { box-shadow:0 0 0 0.25rem rgba(0,123,255,0.25) }
-        .modal-body { padding:24px }
-        .form-control, .form-select { border:1px solid #e0e0e0; border-radius:8px; padding:11px 12px; font-size:0.95rem }
-        .form-control:focus, .form-select:focus { border-color:var(--accent); box-shadow:0 8px 30px rgba(0,123,255,0.12) }
-        .reg-password-strength { height:4px; border-radius:4px; background:#e9ecef; margin-top:6px; overflow:hidden }
-        .reg-password-strength-bar { display:block; height:100%; transition:width .3s ease, background .3s ease }
-        .btn-register { width:100%; padding:11px; font-weight:700; border-radius:10px; background:linear-gradient(135deg,#28a745 0%,#20c997 100%); border:none; color:#fff; margin-top:6px }
-        .btn-register:disabled { opacity:0.7; cursor:not-allowed }
+        .modal-backdrop {
+            background-color: rgba(2, 6, 23, 0.5)
+        }
+
+        .modal-content {
+            border: none;
+            border-radius: 14px;
+            box-shadow: 0 20px 60px rgba(2, 6, 23, 0.3)
+        }
+
+        .modal-header {
+            border-bottom: 1px solid #e9ecef;
+            padding: 24px
+        }
+
+        .modal-title {
+            font-weight: 800;
+            color: #0b2540;
+            font-size: 1.4rem
+        }
+
+        .btn-close:focus {
+            box-shadow: 0 0 0 0.25rem rgba(0, 123, 255, 0.25)
+        }
+
+        .modal-body {
+            padding: 24px
+        }
+
+        .form-control,
+        .form-select {
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 11px 12px;
+            font-size: 0.95rem
+        }
+
+        .form-control:focus,
+        .form-select:focus {
+            border-color: var(--accent);
+            box-shadow: 0 8px 30px rgba(0, 123, 255, 0.12)
+        }
+
+        .reg-password-strength {
+            height: 4px;
+            border-radius: 4px;
+            background: #e9ecef;
+            margin-top: 6px;
+            overflow: hidden
+        }
+
+        .reg-password-strength-bar {
+            display: block;
+            height: 100%;
+            transition: width .3s ease, background .3s ease
+        }
+
+        .btn-register {
+            width: 100%;
+            padding: 11px;
+            font-weight: 700;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            border: none;
+            color: #fff;
+            margin-top: 6px
+        }
+
+        .btn-register:disabled {
+            opacity: 0.7;
+            cursor: not-allowed
+        }
     </style>
 </head>
+
 <body>
     <!-- Navbar Start -->
     <div class="container-fluid fixed-top bg-white">
@@ -113,7 +275,9 @@
                 <label for="email" class="form-label">Email address</label>
                 <div class="input-group">
                     <span class="input-group-text"><i class="fas fa-envelope"></i></span>
-                    <input aria-describedby="emailHelp" aria-invalid="false" required pattern="^[^\s@]+@[^\s@]+\.[^\s@]+$" type="email" class="form-control" id="email" name="email" placeholder="you@organization.org" autocomplete="email">
+                    <input aria-describedby="emailHelp" aria-invalid="false" required
+                        pattern="^[^\s@]+@[^\s@]+\.[^\s@]+$" type="email" class="form-control" id="email" name="email"
+                        placeholder="you@organization.org" autocomplete="email">
                 </div>
                 <div id="emailHelp" class="field-help">Use your official NGO email</div>
                 <div class="invalid-feedback" id="emailError" aria-live="polite" style="display:none"></div>
@@ -123,11 +287,15 @@
                 <label for="password" class="form-label">Password</label>
                 <div class="input-group">
                     <span class="input-group-text"><i class="fas fa-lock"></i></span>
-                    <input aria-describedby="pwHelp" aria-invalid="false" required type="password" class="form-control" id="password" name="password" placeholder="Minimum 8 characters" autocomplete="current-password" minlength="8">
-                    <button type="button" class="pw-toggle" aria-label="Show password" id="togglePw"><i class="fas fa-eye"></i></button>
+                    <input aria-describedby="pwHelp" aria-invalid="false" required type="password" class="form-control"
+                        id="password" name="password" placeholder="Minimum 8 characters" autocomplete="current-password"
+                        minlength="8">
+                    <button type="button" class="pw-toggle" aria-label="Show password" id="togglePw"><i
+                            class="fas fa-eye"></i></button>
                 </div>
                 <div id="pwHelp" class="field-help">Password must be 8+ characters</div>
-                <div class="mt-2 strength" aria-hidden="true"><i id="strengthBar" style="width:0;background:#e9ecef"></i></div>
+                <div class="mt-2 strength" aria-hidden="true"><i id="strengthBar"
+                        style="width:0;background:#e9ecef"></i></div>
                 <div class="invalid-feedback" id="pwError" aria-live="polite" style="display:none"></div>
             </div>
 
@@ -146,9 +314,10 @@
             </div>
         </div>
 
-        <div style="text-align:center;margin-top:12px"><a href="index.html" style="color:#6c757d;text-decoration:none">← Back to Home</a></div>
+        <div style="text-align:center;margin-top:12px"><a href="index.html" style="color:#6c757d;text-decoration:none">←
+                Back to Home</a></div>
     </div>
-    
+
     <!-- Registration Modal -->
     <div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
@@ -161,39 +330,51 @@
                     <form id="registerForm" novalidate>
                         <div class="mb-3">
                             <label for="orgName" class="form-label">Organization Name</label>
-                            <input type="text" class="form-control" id="orgName" name="orgName" placeholder="Your NGO name" required>
-                            <div class="invalid-feedback" id="orgNameError" style="display:none;font-size:0.85rem;color:#dc3545"></div>
+                            <input type="text" class="form-control" id="orgName" name="orgName"
+                                placeholder="Your NGO name" required>
+                            <div class="invalid-feedback" id="orgNameError"
+                                style="display:none;font-size:0.85rem;color:#dc3545"></div>
                         </div>
 
                         <div class="mb-3">
                             <label for="regEmail" class="form-label">Email Address</label>
-                            <input type="email" class="form-control" id="regEmail" name="regEmail" placeholder="ngo@organization.org" required>
-                            <div class="invalid-feedback" id="regEmailError" style="display:none;font-size:0.85rem;color:#dc3545"></div>
+                            <input type="email" class="form-control" id="regEmail" name="regEmail"
+                                placeholder="ngo@organization.org" required>
+                            <div class="invalid-feedback" id="regEmailError"
+                                style="display:none;font-size:0.85rem;color:#dc3545"></div>
                         </div>
 
                         <div class="mb-3">
                             <label for="regPassword" class="form-label">Password</label>
-                            <input type="password" class="form-control" id="regPassword" name="regPassword" placeholder="Minimum 8 characters" minlength="8" required>
-                            <div class="reg-password-strength"><span class="reg-password-strength-bar" id="regStrengthBar" style="width:0%;background:#e9ecef"></span></div>
-                            <div class="invalid-feedback" id="regPasswordError" style="display:none;font-size:0.85rem;color:#dc3545"></div>
+                            <input type="password" class="form-control" id="regPassword" name="regPassword"
+                                placeholder="Minimum 8 characters" minlength="8" required>
+                            <div class="reg-password-strength"><span class="reg-password-strength-bar"
+                                    id="regStrengthBar" style="width:0%;background:#e9ecef"></span></div>
+                            <div class="invalid-feedback" id="regPasswordError"
+                                style="display:none;font-size:0.85rem;color:#dc3545"></div>
                         </div>
 
                         <div class="mb-3">
                             <label for="regPasswordConfirm" class="form-label">Confirm Password</label>
-                            <input type="password" class="form-control" id="regPasswordConfirm" name="regPasswordConfirm" placeholder="Re-enter password" required>
-                            <div class="invalid-feedback" id="regPasswordConfirmError" style="display:none;font-size:0.85rem;color:#dc3545"></div>
+                            <input type="password" class="form-control" id="regPasswordConfirm"
+                                name="regPasswordConfirm" placeholder="Re-enter password" required>
+                            <div class="invalid-feedback" id="regPasswordConfirmError"
+                                style="display:none;font-size:0.85rem;color:#dc3545"></div>
                         </div>
 
                         <div class="mb-3">
                             <label for="regPhone" class="form-label">Phone Number</label>
-                            <input type="tel" class="form-control" id="regPhone" name="regPhone" placeholder="+91 98765 43210" pattern="[0-9+\s\-()]{10,}" required>
-                            <div class="invalid-feedback" id="regPhoneError" style="display:none;font-size:0.85rem;color:#dc3545"></div>
+                            <input type="tel" class="form-control" id="regPhone" name="regPhone"
+                                placeholder="+91 98765 43210" pattern="[0-9+\s\-()]{10,}" required>
+                            <div class="invalid-feedback" id="regPhoneError"
+                                style="display:none;font-size:0.85rem;color:#dc3545"></div>
                         </div>
 
                         <div class="form-check mb-3">
                             <input class="form-check-input" type="checkbox" id="regTerms" name="regTerms" required>
                             <label class="form-check-label" for="regTerms">I agree to the terms and conditions</label>
-                            <div class="invalid-feedback" id="regTermsError" style="display:none;font-size:0.85rem;color:#dc3545"></div>
+                            <div class="invalid-feedback" id="regTermsError"
+                                style="display:none;font-size:0.85rem;color:#dc3545"></div>
                         </div>
 
                         <button type="submit" class="btn btn-register" id="registerSubmitBtn">Create Account</button>
@@ -207,7 +388,39 @@
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        (function(){
+        form.addEventListener('submit', async function (e) {
+    e.preventDefault();
+
+    try {
+        const res = await fetch("http://127.0.0.1:5000/api/ngo/login", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                email: email.value.trim(),
+                password: pw.value
+            })
+        });
+
+        const data = await res.json();
+
+        if (!data.ok) {
+            alert(data.error || "Login failed");
+            return;
+        }
+
+        // ✅ Save NGO session
+        localStorage.setItem("ngoProfile", JSON.stringify(data.ngo));
+
+        // ✅ Redirect to NGO dashboard
+        window.location.href = "dashboard.html";
+
+    } catch (err) {
+        alert("Server not reachable");
+        console.error(err);
+    }
+});
+
+        (function () {
             const form = document.getElementById('loginForm');
             const email = document.getElementById('email');
             const pw = document.getElementById('password');
@@ -217,11 +430,11 @@
             const toggle = document.getElementById('togglePw');
             const strengthBar = document.getElementById('strengthBar');
 
-            function validateEmail(val){
+            function validateEmail(val) {
                 return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val);
             }
 
-            function passwordStrength(value){
+            function passwordStrength(value) {
                 let score = 0; if (!value) return 0;
                 if (value.length >= 8) score += 1;
                 if (/[A-Z]/.test(value)) score += 1;
@@ -230,36 +443,36 @@
                 return score; // 0-4
             }
 
-            function updateStrengthBar(){
+            function updateStrengthBar() {
                 const val = pw.value || '';
                 const score = passwordStrength(val);
-                const widths = ['0%','25%','55%','80%','100%'];
-                const colors = ['#e9ecef','#ff6b6b','#ffb84d','#7bd389','#20c997'];
+                const widths = ['0%', '25%', '55%', '80%', '100%'];
+                const colors = ['#e9ecef', '#ff6b6b', '#ffb84d', '#7bd389', '#20c997'];
                 strengthBar.style.width = widths[score];
                 strengthBar.style.background = colors[score];
             }
 
-            pw.addEventListener('input', function(){
+            pw.addEventListener('input', function () {
                 updateStrengthBar();
-                if (pw.value.length >= 8) { pw.setAttribute('aria-invalid','false'); pwError.style.display='none' }
+                if (pw.value.length >= 8) { pw.setAttribute('aria-invalid', 'false'); pwError.style.display = 'none' }
             });
 
-            toggle.addEventListener('click', function(){
+            toggle.addEventListener('click', function () {
                 const type = pw.getAttribute('type') === 'password' ? 'text' : 'password';
                 pw.setAttribute('type', type);
                 this.querySelector('i').classList.toggle('fa-eye');
                 this.querySelector('i').classList.toggle('fa-eye-slash');
-                this.setAttribute('aria-pressed', type==='text');
+                this.setAttribute('aria-pressed', type === 'text');
             });
 
-            form.addEventListener('submit', function(e){
+            form.addEventListener('submit', function (e) {
                 // Handled by js/api.js (POST to /api/login). Prevent default here.
                 e.preventDefault();
                 return;
             });
 
             // enable/disable submit dynamically
-            [email,pw].forEach(el => el.addEventListener('input', function(){
+            [email, pw].forEach(el => el.addEventListener('input', function () {
                 const ready = validateEmail(email.value.trim()) && pw.value.length >= 8;
                 submitBtn.disabled = !ready;
             }));
@@ -270,7 +483,7 @@
         })();
 
         // Registration Form Logic
-        (function(){
+        (function () {
             const regForm = document.getElementById('registerForm');
             const orgName = document.getElementById('orgName');
             const regEmail = document.getElementById('regEmail');
@@ -281,9 +494,9 @@
             const registerSubmitBtn = document.getElementById('registerSubmitBtn');
             const regStrengthBar = document.getElementById('regStrengthBar');
 
-            function validateEmail(val){ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val); }
-            function validatePhone(val){ return /^[0-9+\s\-()]{10,}$/.test(val); }
-            function passwordStrength(value){
+            function validateEmail(val) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val); }
+            function validatePhone(val) { return /^[0-9+\s\-()]{10,}$/.test(val); }
+            function passwordStrength(value) {
                 let score = 0; if (!value) return 0;
                 if (value.length >= 8) score += 1;
                 if (/[A-Z]/.test(value)) score += 1;
@@ -291,27 +504,27 @@
                 if (/[^A-Za-z0-9]/.test(value)) score += 1;
                 return score;
             }
-            function updateRegStrengthBar(){
+            function updateRegStrengthBar() {
                 const val = regPassword.value || '';
                 const score = passwordStrength(val);
-                const widths = ['0%','25%','55%','80%','100%'];
-                const colors = ['#e9ecef','#ff6b6b','#ffb84d','#7bd389','#20c997'];
+                const widths = ['0%', '25%', '55%', '80%', '100%'];
+                const colors = ['#e9ecef', '#ff6b6b', '#ffb84d', '#7bd389', '#20c997'];
                 regStrengthBar.style.width = widths[score];
                 regStrengthBar.style.background = colors[score];
             }
 
             regPassword.addEventListener('input', updateRegStrengthBar);
 
-            function validateRegForm(){
+            function validateRegForm() {
                 let ok = true;
                 const errors = {};
 
-                if (!orgName.value.trim()){ errors.orgName = 'Organization name is required.'; ok = false; }
-                if (!validateEmail(regEmail.value.trim())){ errors.regEmail = 'Please enter a valid email address.'; ok = false; }
-                if (regPassword.value.length < 8){ errors.regPassword = 'Password must be at least 8 characters.'; ok = false; }
-                if (regPassword.value !== regPasswordConfirm.value){ errors.regPasswordConfirm = 'Passwords do not match.'; ok = false; }
-                if (!validatePhone(regPhone.value)){ errors.regPhone = 'Please enter a valid phone number (10+ digits).'; ok = false; }
-                if (!regTerms.checked){ errors.regTerms = 'You must agree to the terms and conditions.'; ok = false; }
+                if (!orgName.value.trim()) { errors.orgName = 'Organization name is required.'; ok = false; }
+                if (!validateEmail(regEmail.value.trim())) { errors.regEmail = 'Please enter a valid email address.'; ok = false; }
+                if (regPassword.value.length < 8) { errors.regPassword = 'Password must be at least 8 characters.'; ok = false; }
+                if (regPassword.value !== regPasswordConfirm.value) { errors.regPasswordConfirm = 'Passwords do not match.'; ok = false; }
+                if (!validatePhone(regPhone.value)) { errors.regPhone = 'Please enter a valid phone number (10+ digits).'; ok = false; }
+                if (!regTerms.checked) { errors.regTerms = 'You must agree to the terms and conditions.'; ok = false; }
 
                 // Display errors
                 Object.keys(errors).forEach(key => {
@@ -319,7 +532,7 @@
                     if (el) { el.textContent = errors[key]; el.style.display = 'block'; }
                 });
                 // Clear success messages
-                ['orgName','regEmail','regPassword','regPasswordConfirm','regPhone','regTerms'].forEach(key => {
+                ['orgName', 'regEmail', 'regPassword', 'regPasswordConfirm', 'regPhone', 'regTerms'].forEach(key => {
                     const el = document.getElementById(key + 'Error');
                     if (el && !errors[key]) el.style.display = 'none';
                 });
@@ -327,7 +540,7 @@
                 return ok;
             }
 
-            regForm.addEventListener('submit', function(e){
+            regForm.addEventListener('submit', function (e) {
                 // Handled by js/api.js (POST to /api/register). Prevent default here.
                 e.preventDefault();
                 return;
@@ -344,4 +557,5 @@
     </script>
     <script src="js/api.js"></script>
 </body>
+
 </html>

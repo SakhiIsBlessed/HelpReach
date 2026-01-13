@@ -459,6 +459,94 @@
             }
         }
     </style>
+    <!-- function submitRegistration() {
+            console.log('submitRegistration() called');
+            const form = document.getElementById('registrationForm');
+            if (!form) {
+                console.error('Form not found!');
+                alert('Error: Form not found');
+                return;
+            }
+
+            const userType = document.querySelector('input[name="userType"]:checked');
+            if (!userType) {
+                alert('Please select a user type');
+                return;
+            }
+
+            // Get form inputs using more specific selectors to avoid NGO field confusion
+            const formGroups = form.querySelectorAll('.form-group');
+            console.log('Form groups found:', formGroups.length);
+
+            const nameInput = formGroups[0]?.querySelector('input[type="text"]');
+            const emailInput = formGroups[1]?.querySelector('input[type="email"]');
+            const phoneInput = formGroups[2]?.querySelector('input[type="tel"]');
+            const locationInput = formGroups[4]?.querySelector('input[type="text"]');
+            const termsCheckbox = form.querySelector('input[type="checkbox"]');
+
+            console.log('Name:', nameInput?.value, 'Email:', emailInput?.value, 'Phone:', phoneInput?.value, 'Location:', locationInput?.value);
+
+            // Validate all fields
+            if (!nameInput || !nameInput.value.trim()) {
+                alert('Please enter your full name');
+                console.error('Name input missing or empty');
+                return;
+            }
+            if (!emailInput || !emailInput.value.trim()) {
+                alert('Please enter your email');
+                console.error('Email input missing or empty');
+                return;
+            }
+            if (!phoneInput || !phoneInput.value.trim()) {
+                alert('Please enter your phone number');
+                console.error('Phone input missing or empty');
+                return;
+            }
+            if (!locationInput || !locationInput.value.trim()) {
+                alert('Please enter your location');
+                console.error('Location input missing or empty');
+                return;
+            }
+            if (!termsCheckbox || !termsCheckbox.checked) {
+                alert('Please agree to the terms and conditions');
+                console.error('Terms not accepted');
+                return;
+            }
+
+            // Store user data
+            const userData = {
+                userType: userType.value,
+                name: nameInput.value.trim(),
+                email: emailInput.value.trim(),
+                phone: phoneInput.value.trim(),
+                location: locationInput.value.trim()
+            };
+
+            console.log('User data:', userData);
+            // localStorage.setItem('userProfile', JSON.stringify(userData));
+
+            isLoggedIn = true;
+
+            // Show profile icon and hide fill form button
+            const profileIcon = document.getElementById('profileIcon');
+            const fillFormBtn = document.getElementById('fillFormBtn');
+            if (profileIcon) {
+                profileIcon.classList.add('show');
+                console.log('Profile icon shown');
+            }
+            if (fillFormBtn) {
+                fillFormBtn.classList.remove('show');
+                console.log('Fill form button hidden');
+            }
+
+            // Email sending disabled — just show success message
+            alert('Registration successful!');
+            closeRegistration();
+
+            // Update profile with user data
+            updateProfileDisplay(userData);
+        } -->
+
 </head>
 
 <body>
@@ -614,7 +702,8 @@
             <div class="text-center mb-5" style="max-width:750px; margin:auto;">
                 <h2 class="fw-bold" style="color:#0d3b36; font-size:34px;">How HelpReach Works</h2>
                 <p style="color:#4b5f5f; font-size:17px;">
-                    HelpReach’s platform makes it easy for donors and nonprofits to coordinate food and item pickups with
+                    HelpReach’s platform makes it easy for donors and nonprofits to coordinate food and item pickups
+                    with
                     just a few clicks.
                 </p>
             </div>
@@ -1030,7 +1119,7 @@
         <!-- CARD 2 -->
         <div class="row align-items-center mb-5 flex-lg-row-reverse">
             <div class="col-lg-7">
-                <img src="img/creative reuse and upcycling.jpg"
+                <img src="img/handmade.avif"
                     class="img-fluid rounded shadow-lg section-img wow fadeInRight" data-wow-delay="0.1s">
             </div>
 
@@ -1867,94 +1956,200 @@
         }));
     </script>
 
-    <!-- Registration Modal -->
-    <div class="registration-overlay" id="registrationOverlay">
-        <div class="registration-modal">
-            <div class="registration-header">
-                <h3>Join HelpReach</h3>
-                <button class="close-btn" onclick="closeRegistration()">❌</button>
-            </div>
-            <div class="registration-body">
-                <form id="registrationForm">
-                    <div class="form-group">
-                        <label>Full Name</label>
-                        <input type="text" id="regName" placeholder="Enter your full name" required>
-                    </div>
+     <!-- Registration Modal -->
+<div class="registration-overlay" id="registrationOverlay">
+    <div class="registration-modal">
 
-
-                    <div class="form-group">
-                        <label>Email</label>
-                       <input type="email" id="regEmail" placeholder="Enter your email" required>
-                    </div>
-
-
-                    <div class="form-group">
-                        <label>Phone</label>
-<input type="tel" id="regPhone" placeholder="Enter phone number">
-
-                    </div>
-                    <div class="form-group">
-                        <label>Password</label>
-                        <input type="password" id="regPassword" placeholder="Create a password" required minlength="6">
-
-                    </div>
-
-
-
-                    <div class="form-group">
-                        <label>User Type</label>
-                        <div class="user-type-selector">
-                            <div class="user-type-option active" onclick="selectUserType('donor', this)">
-                                <input type="radio" name="userType" value="donor" checked>
-                                <label><i class="fas fa-gift"></i><br>Donor</label>
-                            </div>
-                            <div class="user-type-option" onclick="selectUserType('organizer', this)">
-                                <input type="radio" name="userType" value="organizer">
-                                <label><i class="fas fa-calendar"></i><br>Organizer</label>
-                            </div>
-                            <div class="user-type-option" onclick="selectUserType('ngo', this)">
-                                <input type="radio" name="userType" value="ngo">
-                                <label><i class="fas fa-handshake"></i><br>NGO</label>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Location</label>
-                        <input type="text" id="regLocation" placeholder="Enter your city/location" required>
-                    </div>
-
-                    <div class="ngo-fields" id="ngoFields">
-                        <div class="form-group">
-                            <label>NGO Name</label>
-                            <input type="text" placeholder="Organization name">
-                        </div>
-                        <div class="form-group">
-                            <label>Registration Number</label>
-                            <input type="text" placeholder="NGO registration number">
-                        </div>
-                        <div class="form-group">
-                            <label>Service Area</label>
-                            <input type="text" placeholder="Area of operation">
-                        </div>
-                        <div class="form-group">
-                            <label>Upload Documents</label>
-                            <input type="file" multiple>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label>
-                            <input type="checkbox" required> I agree to the terms and conditions
-                        </label>
-                    </div>
-                </form>
-            </div>
-            <div class="registration-footer">
-                <button class="btn-register" onclick="submitRegistration()">Register</button>
-            </div>
+        <div class="registration-header">
+            <h3>Join HelpReach</h3>
+            <button class="close-btn" onclick="closeRegistration()">❌</button>
         </div>
+
+        <div class="registration-body">
+
+            <!-- REGISTER FORM -->
+            <form id="registrationForm">
+                <div class="form-group">
+                    <label>Full Name</label>
+                    <input type="text" id="regName" placeholder="Enter your full name" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" id="regEmail" placeholder="Enter your email" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Phone</label>
+                    <input type="tel" id="regPhone" placeholder="Enter phone number">
+                </div>
+
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="regPassword" placeholder="Create a password" required minlength="6">
+                </div>
+
+                <div class="form-group">
+                    <label>User Type</label>
+                    <div class="user-type-selector">
+                        <div class="user-type-option active" onclick="selectUserType('donor', this)">
+                            <input type="radio" name="userType" value="donor" checked>
+                            <label><i class="fas fa-gift"></i><br>Donor</label>
+                        </div>
+                        
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Location</label>
+                    <input type="text" id="regLocation" placeholder="Enter your city/location" required>
+                </div>
+
+                <div class="ngo-fields" id="ngoFields">
+                    <div class="form-group">
+                        <label>NGO Name</label>
+                        <input type="text" placeholder="Organization name">
+                    </div>
+                    <div class="form-group">
+                        <label>Registration Number</label>
+                        <input type="text" placeholder="NGO registration number">
+                    </div>
+                    <div class="form-group">
+                        <label>Service Area</label>
+                        <input type="text" placeholder="Area of operation">
+                    </div>
+                    <div class="form-group">
+                        <label>Upload Documents</label>
+                        <input type="file" multiple>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>
+                        <input type="checkbox" required> I agree to the terms and conditions
+                    </label>
+                </div>
+            </form>
+
+            <!-- LOGIN FORM -->
+            <form id="loginForm" style="display:none;">
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" id="loginEmail" placeholder="Enter your email" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="loginPassword" placeholder="Enter your password" required>
+                </div>
+
+                <div class="form-group" style="text-align:center;">
+                    <span>New user?</span>
+                    <a onclick="showRegisterForm()" style="color:#007bff; cursor:pointer;">
+                        Register here
+                    </a>
+                </div>
+            </form>
+
+        </div>
+
+        <div class="registration-footer">
+            <button class="btn-register" id="authButton" onclick="submitRegistration()">
+                Register
+            </button>
+        </div>
+
+        <div class="form-group" id="loginToggleText" style="text-align:center; margin-top:10px;">
+    <span>Already registered?</span>
+    <a onclick="showLoginForm()" style="color:#007bff; cursor:pointer;">
+        Login here
+    </a>
+</div>
+
+
     </div>
+</div>
+
+    <script>
+        function showLoginForm() {
+    document.getElementById("registrationForm").style.display = "none";
+    document.getElementById("loginForm").style.display = "block";
+    document.querySelector(".registration-header h3").textContent = "Login to HelpReach";
+
+    // hide "Already registered? Login here"
+    document.getElementById("loginToggleText").style.display = "none";
+
+    const btn = document.getElementById("authButton");
+    btn.textContent = "Login";
+    btn.onclick = submitLogin;
+}
+
+        function showRegisterForm() {
+            document.getElementById("loginForm").style.display = "none";
+            document.getElementById("registrationForm").style.display = "block";
+            document.querySelector(".registration-header h3").textContent = "Join HelpReach";
+
+            const btn = document.getElementById("authButton");
+            btn.textContent = "Register";
+            btn.onclick = submitRegistration;
+        }
+    function submitLogin() {
+    fetch("http://127.0.0.1:5000/api/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            email: document.getElementById("loginEmail").value,
+            password: document.getElementById("loginPassword").value
+        })
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.ok) {
+
+    const userData = {
+        name: data.user.name,
+        email: data.user.email,
+        phone: data.user.phone,
+        location: data.user.location,
+        userType: data.user.role || "donor"
+    };
+
+    localStorage.setItem("userProfile", JSON.stringify(userData));
+    isLoggedIn = true;
+
+    updateProfileDisplay(userData);
+    closeRegistration();
+
+    alert("✅ Login successful");
+    resetToRegistrationForm(); 
+}
+ else {
+            alert(data.error);
+        }
+    })
+    .catch(() => alert("❌ Server error during login"));
+}
+
+    </script>
+<script>
+function resetToRegistrationForm() {
+    document.getElementById("loginForm").style.display = "none";
+    document.getElementById("registrationForm").style.display = "block";
+    document.querySelector(".registration-header h3").textContent = "Join HelpReach";
+
+    // show "Already registered? Login here"
+    document.getElementById("loginToggleText").style.display = "block";
+
+    const btn = document.getElementById("authButton");
+    btn.textContent = "Register";
+    btn.onclick = submitRegistration;
+
+    // clear login inputs
+    document.getElementById("loginEmail").value = "";
+    document.getElementById("loginPassword").value = "";
+}
+</script>
+
 
     <!-- Profile Icon (appears after registration) -->
     <button class="profile-icon" id="profileIcon" onclick="openProfileSidebar()">
@@ -2107,101 +2302,101 @@
 
     </script>
     -->
- <script>
-async function submitRegistration() {
+    <script>
+        async function submitRegistration() {
 
-  // Get values safely
-  const name = document.getElementById("regName")?.value.trim() || "";
-  const email = document.getElementById("regEmail")?.value.trim() || "";
-  const password = document.getElementById("regPassword")?.value.trim() || "";
-  const location = document.getElementById("regLocation")?.value.trim() || "";
-  const phone = document.getElementById("regPhone")?.value.trim() || "";
-  const roleElement = document.querySelector('input[name="userType"]:checked');
-  const role = roleElement ? roleElement.value : "";
+            // Get values safely
+            const name = document.getElementById("regName")?.value.trim() || "";
+            const email = document.getElementById("regEmail")?.value.trim() || "";
+            const password = document.getElementById("regPassword")?.value.trim() || "";
+            const location = document.getElementById("regLocation")?.value.trim() || "";
+            const phone = document.getElementById("regPhone")?.value.trim() || "";
+            const roleElement = document.querySelector('input[name="userType"]:checked');
+            const role = roleElement ? roleElement.value : "";
 
-  // ================= VALIDATIONS =================
- 
-  // Required fields
-  if (!name || !email || !password || !location) {
-    alert("❌ Please fill all required fields.");
-    return;
-  }
+            // ================= VALIDATIONS =================
 
-  // Name: letters only
-  const namePattern = /^[A-Za-z\s]+$/;
-  if (!namePattern.test(name)) {
-    alert("❌ Name should contain only letters.");
-    return;
-  }
+            // Required fields
+            if (!name || !email || !password || !location) {
+                alert("❌ Please fill all required fields.");
+                return;
+            }
 
-  // Email validation
-  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (!emailPattern.test(email)) {
-    alert("❌ Please enter a valid email address.");
-    return;
-  }
+            // Name: letters only
+            const namePattern = /^[A-Za-z\s]+$/;
+            if (!namePattern.test(name)) {
+                alert("❌ Name should contain only letters.");
+                return;
+            }
 
-  // Phone validation (only if filled)
-  if (phone !== "") {
-    const phonePattern = /^[0-9]{10}$/;
-    if (!phonePattern.test(phone)) {
-      alert("❌ Phone number must be exactly 10 digits.");
-      return;
-    }
-  }
+            // Email validation
+            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailPattern.test(email)) {
+                alert("❌ Please enter a valid email address.");
+                return;
+            }
 
-  // Password validation
-  const passwordPattern = /^(?=.*[!@#$%^&*]).{8,}$/;
-  if (!passwordPattern.test(password)) {
-    alert("❌ Password must be at least 8 characters and include a special character.");
-    return;
-  }
+            // Phone validation (only if filled)
+            if (phone !== "") {
+                const phonePattern = /^[0-9]{10}$/;
+                if (!phonePattern.test(phone)) {
+                    alert("❌ Phone number must be exactly 10 digits.");
+                    return;
+                }
+            }
 
-  // ================= API CALL =================
-  try {
-    const res = await fetch("http://127.0.0.1:5000/api/register", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        name,
-        email,
-        password,
-        role,
-        location,
-        phone
-      })
-    });
+            // Password validation
+            const passwordPattern = /^(?=.*[!@#$%^&*]).{8,}$/;
+            if (!passwordPattern.test(password)) {
+                alert("❌ Password must be at least 8 characters and include a special character.");
+                return;
+            }
 
-    const result = await res.json();
+            // ================= API CALL =================
+            try {
+                const res = await fetch("http://127.0.0.1:5000/api/register", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        name,
+                        email,
+                        password,
+                        role,
+                        location,
+                        phone
+                    })
+                });
 
-    if (!res.ok) {
-      throw new Error(result.error || "Registration failed");
-    }
+                const result = await res.json();
 
-    const userData = {
-      name,
-      email,
-      location,
-      userType: role,
-      phone
-    };
+                if (!res.ok) {
+                    throw new Error(result.error || "Registration failed");
+                }
 
-    localStorage.setItem("userProfile", JSON.stringify(userData));
-    isLoggedIn = true;
+                const userData = {
+                    name,
+                    email,
+                    location,
+                    userType: role,
+                    phone
+                };
 
-    updateProfileDisplay(userData);
-    closeRegistration();
+                localStorage.setItem("userProfile", JSON.stringify(userData));
+                isLoggedIn = true;
 
-    alert("✅ Registration successful!");
+                updateProfileDisplay(userData);
+                closeRegistration();
 
-  } catch (error) {
-    console.error(error);
-    alert("❌ Server error. Please check backend connection.");
-  }
-}
-</script>
+                alert("✅ Registration successful!");
+
+            } catch (error) {
+                console.error(error);
+                alert("❌ Server error. Please check backend connection.");
+            }
+        }
+    </script>
 
 
     <script>
@@ -2285,7 +2480,7 @@ async function submitRegistration() {
             }
         }
 
-        
+
         // Email sending removed. sendConfirmationEmail() intentionally omitted.
 
         function updateProfileDisplay(userData) {
@@ -2388,90 +2583,3 @@ async function submitRegistration() {
 </body>
 
 </html>
-function submitRegistration() {
-            console.log('submitRegistration() called');
-            const form = document.getElementById('registrationForm');
-            if (!form) {
-                console.error('Form not found!');
-                alert('Error: Form not found');
-                return;
-            }
-
-            const userType = document.querySelector('input[name="userType"]:checked');
-            if (!userType) {
-                alert('Please select a user type');
-                return;
-            }
-
-            // Get form inputs using more specific selectors to avoid NGO field confusion
-            const formGroups = form.querySelectorAll('.form-group');
-            console.log('Form groups found:', formGroups.length);
-
-            const nameInput = formGroups[0]?.querySelector('input[type="text"]');
-            const emailInput = formGroups[1]?.querySelector('input[type="email"]');
-            const phoneInput = formGroups[2]?.querySelector('input[type="tel"]');
-            const locationInput = formGroups[4]?.querySelector('input[type="text"]');
-            const termsCheckbox = form.querySelector('input[type="checkbox"]');
-
-            console.log('Name:', nameInput?.value, 'Email:', emailInput?.value, 'Phone:', phoneInput?.value, 'Location:', locationInput?.value);
-
-            // Validate all fields
-            if (!nameInput || !nameInput.value.trim()) {
-                alert('Please enter your full name');
-                console.error('Name input missing or empty');
-                return;
-            }
-            if (!emailInput || !emailInput.value.trim()) {
-                alert('Please enter your email');
-                console.error('Email input missing or empty');
-                return;
-            }
-            if (!phoneInput || !phoneInput.value.trim()) {
-                alert('Please enter your phone number');
-                console.error('Phone input missing or empty');
-                return;
-            }
-            if (!locationInput || !locationInput.value.trim()) {
-                alert('Please enter your location');
-                console.error('Location input missing or empty');
-                return;
-            }
-            if (!termsCheckbox || !termsCheckbox.checked) {
-                alert('Please agree to the terms and conditions');
-                console.error('Terms not accepted');
-                return;
-            }
-
-            // Store user data
-            const userData = {
-                userType: userType.value,
-                name: nameInput.value.trim(),
-                email: emailInput.value.trim(),
-                phone: phoneInput.value.trim(),
-                location: locationInput.value.trim()
-            };
-
-            console.log('User data:', userData);
-            // localStorage.setItem('userProfile', JSON.stringify(userData));
-
-            isLoggedIn = true;
-
-            // Show profile icon and hide fill form button
-            const profileIcon = document.getElementById('profileIcon');
-            const fillFormBtn = document.getElementById('fillFormBtn');
-            if (profileIcon) {
-                profileIcon.classList.add('show');
-                console.log('Profile icon shown');
-            }
-            if (fillFormBtn) {
-                fillFormBtn.classList.remove('show');
-                console.log('Fill form button hidden');
-            }
-
-            // Email sending disabled — just show success message
-            alert('Registration successful!');
-            closeRegistration();
-
-            // Update profile with user data
-            updateProfileDisplay(userData);
-        }
