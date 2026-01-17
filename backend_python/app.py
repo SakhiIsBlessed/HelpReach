@@ -1,179 +1,22 @@
-# from flask import Flask, request, jsonify
-# from flask_cors import CORS
-# from db import get_db_connection
-# import hashlib
-
-# app = Flask(__name__)
-# CORS(app)
-
-# # ---------------- HOME ----------------
-# @app.route("/")
-# def home():
-#     return {"message": "HelpReach backend running 🚀"}
-
-# # ---------------- REGISTER ----------------
-# @app.route("/api/register", methods=["POST", "OPTIONS"])
-# def register():
-#     if request.method == "OPTIONS":
-#         return jsonify({"ok": True}), 200
-
-#     data = request.form if request.form else request.json
-
-#     name = data.get("name")
-#     email = data.get("email")
-#     password = data.get("password")
-
-#     if not name or not email or not password:
-#         return {"error": "Missing fields"}, 400
-
-#     password_hash = hashlib.sha256(password.encode()).hexdigest()
-
-#     db = get_db_connection()
-#     cursor = db.cursor()
-
-#     try:
-#         cursor.execute(
-#             "INSERT INTO users (name, email, password_hash) VALUES (%s, %s, %s)",
-#             (name, email, password_hash)
-#         )
-#         db.commit()
-#         return {"ok": True, "message": "User registered"}
-#     except Exception as e:
-#         return {"error": str(e)}, 500
-#     finally:
-#         cursor.close()
-#         db.close()
-
-
-# # ---------------- LOGIN ----------------
-# @app.route("/api/login", methods=["POST", "OPTIONS"])
-# def login():
-#     if request.method == "OPTIONS":
-#         return jsonify({"ok": True}), 200
-
-#     data = request.form if request.form else request.json
-#     email = data.get("email")
-#     password = data.get("password")
-
-#     password_hash = hashlib.sha256(password.encode()).hexdigest()
-
-#     db = get_db_connection()
-#     cursor = db.cursor(dictionary=True)
-
-#     cursor.execute(
-#         "SELECT id, name FROM users WHERE email=%s AND password_hash=%s",
-#         (email, password_hash)
-#     )
-
-#     user = cursor.fetchone()
-#     cursor.close()
-#     db.close()
-
-#     if user:
-#         return {"ok": True, "user": user}
-
-#     return {"error": "Invalid credentials"}, 401
-
-
-# # ---------------- DONATIONS ----------------
-# @app.route("/api/donations", methods=["GET", "POST", "OPTIONS"])
-# def api_donations():
-#     if request.method == "OPTIONS":
-#         return jsonify({"ok": True}), 200
-
-#     if request.method == "GET":
-#         db = get_db_connection()
-#         cursor = db.cursor(dictionary=True)
-
-#         cursor.execute("""
-#             SELECT d.*, u.name AS donor_name
-#             FROM donations d
-#             JOIN users u ON u.id = d.donor_id
-#             ORDER BY d.created_at DESC
-#         """)
-
-#         data = cursor.fetchall()
-#         cursor.close()
-#         db.close()
-
-#         return jsonify(data)
-
-#     # POST
-#     data = request.form if request.form else request.json
-
-#     title = data.get("title")
-#     description = data.get("description")
-#     quantity = data.get("quantity")
-#     pickup_info = data.get("pickup_info")
-#     donor_id = data.get("donor_id", 1)
-
-#     if not title or not donor_id:
-#         return {"error": "Missing fields"}, 400
-
-#     db = get_db_connection()
-#     cursor = db.cursor()
-
-#     cursor.execute("""
-#         INSERT INTO donations (title, description, quantity, pickup_info, donor_id)
-#         VALUES (%s, %s, %s, %s, %s)
-#     """, (title, description, quantity, pickup_info, donor_id))
-
-#     db.commit()
-#     cursor.close()
-#     db.close()
-
-#     return {"ok": True, "message": "Donation added successfully"}
-
-
-# if __name__ == "__main__":
-#     app.run(debug=True)
-
-
-# ---------------- LOGIN ----------------
-# @app.route("/api/login", methods=["POST", "OPTIONS"])
-# def login():
-#     if request.method == "OPTIONS":
-#         return jsonify({"ok": True}), 200
-
-#     data = request.form if request.form else request.json
-#     email = data.get("email")
-#     password = data.get("password")
-
-#     password_hash = hashlib.sha256(password.encode()).hexdigest()
-
-#     db = get_db_connection()
-#     cursor = db.cursor(dictionary=True)
-
-#     cursor.execute(
-#         "SELECT id, name FROM users WHERE email=%s AND password_hash=%s",
-#         (email, password_hash)
-#     )
-
-#     user = cursor.fetchone()
-#     cursor.close()
-#     db.close()
-
-#     if user:
-#         return {"ok": True, "user": user}
-
-#     return {"error": "Invalid credentials"}, 401
 
 
 
-
-
+from urllib import response
 from flask import Flask, request, jsonify  #Flask:Web framework that is use to create backend Api,request:Reads the data sent from fromtend,jsonify:Converts python data into json
 from flask_cors import CORS #Cross-Origin Resource Sharing:Allows frontend (html,js) to call backend api
 from db import get_db_connection #custom function used to connect to mysql database
 import hashlib # used to securely hashed passwords bcoz we should not store password in plain text
-from werkzeug.security import check_password_hash
+import random # used to generate random OTP
 
 from email_service import send_email
 
 
-
 app = Flask(__name__) # creates a flask application 
-CORS(app) # Enables cross origin resource sharing,so frontend can access backend api
+app.secret_key = "helpreach-secret"
+CORS(app, supports_credentials=True) # Enables cross origin resource sharing,so frontend can access backend api
+
+# Dictionary to store OTP temporarily
+otp_store = {}
 
 # ---------------- HOME ----------------
 @app.route("/")
@@ -281,8 +124,15 @@ If this was not you, please secure your account immediately.
             print("❌ Login email error:", e)
 
         return jsonify({"ok": True, "user": user})
+     # ✅ SET COOKIE (THIS IS THE KEY)
+    response.set_cookie(
+        "user_id",
+        str(user["id"]),
+        httponly=True,
+        samesite="Lax"
+    )
 
-
+    return response
     return jsonify({"error": "Invalid credentials"}), 401
 
 
@@ -316,8 +166,9 @@ def api_donations():
     description = data.get("description")
     quantity = data.get("quantity")
     pickup_info = data.get("pickup_info")
-    donor_id = data.get("donor_id")
+    # donor_id = data.get("donor_id")
     donor_email = data.get("donor_email")
+    donor_id = request.cookies.get("user_id")
 
 
     if not title or not donor_id:
@@ -377,8 +228,6 @@ Connecting kindness with causes that matter
     return {"ok": True, "message": "Donation added successfully"}
 
 
-
-
 @app.route("/api/ngo/register", methods=["POST", "OPTIONS"])
 def register_ngo():
     if request.method == "OPTIONS":
@@ -395,106 +244,246 @@ def register_ngo():
     contact_email = data.get("email")
     phone = data.get("phone")
     address = data.get("address")
+    password = data.get("password")
 
-    # ✅ FIXED validation (no user_id)
-    if not name or not registration_number or not contact_email:
+    if not name or not registration_number or not contact_email or not password:
         return jsonify({"error": "Missing required fields"}), 400
 
+    password_hash = hashlib.sha256(password.encode()).hexdigest()
+
     db = get_db_connection()
-    cursor = db.cursor()
 
     try:
-        cursor.execute("""
+        # 🔹 INSERT
+        insert_cursor = db.cursor()
+        insert_cursor.execute("""
             INSERT INTO ngos
             (name, description, contact_email, registration_number,
-             category, contact_person, phone, address)
-            VALUES (%s,%s,%s,%s,%s,%s,%s,%s)
+             category, contact_person, phone, address, password_hash)
+            VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s)
         """, (
-            name,
-            description,
-            contact_email,
-            registration_number,
-            category,
-            contact_person,
-            phone,
-            address
+            name, description, contact_email, registration_number,
+            category, contact_person, phone, address, password_hash
         ))
-
         db.commit()
+        insert_cursor.close()
 
-        # ✅ Confirmation Email
-        send_email(
-            to_email=contact_email,
-            subject="NGO Registration Successful ✔️",
-            message=f"""Hello {contact_person},
+        # 🔹 EMAIL (safe)
+        try:
+            send_email(
+                to_email=contact_email,
+                subject="NGO Registration Successful ✔️",
+                message=f"""Hello {contact_person},
 
 Your NGO "{name}" has been registered successfully on HelpReach.
 
-Our team will review your details and get back to you shortly.
+You can now log in using your registered email and password.
+
+– Team HelpReach
+"""
+            )
+        except Exception as email_error:
+            print("❌ Email error:", email_error)
+
+        # 🔹 SELECT (buffered cursor FIX)
+        select_cursor = db.cursor(dictionary=True, buffered=True)
+        select_cursor.execute("""
+            SELECT
+                id, name, description, registration_number,
+                category, contact_person, contact_email,
+                phone, address, verified
+            FROM ngos
+            WHERE contact_email = %s
+        """, (contact_email,))
+
+        ngo = select_cursor.fetchone()
+        select_cursor.close()
+
+        return jsonify({
+            "ok": True,
+            "ngo": ngo
+        })
+
+    except Exception as e:
+        print("❌ DB ERROR:", e)
+        return jsonify({"error": "Database error"}), 500
+
+    finally:
+        db.close()
+
+# ---------------- NGO LOGIN ----------------       
+@app.route("/api/ngo/login", methods=["POST", "OPTIONS"])
+def ngo_login():
+    if request.method == "OPTIONS":
+        return jsonify({"ok": True}), 200
+
+    data = request.get_json()
+    print("🔐 NGO Login Attempt:", data)
+
+    email = data.get("email")
+    password = data.get("password")
+
+    if not email or not password:
+        return jsonify({"error": "Email and password are required"}), 400
+
+    # 🔐 Hash password (same as registration)
+    password_hash = hashlib.sha256(password.encode()).hexdigest()
+
+    db = get_db_connection()
+    cursor = db.cursor(dictionary=True)
+
+    try:
+        cursor.execute("""
+    SELECT
+        id,
+        name,
+        description,
+        registration_number,
+        category,
+        contact_person,
+        contact_email,
+        phone,
+        address,
+        verified
+    FROM ngos
+    WHERE contact_email = %s AND password_hash = %s
+""", (email, password_hash))
+
+        ngo = cursor.fetchone()
+
+        if not ngo:
+            return jsonify({"error": "Invalid email or password"}), 401
+
+        # Optional: block unverified NGOs
+        # if ngo["verified"] == 0:
+        #     return jsonify({"error": "Your NGO is not verified yet"}), 403
+
+        # ✅ Send login notification email
+        send_email(
+            to_email=ngo["contact_email"],
+            subject="NGO Login Alert 🔔",
+            message=f"""
+Hello {ngo['name']},
+
+Your NGO account has just logged in successfully on HelpReach.
+
+If this was you, no action is required.  
+If you did not log in, please reset your password immediately.
 
 – Team HelpReach
 """
         )
 
-        return jsonify({"ok": True})
+        return jsonify({
+            "ok": True,
+            "ngo": ngo
+        })
+    
+     #  STORE NGO ID IN HTTP-ONLY COOKIE
+        response.set_cookie(
+            "ngo_id",
+            str(ngo["id"]),
+            httponly=True,
+            samesite="Lax"
+        )
+
+        return response
 
     except Exception as e:
-        print("❌ DB ERROR:", e)
-        return jsonify({"error": str(e)}), 500
+        print("❌ LOGIN ERROR:", e)
+        return jsonify({"error": "Server error"}), 500
 
     finally:
         cursor.close()
         db.close()
+        # ---------------- NGO PROFILE ----------------
+@app.route("/api/ngo/profile/<int:ngo_id>", methods=["GET"])
+def get_ngo_profile(ngo_id):
+    db = get_db_connection()
+    cursor = db.cursor(dictionary=True)
 
+    try:
+        cursor.execute("""
+            SELECT 
+                id,
+                name,
+                description,
+                registration_number,
+                category,
+                contact_person,
+                contact_email,
+                phone,
+                address,
+                verified,
+                created_at
+            FROM ngos
+            WHERE id = %s
+        """, (ngo_id,))
 
+        ngo = cursor.fetchone()
 
-# ---------------- NGO LOGIN ----------------       
-# @app.route("/api/ngo/login", methods=["POST"])
-# def ngo_login():
-#     data = request.get_json()
-#     print("📥 NGO Login Data:", data)
+        if not ngo:
+            return jsonify({"error": "NGO not found"}), 404
 
-#     email = data.get("email")
-#     password = data.get("password")
+        return jsonify({
+            "ok": True,
+            "ngo": ngo
+        })
 
-#     if not email or not password:
-#         return jsonify({"error": "Email and password required"}), 400
+    except Exception as e:
+        print("❌ NGO PROFILE ERROR:", e)
+        return jsonify({"error": "Server error"}), 500
 
-#     db = get_db_connection()
-#     cursor = db.cursor(dictionary=True)
+    finally:
+        cursor.close()
+        db.close()
+@app.route("/api/ngo/me", methods=["GET"])
+def get_logged_in_ngo():
+    ngo_id = request.cookies.get("ngo_id")
 
-#     try:
-#         cursor.execute(
-#             "SELECT id, name, contact_email, password FROM ngos WHERE contact_email = %s",
-#             (email,)
-#         )
-#         ngo = cursor.fetchone()
+    if not ngo_id:
+        return jsonify({"ok": False, "guest": True}), 200
 
-#         if not ngo:
-#             return jsonify({"error": "NGO not found"}), 401
+    db = get_db_connection()
+    cursor = db.cursor(dictionary=True)
 
-#         if not check_password_hash(ngo["password"], password):
-#             return jsonify({"error": "Invalid password"}), 401
+    try:
+        cursor.execute("""
+            SELECT
+                id,
+                name,
+                description,
+                registration_number,
+                category,
+                contact_person,
+                contact_email,
+                phone,
+                address,
+                verified
+            FROM ngos
+            WHERE id = %s
+        """, (ngo_id,))
 
-#         # ✅ Login success
-#         return jsonify({
-#             "ok": True,
-#             "ngo": {
-#                 "id": ngo["id"],
-#                 "name": ngo["name"],
-#                 "email": ngo["contact_email"],
-#                 "role": "ngo"
-#             }
-#         })
+        ngo = cursor.fetchone()
 
-#     except Exception as e:
-#         print("❌ LOGIN ERROR:", e)
-#         return jsonify({"error": "Server error"}), 500
+        if not ngo:
+            return jsonify({"ok": False, "guest": True}), 200
 
-#     finally:
-#         cursor.close()
-#         db.close()
+        return jsonify({
+            "ok": True,
+            "ngo": ngo
+        })
 
+    finally:
+        cursor.close()
+        db.close()
+@app.route("/api/ngo/logout", methods=["POST"])
+def ngo_logout():
+    response = jsonify({"ok": True})
+    response.delete_cookie("ngo_id")
+    return response
+
+        
 # ---------------- CONTACT ENQUIRY ----------------
 @app.route("/api/contact", methods=["POST", "OPTIONS"])
 def contact_enquiry():
@@ -536,6 +525,67 @@ Our team will contact you shortly.
         print("❌ Email error:", e)
 
     return {"ok": True, "message": "Enquiry submitted"}
+
+
+
+@app.route("/api/user/login", methods=["POST"])
+def user_login():
+    data = request.json
+    email = data.get("email")
+    password = data.get("password")
+
+    password_hash = hashlib.sha256(password.encode()).hexdigest()
+
+    db = get_db_connection()
+    cursor = db.cursor(dictionary=True)
+
+    cursor.execute("""
+        SELECT id, name, email
+        FROM users
+        WHERE email = %s AND password_hash = %s
+    """, (email, password_hash))
+
+    user = cursor.fetchone()
+    cursor.close()
+    db.close()
+
+    if not user:
+        return jsonify({"ok": False, "error": "Invalid credentials"}), 401
+
+    resp = jsonify({"ok": True, "user": user})
+    resp.set_cookie("user_id", str(user["id"]), httponly=True)
+
+    return resp
+@app.route("/api/user/me", methods=["GET"])
+def user_me():
+    user_id = request.cookies.get("user_id")
+
+    if not user_id:
+        return jsonify({"ok": False}), 401
+
+    db = get_db_connection()
+    cursor = db.cursor(dictionary=True)
+
+    cursor.execute("""
+        SELECT id, name, email
+        FROM users
+        WHERE id = %s
+    """, (user_id,))
+
+    user = cursor.fetchone()
+    cursor.close()
+    db.close()
+
+    if not user:
+        return jsonify({"ok": False}), 401
+
+    return jsonify({"ok": True, "user": user})
+@app.route("/api/user/logout", methods=["POST"])
+def user_logout():
+    resp = jsonify({"ok": True})
+    resp.set_cookie("user_id", "", expires=0)
+    return resp
+
 
 if __name__ == "__main__":
     app.run(debug=True)

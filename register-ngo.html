@@ -1057,52 +1057,50 @@
                 toggleRegPw.querySelector('i').classList.toggle('fa-eye-slash');
             });
 
-            form.addEventListener('submit', async (e) => {
-                e.preventDefault();
-                if (!validateForm()) return;
+           form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        if (!validateForm()) return;
 
-                // const user = JSON.parse(localStorage.getItem("userProfile"));
-                // if (!user) {
-                //     alert("Please login first");
-                //     return;
-                // }
-
-                try {
-                    const res = await fetch("http://127.0.0.1:5000/api/ngo/register", {
-                        method: "POST",
-                        headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({
-    orgName: orgName.value,
-    registrationNumber: registrationNumber.value,
-    category: category.value,
-    description: description.value,
-    contactPerson: contactPerson.value,
-    email: regEmail.value,
-    phone: regPhone.value,
-    address: address.value
-})
-
-                    });
-
-                    const data = await res.json();
-
-                    if (!data.ok) {
-                        alert(data.error || "Registration failed");
-                        return;
-                    }
-
-                    successMessage.classList.add('show');
-                    registerSubmitBtn.disabled = true;
-
-                    setTimeout(() => {
-                        window.location.href = "login.html";
-                    }, 2000);
-
-                } catch (err) {
-                    alert("Server not reachable");
-                    console.error(err);
-                }
+        try {
+            const res = await fetch("http://127.0.0.1:5000/api/ngo/register", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    orgName: orgName.value,
+                    registrationNumber: registrationNumber.value,
+                    category: category.value,
+                    description: description.value,
+                    contactPerson: contactPerson.value,
+                    email: regEmail.value,
+                    phone: regPhone.value,
+                    address: address.value,
+                    password: regPassword.value
+                })
             });
+
+            const data = await res.json();
+
+            if (!res.ok || !data.ok) {
+                alert(data.error || "Registration failed");
+                return;
+            }
+
+            // ✅ SUCCESS
+            successMessage.classList.add("show");
+            registerSubmitBtn.disabled = true;
+
+            alert("✅ NGO Registered Successfully");
+
+            // ✅ REDIRECT WITH NGO ID
+            setTimeout(() => {
+                window.location.href = `ngo_index.html?ngo_id=${data.ngo.id}`;
+            }, 1200);
+
+        } catch (err) {
+            console.error("Frontend error:", err);
+            alert("⚠️ Server error. Check console.");
+        }
+    });
 
             updateStrengthBar();
         })();

@@ -244,12 +244,12 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                    <li class="nav-item"><a class="nav-link " href="index.html">Home</a></li>
-                    <li class="nav-item"><a class="nav-link " href="about.html">About</a></li>
+                    <li class="nav-item"><a class="nav-link " href="ngo_index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link " href="ngo_about.html">About</a></li>
                     <li class="nav-item"><a class="nav-link" href="donate.html">Donate</a></li>
-                    <li class="nav-item"><a class="nav-link" href="ngo-directory.html">NGO Directory</a></li>
+                    <li class="nav-item"><a class="nav-link" href="Directory_ngo.html">NGO Directory</a></li>
                     <li class="nav-item"><a class="nav-link" href="dashboard.html">Dashboard</a></li>
-                    <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+                    <li class="nav-item"><a class="nav-link" href="ngo_contact.html">Contact</a></li>
                 </ul>
                 <div class="d-flex ms-2">
                     <a class="btn btn-ngo-login btn-sm" href="login.html">NGO Login</a>
@@ -314,7 +314,7 @@
             </div>
         </div>
 
-        <div style="text-align:center;margin-top:12px"><a href="index.html" style="color:#6c757d;text-decoration:none">←
+        <div style="text-align:center;margin-top:12px"><a href="ngo_index.html" style="color:#6c757d;text-decoration:none">←
                 Back to Home</a></div>
     </div>
 
@@ -388,38 +388,6 @@
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        form.addEventListener('submit', async function (e) {
-    e.preventDefault();
-
-    try {
-        const res = await fetch("http://127.0.0.1:5000/api/ngo/login", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                email: email.value.trim(),
-                password: pw.value
-            })
-        });
-
-        const data = await res.json();
-
-        if (!data.ok) {
-            alert(data.error || "Login failed");
-            return;
-        }
-
-        // ✅ Save NGO session
-        localStorage.setItem("ngoProfile", JSON.stringify(data.ngo));
-
-        // ✅ Redirect to NGO dashboard
-        window.location.href = "dashboard.html";
-
-    } catch (err) {
-        alert("Server not reachable");
-        console.error(err);
-    }
-});
-
         (function () {
             const form = document.getElementById('loginForm');
             const email = document.getElementById('email');
@@ -465,11 +433,51 @@
                 this.setAttribute('aria-pressed', type === 'text');
             });
 
-            form.addEventListener('submit', function (e) {
-                // Handled by js/api.js (POST to /api/login). Prevent default here.
-                e.preventDefault();
-                return;
-            });
+            form.addEventListener('submit', async function (e) {
+    e.preventDefault();
+
+    if (!validateEmail(email.value.trim())) {
+        emailError.textContent = 'Please enter a valid email address.';
+        emailError.style.display = 'block';
+        return;
+    }
+
+    if (pw.value.length < 8) {
+        pwError.textContent = 'Password must be at least 8 characters.';
+        pwError.style.display = 'block';
+        return;
+    }
+
+    submitBtn.disabled = true;
+
+    try {
+        const res = await fetch('http://127.0.0.1:5000/api/ngo/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                email: email.value.trim(),
+                password: pw.value
+            })
+        });
+
+        const data = await res.json();
+
+        if (!res.ok || !data.ok) {
+            alert(data.error || 'Login failed');
+            submitBtn.disabled = false;
+            return;
+        }
+
+        // ✅ REDIRECT WITH NGO ID (CRITICAL)
+        window.location.href = `ngo_index.html?ngo_id=${data.ngo.id}`;
+
+    } catch (err) {
+        console.error(err);
+        alert('Server not reachable');
+        submitBtn.disabled = false;
+    }
+});
+
 
             // enable/disable submit dynamically
             [email, pw].forEach(el => el.addEventListener('input', function () {

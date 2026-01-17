@@ -213,14 +213,14 @@
             box-shadow: 0 4px 12px rgba(13, 110, 253, 0.3);
             transition: all 0.3s ease;
             z-index: 1035;
-            opacity: 0;
-            visibility: hidden;
-        }
-
-        .profile-icon.show {
             opacity: 1;
             visibility: visible;
         }
+
+        /* .profile-icon.show {
+            opacity: 1;
+            visibility: visible;
+        } */
 
         .profile-icon:hover {
             transform: scale(1.1);
@@ -456,7 +456,7 @@
                     <li class="nav-item"><a class="nav-link" href="ngo_index.html">Home</a></li>
                     <li class="nav-item"><a class="nav-link" href="ngo_about.html">About</a></li>
                     <li class="nav-item"><a class="nav-link" href="donate.html">Donate</a></li>
-                    <li class="nav-item"><a class="nav-link active" href="directory_ngo.html">NGO Directory</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="Directory_ngo.html">NGO Directory</a></li>
                     <li class="nav-item"><a class="nav-link" href="dashboard.html">Dashboard</a></li>
                     <li class="nav-item"><a class="nav-link" href="ngo_contact.html">Contact</a></li>
                 </ul>
@@ -897,690 +897,239 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>document.querySelectorAll('.nav-link').forEach(a => { if (a.href === location.href) a.classList.add('active') });</script>
 
-     <!-- Registration Modal -->
-<div class="registration-overlay" id="registrationOverlay">
-    <div class="registration-modal">
+     
 
-        <div class="registration-header">
-            <h3>Join HelpReach</h3>
-            <button class="close-btn" onclick="closeRegistration()">❌</button>
+
+<!-- Profile Icon (appears after NGO login) -->
+<button class="profile-icon" id="profileIcon" onclick="openProfileSidebar()">
+    <i class="fas fa-building"></i>
+</button>
+
+<!-- Profile Overlay -->
+<div class="profile-overlay" id="profileOverlay" onclick="closeProfileSidebar()"></div>
+
+<!-- Profile Sidebar -->
+<div class="profile-sidebar" id="profileSidebar">
+    <button class="sidebar-close" onclick="closeProfileSidebar()">✕</button>
+
+    <!-- Header -->
+    <div class="profile-header">
+        <div class="profile-avatar">
+            <i class="fas fa-building"></i>
         </div>
-
-        <div class="registration-body">
-
-            <!-- REGISTER FORM -->
-            <form id="registrationForm">
-                <div class="form-group">
-                    <label>Full Name</label>
-                    <input type="text" id="regName" placeholder="Enter your full name" required>
-                </div>
-
-                <div class="form-group">
-                    <label>Email</label>
-                    <input type="email" id="regEmail" placeholder="Enter your email" required>
-                </div>
-
-                <div class="form-group">
-                    <label>Phone</label>
-                    <input type="tel" id="regPhone" placeholder="Enter phone number">
-                </div>
-
-                <div class="form-group">
-                    <label>Password</label>
-                    <input type="password" id="regPassword" placeholder="Create a password" required minlength="6">
-                </div>
-
-                <div class="form-group">
-                    <label>User Type</label>
-                    <div class="user-type-selector">
-                        <div class="user-type-option active" onclick="selectUserType('donor', this)">
-                            <input type="radio" name="userType" value="donor" checked>
-                            <label><i class="fas fa-gift"></i><br>Donor</label>
-                        </div>
-                        
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label>Location</label>
-                    <input type="text" id="regLocation" placeholder="Enter your city/location" required>
-                </div>
-
-                <div class="ngo-fields" id="ngoFields">
-                    <div class="form-group">
-                        <label>NGO Name</label>
-                        <input type="text" placeholder="Organization name">
-                    </div>
-                    <div class="form-group">
-                        <label>Registration Number</label>
-                        <input type="text" placeholder="NGO registration number">
-                    </div>
-                    <div class="form-group">
-                        <label>Service Area</label>
-                        <input type="text" placeholder="Area of operation">
-                    </div>
-                    <div class="form-group">
-                        <label>Upload Documents</label>
-                        <input type="file" multiple>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label>
-                        <input type="checkbox" required> I agree to the terms and conditions
-                    </label>
-                </div>
-            </form>
-
-            <!-- LOGIN FORM -->
-            <form id="loginForm" style="display:none;">
-                <div class="form-group">
-                    <label>Email</label>
-                    <input type="email" id="loginEmail" placeholder="Enter your email" required>
-                </div>
-
-                <div class="form-group">
-                    <label>Password</label>
-                    <input type="password" id="loginPassword" placeholder="Enter your password" required>
-                </div>
-
-                <div class="form-group" style="text-align:center;">
-                    <span>New user?</span>
-                    <a onclick="showRegisterForm()" style="color:#007bff; cursor:pointer;">
-                        Register here
-                    </a>
-                </div>
-            </form>
-
+        <div class="profile-name" id="profileName">Helping Hands NGO</div>
+        <div class="profile-type" id="profileType">NGO</div>
+        <div class="verify-badge">
+            <i class="fas fa-check-circle"></i> Verified
         </div>
+    </div>
 
-        <div class="registration-footer">
-            <button class="btn-register" id="authButton" onclick="submitRegistration()">
-                Register
-            </button>
+    <!-- Contact Info -->
+    <div class="profile-section">
+        <div class="profile-section-title">
+            <i class="fas fa-phone"></i> Contact Info
         </div>
+        <div class="profile-item">
+            <span class="profile-item-label">Email:</span>
+            <span class="profile-item-value" id="profileEmail">ngo@example.com</span>
+        </div>
+        <div class="profile-item">
+            <span class="profile-item-label">Phone:</span>
+            <span class="profile-item-value" id="profilePhone">+91 98765 43210</span>
+        </div>
+        <div class="profile-item">
+            <span class="profile-item-label">Address:</span>
+            <span class="profile-item-value" id="profileLocation">Pune, India</span>
+        </div>
+    </div>
 
-        <div class="form-group" id="loginToggleText" style="text-align:center; margin-top:10px;">
-    <span>Already registered?</span>
-    <a onclick="showLoginForm()" style="color:#007bff; cursor:pointer;">
-        Login here
-    </a>
-</div>
+    <!-- Account Info -->
+    <div class="profile-section">
+        <div class="profile-section-title">
+            <i class="fas fa-chart-line"></i> NGO Activity
+        </div>
+        <div class="profile-item">
+            <span class="profile-item-label">Requests Raised:</span>
+            <span class="profile-item-value" id="requestCount">15</span>
+        </div>
+        <div class="profile-item">
+            <span class="profile-item-label">Fulfilled:</span>
+            <span class="profile-item-value" id="fulfilledCount">9</span>
+        </div>
+        <div class="profile-item">
+            <span class="profile-item-label">Status:</span>
+            <span class="profile-item-value" id="activityLevel">Active</span>
+        </div>
+    </div>
 
+    <!-- NGO Info -->
+    <div class="profile-section" id="ngoInfoSection">
+        <div class="profile-section-title">
+            <i class="fas fa-building"></i> NGO Details
+        </div>
+        <div class="profile-item">
+            <span class="profile-item-label">Registration No:</span>
+            <span class="profile-item-value" id="ngoRegNumber">NGO-2024-001</span>
+        </div>
+        <div class="profile-item">
+            <span class="profile-item-label">Category:</span>
+            <span class="profile-item-value" id="ngoCategory">Food & Welfare</span>
+        </div>
+        <div class="profile-item">
+            <span class="profile-item-label">Contact Person:</span>
+            <span class="profile-item-value" id="ngoContactPerson">Sakhi Tapre</span>
+        </div>
+    </div>
 
+    <!-- Quick Actions -->
+    <div class="quick-actions">
+        <button class="action-btn" onclick="editProfile()">
+            <i class="fas fa-edit"></i> Edit Profile
+        </button>
+        <button class="action-btn" onclick="manageRequests()">
+            <i class="fas fa-hands-helping"></i> Manage Requests
+        </button>
+        <button class="action-btn" onclick="notifications()">
+            <i class="fas fa-bell"></i> Alerts
+        </button>
+        <button class="action-btn" onclick="myAccount()">
+            <i class="fas fa-cog"></i> Account
+        </button>
+        <button class="action-btn logout" onclick="logoutUser()">
+            <i class="fas fa-sign-out-alt"></i> Logout
+        </button>
     </div>
 </div>
-
-    <script>
-        function showLoginForm() {
-    document.getElementById("registrationForm").style.display = "none";
-    document.getElementById("loginForm").style.display = "block";
-    document.querySelector(".registration-header h3").textContent = "Login to HelpReach";
-
-    // hide "Already registered? Login here"
-    document.getElementById("loginToggleText").style.display = "none";
-
-    const btn = document.getElementById("authButton");
-    btn.textContent = "Login";
-    btn.onclick = submitLogin;
-}
-
-        function showRegisterForm() {
-            document.getElementById("loginForm").style.display = "none";
-            document.getElementById("registrationForm").style.display = "block";
-            document.querySelector(".registration-header h3").textContent = "Join HelpReach";
-
-            const btn = document.getElementById("authButton");
-            btn.textContent = "Register";
-            btn.onclick = submitRegistration;
-        }
-    function submitLogin() {
-    fetch("http://127.0.0.1:5000/api/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-            email: document.getElementById("loginEmail").value,
-            password: document.getElementById("loginPassword").value
-        })
-    })
-    .then(res => res.json())
-    .then(data => {
-        if (data.ok) {
-
-    const userData = {
-        name: data.user.name,
-        email: data.user.email,
-        phone: data.user.phone,
-        location: data.user.location,
-        userType: data.user.role || "donor"
-    };
-
-    localStorage.setItem("userProfile", JSON.stringify(userData));
-    isLoggedIn = true;
-
-    updateProfileDisplay(userData);
-    closeRegistration();
-
-    alert("✅ Login successful");
-    resetToRegistrationForm(); 
-}
- else {
-            alert(data.error);
-        }
-    })
-    .catch(() => alert("❌ Server error during login"));
-}
-
-    </script>
 <script>
-function resetToRegistrationForm() {
-    document.getElementById("loginForm").style.display = "none";
-    document.getElementById("registrationForm").style.display = "block";
-    document.querySelector(".registration-header h3").textContent = "Join HelpReach";
+/* ================= GLOBALS ================= */
+let isNgoLoggedIn = false;
+let currentNgoId = null;
 
-    // show "Already registered? Login here"
-    document.getElementById("loginToggleText").style.display = "block";
+/* ================= UPDATE SIDEBAR ================= */
+function updateNgoProfile(ngo) {
+    if (!ngo) return;
 
-    const btn = document.getElementById("authButton");
-    btn.textContent = "Register";
-    btn.onclick = submitRegistration;
+    // Header
+    document.getElementById("profileName").textContent = ngo.name || "";
+    document.getElementById("profileType").textContent = "NGO";
 
-    // clear login inputs
-    document.getElementById("loginEmail").value = "";
-    document.getElementById("loginPassword").value = "";
+    // Contact
+    document.getElementById("profileEmail").textContent = ngo.contact_email || "---";
+    document.getElementById("profilePhone").textContent = ngo.phone || "---";
+    document.getElementById("profileLocation").textContent = ngo.address || "---";
+
+    // NGO details
+    document.getElementById("ngoRegNumber").textContent =
+        ngo.registration_number || "---";
+    document.getElementById("ngoCategory").textContent =
+        ngo.category || "---";
+    document.getElementById("ngoContactPerson").textContent =
+        ngo.contact_person || "---";
+
+    // Verified badge
+    const badge = document.querySelector(".verify-badge");
+    if (badge) {
+        badge.style.display = ngo.verified ? "flex" : "none";
+    }
+
+    // Show profile icon
+    document.getElementById("profileIcon").classList.add("show");
+
+    isNgoLoggedIn = true;
+}
+
+/* ================= FETCH NGO FROM BACKEND ================= */
+async function loadNgoProfileFromBackend(ngoId) {
+    try {
+        const res = await fetch(
+            `http://127.0.0.1:5000/api/ngo/profile/${ngoId}`
+        );
+
+        const data = await res.json();
+
+        if (!res.ok || !data.ok) {
+            throw new Error(data.error || "Failed to load NGO profile");
+        }
+
+        updateNgoProfile(data.ngo);
+
+    } catch (err) {
+        console.error("❌ Profile load error:", err);
+        alert("Unable to load NGO profile. Please login again.");
+        isNgoLoggedIn = false;
+        document.getElementById("profileIcon").classList.remove("show");
+    }
+}
+
+window.addEventListener("load", () => {
+    const params = new URLSearchParams(window.location.search);
+    const ngoId = params.get("ngo_id");
+
+    if (!ngoId) {
+        showGuestNgo();   // 👈 IMPORTANT
+        return;
+    }
+
+    currentNgoId = ngoId;
+    loadNgoProfileFromBackend(ngoId);
+});
+
+
+/* ================= SIDEBAR ================= */
+function openProfileSidebar() {
+    // if (!isNgoLoggedIn) return;
+
+    document.getElementById("profileSidebar").classList.add("open");
+    document.getElementById("profileOverlay").classList.add("show");
+}
+
+function closeProfileSidebar() {
+    document.getElementById("profileSidebar").classList.remove("open");
+    document.getElementById("profileOverlay").classList.remove("show");
+}
+
+function logoutUser() {
+    if (!confirm("Logout NGO account?")) return;
+
+    // 1️⃣ Reset UI to Guest
+    showGuestNgo();
+
+    // 2️⃣ Remove ngo_id from URL
+    window.history.replaceState({}, document.title, "ngo_index.html");
+
+    // 3️⃣ Redirect to login page
+    setTimeout(() => {
+        window.location.href = "ngo_index.html";
+    }, 300);
+}
+
+</script>
+
+<script>
+/* ================= RESET TO GUEST ================= */
+function showGuestNgo() {
+    document.getElementById("profileName").textContent = "Guest NGO";
+    document.getElementById("profileType").textContent = "Guest";
+
+    document.getElementById("profileEmail").textContent = "---";
+    document.getElementById("profilePhone").textContent = "---";
+    document.getElementById("profileLocation").textContent = "---";
+
+    document.getElementById("ngoRegNumber").textContent = "---";
+    document.getElementById("ngoCategory").textContent = "---";
+    document.getElementById("ngoContactPerson").textContent = "---";
+
+    const badge = document.querySelector(".verify-badge");
+    if (badge) badge.style.display = "none";
+
+    document.getElementById("profileIcon").classList.remove("show");
+
+    isNgoLoggedIn = false;
+    currentNgoId = null;
 }
 </script>
 
-    <!-- Profile Icon (appears after registration) -->
-    <button class="profile-icon" id="profileIcon" onclick="openProfileSidebar()">
-        <i class="fas fa-user"></i>
-    </button>
 
-    <!-- Fill Form Button (appears when form is closed) -->
-    <button class="fill-form-btn show" id="fillFormBtn" onclick="openRegistration()">
-        <i class="fas fa-edit"></i> Fill Form
-    </button>
-
-    <!-- Profile Overlay -->
-    <div class="profile-overlay" id="profileOverlay" onclick="closeProfileSidebar()"></div>
-
-    <!-- Profile Sidebar -->
-    <div class="profile-sidebar" id="profileSidebar">
-        <button class="sidebar-close" onclick="closeProfileSidebar()">✕</button>
-
-        <div class="profile-header">
-            <div class="profile-avatar">
-                <i class="fas fa-user-circle"></i>
-            </div>
-            <div class="profile-name" id="profileName">John Doe</div>
-            <div class="profile-type" id="profileType">Donor</div>
-            <div class="verify-badge">
-                <i class="fas fa-check-circle"></i> Verified
-            </div>
-        </div>
-
-        <!-- Contact Info -->
-        <div class="profile-section">
-            <div class="profile-section-title">
-                <i class="fas fa-phone"></i> Contact Info
-            </div>
-            <div class="profile-item">
-                <span class="profile-item-label">Email:</span>
-                <span class="profile-item-value" id="profileEmail">john@example.com</span>
-            </div>
-            <div class="profile-item">
-                <span class="profile-item-label">Phone:</span>
-                <span class="profile-item-value" id="profilePhone">+91 98765 43210</span>
-            </div>
-            <div class="profile-item">
-                <span class="profile-item-label">Location:</span>
-                <span class="profile-item-value" id="profileLocation">Pune, India</span>
-            </div>
-        </div>
-
-        <!-- Account Info -->
-        <div class="profile-section">
-            <div class="profile-section-title">
-                <i class="fas fa-chart-bar"></i> Account Info
-            </div>
-            <div class="profile-item">
-                <span class="profile-item-label">Donations:</span>
-                <span class="profile-item-value" id="donationCount">24</span>
-            </div>
-            <div class="profile-item">
-                <span class="profile-item-label">Claimed:</span>
-                <span class="profile-item-value" id="claimedCount">12</span>
-            </div>
-            <div class="profile-item">
-                <span class="profile-item-label">Activity:</span>
-                <span class="profile-item-value" id="activityLevel">Very Active</span>
-            </div>
-        </div>
-
-        <!-- NGO Extra Info (hidden by default) -->
-        <div class="profile-section" id="ngoInfoSection" style="display: none;">
-            <div class="profile-section-title">
-                <i class="fas fa-building"></i> NGO Info
-            </div>
-            <div class="profile-item">
-                <span class="profile-item-label">Reg. Number:</span>
-                <span class="profile-item-value" id="ngoRegNumber">NGO-2024-001</span>
-            </div>
-            <div class="profile-item">
-                <span class="profile-item-label">Service Area:</span>
-                <span class="profile-item-value" id="ngoServiceArea">Pune</span>
-            </div>
-            <div class="profile-item">
-                <span class="profile-item-label">Documents:</span>
-                <span class="profile-item-value" id="ngoDocuments">3 files</span>
-            </div>
-        </div>
-
-        <!-- Quick Actions -->
-        <div class="quick-actions">
-            <button class="action-btn" onclick="editProfile()">
-                <i class="fas fa-edit"></i> Edit
-            </button>
-            <button class="action-btn" onclick="myDonations()">
-                <i class="fas fa-heart"></i> Donations
-            </button>
-            <button class="action-btn" onclick="notifications()">
-                <i class="fas fa-bell"></i> Alerts
-            </button>
-            <button class="action-btn" onclick="myAccount()">
-                <i class="fas fa-cog"></i> Account
-            </button>
-            <button class="action-btn logout" onclick="logoutUser()">
-                <i class="fas fa-sign-out-alt"></i> Logout
-            </button>
-        </div>
-    </div>
-
-    <!-- NGO Details Modal -->
-    <div class="modal fade" id="ngoModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">NGO Details</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
-                        aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <p class="modal-location mb-2"><strong>Location:</strong> <span class="text-muted"></span></p>
-                    <p class="modal-phone mb-2"><strong>Phone:</strong> <span class="text-muted"></span></p>
-                    <p class="modal-email mb-2"><strong>Email:</strong> <span class="text-muted"></span></p>
-                    <p class="modal-services mb-0"><strong>Services:</strong> <span class="text-muted"></span></p>
-                </div>
-                <div class="modal-footer">
-                    <a class="btn btn-primary modal-call" href="#"><i class="fas fa-phone"></i> Call</a>
-                    <a class="btn btn-secondary modal-email-link" href="#"><i class="fas fa-envelope"></i> Email</a>
-                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
-<script>
-async function submitRegistration() {
-
-  // Get values safely
-  const name = document.getElementById("regName")?.value.trim() || "";
-  const email = document.getElementById("regEmail")?.value.trim() || "";
-  const password = document.getElementById("regPassword")?.value.trim() || "";
-  const location = document.getElementById("regLocation")?.value.trim() || "";
-  const phone = document.getElementById("regPhone")?.value.trim() || "";
-  const roleElement = document.querySelector('input[name="userType"]:checked');
-  const role = roleElement ? roleElement.value : "";
-
-  // ================= VALIDATIONS =================
-
-  // Required fields
-  if (!name || !email || !password || !location) {
-    alert("❌ Please fill all required fields.");
-    return;
-  }
-
-  // Name: letters only
-  const namePattern = /^[A-Za-z\s]+$/;
-  if (!namePattern.test(name)) {
-    alert("❌ Name should contain only letters.");
-    return;
-  }
-
-  // Email validation
-  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (!emailPattern.test(email)) {
-    alert("❌ Please enter a valid email address.");
-    return;
-  }
-
-  // Phone validation (only if filled)
-  if (phone !== "") {
-    const phonePattern = /^[0-9]{10}$/;
-    if (!phonePattern.test(phone)) {
-      alert("❌ Phone number must be exactly 10 digits.");
-      return;
-    }
-  }
-
-  // Password validation
-  const passwordPattern = /^(?=.*[!@#$%^&*]).{8,}$/;
-  if (!passwordPattern.test(password)) {
-    alert("❌ Password must be at least 8 characters and include a special character.");
-    return;
-  }
-
-  // ================= API CALL =================
-  try {
-    const res = await fetch("http://127.0.0.1:5000/api/register", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        name,
-        email,
-        password,
-        role,
-        location,
-        phone
-      })
-    });
-
-    const result = await res.json();
-
-    if (!res.ok) {
-      throw new Error(result.error || "Registration failed");
-    }
-
-    const userData = {
-      name,
-      email,
-      location,
-      userType: role,
-      phone
-    };
-
-    localStorage.setItem("userProfile", JSON.stringify(userData));
-    isLoggedIn = true;
-
-    updateProfileDisplay(userData);
-    closeRegistration();
-
-    alert("✅ Registration successful!");
-
-  } catch (error) {
-    console.error(error);
-    alert("❌ Server error. Please check backend connection.");
-  }
-}
-</script>
-
-    <script>
-        // Email sending removed. Keep globals for profile behavior.
-        var guestNumber = Math.floor(Math.random() * 10000);
-        var isLoggedIn = false;
-
-        // Show registration form on page load: show once per session when navigating, and also show on reload
-        window.addEventListener('load', () => {
-            const userProfile = localStorage.getItem('userProfile');
-            const icon = document.getElementById('profileIcon'); if (icon) icon.classList.add('show');
-            const fillBtn = document.getElementById('fillFormBtn'); if (fillBtn) fillBtn.classList.add('show');
-
-            function getNavType() {
-                try {
-                    const entries = performance.getEntriesByType && performance.getEntriesByType('navigation');
-                    if (entries && entries.length) return entries[0].type;
-                    if (performance.navigation && typeof performance.navigation.type !== 'undefined') {
-                        return (performance.navigation.type === 1) ? 'reload' : 'navigate';
-                    }
-                } catch (e) { }
-                return 'navigate';
-            }
-
-            const navType = getNavType();
-            const sessionShown = sessionStorage.getItem('registrationShown');
-
-            if (userProfile) {
-                isLoggedIn = true;
-                const userData = JSON.parse(userProfile);
-                updateProfileDisplay(userData);
-                if (fillBtn) fillBtn.classList.remove('show');
-                return;
-            }
-
-            if (navType === 'reload' || !sessionShown) {
-                const overlay = document.getElementById('registrationOverlay'); if (overlay) overlay.classList.add('show');
-                try { sessionStorage.setItem('registrationShown', 'true'); } catch (e) { }
-            }
-        });
-
-        function closeRegistration() {
-            document.getElementById('registrationOverlay').classList.remove('show');
-            document.getElementById('fillFormBtn').classList.add('show');
-            if (!isLoggedIn) {
-                showGuestProfile();
-            }
-        }
-
-        function openRegistration() {
-            document.getElementById('registrationOverlay').classList.add('show');
-            document.getElementById('fillFormBtn').classList.remove('show');
-        }
-
-        function showGuestProfile() {
-            isLoggedIn = false;
-            document.getElementById('profileName').textContent = 'Guest #' + guestNumber;
-            document.getElementById('profileType').textContent = 'Guest';
-            document.getElementById('profileEmail').textContent = 'guest@helpreach.org';
-            document.getElementById('profilePhone').textContent = '---';
-            document.getElementById('profileLocation').textContent = 'Not specified';
-            document.getElementById('donationCount').textContent = '0';
-            document.getElementById('claimedCount').textContent = '0';
-            document.getElementById('activityLevel').textContent = 'Inactive';
-            document.getElementById('ngoInfoSection').style.display = 'none';
-            document.getElementById('profileIcon').classList.add('show');
-        }
-
-        function selectUserType(type, element) {
-            document.querySelectorAll('.user-type-option').forEach(opt => opt.classList.remove('active'));
-            element.classList.add('active');
-            element.querySelector('input').checked = true;
-
-            // Show/hide NGO fields
-            const ngoFields = document.getElementById('ngoFields');
-            if (type === 'ngo') {
-                ngoFields.classList.add('show');
-            } else {
-                ngoFields.classList.remove('show');
-            }
-        }
-
-        function submitRegistration() {
-            console.log('submitRegistration() called');
-            const form = document.getElementById('registrationForm');
-            if (!form) {
-                console.error('Form not found!');
-                alert('Error: Form not found');
-                return;
-            }
-
-            const userType = document.querySelector('input[name="userType"]:checked');
-            if (!userType) {
-                alert('Please select a user type');
-                return;
-            }
-
-            // Get form inputs using more specific selectors to avoid NGO field confusion
-            const formGroups = form.querySelectorAll('.form-group');
-            console.log('Form groups found:', formGroups.length);
-
-            const nameInput = formGroups[0]?.querySelector('input[type="text"]');
-            const emailInput = formGroups[1]?.querySelector('input[type="email"]');
-            const phoneInput = formGroups[2]?.querySelector('input[type="tel"]');
-            const locationInput = formGroups[4]?.querySelector('input[type="text"]');
-            const termsCheckbox = form.querySelector('input[type="checkbox"]');
-
-            console.log('Name:', nameInput?.value, 'Email:', emailInput?.value, 'Phone:', phoneInput?.value, 'Location:', locationInput?.value);
-
-            // Validate all fields
-            if (!nameInput || !nameInput.value.trim()) {
-                alert('Please enter your full name');
-                console.error('Name input missing or empty');
-                return;
-            }
-            if (!emailInput || !emailInput.value.trim()) {
-                alert('Please enter your email');
-                console.error('Email input missing or empty');
-                return;
-            }
-            if (!phoneInput || !phoneInput.value.trim()) {
-                alert('Please enter your phone number');
-                console.error('Phone input missing or empty');
-                return;
-            }
-            if (!locationInput || !locationInput.value.trim()) {
-                alert('Please enter your location');
-                console.error('Location input missing or empty');
-                return;
-            }
-            if (!termsCheckbox || !termsCheckbox.checked) {
-                alert('Please agree to the terms and conditions');
-                console.error('Terms not accepted');
-                return;
-            }
-
-            // Store user data
-            const userData = {
-                userType: userType.value,
-                name: nameInput.value.trim(),
-                email: emailInput.value.trim(),
-                phone: phoneInput.value.trim(),
-                location: locationInput.value.trim()
-            };
-
-            console.log('User data:', userData);
-            localStorage.setItem('userProfile', JSON.stringify(userData));
-            isLoggedIn = true;
-
-            // Show profile icon and hide fill form button
-            const profileIcon = document.getElementById('profileIcon');
-            const fillFormBtn = document.getElementById('fillFormBtn');
-            if (profileIcon) {
-                profileIcon.classList.add('show');
-                console.log('Profile icon shown');
-            }
-            if (fillFormBtn) {
-                fillFormBtn.classList.remove('show');
-                console.log('Fill form button hidden');
-            }
-
-            // Email sending disabled — just show success message
-            alert('Registration successful!');
-            closeRegistration();
-
-            // Update profile with user data
-            updateProfileDisplay(userData);
-        }
-
-        // Email sending removed. sendConfirmationEmail() intentionally omitted.
-
-        function updateProfileDisplay(userData) {
-            const profileName = document.getElementById('profileName');
-            const profileType = document.getElementById('profileType');
-            const profileEmail = document.getElementById('profileEmail');
-            const profilePhone = document.getElementById('profilePhone');
-            const profileLocation = document.getElementById('profileLocation');
-            const donationCount = document.getElementById('donationCount');
-            const claimedCount = document.getElementById('claimedCount');
-            const activityLevel = document.getElementById('activityLevel');
-
-            if (profileName) profileName.textContent = userData.name;
-            if (profileType) profileType.textContent = userData.userType.charAt(0).toUpperCase() + userData.userType.slice(1);
-            if (profileEmail) profileEmail.textContent = userData.email;
-            if (profilePhone) profilePhone.textContent = userData.phone;
-            if (profileLocation) profileLocation.textContent = userData.location;
-            if (donationCount) donationCount.textContent = '0';
-            if (claimedCount) claimedCount.textContent = '0';
-            if (activityLevel) activityLevel.textContent = 'New';
-
-            // Ensure profile icon is visible
-            const profileIcon = document.getElementById('profileIcon');
-            const fillFormBtn = document.getElementById('fillFormBtn');
-            if (profileIcon) profileIcon.classList.add('show');
-            if (fillFormBtn) fillFormBtn.classList.remove('show');
-
-            // Show NGO section if user type is NGO
-            const ngoInfoSection = document.getElementById('ngoInfoSection');
-            if (ngoInfoSection) {
-                if (userData.userType === 'ngo') {
-                    ngoInfoSection.style.display = 'block';
-                } else {
-                    ngoInfoSection.style.display = 'none';
-                }
-            }
-        }
-
-        function openProfileSidebar() {
-            document.getElementById('profileSidebar').classList.add('open');
-            document.getElementById('profileOverlay').classList.add('show');
-        }
-
-        function closeProfileSidebar() {
-            document.getElementById('profileSidebar').classList.remove('open');
-            document.getElementById('profileOverlay').classList.remove('show');
-        }
-
-        function editProfile() {
-            if (isLoggedIn) {
-                alert('Edit Profile: Redirect to profile edit page');
-                // window.location.href = 'edit-profile.html';
-            } else {
-                alert('Please register or login to edit profile');
-            }
-        }
-
-        function myDonations() {
-            if (isLoggedIn) {
-                alert('My Donations: View all your donations');
-                // window.location.href = 'my-donations.html';
-            } else {
-                alert('Please register or login to view donations');
-            }
-        }
-
-        function notifications() {
-            if (isLoggedIn) {
-                alert('Notifications: You have no new notifications');
-            } else {
-                alert('Please register or login to view notifications');
-            }
-        }
-
-        function myAccount() {
-            if (isLoggedIn) {
-                alert('Account Settings: Manage your account');
-                // window.location.href = 'account-settings.html';
-            } else {
-                alert('Please register or login to access account settings');
-            }
-        }
-
-        function logoutUser() {
-            if (isLoggedIn) {
-                if (confirm('Are you sure you want to logout?')) {
-                    localStorage.removeItem('userProfile');
-                    isLoggedIn = false;
-                    showGuestProfile();
-                    closeProfileSidebar();
-                    alert('Logged out successfully! You are now viewing as Guest #' + guestNumber);
-                }
-            } else {
-                alert('You are currently browsing as Guest #' + guestNumber);
-            }
-        }
-
-        // Check if user is already logged in on page load (moved to window load event above)
-    </script>
 </body>
 
 </html>
