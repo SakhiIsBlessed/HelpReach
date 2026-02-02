@@ -8,6 +8,7 @@
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
     <style>
         .card-compact {
             box-shadow: 0 6px 18px rgba(0, 0, 0, .05);
@@ -2068,6 +2069,7 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
 
         <!-- Template Javascript -->
+        <script src="lib/owlcarousel/owl.carousel.min.js"></script>
         <script src="js/main.js"></script>
         <script src="js/donation_debug.js"></script>
 
@@ -2216,22 +2218,19 @@
                 } catch (e) { /* ignore if elements missing */ }
 
                 // Header
-                document.getElementById("profileName").textContent = ngo.name || "";
-                document.getElementById("profileType").textContent = "NGO";
+                const profileNameEl = document.getElementById("profileName"); if (profileNameEl) profileNameEl.textContent = ngo.name || "";
+                const profileTypeEl = document.getElementById("profileType"); if (profileTypeEl) profileTypeEl.textContent = "NGO";
 
                 // Contact
-                document.getElementById("profileEmail").textContent = ngo.contact_email || "---";
-                if (document.getElementById("profileEmailHeader")) document.getElementById("profileEmailHeader").textContent = ngo.contact_email || "---";
-                document.getElementById("profilePhone").textContent = ngo.phone || "---";
-                document.getElementById("profileLocation").textContent = ngo.address || "---";
+                const profileEmailEl = document.getElementById("profileEmail"); if (profileEmailEl) profileEmailEl.textContent = ngo.contact_email || "---";
+                const profileEmailHeaderEl = document.getElementById("profileEmailHeader"); if (profileEmailHeaderEl) profileEmailHeaderEl.textContent = ngo.contact_email || "---";
+                const profilePhoneEl = document.getElementById("profilePhone"); if (profilePhoneEl) profilePhoneEl.textContent = ngo.phone || "---";
+                const profileLocationEl = document.getElementById("profileLocation"); if (profileLocationEl) profileLocationEl.textContent = ngo.address || "---";
 
                 // NGO details
-                document.getElementById("ngoRegNumber").textContent =
-                    ngo.registration_number || "---";
-                document.getElementById("ngoCategory").textContent =
-                    ngo.category || "---";
-                document.getElementById("ngoContactPerson").textContent =
-                    ngo.contact_person || "---";
+                const ngoRegNumberEl = document.getElementById("ngoRegNumber"); if (ngoRegNumberEl) ngoRegNumberEl.textContent = ngo.registration_number || "---";
+                const ngoCategoryEl = document.getElementById("ngoCategory"); if (ngoCategoryEl) ngoCategoryEl.textContent = ngo.category || "---";
+                const ngoContactPersonEl = document.getElementById("ngoContactPerson"); if (ngoContactPersonEl) ngoContactPersonEl.textContent = ngo.contact_person || "---";
 
                 // Verified badge
                 const badge = document.querySelector(".verify-badge");
@@ -2240,7 +2239,7 @@
                 }
 
                 // Show profile icon
-                document.getElementById("profileIcon").classList.add("show");
+                const profileIconEl = document.getElementById("profileIcon"); if (profileIconEl) profileIconEl.classList.add("show");
 
                 // Load NGO docs count from server
                 try {
@@ -2439,8 +2438,8 @@
 
             /* ================= RESET TO GUEST ================= */
             function showGuestNgo() {
-                document.getElementById("profileName").textContent = "Guest NGO";
-                document.getElementById("profileType").textContent = "Guest";
+                const profileNameEl = document.getElementById("profileName"); if (profileNameEl) profileNameEl.textContent = "Guest NGO";
+                const profileTypeEl = document.getElementById("profileType"); if (profileTypeEl) profileTypeEl.textContent = "Guest";
 
                 // Top dashboard defaults
                 try {
@@ -2450,19 +2449,19 @@
                     if (topEmail) topEmail.textContent = '---';
                 } catch (e) { }
 
-                document.getElementById("profileEmail").textContent = "---";
-                if (document.getElementById("profileEmailHeader")) document.getElementById("profileEmailHeader").textContent = "---";
-                document.getElementById("profilePhone").textContent = "---";
-                document.getElementById("profileLocation").textContent = "---";
+                const profileEmailEl = document.getElementById("profileEmail"); if (profileEmailEl) profileEmailEl.textContent = "---";
+                const profileEmailHeaderEl = document.getElementById("profileEmailHeader"); if (profileEmailHeaderEl) profileEmailHeaderEl.textContent = "---";
+                const profilePhoneEl = document.getElementById("profilePhone"); if (profilePhoneEl) profilePhoneEl.textContent = "---";
+                const profileLocationEl = document.getElementById("profileLocation"); if (profileLocationEl) profileLocationEl.textContent = "---";
 
-                document.getElementById("ngoRegNumber").textContent = "---";
-                document.getElementById("ngoCategory").textContent = "---";
-                document.getElementById("ngoContactPerson").textContent = "---";
+                const ngoRegNumberEl = document.getElementById("ngoRegNumber"); if (ngoRegNumberEl) ngoRegNumberEl.textContent = "---";
+                const ngoCategoryEl = document.getElementById("ngoCategory"); if (ngoCategoryEl) ngoCategoryEl.textContent = "---";
+                const ngoContactPersonEl = document.getElementById("ngoContactPerson"); if (ngoContactPersonEl) ngoContactPersonEl.textContent = "---";
 
                 const badge = document.querySelector(".verify-badge");
                 if (badge) badge.style.display = "none";
 
-                document.getElementById("profileIcon").classList.remove("show");
+                const profileIconEl = document.getElementById("profileIcon"); if (profileIconEl) profileIconEl.classList.remove("show");
 
                 // reset docs count
                 try { document.getElementById('docCount').textContent = 0; } catch (e) { }
@@ -2485,11 +2484,14 @@
 
             // Set default time to now
             function setDefaultTime() {
+                const input = document.getElementById('food-claimed-time');
+                if (!input) return;
                 const now = new Date();
                 now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
-                claimedTimeInput.value = now.toISOString().slice(0, 16);
+                input.value = now.toISOString().slice(0, 16);
             }
 
+            // Only set default time if input exists
             setDefaultTime();
 
             function updateFoodTimer() {

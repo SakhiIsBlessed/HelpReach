@@ -1951,120 +1951,120 @@
         }));
     </script>
 
-     <!-- Registration Modal -->
-<div class="registration-overlay" id="registrationOverlay">
-    <div class="registration-modal">
+    <!-- Registration Modal -->
+    <div class="registration-overlay" id="registrationOverlay">
+        <div class="registration-modal">
 
-        <div class="registration-header">
-            <h3>Join HelpReach</h3>
-            <button class="close-btn" onclick="closeRegistration()">❌</button>
-        </div>
+            <div class="registration-header">
+                <h3>Join HelpReach</h3>
+                <button class="close-btn" onclick="closeRegistration()">❌</button>
+            </div>
 
-        <div class="registration-body">
+            <div class="registration-body">
 
-            <!-- REGISTER FORM -->
-            <form id="registrationForm">
-                <div class="form-group">
-                    <label>Full Name</label>
-                    <input type="text" id="regName" placeholder="Enter your full name" required>
-                </div>
+                <!-- REGISTER FORM -->
+                <form id="registrationForm">
+                    <div class="form-group">
+                        <label>Full Name</label>
+                        <input type="text" id="regName" placeholder="Enter your full name" required>
+                    </div>
 
-                <div class="form-group">
-                    <label>Email</label>
-                    <input type="email" id="regEmail" placeholder="Enter your email" required>
-                </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" id="regEmail" placeholder="Enter your email" required>
+                    </div>
 
-                <div class="form-group">
-                    <label>Phone</label>
-                    <input type="tel" id="regPhone" placeholder="Enter phone number">
-                </div>
+                    <div class="form-group">
+                        <label>Phone</label>
+                        <input type="tel" id="regPhone" placeholder="Enter phone number">
+                    </div>
 
-                <div class="form-group">
-                    <label>Password</label>
-                    <input type="password" id="regPassword" placeholder="Create a password" required minlength="6">
-                </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" id="regPassword" placeholder="Create a password" required minlength="6">
+                    </div>
 
-                <div class="form-group">
-                    <label>User Type</label>
-                    <div class="user-type-selector">
-                        <div class="user-type-option active" onclick="selectUserType('donor', this)">
-                            <input type="radio" name="userType" value="donor" checked>
-                            <label><i class="fas fa-gift"></i><br>Donor</label>
+                    <div class="form-group">
+                        <label>User Type</label>
+                        <div class="user-type-selector">
+                            <div class="user-type-option active" onclick="selectUserType('donor', this)">
+                                <input type="radio" name="userType" value="donor" checked>
+                                <label><i class="fas fa-gift"></i><br>Donor</label>
+                            </div>
+
                         </div>
-                        
                     </div>
-                </div>
 
-                <div class="form-group">
-                    <label>Location</label>
-                    <input type="text" id="regLocation" placeholder="Enter your city/location" required>
-                </div>
-
-                <div class="ngo-fields" id="ngoFields">
                     <div class="form-group">
-                        <label>NGO Name</label>
-                        <input type="text" placeholder="Organization name">
+                        <label>Location</label>
+                        <input type="text" id="regLocation" placeholder="Enter your city/location" required>
                     </div>
+
+                    <div class="ngo-fields" id="ngoFields">
+                        <div class="form-group">
+                            <label>NGO Name</label>
+                            <input type="text" placeholder="Organization name">
+                        </div>
+                        <div class="form-group">
+                            <label>Registration Number</label>
+                            <input type="text" placeholder="NGO registration number">
+                        </div>
+                        <div class="form-group">
+                            <label>Service Area</label>
+                            <input type="text" placeholder="Area of operation">
+                        </div>
+                        <div class="form-group">
+                            <label>Upload Documents</label>
+                            <input type="file" multiple>
+                        </div>
+                    </div>
+
                     <div class="form-group">
-                        <label>Registration Number</label>
-                        <input type="text" placeholder="NGO registration number">
+                        <label>
+                            <input type="checkbox" required> I agree to the terms and conditions
+                        </label>
                     </div>
+                </form>
+
+                <!-- LOGIN FORM -->
+                <form id="loginForm" style="display:none;">
                     <div class="form-group">
-                        <label>Service Area</label>
-                        <input type="text" placeholder="Area of operation">
+                        <label>Email</label>
+                        <input type="email" id="loginEmail" placeholder="Enter your email" required>
                     </div>
+
                     <div class="form-group">
-                        <label>Upload Documents</label>
-                        <input type="file" multiple>
+                        <label>Password</label>
+                        <input type="password" id="loginPassword" placeholder="Enter your password" required>
                     </div>
-                </div>
 
-                <div class="form-group">
-                    <label>
-                        <input type="checkbox" required> I agree to the terms and conditions
-                    </label>
-                </div>
-            </form>
+                    <div class="form-group" style="text-align:center;">
+                        <span>New user?</span>
+                        <a onclick="showRegisterForm()" style="color:#007bff; cursor:pointer;">
+                            Register here
+                        </a>
+                    </div>
+                </form>
 
-            <!-- LOGIN FORM -->
-            <form id="loginForm" style="display:none;">
-                <div class="form-group">
-                    <label>Email</label>
-                    <input type="email" id="loginEmail" placeholder="Enter your email" required>
-                </div>
+            </div>
 
-                <div class="form-group">
-                    <label>Password</label>
-                    <input type="password" id="loginPassword" placeholder="Enter your password" required>
-                </div>
+            <div class="registration-footer">
+                <button class="btn-register" id="authButton" onclick="submitRegistration()">
+                    Register
+                </button>
+            </div>
 
-                <div class="form-group" style="text-align:center;">
-                    <span>New user?</span>
-                    <a onclick="showRegisterForm()" style="color:#007bff; cursor:pointer;">
-                        Register here
-                    </a>
-                </div>
-            </form>
+            <div class="form-group" id="loginToggleText" style="text-align:center; margin-top:10px;">
+                <span>Already registered?</span>
+                <a onclick="showLoginForm()" style="color:#007bff; cursor:pointer;">
+                    Login here
+                </a>
+            </div>
+
 
         </div>
-
-        <div class="registration-footer">
-            <button class="btn-register" id="authButton" onclick="submitRegistration()">
-                Register
-            </button>
-        </div>
-
-        <div class="form-group" id="loginToggleText" style="text-align:center; margin-top:10px;">
-    <span>Already registered?</span>
-    <a onclick="showLoginForm()" style="color:#007bff; cursor:pointer;">
-        Login here
-    </a>
-</div>
-
-
     </div>
-</div>
-<button id="chatToggle" onclick="toggleChat()">🤖 Ask AI</button>
+    <button id="chatToggle" onclick="toggleChat()">🤖 Ask AI</button>
     <style>
         #chatToggle {
             position: fixed;
@@ -2081,18 +2081,18 @@
         }
     </style>
     <div id="chatbot">
-  <div id="chat-header">
-    💬 HelpReach AI
-    <button id="closeChat" onclick="closeChat()">✖</button>
-  </div>
+        <div id="chat-header">
+            💬 HelpReach AI
+            <button id="closeChat" onclick="closeChat()">✖</button>
+        </div>
 
-  <div id="chatbox"></div>
+        <div id="chatbox"></div>
 
-  <div id="chat-input">
-    <input id="userInput" placeholder="Ask something..." onkeypress="handleEnter(event)" />
-    <button onclick="sendMessage()">➤</button>
-  </div>
-</div>
+        <div id="chat-input">
+            <input id="userInput" placeholder="Ask something..." onkeypress="handleEnter(event)" />
+            <button onclick="sendMessage()">➤</button>
+        </div>
+    </div>
     <style>
         #chatbot {
             display: none;
@@ -2180,85 +2180,85 @@
             cursor: pointer;
         }
     </style>
-   <script>
-let greeted = false;
+    <script>
+        let greeted = false;
 
-function toggleChat() {
-  const chat = document.getElementById("chatbot");
-  const chatbox = document.getElementById("chatbox");
+        function toggleChat() {
+            const chat = document.getElementById("chatbot");
+            const chatbox = document.getElementById("chatbox");
 
-  if (chat.style.display === "none" || chat.style.display === "") {
-    chat.style.display = "flex";
+            if (chat.style.display === "none" || chat.style.display === "") {
+                chat.style.display = "flex";
 
-    if (!greeted) {
-      chatbox.innerHTML += `
+                if (!greeted) {
+                    chatbox.innerHTML += `
         <div class="bot-msg">
           <span>Hi 👋 I'm <b>HelpReach AI</b>. How can I help you today?</span>
         </div>
       `;
-      chatbox.scrollTop = chatbox.scrollHeight;
-      greeted = true;
-    }
-  }
-}
+                    chatbox.scrollTop = chatbox.scrollHeight;
+                    greeted = true;
+                }
+            }
+        }
 
-function closeChat() {
-  document.getElementById("chatbot").style.display = "none";
-  greeted = false;
-}
+        function closeChat() {
+            document.getElementById("chatbot").style.display = "none";
+            greeted = false;
+        }
 
-function handleEnter(event) {
-  if (event.key === "Enter") {
-    sendMessage();
-  }
-}
+        function handleEnter(event) {
+            if (event.key === "Enter") {
+                sendMessage();
+            }
+        }
 
-function sendMessage() {
-  const input = document.getElementById("userInput");
-  const message = input.value.trim();
-  if (!message) return;
+        function sendMessage() {
+            const input = document.getElementById("userInput");
+            const message = input.value.trim();
+            if (!message) return;
 
-  const chatbox = document.getElementById("chatbox");
+            const chatbox = document.getElementById("chatbox");
 
-  chatbox.innerHTML += `
+            chatbox.innerHTML += `
     <div class="user-msg">
       <span>${message}</span>
     </div>
   `;
 
-  fetch("http://127.0.0.1:5000/api/chatbot", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ message })
-  })
-  .then(res => res.json())
-  .then(data => {
-    chatbox.innerHTML += `
+            fetch("http://127.0.0.1:5000/api/chatbot", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ message })
+            })
+                .then(res => res.json())
+                .then(data => {
+                    chatbox.innerHTML += `
       <div class="bot-msg">
         <span>${data.reply}</span>
       </div>
     `;
-    chatbox.scrollTop = chatbox.scrollHeight;
-  });
+                    chatbox.scrollTop = chatbox.scrollHeight;
+                });
 
-  input.value = "";
-}
-</script>
+            input.value = "";
+        }
+    </script>
 
 
     <script>
         function showLoginForm() {
-    document.getElementById("registrationForm").style.display = "none";
-    document.getElementById("loginForm").style.display = "block";
-    document.querySelector(".registration-header h3").textContent = "Login to HelpReach";
+            document.getElementById("registrationForm").style.display = "none";
+            document.getElementById("loginForm").style.display = "block";
+            document.querySelector(".registration-header h3").textContent = "Login to HelpReach";
 
-    // hide "Already registered? Login here"
-    document.getElementById("loginToggleText").style.display = "none";
+            // hide "Already registered? Login here"
+            document.getElementById("loginToggleText").style.display = "none";
 
-    const btn = document.getElementById("authButton");
-    btn.textContent = "Login";
-    btn.onclick = submitLogin;
-}
+            const btn = document.getElementById("authButton");
+            btn.textContent = "Login";
+            btn.onclick = submitLogin;
+        }
 
         function showRegisterForm() {
             document.getElementById("loginForm").style.display = "none";
@@ -2269,62 +2269,62 @@ function sendMessage() {
             btn.textContent = "Register";
             btn.onclick = submitRegistration;
         }
-    function submitLogin() {
-    fetch("http://127.0.0.1:5000/api/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-            email: document.getElementById("loginEmail").value,
-            password: document.getElementById("loginPassword").value
-        })
-    })
-    .then(res => res.json())
-    .then(data => {
-        if (data.ok) {
+        function submitLogin() {
+            fetch("http://127.0.0.1:5000/api/login", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    email: document.getElementById("loginEmail").value,
+                    password: document.getElementById("loginPassword").value
+                })
+            })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.ok) {
 
-    const userData = {
-        name: data.user.name,
-        email: data.user.email,
-        phone: data.user.phone,
-        location: data.user.location,
-        userType: data.user.role || "donor"
-    };
+                        const userData = {
+                            name: data.user.name,
+                            email: data.user.email,
+                            phone: data.user.phone,
+                            location: data.user.location,
+                            userType: data.user.role || "donor"
+                        };
 
-    localStorage.setItem("userProfile", JSON.stringify(userData));
-    isLoggedIn = true;
+                        localStorage.setItem("userProfile", JSON.stringify(userData));
+                        isLoggedIn = true;
 
-    updateProfileDisplay(userData);
-    closeRegistration();
+                        updateProfileDisplay(userData);
+                        closeRegistration();
 
-    alert("✅ Login successful");
-    resetToRegistrationForm(); 
-}
- else {
-            alert(data.error);
+                        alert("✅ Login successful");
+                        resetToRegistrationForm();
+                    }
+                    else {
+                        alert(data.error);
+                    }
+                })
+                .catch(() => alert("❌ Server error during login"));
         }
-    })
-    .catch(() => alert("❌ Server error during login"));
-}
 
     </script>
-<script>
-function resetToRegistrationForm() {
-    document.getElementById("loginForm").style.display = "none";
-    document.getElementById("registrationForm").style.display = "block";
-    document.querySelector(".registration-header h3").textContent = "Join HelpReach";
+    <script>
+        function resetToRegistrationForm() {
+            document.getElementById("loginForm").style.display = "none";
+            document.getElementById("registrationForm").style.display = "block";
+            document.querySelector(".registration-header h3").textContent = "Join HelpReach";
 
-    // show "Already registered? Login here"
-    document.getElementById("loginToggleText").style.display = "block";
+            // show "Already registered? Login here"
+            document.getElementById("loginToggleText").style.display = "block";
 
-    const btn = document.getElementById("authButton");
-    btn.textContent = "Register";
-    btn.onclick = submitRegistration;
+            const btn = document.getElementById("authButton");
+            btn.textContent = "Register";
+            btn.onclick = submitRegistration;
 
-    // clear login inputs
-    document.getElementById("loginEmail").value = "";
-    document.getElementById("loginPassword").value = "";
-}
-</script>
+            // clear login inputs
+            document.getElementById("loginEmail").value = "";
+            document.getElementById("loginPassword").value = "";
+        }
+    </script>
 
 
     <!-- Profile Icon (appears after registration) -->

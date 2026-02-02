@@ -1945,6 +1945,56 @@
         });
     </script>
 
+    <script>
+        // On-demand subscription helper — called after a successful donation
+        async function urlBase64ToUint8Array(base64String) {
+            const padding = '='.repeat((4 - base64String.length % 4) % 4);
+            const base64 = (base64String + padding).replace(/-/g, '+').replace(/_/g, '/');
+            const rawData = window.atob(base64);
+            const outputArray = new Uint8Array(rawData.length);
+            for (let i = 0; i < rawData.length; ++i) {
+                outputArray[i] = rawData.charCodeAt(i);
+            }
+            return outputArray;
+        }
+
+        async function subscribeForNotifications() {
+            const BACKEND = window.BACKEND_URL || 'http://127.0.0.1:5000';
+            try {
+                // If already granted, still try to subscribe
+                const reg = await navigator.serviceWorker.register('/sw.js');
+                // get VAPID public key from server
+                const r = await fetch(BACKEND + '/api/vapid_public_key');
+                const j = await r.json();
+                if (!j.publicKey) throw new Error('VAPID public key not available');
+
+                // request permission
+                const permission = await Notification.requestPermission();
+                if (permission !== 'granted') {
+                    console.log('Notifications permission not granted:', permission);
+                    return;
+                }
+
+                const sub = await reg.pushManager.subscribe({
+                    userVisibleOnly: true,
+                    applicationServerKey: urlBase64ToUint8Array(j.publicKey)
+                });
+
+                // send subscription to server
+                await fetch(BACKEND + '/api/subscribe', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(sub)
+                });
+
+                console.log('Push subscription stored on server');
+            } catch (err) {
+                console.warn('subscribeForNotifications error', err);
+                throw err;
+            }
+        }
+    </script>
+
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
     <script>
@@ -2157,7 +2207,7 @@ document.getElementById('donateForm').addEventListener('submit', async function 
             try {
                 const response = await fetch("http://127.0.0.1:5000/api/donations", {
                     method: "POST",
-                    body: formData , // Send FormData instead of JSON
+                    body: formData, // Send FormData instead of JSON
                     credentials: 'include'
                 });
 
@@ -2177,6 +2227,15 @@ document.getElementById('donateForm').addEventListener('submit', async function 
                         updateProfileDisplay(user);
                     } catch (e) {
                         console.warn('Could not update profile display after donation:', e);
+                    }
+                    // After successful donation, ask user to allow notifications (subscribe)
+                    try {
+                        if ('Notification' in window && navigator.serviceWorker) {
+                            // ask for permission and subscribe (defined below)
+                            subscribeForNotifications().catch(err => console.warn('Push subscribe failed', err));
+                        }
+                    } catch (err) {
+                        console.warn('Notification registration error', err);
                     }
                 } else {
                     msg.style.display = "block";
@@ -2235,9 +2294,9 @@ document.getElementById('donateForm').addEventListener('submit', async function 
                                 <label><i class="fas fa-gift"></i><br>Donor</label>
                             </div>
                             <div class="user-type-option" onclick="window.location.href='login.html'">
-    <input type="radio" name="userType" value="ngo">
-    <label><i class="fas fa-hands-helping"></i><br>NGO</label>
-</div>
+                                <input type="radio" name="userType" value="ngo">
+                                <label><i class="fas fa-hands-helping"></i><br>NGO</label>
+                            </div>
 
                         </div>
                     </div>
@@ -2670,7 +2729,7 @@ document.getElementById('donateForm').addEventListener('submit', async function 
 
             } catch (error) {
                 console.error("Registration error:", error);
-                
+
                 // More detailed error messages
                 if (error.message.includes("fetch")) {
                     alert("❌ Cannot reach backend server. Is it running on http://127.0.0.1:5000?");
@@ -2760,7 +2819,7 @@ document.getElementById('donateForm').addEventListener('submit', async function 
             const activityLevel = document.getElementById('activityLevel');
             const ngoInfoSection = document.getElementById('ngoInfoSection');
             const profileIcon = document.getElementById('profileIcon');
-            
+
             if (profileName) profileName.textContent = 'Guest #' + guestNumber;
             if (profileType) profileType.textContent = 'Guest';
             if (profileEmail) profileEmail.textContent = 'guest@helpreach.org';
@@ -2923,7 +2982,7 @@ document.getElementById('donateForm').addEventListener('submit', async function 
                 alert('Please log in first.');
                 return;
             }
-            
+
             // Show alert with instructions
             const confirmed = confirm(
                 '🔄 Refresh Session\n\n' +
@@ -2931,37 +2990,37 @@ document.getElementById('donateForm').addEventListener('submit', async function 
                 'This will enable donations.\n\n' +
                 'Your email: ' + userProfile.email
             );
-            
+
             if (confirmed) {
                 // Show overlay and modal (not Bootstrap, just custom CSS)
                 const overlay = document.getElementById('registrationOverlay');
                 if (overlay) overlay.classList.add('show');
-                
+
                 // Switch to login form
                 const loginForm = document.getElementById('loginForm');
                 const regForm = document.getElementById('registrationForm');
                 if (loginForm) loginForm.style.display = 'block';
                 if (regForm) regForm.style.display = 'none';
-                
+
                 // Update header
                 const header = document.querySelector(".registration-header h3");
                 if (header) header.textContent = "Refresh Session";
-                
+
                 // Pre-fill email
                 const emailField = document.getElementById('loginEmail');
                 if (emailField) emailField.value = userProfile.email;
-                
+
                 // Clear password for security
                 const passwordField = document.getElementById('loginPassword');
                 if (passwordField) passwordField.value = '';
-                
+
                 // Update button
                 const btn = document.getElementById("authButton");
                 if (btn) {
                     btn.textContent = "Refresh & Login";
                     btn.onclick = submitLogin;
                 }
-                
+
                 // Focus on password field
                 setTimeout(() => {
                     if (passwordField) passwordField.focus();

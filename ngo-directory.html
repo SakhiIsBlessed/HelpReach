@@ -1347,7 +1347,7 @@
             document.getElementById("loginForm").style.display = "none";
             document.getElementById("registrationForm").style.display = "block";
             document.querySelector(".registration-header h3").textContent = "Join HelpReach";
-// show "Already registered? Login here"
+            // show "Already registered? Login here"
             document.getElementById("loginToggleText").style.display = "block";
             const btn = document.getElementById("authButton");
             btn.textContent = "Register";
@@ -1389,7 +1389,7 @@
                 })
                 .catch(() => alert("❌ Server error during login"));
         }
-// ==================== OTP FUNCTIONS ====================
+        // ==================== OTP FUNCTIONS ====================
         let currentOtpToken = null;
         let currentResetEmail = null;
 
