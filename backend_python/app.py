@@ -288,16 +288,15 @@ def register():#This function runs whenever /api/register is called
                     to_email=email,
                     subject="Welcome to HelpReach 🎉",
                     message=f"""
-Hello {name}, 
+Hello {name},
 
-Welcome to the HelpReach family! 🌟
+Welcome to the HelpReach family. We're glad you're here.
+You can now start donating items and supporting NGOs to make a real difference.
 
-Your account has been successfully created, and now you can start donating items and supporting NGOs to make a real difference in people's lives.
-
-Thank you for joining us—your kindness matters! 💖
+If you need help getting started, reply to this email and we'll assist you.
 
 Warm regards,
-– Team HelpReach
+Team HelpReach
 """
                 )
             except Exception as email_error:
@@ -375,9 +374,9 @@ Hello {user['name']},
 
 You have successfully logged in to your HelpReach account.
 
-If this was not you, please secure your account immediately.
+If you did not log in, please reset your password or contact support immediately.
 
-– Team HelpReach
+Team HelpReach
 """
             )
         except Exception as e:
@@ -493,20 +492,12 @@ def api_donations():
                 message=f"""
 Hello {user['name']},
 
-We are truly grateful for your generous donation towards “{title}”.
-Your kindness and willingness to support this cause mean more than words can express.
+Thank you for your generous donation of "{title}". Your support helps NGOs continue their important work and reach those in need.
 
-Because of thoughtful donors like you, we are able to help NGOs continue their mission, reach those in need, and create a positive impact in countless lives. Every contribution—big or small—brings us one step closer to a better, kinder world.
-
-Your support inspires hope and encourages meaningful change. We deeply appreciate the trust you have placed in HelpReach and the cause you chose to support.
-
-If you have any questions or would like updates on how your contribution is making a difference, feel free to reach out to us anytime.
-
-Once again, thank you for being a part of this journey of compassion and generosity 💖
+We appreciate your kindness. If you would like updates on how your donation is being used, reply to this email or check your dashboard.
 
 With heartfelt gratitude,
 Team HelpReach
-Connecting kindness with causes that matter
 """
             )
             print(f"✅ Donation thank-you email sent to {user['email']}")
@@ -535,24 +526,19 @@ Connecting kindness with causes that matter
         for ngo in ngos:
             ngo_subject = f"🎁 New Donation Available: {title}"
             ngo_message = f"""
-Hi {ngo['name']},
+Hello {ngo['name']},
 
-Great news! A new donation has been posted on HelpReach and is available for claiming:
+A new donation is available on HelpReach and may be relevant to your work. Here are the key details:
 
-📦 DONATION DETAILS:
-   • Title: {title}
-   • Description: {description or 'N/A'}
-   • Quantity: {quantity}
-   • Pickup Info: {pickup_info or 'Contact donor for details'}
+Title: {title}
+Description: {description or 'N/A'}
+Quantity: {quantity}
+Pickup Info: {pickup_info or 'Contact donor for details'}
 
-This is a wonderful opportunity to support your cause!
-
-👉 ACTION: Log in to your HelpReach Dashboard now and claim this donation!
-
-Thank you for making a difference!
+To claim this donation, please log in to your HelpReach Dashboard and follow the claim steps.
 
 Best regards,
-HelpReach Team
+Team HelpReach
 """
             
             print(f"   📧 Notifying: {ngo['name']} ({ngo['contact_email']})")
@@ -683,11 +669,11 @@ def register_ngo():
                 subject="NGO Registration Successful ✔️",
                 message=f"""Hello {contact_person},
 
-Your NGO "{name}" has been registered successfully on HelpReach.
+Congratulations — your NGO "{name}" is now registered on HelpReach. You can log in using your registered email and password to manage your profile and view donations.
 
-You can now log in using your registered email and password.
+If you have any questions, reply to this email and we'll assist.
 
-– Team HelpReach
+Team HelpReach
 """
             )
         except Exception as email_error:
@@ -939,12 +925,11 @@ def ngo_login():
                 message=f"""
 Hello {ngo['name']},
 
-Your NGO account has just logged in successfully on HelpReach.
+Your NGO account has just logged in to HelpReach.
 
-If this was you, no action is required.  
-If you did not log in, please reset your password immediately.
+If this was not you, please reset your password or contact support immediately.
 
-– Team HelpReach
+Team HelpReach
 """
             )
         except Exception as email_err:
@@ -1074,23 +1059,20 @@ def request_otp():
                 message=f"""
 Hello {ngo['name']},
 
-You requested to reset your HelpReach password. Here's your One-Time Password (OTP):
+You requested to reset your HelpReach password. Your One-Time Password (OTP) is:
 
-<h2 style="color:#007bff;text-align:center;font-family:monospace;letter-spacing:5px">
 {otp}
-</h2>
 
-⏰ <strong>This OTP is valid for 10 minutes.</strong>
+This OTP is valid for 10 minutes.
 
-🔒 Security Note:
-- Never share this OTP with anyone
-- HelpReach staff will never ask for your OTP
-- If you didn't request this, please ignore this email
+Security note:
+- Never share this OTP with anyone.
+- HelpReach staff will never ask for your OTP.
 
-If you need help, contact our support team.
+If you did not request this, please ignore this email or contact support.
 
 Best regards,
-– Team HelpReach
+Team HelpReach
 """
             )
             print(f"✅ OTP sent to {email}: {otp}")
@@ -1145,14 +1127,12 @@ Hello,
 
 Here's your new One-Time Password (OTP):
 
-<h2 style="color:#007bff;text-align:center;font-family:monospace;letter-spacing:5px">
 {new_otp}
-</h2>
 
-⏰ <strong>This OTP is valid for 10 minutes.</strong>
+This OTP is valid for 10 minutes.
 
 Best regards,
-– Team HelpReach
+Team HelpReach
 """
         )
         print(f"✅ New OTP sent to {otp_record['email']}: {new_otp}")
@@ -1268,14 +1248,12 @@ def reset_password():
                 message=f"""
 Hello,
 
-Your HelpReach password has been successfully reset! 🎉
+Your HelpReach password has been successfully reset.
 
-You can now log in with your new password.
+If you did not request this change, please contact us immediately at support@helpreach.org.
 
-🔒 If you didn't request this change, please contact us immediately at support@helpreach.org
-
-Stay secure!
-– Team HelpReach
+Stay secure,
+Team HelpReach
 """
             )
         except Exception as email_err:
@@ -1354,23 +1332,20 @@ def user_request_otp():
                 message=f"""
 Hello {user['name']},
 
-You requested to reset your HelpReach password. Here's your One-Time Password (OTP):
+You requested to reset your HelpReach password. Your One-Time Password (OTP) is:
 
-<h2 style="color:#007bff;text-align:center;font-family:monospace;letter-spacing:5px">
 {otp}
-</h2>
 
-⏰ <strong>This OTP is valid for 10 minutes.</strong>
+This OTP is valid for 10 minutes.
 
-🔒 Security Note:
-- Never share this OTP with anyone
-- HelpReach staff will never ask for your OTP
-- If you didn't request this, please ignore this email
+Security note:
+- Never share this OTP with anyone.
+- HelpReach staff will never ask for your OTP.
 
-If you need help, contact our support team.
+If you did not request this, please ignore this email or contact support.
 
 Best regards,
-– Team HelpReach
+Team HelpReach
 """
             )
             print(f"✅ OTP sent to {email}: {otp}")
@@ -1475,14 +1450,12 @@ Hello,
 
 Here's your new One-Time Password (OTP) for password reset:
 
-<h2 style="color:#007bff;text-align:center;font-family:monospace;letter-spacing:5px">
 {new_otp}
-</h2>
 
-⏰ <strong>This OTP is valid for 10 minutes.</strong>
+This OTP is valid for 10 minutes.
 
 Best regards,
-– Team HelpReach
+Team HelpReach
 """
         )
         print(f"✅ New OTP sent to {otp_record['email']}: {new_otp}")
@@ -1545,12 +1518,12 @@ def user_reset_password():
                 message=f"""
 Hello,
 
-Your password has been successfully reset.
+Your HelpReach password has been successfully reset.
 
-If you didn't request this change, please contact our support team immediately.
+If you did not request this change, please contact our support team immediately.
 
 Best regards,
-– Team HelpReach
+Team HelpReach
 """
             )
         except Exception as email_err:
@@ -1692,16 +1665,15 @@ def contact_enquiry():
             message=f"""
 Hello {name},
 
-Thank you for contacting HelpReach.
-
-We have received your enquiry with the following details:
+Thank you for contacting HelpReach. We have received your enquiry and will reply shortly.
 
 Inquiry Type: {inquiry_type}
 Message: {message}
 
-Our team will contact you shortly.
+If this is urgent, reply to this email or call our support line.
 
-– Team HelpReach
+Best regards,
+Team HelpReach
 """
         )
     except Exception as e:
@@ -1840,24 +1812,28 @@ def claim_donation():
         # Send email to NGO
         ngo_subject = "🎉 Donation Claimed Successfully!"
         ngo_message = f"""
-Hi {ngo['name']},
+Hello {ngo['name']},
 
-Great news! You have successfully claimed the following donation:
+You have successfully claimed the donation titled "{donation['title']}".
 
-📦 Donation Details:
-  • Title: {donation['title']}
-  • Description: {donation['description'] or 'N/A'}
-  • Quantity: {donation['quantity']}
-  • Donor: {donation['donor_name']}
-
-Please arrange for the pickup of this donation at your earliest convenience.
-
-Thank you for your wonderful work!
+Please arrange pickup with the donor at your earliest convenience. If you need contact details, reply to this email.
 
 Best regards,
-HelpReach Team
-        """
+Team HelpReach
+"""
         print(f"  📧 Sending email to NGO at: {ngo['contact_email']}")
+        
+        donor_subject = "✅ Your Donation Has Been Claimed!"
+        donor_message = f"""
+Hello {donation['donor_name']},
+
+Your donation "{donation['title']}" has been claimed by {ngo['name']}. The NGO will contact you soon to arrange the pickup.
+
+Thank you for making a difference.
+
+Best regards,
+Team HelpReach
+"""
         sys.stdout.flush()
         ngo_email_sent = send_email(ngo['contact_email'], ngo_subject, ngo_message)
         sys.stdout.flush()
@@ -1982,40 +1958,29 @@ def mark_donation_received():
             # Send email to donor
             donor_subject = "🎉 Your Donation Has Been Received!"
             donor_message = f"""
-Hi {donation_info['donor_name']},
+Hello {donation_info['donor_name']},
 
-Excellent news! Your generous donation has been successfully received by the NGO:
+Good news — your donation "{donation_info['title']}" has been received by {donation_info['ngo_name']}.
 
-📦 Donation Details:
-  • Title: {donation_info['title']}
-  • Description: {donation_info['description'] or 'N/A'}
-  • Quantity: {donation_info['quantity']}
-  • Received by: {donation_info['ngo_name']}
-
-Thank you for making a positive impact on the community!
+Thank you for making a positive impact on the community. If you would like confirmation details, reply to this email and we'll assist.
 
 Best regards,
-HelpReach Team
-            """
+Team HelpReach
+"""
             send_email(donation_info['donor_email'], donor_subject, donor_message)
             
             # Send email to NGO
             ngo_subject = "✅ Donation Received - Thank You!"
             ngo_message = f"""
-Hi {donation_info['ngo_name']},
+Hello {donation_info['ngo_name']},
 
-Thank you for receiving the following donation:
+Thank you for receiving the donation "{donation_info['title']}".
 
-📦 Donation Details:
-  • Title: {donation_info['title']}
-  • Quantity: {donation_info['quantity']}
-  • Donor: {donation_info['donor_name']}
-
-This donation has been marked as received in the HelpReach system.
+This donation has been marked as received in the HelpReach system. Thank you for your work in the community.
 
 Best regards,
-HelpReach Team
-            """
+Team HelpReach
+"""
             send_email(donation_info['ngo_email'], ngo_subject, ngo_message)
         
         return jsonify({
