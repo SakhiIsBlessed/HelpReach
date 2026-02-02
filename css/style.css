@@ -1580,7 +1580,8 @@ body {
 /* Donate Hero Section */
 .donate-hero {
     height: 80vh;
-    background: url('img/donate-bg.jpg') center/cover no-repeat;
+    /* Use existing image as fallback for older browsers or when video is unavailable */
+    /* background: url('../img/impact-bg.jpg') center/cover no-repeat; */
     display: flex;
     justify-content: center;
     align-items: center;

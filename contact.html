@@ -1762,9 +1762,9 @@
                                 <label><i class="fas fa-gift"></i><br>Donor</label>
                             </div>
                             <div class="user-type-option" onclick="window.location.href='login.html'">
-    <input type="radio" name="userType" value="ngo">
-    <label><i class="fas fa-hands-helping"></i><br>NGO</label>
-</div>
+                                <input type="radio" name="userType" value="ngo">
+                                <label><i class="fas fa-hands-helping"></i><br>NGO</label>
+                            </div>
 
                         </div>
                     </div>
@@ -1890,7 +1890,8 @@
                         🔄 Resend OTP
                     </button>
                     <p style="font-size:0.85rem; color:#999; text-align:center; margin-top:10px;">Resend available in
-                        <strong id="resendTimer">60</strong>s</p>
+                        <strong id="resendTimer">60</strong>s
+                    </p>
                 </div>
 
                 <!-- STEP 3: PASSWORD RESET -->
@@ -1934,65 +1935,65 @@
 
     <script>
         function showLoginForm() {
-    document.getElementById("registrationForm").style.display = "none";
-    document.getElementById("loginForm").style.display = "block";
-    document.querySelector(".registration-header h3").textContent = "Login to HelpReach";
+            document.getElementById("registrationForm").style.display = "none";
+            document.getElementById("loginForm").style.display = "block";
+            document.querySelector(".registration-header h3").textContent = "Login to HelpReach";
 
-    // hide "Already registered? Login here"
-    document.getElementById("loginToggleText").style.display = "none";
+            // hide "Already registered? Login here"
+            document.getElementById("loginToggleText").style.display = "none";
 
-    const btn = document.getElementById("authButton");
-    btn.textContent = "Login";
-    btn.onclick = submitLogin;
-}
+            const btn = document.getElementById("authButton");
+            btn.textContent = "Login";
+            btn.onclick = submitLogin;
+        }
 
         function showRegisterForm() {
             document.getElementById("loginForm").style.display = "none";
             document.getElementById("registrationForm").style.display = "block";
             document.querySelector(".registration-header h3").textContent = "Join HelpReach";
-// show "Already registered? Login here"
+            // show "Already registered? Login here"
             document.getElementById("loginToggleText").style.display = "block";
             const btn = document.getElementById("authButton");
             btn.textContent = "Register";
             btn.onclick = submitRegistration;
         }
-    function submitLogin() {
-    fetch("http://127.0.0.1:5000/api/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-            email: document.getElementById("loginEmail").value,
-            password: document.getElementById("loginPassword").value
-        })
-    })
-    .then(res => res.json())
-    .then(data => {
-        if (data.ok) {
+        function submitLogin() {
+            fetch("http://127.0.0.1:5000/api/login", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    email: document.getElementById("loginEmail").value,
+                    password: document.getElementById("loginPassword").value
+                })
+            })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.ok) {
 
-    const userData = {
-        name: data.user.name,
-        email: data.user.email,
-        phone: data.user.phone,
-        location: data.user.location,
-        userType: data.user.role || "donor"
-    };
+                        const userData = {
+                            name: data.user.name,
+                            email: data.user.email,
+                            phone: data.user.phone,
+                            location: data.user.location,
+                            userType: data.user.role || "donor"
+                        };
 
-    localStorage.setItem("userProfile", JSON.stringify(userData));
-    isLoggedIn = true;
+                        localStorage.setItem("userProfile", JSON.stringify(userData));
+                        isLoggedIn = true;
 
-    updateProfileDisplay(userData);
-    closeRegistration();
+                        updateProfileDisplay(userData);
+                        closeRegistration();
 
-    alert("✅ Login successful");
-    resetToRegistrationForm(); 
-}
- else {
-            alert(data.error);
+                        alert("✅ Login successful");
+                        resetToRegistrationForm();
+                    }
+                    else {
+                        alert(data.error);
+                    }
+                })
+                .catch(() => alert("❌ Server error during login"));
         }
-    })
-    .catch(() => alert("❌ Server error during login"));
-}
-// ==================== OTP FUNCTIONS ====================
+        // ==================== OTP FUNCTIONS ====================
         let currentOtpToken = null;
         let currentResetEmail = null;
 
@@ -2213,24 +2214,24 @@
         }
 
     </script>
-<script>
-function resetToRegistrationForm() {
-    document.getElementById("loginForm").style.display = "none";
-    document.getElementById("registrationForm").style.display = "block";
-    document.querySelector(".registration-header h3").textContent = "Join HelpReach";
+    <script>
+        function resetToRegistrationForm() {
+            document.getElementById("loginForm").style.display = "none";
+            document.getElementById("registrationForm").style.display = "block";
+            document.querySelector(".registration-header h3").textContent = "Join HelpReach";
 
-    // show "Already registered? Login here"
-    document.getElementById("loginToggleText").style.display = "block";
+            // show "Already registered? Login here"
+            document.getElementById("loginToggleText").style.display = "block";
 
-    const btn = document.getElementById("authButton");
-    btn.textContent = "Register";
-    btn.onclick = submitRegistration;
+            const btn = document.getElementById("authButton");
+            btn.textContent = "Register";
+            btn.onclick = submitRegistration;
 
-    // clear login inputs
-    document.getElementById("loginEmail").value = "";
-    document.getElementById("loginPassword").value = "";
-}
-</script>
+            // clear login inputs
+            document.getElementById("loginEmail").value = "";
+            document.getElementById("loginPassword").value = "";
+        }
+    </script>
 
     <!-- Profile Icon (appears after registration) -->
     <button class="profile-icon" id="profileIcon" onclick="openProfileSidebar()">
@@ -2412,7 +2413,7 @@ function resetToRegistrationForm() {
             }
         }
     </script>
-<button id="chatToggle" onclick="toggleChat()">🤖 Ask AI</button>
+    <button id="chatToggle" onclick="toggleChat()">🤖 Ask AI</button>
     <style>
         #chatToggle {
             position: fixed;
@@ -2429,18 +2430,18 @@ function resetToRegistrationForm() {
         }
     </style>
     <div id="chatbot">
-  <div id="chat-header">
-    💬 HelpReach AI
-    <button id="closeChat" onclick="closeChat()">✖</button>
-  </div>
+        <div id="chat-header">
+            💬 HelpReach AI
+            <button id="closeChat" onclick="closeChat()">✖</button>
+        </div>
 
-  <div id="chatbox"></div>
+        <div id="chatbox"></div>
 
-  <div id="chat-input">
-    <input id="userInput" placeholder="Ask something..." onkeypress="handleEnter(event)" />
-    <button onclick="sendMessage()">➤</button>
-  </div>
-</div>
+        <div id="chat-input">
+            <input id="userInput" placeholder="Ask something..." onkeypress="handleEnter(event)" />
+            <button onclick="sendMessage()">➤</button>
+        </div>
+    </div>
     <style>
         #chatbot {
             display: none;
@@ -2528,72 +2529,72 @@ function resetToRegistrationForm() {
             cursor: pointer;
         }
     </style>
-   <script>
-let greeted = false;
+    <script>
+        let greeted = false;
 
-function toggleChat() {
-  const chat = document.getElementById("chatbot");
-  const chatbox = document.getElementById("chatbox");
+        function toggleChat() {
+            const chat = document.getElementById("chatbot");
+            const chatbox = document.getElementById("chatbox");
 
-  if (chat.style.display === "none" || chat.style.display === "") {
-    chat.style.display = "flex";
+            if (chat.style.display === "none" || chat.style.display === "") {
+                chat.style.display = "flex";
 
-    if (!greeted) {
-      chatbox.innerHTML += `
+                if (!greeted) {
+                    chatbox.innerHTML += `
         <div class="bot-msg">
           <span>Hi 👋 I'm <b>HelpReach AI</b>. How can I help you today?</span>
         </div>
       `;
-      chatbox.scrollTop = chatbox.scrollHeight;
-      greeted = true;
-    }
-  }
-}
+                    chatbox.scrollTop = chatbox.scrollHeight;
+                    greeted = true;
+                }
+            }
+        }
 
-function closeChat() {
-  document.getElementById("chatbot").style.display = "none";
-  greeted = false;
-}
+        function closeChat() {
+            document.getElementById("chatbot").style.display = "none";
+            greeted = false;
+        }
 
-function handleEnter(event) {
-  if (event.key === "Enter") {
-    sendMessage();
-  }
-}
+        function handleEnter(event) {
+            if (event.key === "Enter") {
+                sendMessage();
+            }
+        }
 
-function sendMessage() {
-  const input = document.getElementById("userInput");
-  const message = input.value.trim();
-  if (!message) return;
+        function sendMessage() {
+            const input = document.getElementById("userInput");
+            const message = input.value.trim();
+            if (!message) return;
 
-  const chatbox = document.getElementById("chatbox");
+            const chatbox = document.getElementById("chatbox");
 
-  chatbox.innerHTML += `
+            chatbox.innerHTML += `
     <div class="user-msg">
       <span>${message}</span>
     </div>
   `;
 
-  fetch("http://127.0.0.1:5000/api/chatbot", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ message })
-  })
-  .then(res => res.json())
-  .then(data => {
-    chatbox.innerHTML += `
+            fetch("http://127.0.0.1:5000/api/chatbot", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ message })
+            })
+                .then(res => res.json())
+                .then(data => {
+                    chatbox.innerHTML += `
       <div class="bot-msg">
         <span>${data.reply}</span>
       </div>
     `;
-    chatbox.scrollTop = chatbox.scrollHeight;
-  });
+                    chatbox.scrollTop = chatbox.scrollHeight;
+                });
 
-  input.value = "";
-}
-</script>
+            input.value = "";
+        }
+    </script>
 
- <script>
+    <script>
         // Email sending removed. Keep globals for profile behavior.
         var guestNumber = Math.floor(Math.random() * 10000);
         var isLoggedIn = false;
@@ -2817,7 +2818,7 @@ function sendMessage() {
         }
 
         // Check if user is already logged in on page load (moved to window load event above)
-    
+
 
         // Contact Form Handler — opens WhatsApp to footer number with prefilled message
         function handleContactForm(event) {
@@ -2843,27 +2844,27 @@ function sendMessage() {
             if (overlay) overlay.classList.add('show');
             const waText = document.getElementById('waBoxText');
             if (waText) waText.textContent = 'Opening WhatsApp...';
-// 🔹 Send enquiry email via backend
-fetch("http://127.0.0.1:5000/api/contact", {
-    method: "POST",
-    headers: {
-        "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-        name: name,
-        email: email,
-        phone: phone,
-        inquiryType: inquiryType,
-        message: message
-    })
-})
-.then(res => res.json())
-.then(data => {
-    console.log("Email status:", data);
-})
-.catch(err => {
-    console.error("Email error:", err);
-});
+            // 🔹 Send enquiry email via backend
+            fetch("http://127.0.0.1:5000/api/contact", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    name: name,
+                    email: email,
+                    phone: phone,
+                    inquiryType: inquiryType,
+                    message: message
+                })
+            })
+                .then(res => res.json())
+                .then(data => {
+                    console.log("Email status:", data);
+                })
+                .catch(err => {
+                    console.error("Email error:", err);
+                });
 
             // Open WhatsApp in a new tab after a short animation
             setTimeout(() => {
