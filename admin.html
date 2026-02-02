@@ -1,0 +1,437 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>HelpReach — Admin</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap');
+        :root{
+            --bg:#0f1724;
+            --card:#0b1220;
+            --muted:#94a3b8;
+            --accent1:#06b6d4;
+            --accent2:#3b82f6;
+            --glass: rgba(255,255,255,0.04);
+            --glass-2: rgba(255,255,255,0.02);
+        }
+        html,body{height:100%;}
+        body{font-family:Inter,system-ui,Segoe UI,Roboto,-apple-system,"Helvetica Neue",Arial;margin:0;padding:28px;background:linear-gradient(180deg,#ffffff 0%, #fdfdfd 100%);color:#e6eef8}
+        .center-box{max-width:1200px;margin:0 auto}
+        h2{font-weight:800;margin-bottom:6px}
+        .table-wrap{margin-top:20px}
+        .card{background:linear-gradient(180deg,var(--card),#06131f);border-radius:12px;padding:16px;box-shadow:0 8px 30px rgba(2,6,23,0.6);transition:transform .28s cubic-bezier(.2,.9,.3,1),box-shadow .28s}
+        .card:hover{transform:translateY(-6px);box-shadow:0 26px 60px rgba(2,6,23,0.7)}
+        .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+        .section-title{display:flex;align-items:center;justify-content:space-between;gap:12px}
+        .pill{background:linear-gradient(90deg,var(--accent1),var(--accent2));color:white;padding:6px 12px;border-radius:999px;font-weight:700}
+        .muted{color:var(--muted)}
+        .list-row{display:flex;gap:12px;align-items:center;padding:12px;border-radius:8px;margin-bottom:8px;background:linear-gradient(90deg,var(--glass),var(--glass-2));backdrop-filter:blur(4px)}
+        .list-row .meta{color:var(--muted);font-size:13px}
+        .avatar{width:52px;height:52px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-weight:800;color:white}
+        table.table{background:transparent;color:inherit}
+        table.table thead th{border-bottom:1px solid rgba(255,255,255,0.06);color:#cfe8ff;font-weight:700}
+        table.table tbody td{vertical-align:middle;border-bottom:1px dashed rgba(255,255,255,0.03)}
+        .stat-row{display:flex;gap:12px;margin-bottom:14px}
+        .stat{flex:1;padding:12px;border-radius:10px;background:linear-gradient(90deg,rgba(255,255,255,0.03),rgba(255,255,255,0.02));text-align:left}
+        .stat h3{margin:0;font-size:18px}
+        .stat p{margin:0;color:var(--muted);font-size:13px}
+        @media (max-width:900px){.grid{grid-template-columns:1fr}.stat-row{flex-direction:column}}
+
+        /* Animations */
+        .fade-in{animation:fadeIn .5s ease both}
+        .fade-in-up{animation:fadeInUp .45s cubic-bezier(.2,.9,.3,1) both}
+        @keyframes fadeIn{from{opacity:0}to{opacity:1}}
+        @keyframes fadeInUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+        .table-wrap {
+            margin-top: 18px
+        }
+
+        /* Admin dashboard styling */
+        .card {
+            border-radius: 12px;
+            box-shadow: 0 8px 30px rgba(16, 24, 40, 0.06);
+            transition: transform .22s ease, box-shadow .22s ease;
+            background: white
+        }
+
+        .card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 18px 50px rgba(16, 24, 40, 0.12)
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px
+        }
+
+        .section-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px
+        }
+
+        .pill {
+            background: linear-gradient(90deg, #06b6d4, #3b82f6);
+            color: white;
+            padding: 6px 10px;
+            border-radius: 999px;
+            font-weight: 600
+        }
+
+        .fade-in {
+            animation: fadeIn .45s ease both
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(6px)
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0)
+            }
+        }
+
+        .list-row {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            padding: 12px;
+            border-bottom: 1px solid #f0f2f5
+        }
+
+        .avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #f97316, #ef4444);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700
+        }
+
+        .muted {
+            color: #6b7280
+        }
+
+        @media (max-width:900px) {
+            .grid {
+                grid-template-columns: 1fr
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Top Announcement Bar -->
+    <div class="top-announcement">
+        <span>
+            New! Connect donors with NGOs faster using HelpReach –
+            <a href="about.html" class="learn-more">Learn more</a>
+        </span>
+    </div>
+
+
+    <!-- Navbar Start -->
+    <div class="container-fluid fixed-top bg-white">
+        <nav class="navbar navbar-expand-lg navbar-light container">
+            <a class="navbar-brand fw-bold" href="index.html">
+                <img src="logo.svg" alt="HelpReach Logo" class="me-2">
+                HelpReach
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
+                aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item"><a class="nav-link active" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="donate.html">Donate</a></li>
+                    <li class="nav-item"><a class="nav-link" href="ngo-directory.html">NGO Directory</a></li>
+                    <li class="nav-item"><a class="nav-link" href="dashboard.html">Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+                </ul>
+                <div class="d-flex ms-2">
+                    <a class="btn btn-ngo-login btn-sm" href="login.html">NGO Login</a>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <div class="center-box">
+        <h2>HelpReach Admin</h2>
+
+        <!-- Admin dashboard (no login on this page) -->
+
+        <div id="dashboardView">
+            <div class="d-flex justify-content-between align-items-center">
+                <h4>Admin Dashboard</h4>
+                <div>
+                    <button class="btn btn-secondary btn-sm" onclick="onLogout()">Logout</button>
+                </div>
+            </div>
+
+            <div class="table-wrap">
+                <h5>Active Donations</h5>
+                <div class="table-responsive">
+                    <table class="table table-striped table-sm" id="activeTable">
+                        <thead>
+                            <tr>
+                                <th>Donation Name</th>
+                                <th>Donor Name</th>
+                                <th>Time</th>
+                                <th>Amount</th>
+                                <th>Requirement</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="table-wrap">
+                <h5>Claimed Donations</h5>
+                <div class="table-responsive">
+                    <table class="table table-striped table-sm" id="claimedTable">
+                        <thead>
+                            <tr>
+                                <th>Donation Name</th>
+                                <th>Donor Name</th>
+                                <th>Claimed By</th>
+                                <th>Claim Time</th>
+                                <th>Amount</th>
+                                <th>Requirement</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="table-wrap fade-in" id="usersNgosWrap">
+                <div class="grid">
+                    <div class="card p-3" id="usersCard">
+                        <div class="section-title">
+                            <h5>Registered Users</h5>
+                            <span class="pill" id="userCount">0</span>
+                        </div>
+                        <div id="usersList" style="margin-top:12px; max-height:320px; overflow:auto"></div>
+                        <div id="usersDebug" class="small muted mt-2"
+                            style="display:none; white-space:pre-wrap; font-family:monospace; max-height:140px; overflow:auto">
+                        </div>
+                    </div>
+
+                    <div class="card p-3" id="ngosCard">
+                        <div class="section-title">
+                            <h5>Registered NGOs</h5>
+                            <span class="pill" id="ngoCount">0</span>
+                        </div>
+                        <div id="ngosList" style="margin-top:12px; max-height:320px; overflow:auto"></div>
+                        <div id="ngosDebug" class="small muted mt-2"
+                            style="display:none; white-space:pre-wrap; font-family:monospace; max-height:140px; overflow:auto">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Data containers (populated from backend)
+        let activeDonations = [];
+        let claimedDonations = [];
+
+        // Load real data from backend endpoints
+        async function loadRealData() {
+            try {
+                const [donRes, claimedRes] = await Promise.all([
+                    fetch('http://127.0.0.1:5000/api/donations'),
+                    fetch('http://127.0.0.1:5000/api/all-claimed-donations')
+                ]);
+
+                const donations = donRes.ok ? await donRes.json() : [];
+                const claimedList = claimedRes.ok ? await claimedRes.json() : [];
+
+                const claimedIdSet = new Set((claimedList || []).map(c => Number(c.donation_id)).filter(Boolean));
+
+                // Active donations: those not claimed
+                activeDonations = (Array.isArray(donations) ? donations : []).filter(d => !claimedIdSet.has(Number(d.id))).map(d => ({
+                    name: d.title || '',
+                    donor: d.donor_name || '',
+                    time: d.created_at || d.createdAt || '',
+                    amount: d.amount || d.quantity || '',
+                    requirement: d.category || d.description || '',
+                    status: d.status || 'Open'
+                }));
+
+                // Claimed donations: combine claim records with donation details
+                claimedDonations = (Array.isArray(claimedList) ? claimedList : []).map(c => {
+                    const d = (Array.isArray(donations) ? donations : []).find(x => Number(x.id) === Number(c.donation_id)) || {};
+                    return {
+                        name: d.title || '',
+                        donor: d.donor_name || '',
+                        claimedBy: c.ngo_name || c.name || ('NGO ' + (c.ngo_id || '')),
+                        claimTime: c.claimed_at || c.claimedAt || '',
+                        amount: d.amount || d.quantity || '',
+                        requirement: d.category || d.description || ''
+                    };
+                });
+
+                renderActive();
+                renderClaimed();
+            } catch (err) {
+                console.error('Error loading real data:', err);
+                // fall back to empty arrays
+                activeDonations = [];
+                claimedDonations = [];
+                renderActive();
+                renderClaimed();
+            }
+        }
+
+        // Load dashboard data when the page is ready
+        document.addEventListener('DOMContentLoaded', async () => {
+            await loadRealData();
+            loadUsersAndNgos();
+        });
+
+        function onLogout() {
+            document.getElementById('dashboardView').classList.add('hidden');
+            // Return to a simple empty view after logout
+            document.getElementById('dashboardView').innerHTML = '<div class="alert alert-secondary">Logged out</div>';
+        }
+
+        function fmtTime(iso) {
+            try { return new Date(iso).toLocaleString(); } catch (e) { return iso }
+        }
+
+        function renderActive() {
+            const tbody = document.querySelector('#activeTable tbody');
+            tbody.innerHTML = '';
+            activeDonations.forEach((d, i) => {
+                const tr = document.createElement('tr');
+                tr.className = 'fade-in-up';
+                tr.style.animationDelay = `${i * 40}ms`;
+                tr.innerHTML = `<td>${escapeHtml(d.name)}</td><td>${escapeHtml(d.donor)}</td><td>${fmtTime(d.time)}</td><td>${escapeHtml(d.amount)}</td><td>${escapeHtml(d.requirement)}</td><td><span class="pill" style="font-size:12px;padding:4px 8px">${escapeHtml(d.status)}</span></td>`;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function renderClaimed() {
+            const tbody = document.querySelector('#claimedTable tbody');
+            tbody.innerHTML = '';
+            claimedDonations.forEach((d, i) => {
+                const tr = document.createElement('tr');
+                tr.className = 'fade-in-up';
+                tr.style.animationDelay = `${i * 40}ms`;
+                tr.innerHTML = `<td>${escapeHtml(d.name)}</td><td>${escapeHtml(d.donor)}</td><td>${escapeHtml(d.claimedBy)}</td><td>${fmtTime(d.claimTime)}</td><td>${escapeHtml(d.amount)}</td><td>${escapeHtml(d.requirement)}</td>`;
+                tbody.appendChild(tr);
+            });
+        }
+
+        // --- Users & NGOs ---
+        async function loadUsersAndNgos() {
+            try {
+                const [uRes, nRes] = await Promise.all([
+                    fetch('http://127.0.0.1:5000/api/users'),
+                    fetch('http://127.0.0.1:5000/api/ngos')
+                ]);
+
+                let users = [];
+                let ngos = [];
+
+                try {
+                    users = uRes.ok ? await uRes.json() : [];
+                } catch (e) {
+                    console.error('Failed parsing /api/users response', e);
+                }
+
+                try {
+                    ngos = nRes.ok ? await nRes.json() : [];
+                } catch (e) {
+                    console.error('Failed parsing /api/ngos response', e);
+                }
+
+                document.getElementById('userCount').textContent = (users && users.length) || 0;
+                document.getElementById('ngoCount').textContent = (ngos && ngos.length) || 0;
+
+                const usersList = document.getElementById('usersList');
+                usersList.innerHTML = '';
+                users.forEach(u => {
+                    const name = u && (u.name || u.full_name || u.email || 'Unknown');
+                    const initials = (name && String(name).trim()[0]) || '?';
+                    const row = document.createElement('div');
+                    row.className = 'list-row';
+                    row.innerHTML = `<div class="avatar">${escapeHtml(initials)}</div>
+            <div style="flex:1">
+              <div style="font-weight:700">${escapeHtml(name)}</div>
+              <div class="muted small">${escapeHtml(u.email || '—')} • ${escapeHtml(u.phone || '—')}</div>
+            </div>`;
+                    if (!u.name) {
+                        const note = document.createElement('div');
+                        note.className = 'small muted';
+                        note.textContent = '⚠️ Name missing in record';
+                        row.appendChild(note);
+                    }
+                    usersList.appendChild(row);
+                });
+
+                const ngosList = document.getElementById('ngosList');
+                ngosList.innerHTML = '';
+                ngos.forEach(n => {
+                    const displayName = n && (n.name || n.orgName || n.contact_person || n.contact_email || 'Unknown');
+                    const initials = (displayName && String(displayName).trim()[0]) || 'N';
+                    const row = document.createElement('div');
+                    row.className = 'list-row';
+                    row.innerHTML = `<div class="avatar" style="background:linear-gradient(135deg,#06b6d4,#3b82f6)">${escapeHtml(initials)}</div>
+            <div style="flex:1">
+              <div style="font-weight:700">${escapeHtml(displayName)}</div>
+              <div class="muted small">${escapeHtml(n.location || n.address || '—')} • ${escapeHtml(n.phone || n.contact_email || '—')}</div>
+            </div>`;
+                    if (!n.name) {
+                        const note = document.createElement('div');
+                        note.className = 'small muted';
+                        note.textContent = '⚠️ Name missing in NGO record';
+                        row.appendChild(note);
+                    }
+                    ngosList.appendChild(row);
+                });
+
+                // Show raw JSON for debugging if any records missing names
+                const missingUserNames = users.filter(x => !x.name);
+                const missingNgoNames = ngos.filter(x => !x.name);
+                const usersDebug = document.getElementById('usersDebug');
+                const ngosDebug = document.getElementById('ngosDebug');
+                if (missingUserNames.length || !uRes.ok) {
+                    usersDebug.style.display = 'block';
+                    usersDebug.textContent = `users fetch ok=${uRes.ok}\n${JSON.stringify(users.slice(0, 20), null, 2)}`;
+                } else { usersDebug.style.display = 'none'; }
+
+                if (missingNgoNames.length || !nRes.ok) {
+                    ngosDebug.style.display = 'block';
+                    ngosDebug.textContent = `ngos fetch ok=${nRes.ok}\n${JSON.stringify(ngos.slice(0, 20), null, 2)}`;
+                } else { ngosDebug.style.display = 'none'; }
+
+            } catch (err) {
+                console.error('Error loading users/ngos:', err);
+            }
+        }
+
+        function escapeHtml(str) {
+            if (!str && str !== 0) return '';
+            return String(str).replace(/[&<>\"']/g, s => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '\"': '&quot;', "'": "&#39;" })[s]);
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,2564 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Dashboard — HelpReach</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        .card-compact {
+            box-shadow: 0 6px 18px rgba(0, 0, 0, .05);
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        /* Registration Modal & Profile Styles */
+        .registration-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1040;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .registration-overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .registration-modal {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            max-width: 500px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            animation: slideUp 0.4s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .registration-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .registration-header h3 {
+            margin: 0;
+            font-weight: 700;
+            color: #212529;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 28px;
+            cursor: pointer;
+            color: #6c757d;
+            padding: 0;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .close-btn:hover {
+            color: #212529;
+            background: #f1f3f5;
+            border-radius: 50%;
+        }
+
+        .registration-body {
+            padding: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            font-weight: 600;
+            margin-bottom: 8px;
+            display: block;
+            color: #212529;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #dee2e6;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            transition: border-color 0.2s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #0d6efd;
+            box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.1);
+        }
+
+        .user-type-selector {
+            display: flex;
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .user-type-option {
+            flex: 1;
+            padding: 15px;
+            border: 2px solid #dee2e6;
+            border-radius: 8px;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.2s ease;
+        }
+
+        .user-type-option:hover {
+            border-color: #0d6efd;
+            background: #f8f9fa;
+        }
+
+        .user-type-option input {
+            display: none;
+        }
+
+        .user-type-option input:checked+label {
+            color: #0d6efd;
+            font-weight: 700;
+        }
+
+        .user-type-option.active {
+            border-color: #0d6efd;
+            background: rgba(13, 110, 253, 0.05);
+        }
+
+        .user-type-option label {
+            margin: 0;
+            cursor: pointer;
+        }
+
+        .ngo-fields {
+            display: none;
+        }
+
+        .ngo-fields.show {
+            display: block;
+        }
+
+        .registration-footer {
+            padding: 20px 30px;
+            border-top: 1px solid #eee;
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-register {
+            flex: 1;
+            padding: 12px;
+            background: #0d6efd;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-register:hover {
+            background: #0b5ed7;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(13, 110, 253, 0.3);
+        }
+
+        .profile-icon {
+            position: fixed;
+            top: 15px;
+            right: 1px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: #0d6efd;
+            color: white;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            box-shadow: 0 4px 12px rgba(13, 110, 253, 0.3);
+            transition: all 0.3s ease;
+            z-index: 1035;
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .profile-icon.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .profile-icon:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(13, 110, 253, 0.4);
+        }
+
+        .fill-form-btn {
+            position: fixed;
+            bottom: 100px;
+            right: 20px;
+            padding: 12px 20px;
+            background: #10b981;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+            transition: all 0.3s ease;
+            z-index: 1035;
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .fill-form-btn.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .fill-form-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+        }
+
+        .profile-sidebar {
+            position: fixed;
+            right: -400px;
+            top: 0;
+            width: 400px;
+            height: 100vh;
+            background: white;
+            box-shadow: -4px 0 20px rgba(0, 0, 0, 0.1);
+            z-index: 1050;
+            transition: right 0.4s ease;
+            overflow-y: auto;
+        }
+
+        .profile-sidebar.open {
+            right: 0;
+        }
+
+        .profile-header {
+            background: linear-gradient(135deg, #0d6efd 0%, #10b981 100%);
+            padding: 30px 20px;
+            color: white;
+            position: relative;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .profile-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: white;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            color: #0d6efd;
+            border: 3px solid white;
+        }
+
+        .profile-name {
+            font-weight: 700;
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            text-align: center;
+        }
+
+        .profile-type {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            margin-bottom: 10px;
+        }
+
+        .profile-email {
+            font-size: 0.95rem;
+            opacity: 0.95;
+            margin-bottom: 8px;
+            word-break: break-word;
+        }
+
+        /* Top action menu inside top-left card */
+        .top-action-menu {
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.04);
+            margin: 0 12px;
+        }
+
+        .top-action-menu .menu-item {
+            display: block;
+            padding: 12px 14px;
+            background: #fff;
+            color: #222;
+            text-decoration: none;
+            border-bottom: 1px solid #f1f3f5;
+            font-weight: 600;
+        }
+
+        .top-action-menu .menu-item i {
+            width: 22px;
+            text-align: center;
+            margin-right: 10px;
+            color: #0d6efd;
+        }
+
+        .top-action-menu .menu-item.active {
+            background: #0d6efd;
+            color: #fff;
+        }
+
+        .top-action-menu .menu-item.logout {
+            color: #dc3545;
+            font-weight: 700;
+        }
+
+        .top-action-menu .menu-item.logout i {
+            color: #dc3545;
+        }
+
+        .top-action-menu .menu-item:hover {
+            background: rgba(13, 110, 253, 0.04);
+            color: #0d6efd;
+            text-decoration: none;
+        }
+
+        .verify-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+        }
+
+        .profile-section {
+            padding: 20px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .profile-section-title {
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: #212529;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .profile-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            font-size: 0.95rem;
+        }
+
+        .profile-item-label {
+            color: #6c757d;
+            font-weight: 500;
+        }
+
+        .profile-item-value {
+            color: #212529;
+            font-weight: 600;
+        }
+
+        .quick-actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            padding: 20px;
+        }
+
+        .action-btn {
+            padding: 12px;
+            border: 1px solid #dee2e6;
+            background: white;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            color: #0d6efd;
+        }
+
+        .action-btn:hover {
+            background: #0d6efd;
+            color: white;
+        }
+
+        .action-btn.logout {
+            grid-column: 1 / -1;
+            background: #dc3545;
+            color: white;
+            border-color: #dc3545;
+        }
+
+        .action-btn.logout:hover {
+            background: #c82333;
+        }
+
+        .sidebar-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            transition: all 0.2s ease;
+        }
+
+        .sidebar-close:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .profile-overlay {
+            position: fixed;
+            left: 0;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.3);
+            z-index: 1045;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .profile-overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        @media (max-width: 768px) {
+            .profile-sidebar {
+                width: 100%;
+                right: -100%;
+            }
+
+            .quick-actions {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body> <!-- Navbar Start -->
+    <div class="container-fluid fixed-top bg-white">
+        <nav class="navbar navbar-expand-lg navbar-light container">
+            <a class="navbar-brand fw-bold" href="index.html">
+                <img src="logo.svg" alt="HelpReach Logo" class="me-2" style="height: 40px;">
+                HelpReach
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item"><a class="nav-link" href="ngo_index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="ngo_about.html">About</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="Ngo_Dashboard.html">Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link" href="directory_ngo.html">NGO Directory</a></li>
+                    <li class="nav-item"><a class="nav-link" href="ngo_history.html">History</a></li>
+                    <li class="nav-item"><a class="nav-link" href="ngo_contact.html">Contact</a></li>
+                </ul>
+                <div class="d-flex ms-2">
+                    <a class="btn btn-ngo-login btn-sm" href="login.html">NGO Login</a>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <!-- Navbar End -->
+    <div class="container" style="margin-top:80px;">
+        <!-- <div class="d-flex justify-content-between align-items-center mb-3">
+            <div>
+                <h2 class="mb-0"><i class="fas fa-tachometer-alt text-success me-2"></i>Your Dashboard</h2>
+                <p class="text-muted small mt-1">Manage your donations and NGO claims with ease</p>
+            </div>
+            <div>
+                <a class="btn btn-danger-gradient me-2" href="listings.html">
+                    <i class="fas fa-eye me-2"></i>Active Donations
+                </a>
+                <a class="btn btn-primary" href="donate.html">
+                    <i class="fas fa-gift me-2"></i>Donate Now
+                </a>
+            </div>
+        </div> -->
+
+        <!-- Top Dashboard Cards (Profile + Metrics + Latest Diagnosis) -->
+        <div class="row g-3 mb-4" id="dashboardTop">
+            <div class="col-lg-3">
+                <div class="card p-3 text-center" style="border:1px solid #eef2f5;">
+                    <div
+                        style="width:84px;height:84px;border-radius:50%;background:#c9e2fb;display:inline-flex;align-items:center;justify-content:center;font-size:32px;color:#0d6efd;margin:0 auto 8px;">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div id="ngoNameTop" class="fw-bold">Guest NGO</div>
+                    <div id="ngoEmailTop" class="small text-muted" style="margin-top:6px;margin-bottom:8px;">---</div>
+                </div>
+                <div class="card p-3 text-center" style="border:1px solid #eef2f5;">
+                    <!-- Top action menu (matches reference image) -->
+                    <div class="top-action-menu mt-3 text-start">
+                        <a href="Ngo_Dashboard.html" class="menu-item active"
+                            onclick="document.getElementById('dashboardTop').scrollIntoView({behavior:'smooth'}); return false;">
+                            <i class="fas fa-tachometer-alt me-2"></i> Dashboard
+                        </a>
+                        <a href="Ngo_Dashboard.html" class="menu-item" onclick="openUploadModal(); return false;">
+                            <i class="fas fa-upload me-2"></i> Upload Document
+                        </a>
+                        <a href="Ngo_Dashboard.html" class="menu-item" onclick="openMyDocuments(); return false;">
+                            <i class="fas fa-folder me-2"></i> My Documents
+                        </a>
+                        <a href="Ngo_Dashboard.html" class="menu-item" onclick="openResetPassword(); return false;">
+                            <i class="fas fa-user-cog me-2"></i> Profile Settings
+                        </a>
+                        <a href="Ngo_Dashboard.html" class="menu-item logout" onclick="logoutUser(); return false;">
+                            <i class="fas fa-sign-out-alt me-2"></i> Logout
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+                <h2 class="mb-0"><i class="fas fa-tachometer-alt text-success me-2"></i>Your Dashboard</h2>
+                <p class="text-muted small mt-1">Manage your donations and NGO claims with ease</p>
+                <div class="col-lg-6">
+                    <div class="d-flex gap-3">
+
+                        <div class="card metric-card metric-blue">
+                            <div class="metric-header">
+                                <span>Total Donations</span>
+                                <i class="fas fa-list"></i>
+                            </div>
+                            <div id="metricTotal" class="metric-value">1</div>
+                        </div>
+
+                        <div class="card metric-card metric-green">
+                            <div class="metric-header">
+                                <span>Completed</span>
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <div id="metricCompleted" class="metric-value">0</div>
+                        </div>
+
+                        <div class="card metric-card metric-yellow">
+                            <div class="metric-header">
+                                <span>Pending</span>
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div id="metricPending" class="metric-value">1</div>
+                        </div>
+
+                    </div>
+                </div>
+                <style>
+                    .metric-card {
+                        border: none;
+                        border-radius: 10px;
+                        padding: 16px;
+                        color: #fff;
+                        min-height: 120px;
+                        min-width: 300px;
+                    }
+
+                    .metric-header {
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                        font-size: 14px;
+                        opacity: 0.9;
+                    }
+
+                    .metric-value {
+                        font-size: 32px;
+                        font-weight: 700;
+                        margin-top: 6px;
+                    }
+
+                    /* COLORS */
+                    .metric-blue {
+                        background: #1677ff;
+                    }
+
+                    .metric-green {
+                        background: #198754;
+                    }
+
+                    .metric-yellow {
+                        background: #ffc107;
+                        color: #212529;
+                    }
+
+                    /* Icons style */
+                    .metric-card i {
+                        font-size: 20px;
+                        opacity: 0.9;
+                    }
+                </style>
+
+                <div class="card mt-3 p-3 text-center" style="border:1px solid #eef2f5;min-width:929px">
+                    <div style="
+                width:56px;
+                height:56px;
+                border-radius:50%;
+                background:#f7fbff;
+                display:flex;
+                align-items:center;
+                justify-content:center;
+                font-size:22px;
+                color:#0d6efd;
+                margin:0 auto 10px;">
+                        <i class="fas fa-file-upload"></i>
+                    </div>
+
+                    <h6 class="mb-1 fw-bold">Upload Documents</h6>
+
+                    <div id="docMessage" class="text-muted small mb-2">
+                        No documents uploaded yet
+                    </div>
+
+                    <!-- Alert area (success/error) -->
+                    <div id="uploadAlertContainer" class="mt-2"></div>
+
+                    <!-- Uploaded files list -->
+                    <div id="uploadedDocsList" class="mt-2 text-start small"></div>
+
+                    <!-- Hidden file input -->
+                    <input type="file" id="documentUpload" class="d-none" multiple>
+
+                    <!-- Button that opens file picker -->
+                    <button class="btn btn-sm btn-outline-primary"
+                        onclick="document.getElementById('documentUpload').click()">
+                        Upload Now
+                    </button>
+                </div>
+
+
+                <script>
+                    async function refreshDocumentList() {
+                        const list = document.getElementById('uploadedDocsList');
+                        const msg = document.getElementById('docMessage');
+                        list.innerHTML = '<div class="text-muted">Loading documents...</div>';
+
+                        if (!currentNgoId) {
+                            list.innerHTML = '<div class="text-muted">Please login to view documents.</div>';
+                            try { msg.textContent = 'No documents uploaded yet'; } catch (e) { }
+                            try { document.getElementById('docCount').textContent = 0; } catch (e) { }
+                            return;
+                        }
+
+                        try {
+                            const res = await fetch(`http://127.0.0.1:5000/api/ngo/${currentNgoId}/documents`, { credentials: 'include' });
+                            const data = await res.json();
+
+                            if (res.ok && data.ok) {
+                                const docs = data.documents || [];
+                                if (docs.length === 0) {
+                                    list.innerHTML = '<div class="text-muted">No documents uploaded yet.</div>';
+                                    msg.textContent = 'No documents uploaded yet';
+                                    try { document.getElementById('uploadedDocsListSecondary').innerHTML = '<div class="text-muted">No documents uploaded yet.</div>'; } catch (e) { }
+                                } else {
+                                    list.innerHTML = '';
+                                    docs.forEach(d => {
+                                        const row = document.createElement('div');
+                                        row.innerHTML = `<a href="${d.url}" target="_blank">${d.original_filename || d.filename}</a> <span class="text-muted small"> — ${new Date(d.uploaded_at).toLocaleString()}</span>`;
+                                        list.appendChild(row);
+                                    });
+                                    msg.textContent = '';
+                                    try { document.getElementById('uploadedDocsListSecondary').innerHTML = list.innerHTML; } catch (e) { }
+                                }
+                                try { document.getElementById('docCount').textContent = docs.length || 0; } catch (e) { }
+                            } else {
+                                list.innerHTML = '<div class="text-muted">Failed to load documents.</div>';
+                            }
+                        } catch (err) {
+                            console.error('Error loading NGO documents:', err);
+                            list.innerHTML = '<div class="text-muted">Failed to load documents.</div>';
+                        }
+                    }
+
+                    function showUploadAlert(message, type = 'success', timeout = 4000) {
+                        const container = document.getElementById('uploadAlertContainer');
+                        container.innerHTML = `<div class="alert alert-${type}">${message}</div>`;
+                        if (timeout) {
+                            setTimeout(() => { container.innerHTML = ''; }, timeout);
+                        }
+                    }
+
+                    // Upload handler
+                    document.getElementById('documentUpload').addEventListener('change', async function () {
+                        if (!this.files || this.files.length === 0) return;
+
+                        if (!currentNgoId) {
+                            showUploadAlert('Please login as NGO to upload documents', 'warning');
+                            this.value = '';
+                            return;
+                        }
+
+                        const form = new FormData();
+                        Array.from(this.files).forEach(f => form.append('documents', f));
+
+                        showUploadAlert('Uploading...', 'info', 0);
+
+                        try {
+                            const res = await fetch(`http://127.0.0.1:5000/api/ngo/${currentNgoId}/documents`, {
+                                method: 'POST',
+                                credentials: 'include',
+                                body: form
+                            });
+                            const data = await res.json();
+
+                            if (res.ok && data.ok) {
+                                showUploadAlert('File(s) uploaded successfully', 'success');
+                                // Refresh using existing helper
+                                try { getMyDocuments(currentNgoId); } catch (e) { console.error('Error refreshing documents', e); }
+                            } else {
+                                showUploadAlert('Upload failed: ' + (data.error || 'Server error'), 'danger');
+                            }
+                        } catch (err) {
+                            console.error('Upload error:', err);
+                            showUploadAlert('Upload failed: Network error', 'danger');
+                        } finally {
+                            this.value = '';
+                        }
+                    });
+
+                    // Expose for page init and profile update
+                    if (typeof getMyDocuments === 'function') getMyDocuments(currentNgoId);
+                </script>
+
+
+
+            </div>
+            <h2 class="mb-2">Recent Donations</h6>
+                <div class="row mt-5">
+                    <div class="col-lg-6">
+                        <h5><i class="fas fa-hands-helping text-success me-2"></i>NGO — Your Claimed Donations</h5>
+                        <div id="ngoArea"></div>
+                    </div>
+                    <div class="col-lg-6">
+                        <h5><i class="fas fa-heart text-success me-2"></i>📦 Active Donations Feed</h5>
+
+                        <!-- Search Bar -->
+                        <div class="mb-3">
+                            <input type="text" id="donationSearch" class="form-control"
+                                placeholder="🔍 Search by title or donor name..." onkeyup="filterDonations()">
+                        </div>
+
+                        <!-- Filters & Sort Row -->
+                        <div class="row g-2 mb-3">
+                            <div class="col-md-4">
+                                <select id="categoryFilter" class="form-select form-select-sm"
+                                    onchange="filterDonations()">
+                                    <option value="">All Categories</option>
+                                    <option value="Food">🍲 Food</option>
+                                    <option value="Clothes">👕 Clothes</option>
+                                    <option value="Books">📚 Books</option>
+                                    <option value="Medical">💊 Medical</option>
+                                    <option value="Electronics">📱 Electronics</option>
+                                    <option value="Other">📦 Other</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <select id="locationFilter" class="form-select form-select-sm"
+                                    onchange="filterDonations()">
+                                    <option value="">All Locations</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <select id="sortBy" class="form-select form-select-sm" onchange="filterDonations()">
+                                    <option value="latest">⏱️ Latest First</option>
+                                    <option value="oldest">📅 Oldest First</option>
+                                    <option value="quantity-high">📦 Quantity: High</option>
+                                    <option value="quantity-low">📦 Quantity: Low</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Results Counter -->
+                        <div class="mb-2">
+                            <small class="text-muted">Showing <span id="resultCount">0</span> donation(s)</small>
+                        </div>
+
+                        <!-- Donations List -->
+                        <div id="donorArea"></div>
+                    </div>
+                </div>
+        </div>
+        <button id="chatToggle" onclick="toggleChat()">🤖 Ask AI</button>
+        <style>
+            #chatToggle {
+                position: fixed;
+                bottom: 20px;
+                left: 20px;
+                background: #4CAF50;
+                color: white;
+                border: none;
+                padding: 14px 18px;
+                border-radius: 50px;
+                cursor: pointer;
+                font-size: 16px;
+                box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            }
+        </style>
+        <div id="chatbot">
+            <div id="chat-header">
+                💬 HelpReach AI
+                <button id="closeChat" onclick="closeChat()">✖</button>
+            </div>
+
+            <div id="chatbox"></div>
+
+            <div id="chat-input">
+                <input id="userInput" placeholder="Ask something..." onkeypress="handleEnter(event)" />
+                <button onclick="sendMessage()">➤</button>
+            </div>
+        </div>
+        <style>
+            #chatbot {
+                display: none;
+                /* ✅ hidden by default */
+                position: fixed;
+                bottom: 80px;
+                left: 20px;
+                width: 320px;
+                height: 420px;
+                background: white;
+                border-radius: 15px;
+                box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+                flex-direction: column;
+                font-family: Arial;
+            }
+
+            #closeChat {
+                background: transparent;
+                border: none;
+                color: white;
+                font-size: 18px;
+                cursor: pointer;
+            }
+
+
+            #chat-header {
+                background: #4CAF50;
+                color: white;
+                padding: 12px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                border-radius: 15px 15px 0 0;
+            }
+
+            #chatbox {
+                flex: 1;
+                padding: 10px;
+                background: #f4f7f9;
+                overflow-y: auto;
+            }
+
+            .user-msg {
+                text-align: right;
+                margin: 6px 0;
+            }
+
+            .user-msg span {
+                background: #4CAF50;
+                color: white;
+                padding: 8px 12px;
+                border-radius: 15px 15px 0 15px;
+                display: inline-block;
+            }
+
+            .bot-msg {
+                text-align: left;
+                margin: 6px 0;
+            }
+
+            .bot-msg span {
+                background: #e0e0e0;
+                padding: 8px 12px;
+                border-radius: 15px 15px 15px 0;
+                display: inline-block;
+            }
+
+            #chat-input {
+                display: flex;
+                border-top: 1px solid #ddd;
+            }
+
+            #chat-input input {
+                flex: 1;
+                border: none;
+                padding: 10px;
+                outline: none;
+            }
+
+            #chat-input button {
+                border: none;
+                background: #4CAF50;
+                color: white;
+                padding: 0 18px;
+                cursor: pointer;
+            }
+        </style>
+        <script>
+            let greeted = false;
+
+            function toggleChat() {
+                const chat = document.getElementById("chatbot");
+                const chatbox = document.getElementById("chatbox");
+
+                if (chat.style.display === "none" || chat.style.display === "") {
+                    chat.style.display = "flex";
+
+                    if (!greeted) {
+                        chatbox.innerHTML += `
+        <div class="bot-msg">
+          <span>Hi 👋 I'm <b>HelpReach AI</b>. How can I help you today?</span>
+        </div>
+      `;
+                        chatbox.scrollTop = chatbox.scrollHeight;
+                        greeted = true;
+                    }
+                }
+            }
+
+            function closeChat() {
+                document.getElementById("chatbot").style.display = "none";
+                greeted = false;
+            }
+
+            function handleEnter(event) {
+                if (event.key === "Enter") {
+                    sendMessage();
+                }
+            }
+
+            function sendMessage() {
+                const input = document.getElementById("userInput");
+                const message = input.value.trim();
+                if (!message) return;
+
+                const chatbox = document.getElementById("chatbox");
+
+                chatbox.innerHTML += `
+    <div class="user-msg">
+      <span>${message}</span>
+    </div>
+  `;
+
+                fetch("http://127.0.0.1:5000/api/chatbot", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ message })
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        chatbox.innerHTML += `
+      <div class="bot-msg">
+        <span>${data.reply}</span>
+      </div>
+    `;
+                        chatbox.scrollTop = chatbox.scrollHeight;
+                    });
+
+                input.value = "";
+            }
+        </script>
+
+
+        <!-- Footer -->
+        <footer class="container-fluid bg-dark text-light py-5">
+            <div class="container">
+                <div class="row g-4">
+                    <!-- About Section -->
+                    <div class="col-lg-3 col-md-6 footer-section">
+                        <h5 class="fw-bold">HelpReach</h5>
+                        <p class="small">A platform connecting donors and NGOs to reduce food and item wastage while
+                            helping
+                            communities in need.</p>
+                        <div class="social-links">
+                            <a href="#" title="Facebook" aria-label="Follow us on Facebook"><i
+                                    class="fab fa-facebook-f"></i></a>
+                            <a href="#" title="Twitter" aria-label="Follow us on Twitter"><i
+                                    class="fab fa-twitter"></i></a>
+                            <a href="#" title="Instagram" aria-label="Follow us on Instagram"><i
+                                    class="fab fa-instagram"></i></a>
+                            <a href="#" title="LinkedIn" aria-label="Follow us on LinkedIn"><i
+                                    class="fab fa-linkedin-in"></i></a>
+                        </div>
+                    </div>
+
+                    <!-- Quick Links -->
+                    <div class="col-lg-3 col-md-6 footer-section">
+                        <h6>Quick Links</h6>
+                        <ul class="list-unstyled">
+                            <li><a class="text-decoration-none" href="index.html">Home</a></li>
+                            <li><a class="text-decoration-none" href="about.html">About Us</a></li>
+                            <li><a class="text-decoration-none" href="donate.html">Donate Now</a></li>
+                            <li><a class="text-decoration-none" href="listings.html">Active Donations</a></li>
+                            <li><a class="text-decoration-none" href="dashboard.html">Dashboard</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Important Links -->
+                    <div class="col-lg-2 col-md-6 footer-section">
+                        <h6>Resources</h6>
+                        <ul class="list-unstyled">
+                            <li><a class="text-decoration-none" href="blog.html">Blog</a></li>
+                            <li><a class="text-decoration-none" href="feature.html">Features</a></li>
+                            <li><a class="text-decoration-none" href="ngo-directory.html">NGO Directory</a></li>
+                            <li><a class="text-decoration-none" href="contact.html">Contact</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Contact Info -->
+                    <div class="col-lg-4 col-md-6 footer-section">
+                        <h6>Get In Touch</h6>
+                        <div class="contact-info">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>411 041 Narhe Road, Pune, India</span>
+                        </div>
+                        <div class="contact-info">
+                            <i class="fas fa-envelope"></i>
+                            <a href="mailto:helpreach18@gmail.com"
+                                class="text-decoration-none">helpreach18@gmail.com</a>
+                        </div>
+                        <div class="contact-info">
+                            <i class="fas fa-phone"></i>
+                            <div>
+                                <div><a href="tel:+918530932462" class="text-decoration-none">+91 8530932462</a></div>
+                                <div><a href="tel:+919607340088" class="text-decoration-none">+91 9607340088</a></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Footer Divider -->
+                <div class="footer-divider"></div>
+
+                <!-- Footer Bottom -->
+                <div class="footer-bottom">
+                    <div class="row align-items-center">
+                        <div class="col-md-6 text-center text-md-start">
+                            <p class="small mb-0">&copy; <span id="year"></span> <strong>HelpReach</strong>. All rights
+                                reserved.</p>
+                        </div>
+                        <div class="col-md-6 text-center text-md-end">
+                            <p class="small mb-0">Made with <i class="fas fa-heart text-danger"></i> to make a
+                                difference
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <script>
+            let isNgoLoggedIn = false;
+            let currentNgoId = null;
+            let allDonations = []; // Store all donations for filtering
+            let renderInProgress = false; // Prevent duplicate renders
+            let metricsAutoRefreshSet = false; // Ensure we only set one auto-refresh interval
+
+            async function render() {
+                // Prevent simultaneous renders
+                if (renderInProgress) return;
+                renderInProgress = true;
+
+                const donorArea = document.getElementById('donorArea');
+                const ngoArea = document.getElementById('ngoArea');
+
+                donorArea.innerHTML = '';
+                ngoArea.innerHTML = '';
+
+                try {
+                    const res = await fetch("http://127.0.0.1:5000/api/donations");
+
+                    if (!res.ok) {
+                        throw new Error("Server error");
+                    }
+
+                    const list = await res.json();
+                    allDonations = list; // Store for filtering
+
+                    // Debug: Log first donation to see structure
+                    console.log("API Response - First donation:", list[0]);
+                    console.log("Total donations:", list.length);
+
+                    // Log donations with photos
+                    const donationsWithPhotos = list.filter(d => d.photo_filename);
+                    console.log(`Donations with photos: ${donationsWithPhotos.length}`);
+
+                    // Load claimed donations for the current NGO
+                    let claimedDonations = [];
+                    let receivedDonations = []; // donations marked received (history)
+                    if (isNgoLoggedIn && currentNgoId) {
+                        try {
+                            const claimedRes = await fetch(`http://127.0.0.1:5000/api/ngo/${currentNgoId}/claimed-donations`);
+                            if (claimedRes.ok) {
+                                const claimedData = await claimedRes.json();
+                                claimedDonations = Array.isArray(claimedData) ? claimedData : (claimedData.donations || []);
+
+                                // Debug: Log claimed donations with photos
+                                console.log("Claimed donations response:", claimedDonations);
+                                const claimedWithPhotos = claimedDonations.filter(d => d.photo_filename);
+                                console.log(`Claimed donations with photos: ${claimedWithPhotos.length}/${claimedDonations.length}`);
+                                if (claimedDonations.length > 0) {
+                                    console.log("First claimed donation:", claimedDonations[0]);
+                                }
+                            }
+                        } catch (err) {
+                            console.error("Error loading claimed donations:", err);
+                        }
+                        // Also load received (completed) donations for NGO history
+                        try {
+                            const receivedRes = await fetch(`http://127.0.0.1:5000/api/ngo/${currentNgoId}/received-donations`);
+                            if (receivedRes.ok) {
+                                const receivedData = await receivedRes.json();
+                                receivedDonations = Array.isArray(receivedData) ? receivedData : (receivedData.donations || []);
+                                console.log("Received donations for NGO:", receivedDonations.length);
+                            }
+                        } catch (err) {
+                            console.error("Error loading received donations:", err);
+                        }
+                        // Also fetch global claimed donation ids to accurately compute pending
+                        var allClaimedIdsForMetrics = new Set();
+                        try {
+                            const allClaimsRes = await fetch(`http://127.0.0.1:5000/api/all-claimed-donations`);
+                            if (allClaimsRes.ok) {
+                                const allClaims = await allClaimsRes.json();
+                                if (Array.isArray(allClaims)) {
+                                    allClaims.forEach(c => { if (c && c.donation_id) allClaimedIdsForMetrics.add(c.donation_id); });
+                                }
+                            }
+                        } catch (err) {
+                            console.error('Error loading all claimed donations for metrics:', err);
+                        }
+                    }
+
+                    // Metrics will be updated after claimed/received/global-claim data is loaded
+
+                    // Ensure periodic refresh of donations/metrics (only once)
+                    if (!metricsAutoRefreshSet) {
+                        metricsAutoRefreshSet = true;
+                        setInterval(() => {
+                            console.log('🔁 Auto-refreshing donations and metrics...');
+                            render();
+                        }, 15000); // every 15 seconds
+                    }
+
+                    // Clear and display claimed donations
+                    ngoArea.innerHTML = '';
+                    if (claimedDonations.length > 0) {
+                        claimedDonations.forEach(d => {
+                            const card = document.createElement('div');
+                            card.className = 'card p-3 mb-3 card-compact';
+                            card.setAttribute('data-donation-id', d.id);
+                            card.setAttribute('data-claimed-time', d.claimed_at);
+                            // Use either category or description field (claimed donations use description)
+                            const donationType = (d.category || d.description || '').toLowerCase();
+                            card.setAttribute('data-category', donationType);
+
+                            // Add photo if available
+                            const photoHTML = d.photo_filename
+                                ? `<img src="http://127.0.0.1:5000/uploads/donations/${d.photo_filename}" alt="Donation photo" style="width:100%; border-radius:6px; margin-bottom:10px; max-height:200px; object-fit:cover;">`
+                                : '';
+
+                            card.innerHTML = `
+                    ${photoHTML}
+                    <h6>${d.title || 'N/A'}</h6>
+                    <p class="small">${d.description || ''}</p>
+                    <p class="small"><strong>Qty:</strong> ${d.quantity || 'N/A'}</p>
+                    <p class="small"><strong>Pickup:</strong> ${d.pickup_info || ''}</p>
+                    <p class="small"><strong>Donor:</strong> ${d.donor_name || 'N/A'}</p>
+                    <p class="small text-muted">📅 Claimed: ${new Date(d.claimed_at).toLocaleDateString()}</p>
+                    <div class="d-flex gap-2">
+                        <span class="badge bg-info">Claimed</span>
+                        <button class="btn btn-sm btn-primary" onclick="trackDonation(${d.id}, '${d.title}')">
+                            <i class="fas fa-map"></i> Track Donation
+                        </button>
+                        <button class="btn btn-sm btn-success" onclick="markDonationReceived(${d.id}, ${currentNgoId}, '${d.title}')">
+                            <i class="fas fa-check-circle"></i> Donation Received
+                        </button>
+                    </div>
+                `;
+
+                            ngoArea.appendChild(card);
+                        });
+                    } else {
+                        ngoArea.innerHTML = `
+                <div class="alert alert-warning">
+                    No claimed donations yet.
+                </div>`;
+                    }
+
+                    // Populate location filter
+                    populateLocationFilter();
+
+                    // Update dashboard metrics and Recent Scans
+                    updateDashboardMetrics(list, claimedDonations, receivedDonations, allClaimedIdsForMetrics);
+                    populateRecentScans(list);
+
+                    // Filter and display donations
+                    await filterDonations();
+
+                } catch (err) {
+                    console.error(err);
+                    donorArea.innerHTML = `
+            <div class="alert alert-danger">
+                Failed to load donations.
+            </div>`;
+                } finally {
+                    renderInProgress = false; // Reset flag
+                }
+            }
+
+            function populateLocationFilter() {
+                const locationFilter = document.getElementById('locationFilter');
+                const locations = [...new Set(allDonations.map(d => d.pickup_location).filter(Boolean))];
+
+                const currentValue = locationFilter.value;
+                locationFilter.innerHTML = '<option value="">All Locations</option>';
+
+                locations.forEach(location => {
+                    const option = document.createElement('option'); // ✅ FIXED
+                    option.value = location;
+                    option.textContent = location;
+                    locationFilter.appendChild(option);
+                });
+
+                locationFilter.value = currentValue;
+            }
+
+
+            async function filterDonations() {
+                const donorArea = document.getElementById('donorArea');
+                const searchTerm = document.getElementById('donationSearch').value.toLowerCase();
+                const categoryFilter = document.getElementById('categoryFilter').value;
+                const locationFilter = document.getElementById('locationFilter').value;
+                const sortBy = document.getElementById('sortBy').value;
+
+                console.log("🔄 Filtering donations...");
+
+                // Build claimed map
+                let claimedMap = {};
+                // Build global claimed set (donations claimed by any NGO) to exclude from Active Feed
+                let globallyClaimedIds = new Set();
+                if (isNgoLoggedIn && currentNgoId) {
+                    try {
+                        const res = await fetch(`http://127.0.0.1:5000/api/ngo/${currentNgoId}/claimed-donations`);
+                        if (res.ok) {
+                            const data = await res.json();
+                            const claims = Array.isArray(data) ? data : (data.donations || []);
+                            claims.forEach(c => {
+                                claimedMap[c.id] = c;
+                            });
+                            console.log("Claimed map:", claimedMap);
+                        }
+                    } catch (err) {
+                        console.error("Error loading claimed donations:", err);
+                    }
+                }
+
+                // Fetch all claimed donations (global) and build a set of claimed donation ids
+                try {
+                    const allClaimsRes = await fetch(`http://127.0.0.1:5000/api/all-claimed-donations`);
+                    if (allClaimsRes.ok) {
+                        const allClaims = await allClaimsRes.json();
+                        if (Array.isArray(allClaims)) {
+                            allClaims.forEach(c => {
+                                if (c && c.donation_id) globallyClaimedIds.add(c.donation_id);
+                            });
+                        }
+                        console.log('Global claimed ids:', Array.from(globallyClaimedIds));
+                    }
+                } catch (err) {
+                    console.error('Error loading global claimed donations:', err);
+                }
+
+                // Filter donations
+                let filtered = allDonations.filter(d => {
+                    // Exclude donations that have been claimed by any NGO
+                    if (globallyClaimedIds.has(d.id)) return false;
+                    // Search filter
+                    const matchesSearch = searchTerm === '' ||
+                        d.title.toLowerCase().includes(searchTerm) ||
+                        (d.donor_name && d.donor_name.toLowerCase().includes(searchTerm));
+
+                    // Category filter
+                    const matchesCategory = categoryFilter === '' || d.category === categoryFilter;
+
+                    // Location filter
+                    const matchesLocation = locationFilter === '' || d.pickup_location === locationFilter;
+
+                    return matchesSearch && matchesCategory && matchesLocation;
+                });
+
+                console.log("Filtered donations count:", filtered.length);
+
+                // Sort donations
+                filtered.sort((a, b) => {
+                    switch (sortBy) {
+                        case 'latest':
+                            return new Date(b.created_at) - new Date(a.created_at);
+                        case 'oldest':
+                            return new Date(a.created_at) - new Date(b.created_at);
+                        case 'quantity-high':
+                            return b.quantity - a.quantity;
+                        case 'quantity-low':
+                            return a.quantity - b.quantity;
+                        default:
+                            return 0;
+                    }
+                });
+
+                // Update result count
+                document.getElementById('resultCount').textContent = filtered.length;
+
+                // Clear and render filtered donations
+                donorArea.innerHTML = '';
+
+                if (filtered.length === 0) {
+                    donorArea.innerHTML = `
+                <div class="alert alert-info">
+                    <i class="fas fa-search me-2"></i>No donations match your filters. Try adjusting your search criteria.
+                </div>`;
+                    return;
+                }
+
+                filtered.forEach(d => {
+                    const card = document.createElement('div');
+                    card.className = 'card p-3 mb-3 card-compact';
+                    card.setAttribute('data-donation-id', d.id);
+                    const isClaimed = claimedMap[d.id];
+                    if (isClaimed) {
+                        card.setAttribute('data-claimed-time', isClaimed.claimed_at);
+                        card.setAttribute('data-category', (isClaimed.category || isClaimed.description || '').toLowerCase());
+                    }
+
+                    let actionButton = '';
+                    if (isNgoLoggedIn && currentNgoId) {
+                        actionButton = `<button class="btn btn-sm btn-success" onclick="claimDonation(${d.id})">
+                    <i class="fas fa-hand-holding-heart"></i> Claim
+                </button>`;
+                    }
+
+                    const categoryBadge = d.category ? `<span class="badge bg-secondary me-2">${d.category}</span>` : '';
+                    const createdDate = d.created_at ? new Date(d.created_at).toLocaleDateString() : 'N/A';
+                    const photoHTML = d.photo_filename
+                        ? `<img src="http://127.0.0.1:5000/uploads/donations/${d.photo_filename}" alt="Donation photo" style="width:100%; border-radius:6px; margin-bottom:10px; max-height:200px; object-fit:cover;">`
+                        : '';
+
+                    // Show timer only for claimed food donations
+                    let timerHTML = '';
+                    const isFood = isClaimed && ((isClaimed.category && isClaimed.category.toLowerCase() === 'food') || (isClaimed.description && isClaimed.description.toLowerCase() === 'food'));
+                    if (isFood) {
+                        console.log(`Creating timer for donation ${d.id} (${d.title}) - claimed at ${isClaimed.claimed_at}`);
+                        timerHTML = `<div class="food-timer-display" data-donation-id="${d.id}" style="background: linear-gradient(135deg, #fff5e6 0%, #fffbf0 100%); border: 2px solid #ffc107; border-radius: 8px; padding: 15px; margin-bottom: 12px; text-align: center;">
+                        <div class="timer-text" style="font-size: 2.5rem; font-weight: bold; color: #28a745; font-family: 'Courier New', monospace; margin-bottom: 8px; letter-spacing: 2px;">2h 0m 0s</div>
+                        <div class="alert alert-warning mb-0 py-1 px-2 timer-alert" style="text-align: center; font-size: 0.85rem;">
+                            <i class="fas fa-info-circle me-1"></i>
+                            <span class="status-text"><strong>Status: Active</strong></span>
+                        </div>
+                    </div>`;
+                    } else if (isClaimed) {
+                        console.log(`Donation ${d.id} is claimed but NOT food - category: ${isClaimed.category}, description: ${isClaimed.description}`);
+                    }
+
+                    // Debug: Log if photo exists
+                    if (d.photo_filename) {
+                        console.log(`Photo found for ${d.title}: ${d.photo_filename}`);
+                    }
+
+                    card.innerHTML = `
+                ${photoHTML}
+                <div class="d-flex justify-content-between align-items-start mb-2">
+                    <h6 class="mb-0">${d.title}</h6>
+                    ${categoryBadge}
+                </div>
+                <p class="small text-muted mb-2">${d.description || ''}</p>
+                <p class="small mb-1"><strong>📍 Location:</strong> ${d.pickup_location || 'N/A'}</p>
+                <p class="small mb-1"><strong>📦 Quantity:</strong> ${d.quantity}</p>
+                <p class="small mb-1"><strong>🚚 Pickup:</strong> ${d.pickup_info || 'Contact donor'}</p>
+                <p class="small mb-3"><strong>👤 Donor:</strong> ${d.donor_name || 'Anonymous'}</p>
+                <p class="small text-muted mb-2">📅 Posted: ${createdDate}</p>
+                ${timerHTML}
+                <div class="d-flex justify-content-between align-items-center">
+                    <span class="badge bg-success">Active</span>
+                    ${actionButton}
+                </div>
+            `;
+
+                    donorArea.appendChild(card);
+                });
+
+                console.log("✅ Filtering complete!");
+            }
+
+            async function claimDonation(donationId) {
+                if (!isNgoLoggedIn || !currentNgoId) {
+                    alert("❌ Please login as NGO to claim donations");
+                    return;
+                }
+
+                if (!confirm("Are you sure you want to claim this donation?")) {
+                    return;
+                }
+
+                try {
+                    const res = await fetch("http://127.0.0.1:5000/api/claim-donation", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            donation_id: donationId,
+                            ngo_id: currentNgoId
+                        })
+                    });
+
+                    const data = await res.json();
+
+                    if (data.ok) {
+                        alert("✅ Donation claimed successfully!");
+                        render(); // Refresh the display
+                    } else {
+                        alert(`❌ ${data.error || "Failed to claim donation"}`);
+                    }
+                } catch (err) {
+                    console.error("Error claiming donation:", err);
+                    alert("❌ Error claiming donation");
+                }
+            }
+
+            async function trackDonation(donationId, title) {
+                console.log(`🔍 trackDonation called with donationId: ${donationId}, title: ${title}`);
+
+                // Find the donation in allDonations
+                const donation = allDonations.find(d => d.id === donationId);
+                if (!donation) {
+                    console.error(`❌ Donation ${donationId} not found in allDonations`);
+                    console.log("Available donations:", allDonations.map(d => d.id));
+                    alert("❌ Donation not found");
+                    return;
+                }
+
+                console.log("✅ Donation found:", donation);
+
+                // Check claim status from backend
+                let claimStatus = null;
+                let claimRecord = null;
+                try {
+                    const res = await fetch(`http://127.0.0.1:5000/api/ngo/${currentNgoId}/claimed-donations`);
+                    if (res.ok) {
+                        const claims = await res.json();
+                        claimStatus = claims.find(c => c.id === donationId);
+                        console.log("✅ Claim status fetched:", claimStatus);
+                    }
+
+                    // Get detailed claim status
+                    const statusRes = await fetch(`http://127.0.0.1:5000/api/donation-claim-status/${donationId}/${currentNgoId}`);
+                    if (statusRes.ok) {
+                        const statusData = await statusRes.json();
+                        claimRecord = statusData.claim;
+                        console.log("✅ Claim record fetched:", claimRecord);
+                    }
+                } catch (err) {
+                    console.error("Error fetching claim status:", err);
+                }
+
+                // Create tracking modal
+                const modal = document.createElement('div');
+                modal.className = 'modal fade';
+                modal.id = `trackModal-${donationId}`;
+                modal.setAttribute('tabindex', '-1');
+                modal.setAttribute('aria-hidden', 'true');
+
+                // Determine which steps are completed based on actual status
+                const isClaimed = claimStatus !== null;
+                const claimedTime = claimStatus ? claimStatus.claimed_at : null;
+                const currentStatus = claimRecord ? claimRecord.status : 'Pending';
+
+                const statusMap = {
+                    'Pending': { completed: false, index: 1 },
+                    'Approved': { completed: true, index: 2 },
+                    'PickedUp': { completed: true, index: 3 },
+                    'Completed': { completed: true, index: 4 }
+                };
+
+                const statusInfo = statusMap[currentStatus] || { completed: false, index: 0 };
+
+                const statusSteps = [
+                    { step: 'Posted', icon: '📤', time: donation.created_at, completed: true },
+                    { step: 'Available', icon: '✅', time: donation.created_at, completed: true },
+                    { step: 'Claimed', icon: '🤝', time: claimedTime || 'Pending', completed: isClaimed },
+                    { step: 'Picked Up', icon: '🚗', time: claimRecord?.picked_up_at || 'Pending', completed: statusInfo.index >= 3 },
+                    { step: 'Delivered', icon: '📦', time: claimRecord?.received_at || 'Pending', completed: statusInfo.index >= 4 }
+                ];
+
+                // Calculate 2-hour deadline for food donations
+                let deadlineHTML = '';
+                if (donation.category && donation.category.toLowerCase() === 'food' && claimStatus) {
+                    // const claimedTime = new Date(claimedTime).getTime();
+                    const deadline = claimedTime + (2 * 60 * 60 * 1000); // 2 hours in milliseconds
+                    const now = new Date().getTime();
+                    const timeRemaining = deadline - now;
+
+                    let hoursRemaining = Math.floor(timeRemaining / (60 * 60 * 1000));
+                    let minutesRemaining = Math.floor((timeRemaining % (60 * 60 * 1000)) / (60 * 1000));
+                    let secondsRemaining = Math.floor((timeRemaining % (60 * 1000)) / 1000);
+
+                    if (timeRemaining > 0) {
+                        const alertClass = timeRemaining < 30 * 60 * 1000 ? 'alert-danger' : 'alert-warning';
+                        const urgency = timeRemaining < 30 * 60 * 1000 ? '⚠️ URGENT:' : '';
+                        deadlineHTML = `
+                        <div class="alert ${alertClass} py-3 px-3 mb-4">
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <div>
+                                    <i class="fas fa-hourglass-half me-2"></i>
+                                    <strong>⏰ Food Delivery Deadline:</strong><br>
+                                    <span style="font-size: 1.2rem; font-weight: bold;">${hoursRemaining}h ${minutesRemaining}m ${secondsRemaining}s</span>
+                                    <p class="small mb-0 mt-1">Deadline: ${new Date(deadline).toLocaleString()}</p>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    } else {
+                        deadlineHTML = `
+                        <div class="alert alert-danger py-3 px-3 mb-4">
+                            <i class="fas fa-exclamation-triangle me-2"></i>
+                            <strong>⛔ EXPIRED:</strong> The 2-hour food delivery deadline has been exceeded!
+                        </div>
+                    `;
+                    }
+                }
+
+                const statusTimeline = statusSteps.map((status, idx) => {
+                    const isCompleted = status.completed;
+                    const markerColor = isCompleted ? '#28a745' : '#ccc';
+                    return `
+                <div class="timeline-item mb-3" style="display: flex; gap: 10px;">
+                    <div class="timeline-marker" style="min-width: 50px; text-align: center; font-size: 20px; color: ${markerColor}; font-weight: bold;">
+                        ${status.icon}
+                    </div>
+                    <div class="timeline-content">
+                        <h6 class="mb-0" style="${isCompleted ? 'color: #28a745; font-weight: 600;' : 'color: #999;'}">${status.step} ${isCompleted ? '✓' : ''}</h6>
+                        <p class="small text-muted mb-0">${typeof status.time === 'string' && status.time === 'Pending' ? status.time : new Date(status.time).toLocaleString()}</p>
+                    </div>
+                </div>
+            `;
+                }).join('');
+
+                modal.innerHTML = `
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header bg-primary text-white">
+                            <h5 class="modal-title">📍 Track Donation: ${title}</h5>
+                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="container-fluid">
+                                ${deadlineHTML}
+                                <!-- Donation Details -->
+                                <div class="card mb-4">
+                                    <div class="card-body">
+                                        <h6 class="card-title">📦 Donation Details</h6>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <p class="mb-2"><strong>Title:</strong> ${donation.title}</p>
+                                                <p class="mb-2"><strong>Category:</strong> ${donation.category || 'N/A'}</p>
+                                                <p class="mb-2"><strong>Quantity:</strong> ${donation.quantity}</p>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p class="mb-2"><strong>Donor:</strong> ${donation.donor_name || 'Anonymous'}</p>
+                                                <p class="mb-2"><strong>Location:</strong> ${donation.pickup_location || 'N/A'}</p>
+                                                <p class="mb-2"><strong>Status:</strong> <span class="badge bg-success">Active</span></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Status Timeline -->
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h6 class="card-title">🚀 Real-Time Tracking Status</h6>
+                                        <div class="timeline" style="max-height: 300px; overflow-y: auto; padding: 15px 0;">
+                                            ${statusTimeline}
+                                        </div>
+                                        <hr>
+                                        <div class="d-grid gap-2 mt-3">
+                                            <button class="btn btn-primary" id="refreshTrackBtn-${donationId}">
+                                                <i class="fas fa-sync-alt me-2"></i> Refresh Status
+                                            </button>
+                                            ${statusInfo.index < 3 ? `<button class="btn btn-warning text-dark" id="pickedUpBtn-${donationId}"><i class="fas fa-truck me-2"></i> Mark as Picked Up</button>` : ''}
+                                            ${statusInfo.index < 4 ? `<button class="btn btn-success" id="deliveredBtn-${donationId}"><i class="fas fa-box-open me-2"></i> Mark as Delivered</button>` : ''}
+                                            <button class="btn btn-outline-secondary" id="notifyBtn-${donationId}">
+                                                <i class="fas fa-bell me-2"></i> Notify Me on Update
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Real-time Updates -->
+                                <div class="alert alert-info mt-3" id="liveUpdates-${donationId}">
+                                    <i class="fas fa-info-circle me-2"></i>
+                                    <strong>Live Updates:</strong> You'll receive notifications when the donation status changes.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+                console.log("📝 Modal HTML created");
+
+                // Add modal to page
+                document.body.appendChild(modal);
+                console.log("✅ Modal appended to body");
+
+                // Ensure modal is in DOM before showing
+                await new Promise(resolve => setTimeout(resolve, 50));
+
+                // Create Bootstrap modal instance and show
+                try {
+                    const bsModal = new bootstrap.Modal(modal);
+                    bsModal.show();
+                    console.log("✅ Modal shown successfully");
+                } catch (err) {
+                    console.error("❌ Error showing modal:", err);
+                }
+
+                // Add event listeners
+                const refreshBtn = document.getElementById(`refreshTrackBtn-${donationId}`);
+                console.log(`🔘 Looking for refreshBtn with id: refreshTrackBtn-${donationId}, found:`, refreshBtn);
+                if (refreshBtn) {
+                    console.log("✅ Refresh button found, adding listener");
+                    refreshBtn.addEventListener('click', async () => {
+                        refreshBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i> Refreshing...';
+                        refreshBtn.disabled = true;
+
+                        try {
+                            // Fetch updated claim status from backend
+                            const res = await fetch(`http://127.0.0.1:5000/api/ngo/${currentNgoId}/claimed-donations`);
+                            if (res.ok) {
+                                const claims = await res.json();
+                                const updatedClaim = claims.find(c => c.id === donationId);
+
+                                const liveUpdates = document.getElementById(`liveUpdates-${donationId}`);
+                                if (liveUpdates) {
+                                    if (updatedClaim) {
+                                        liveUpdates.innerHTML = `
+                                        <i class="fas fa-check-circle text-success me-2"></i>
+                                        <strong>✅ Status Updated!</strong> Donation is claimed as of ${new Date(updatedClaim.claimed_at).toLocaleString()}
+                                    `;
+                                    } else {
+                                        liveUpdates.innerHTML = `
+                                        <i class="fas fa-info-circle me-2"></i>
+                                        <strong>Status:</strong> No new updates at this time. Please check back soon.
+                                    `;
+                                    }
+                                }
+                            }
+                        } catch (err) {
+                            console.error("Error refreshing status:", err);
+                            const liveUpdates = document.getElementById(`liveUpdates-${donationId}`);
+                            if (liveUpdates) {
+                                liveUpdates.innerHTML = `
+                                <i class="fas fa-exclamation-circle text-warning me-2"></i>
+                                <strong>⚠️ Could not refresh</strong> Please try again later.
+                            `;
+                            }
+                        }
+
+                        // Reset button after refresh
+                        setTimeout(() => {
+                            refreshBtn.innerHTML = '<i class="fas fa-sync-alt me-2"></i> Refresh Status';
+                            refreshBtn.disabled = false;
+                        }, 1500);
+                    });
+                }
+
+                // Mark as Picked Up Button
+                const pickedUpBtn = document.getElementById(`pickedUpBtn-${donationId}`);
+                console.log(`🔘 Looking for pickedUpBtn with id: pickedUpBtn-${donationId}, found:`, pickedUpBtn);
+                if (pickedUpBtn) {
+                    console.log("✅ Picked Up button found, adding listener");
+                    pickedUpBtn.addEventListener('click', async () => {
+                        if (!confirm("✅ Mark this donation as picked up?")) return;
+
+                        pickedUpBtn.disabled = true;
+                        pickedUpBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i> Updating...';
+
+                        try {
+                            const res = await fetch("http://127.0.0.1:5000/api/donation-picked-up", {
+                                method: "POST",
+                                headers: { "Content-Type": "application/json" },
+                                body: JSON.stringify({
+                                    donation_id: donationId,
+                                    ngo_id: currentNgoId
+                                })
+                            });
+
+                            if (res.ok) {
+                                // Wait a moment for database to update
+                                await new Promise(r => setTimeout(r, 500));
+
+                                // Close current modal
+                                const currentModal = document.getElementById(`trackModal-${donationId}`);
+                                if (currentModal) {
+                                    const bsModalInstance = bootstrap.Modal.getInstance(currentModal);
+                                    if (bsModalInstance) {
+                                        bsModalInstance.hide();
+                                    }
+                                    currentModal.remove();
+                                }
+
+                                // Show success message
+                                const liveUpdates = document.getElementById(`liveUpdates-${donationId}`);
+                                if (liveUpdates) {
+                                    liveUpdates.innerHTML = `
+                                    <i class="fas fa-check-circle text-success me-2"></i>
+                                    <strong>✅ Picked Up!</strong> Status updated successfully. Refreshing...
+                                `;
+                                }
+
+                                // Reopen modal with fresh data
+                                setTimeout(() => trackDonation(donationId, title), 800);
+                            } else {
+                                alert("❌ Failed to update status");
+                                pickedUpBtn.disabled = false;
+                                pickedUpBtn.innerHTML = '<i class="fas fa-truck me-2"></i> Mark as Picked Up';
+                            }
+                        } catch (err) {
+                            console.error("Error:", err);
+                            alert("❌ Error updating status");
+                            pickedUpBtn.disabled = false;
+                            pickedUpBtn.innerHTML = '<i class="fas fa-truck me-2"></i> Mark as Picked Up';
+                        }
+                    });
+                }
+
+                // Mark as Delivered Button
+                const deliveredBtn = document.getElementById(`deliveredBtn-${donationId}`);
+                console.log(`🔘 Looking for deliveredBtn with id: deliveredBtn-${donationId}, found:`, deliveredBtn);
+                if (deliveredBtn) {
+                    console.log("✅ Delivered button found, adding listener");
+                    deliveredBtn.addEventListener('click', async () => {
+                        if (!confirm("🎉 Mark this donation as delivered?")) return;
+
+                        deliveredBtn.disabled = true;
+                        deliveredBtn.innerHTML = '<i class="fas flatedt-spinner fa-spin me-2"></i> Updating...';
+
+                        try {
+                            const res = await fetch("http://127.0.0.1:5000/api/donation-delivered", {
+                                method: "POST",
+                                headers: { "Content-Type": "application/json" },
+                                body: JSON.stringify({
+                                    donation_id: donationId,
+                                    ngo_id: currentNgoId
+                                })
+                            });
+
+                            if (res.ok) {
+                                // Wait a moment for database to update
+                                await new Promise(r => setTimeout(r, 500));
+
+                                // Close current modal
+                                const currentModal = document.getElementById(`trackModal-${donationId}`);
+                                if (currentModal) {
+                                    const bsModalInstance = bootstrap.Modal.getInstance(currentModal);
+                                    if (bsModalInstance) {
+                                        bsModalInstance.hide();
+                                    }
+                                    currentModal.remove();
+                                }
+
+                                // Show success message
+                                const liveUpdates = document.getElementById(`liveUpdates-${donationId}`);
+                                if (liveUpdates) {
+                                    liveUpdates.innerHTML = `
+                                    <i class="fas fa-check-circle text-success me-2"></i>
+                                    <strong>🎉 Delivered!</strong> Status updated successfully. Refreshing...
+                                `;
+                                }
+
+                                // Reopen modal with fresh data
+                                setTimeout(() => trackDonation(donationId, title), 800);
+                            } else {
+                                alert("❌ Failed to update status");
+                                deliveredBtn.disabled = false;
+                                deliveredBtn.innerHTML = '<i class="fas fa-box-open me-2"></i> Mark as Delivered';
+                            }
+                        } catch (err) {
+                            console.error("Error:", err);
+                            alert("❌ Error updating status");
+                            deliveredBtn.disabled = false;
+                            deliveredBtn.innerHTML = '<i class="fas fa-box-open me-2"></i> Mark as Delivered';
+                        }
+                    });
+                }
+
+                const notifyBtn = document.getElementById(`notifyBtn-${donationId}`);
+                console.log(`🔘 Looking for notifyBtn with id: notifyBtn-${donationId}, found:`, notifyBtn);
+                if (notifyBtn) {
+                    console.log("✅ Notify button found, adding listener");
+                    notifyBtn.addEventListener('click', () => {
+                        notifyBtn.classList.remove('btn-outline-secondary');
+                        notifyBtn.classList.add('btn-success');
+                        notifyBtn.innerHTML = '<i class="fas fa-check me-2"></i> Notifications Enabled';
+                        notifyBtn.disabled = true;
+                        alert("🔔 You'll be notified when this donation is claimed or picked up!");
+                    });
+                }
+            }
+
+            async function markDonationReceived(donationId, ngoId, title) {
+                if (!confirm(`✅ Mark "${title}" as received?\n\nThis will move the donation to your history.`)) {
+                    return;
+                }
+
+                try {
+                    const res = await fetch("http://127.0.0.1:5000/api/mark-donation-received", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            donation_id: donationId,
+                            ngo_id: ngoId
+                        })
+                    });
+
+                    const data = await res.json();
+
+                    if (data.ok) {
+                        alert("✅ Donation marked as received! It now appears in your history.");
+                        render(); // Refresh the display
+                    } else {
+                        alert(`❌ ${data.error || "Failed to mark donation as received"}`);
+                    }
+                } catch (err) {
+                    console.error("Error marking donation as received:", err);
+                    alert("❌ Error marking donation as received");
+                }
+            }
+
+            // Dashboard helper functions
+            function updateDashboardMetrics(allDonations, claimedDonations, receivedDonations, allClaimedIdsForMetrics) {
+                try {
+                    const total = (allDonations && allDonations.length) ? allDonations.length : 0;
+                    // Completed donations are those in NGO history (received donations)
+                    const completed = (receivedDonations || []).length;
+                    // Use active donations from the overall list as the "pending" metric
+                    const activeCount = (allDonations || []).filter(d => {
+                        const s = (d.status || '').toLowerCase();
+                        if (!(s === 'available' || s === 'pending' || s === 'active' || s === '')) return false;
+                        if (allClaimedIdsForMetrics && typeof allClaimedIdsForMetrics.has === 'function') {
+                            return !allClaimedIdsForMetrics.has(d.id);
+                        }
+                        return true;
+                    }).length;
+
+                    // Debug output for investigating mismatch
+                    console.log('updateDashboardMetrics:', { totalAll: total, completedFromHistory: completed, activeAfterExcludingClaims: activeCount, allClaimedIdsSize: (allClaimedIdsForMetrics && allClaimedIdsForMetrics.size) || 0 });
+
+                    document.getElementById('metricTotal').textContent = total;
+                    document.getElementById('metricCompleted').textContent = completed || 0;
+                    document.getElementById('metricPending').textContent = activeCount || 0;
+                } catch (e) { /* ignore if elements missing */ }
+            }
+
+            function populateRecentScans(allDonations) {
+                const tbody = document.querySelector('#recentScansTable tbody');
+                if (!tbody) return;
+                tbody.innerHTML = '';
+                const max = Math.min(5, (allDonations || []).length);
+                for (let i = 0; i < max; i++) {
+                    const d = allDonations[i];
+                    const date = d.created_at ? new Date(d.created_at).toLocaleDateString() : 'N/A';
+                    const type = d.category || d.description || 'N/A';
+                    const status = d.status || 'Active';
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `<td>${date}</td><td>${type}</td><td><span class="${status.toLowerCase() === 'pending' ? 'badge bg-warning' : 'badge bg-success'}">${status}</span></td><td><button class="btn btn-sm btn-outline-primary" onclick="trackDonation(${d.id}, \`${(d.title || '')}\`)">View</button></td>`;
+                    tbody.appendChild(tr);
+                }
+                if (max === 0) {
+                    tbody.innerHTML = `<tr><td colspan="4" class="text-center text-muted">No recent scans</td></tr>`;
+                }
+            }
+
+            // Documents upload helpers (server-backed)
+            async function getMyDocuments(ngoId) {
+                const list = document.getElementById('uploadedDocsList');
+                list.innerHTML = '<div class="text-muted">Loading documents...</div>';
+
+                if (!ngoId) {
+                    list.innerHTML = '<div class="text-muted">Please login as NGO to view documents.</div>';
+                    return;
+                }
+
+                try {
+                    const res = await fetch(`http://127.0.0.1:5000/api/ngo/${ngoId}/documents`, { credentials: 'include' });
+                    const data = await res.json();
+                    if (!res.ok || !data.ok) {
+                        list.innerHTML = '<div class="text-muted">No documents uploaded yet.</div>';
+                        try { document.getElementById('docCount').textContent = 0; } catch (e) { }
+                        return;
+                    }
+
+                    list.innerHTML = '';
+                    const docs = data.documents || [];
+                    if (docs.length === 0) {
+                        list.innerHTML = '<div class="text-muted">No documents uploaded yet.</div>';
+                    } else {
+                        docs.forEach(d => {
+                            const row = document.createElement('div');
+                            row.innerHTML = `<a href="${d.url}" target="_blank">${d.original_filename || d.filename}</a> <span class="text-muted small"> — ${new Date(d.uploaded_at).toLocaleString()}</span>`;
+                            list.appendChild(row);
+                        });
+                    }
+                    try { document.getElementById('docCount').textContent = docs.length || 0; } catch (e) { }
+
+                } catch (err) {
+                    console.error('Error loading NGO documents:', err);
+                    list.innerHTML = '<div class="text-muted">Failed to load documents.</div>';
+                }
+            }
+
+            function openUploadModal() {
+                const modalEl = document.getElementById('uploadDocsModal');
+                if (!modalEl) return;
+                document.getElementById('ngoDocsInput').value = null;
+                const bs = new bootstrap.Modal(modalEl);
+                bs.show();
+                // Load current documents from server
+                getMyDocuments(currentNgoId);
+            }
+
+            async function submitUploadDocs() {
+                const input = document.getElementById('ngoDocsInput');
+                if (!input || !input.files || input.files.length === 0) {
+                    alert('Please select one or more files to upload.');
+                    return;
+                }
+
+                if (!currentNgoId) { alert('Please login as NGO first'); return; }
+
+                const form = new FormData();
+                Array.from(input.files).forEach(f => form.append('documents', f));
+
+                try {
+                    const uploadBtn = document.querySelector('#uploadDocsModal .modal-footer .btn-primary');
+                    const prevText = uploadBtn.textContent;
+                    uploadBtn.textContent = 'Uploading...';
+                    uploadBtn.disabled = true;
+
+                    const res = await fetch(`http://127.0.0.1:5000/api/ngo/${currentNgoId}/documents`, {
+                        method: 'POST',
+                        credentials: 'include',
+                        body: form
+                    });
+
+                    const data = await res.json();
+
+                    if (res.ok && data.ok) {
+                        alert('Files uploaded successfully');
+                        // Refresh list
+                        getMyDocuments(currentNgoId);
+                    } else {
+                        alert('Upload failed: ' + (data.error || 'Unknown error'));
+                    }
+
+                    uploadBtn.textContent = prevText;
+                    uploadBtn.disabled = false;
+
+                } catch (err) {
+                    console.error('Upload error:', err);
+                    alert('Upload failed');
+                }
+            }
+
+            function updateDonationMetrics(total = 0, completed = 0, pending = 0, latestDonation = null) {
+                try {
+                    document.getElementById('metricTotal').textContent = total;
+                    document.getElementById('metricCompleted').textContent = completed;
+                    document.getElementById('metricPending').textContent = pending;
+                    const latest = document.getElementById('latestDonationText');
+                    if (latest) {
+                        if (total === 0) {
+                            latest.innerHTML = 'No donations yet. <a href="donate.html">Post your first donation</a>';
+                        } else if (latestDonation && latestDonation.title) {
+                            const dt = latestDonation.created_at ? new Date(latestDonation.created_at).toLocaleString() : '';
+                            latest.innerHTML = `<strong>Latest:</strong> ${latestDonation.title} ${dt ? ' — ' + dt : ''}`;
+                        } else {
+                            latest.innerHTML = `${total} donation(s) — ${completed} completed, ${pending} pending.`;
+                        }
+                    }
+                } catch (e) { }
+            }
+
+            render();
+        </script>
+
+
+        <!-- JavaScript Libraries -->
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+
+        <!-- Template Javascript -->
+        <script src="js/main.js"></script>
+        <script src="js/donation_debug.js"></script>
+
+
+        <!-- Profile Icon (appears after NGO login) -->
+        <button class="profile-icon" id="profileIcon" onclick="openProfileSidebar()">
+            <i class="fas fa-building"></i>
+        </button>
+
+        <!-- Profile Overlay -->
+        <div class="profile-overlay" id="profileOverlay" onclick="closeProfileSidebar()"></div>
+
+        <!-- Profile Sidebar -->
+        <div class="profile-sidebar" id="profileSidebar">
+            <button class="sidebar-close" onclick="closeProfileSidebar()">✕</button>
+
+            <!-- Header -->
+            <div class="profile-header">
+                <div class="profile-avatar" aria-hidden="true">
+                    <i class="fas fa-building"></i>
+                </div>
+                <div class="profile-name" id="profileName">Guest NGO</div>
+                <div class="profile-email" id="profileEmailHeader">---</div>
+            </div>
+
+            <!-- Contact Info -->
+            <div class="profile-section">
+                <div class="profile-section-title">
+                    <i class="fas fa-phone"></i> Contact Info
+                </div>
+                <div class="profile-item">
+                    <span class="profile-item-label">Email:</span>
+                    <span class="profile-item-value" id="profileEmail">---</span>
+                </div>
+                <div class="profile-item">
+                    <span class="profile-item-label">Phone:</span>
+                    <span class="profile-item-value" id="profilePhone">---</span>
+                </div>
+                <div class="profile-item">
+                    <span class="profile-item-label">Address:</span>
+                    <span class="profile-item-value" id="profileLocation">---</span>
+                </div>
+            </div>
+
+            <!-- Account Info -->
+            <div class="profile-section">
+                <div class="profile-section-title">
+                    <i class="fas fa-chart-line"></i> NGO Activity
+                </div>
+                <div class="profile-item">
+                    <span class="profile-item-label">Requests Raised:</span>
+                    <span class="profile-item-value" id="requestCount">--</span>
+                </div>
+                <div class="profile-item">
+                    <span class="profile-item-label">Fulfilled:</span>
+                    <span class="profile-item-value" id="fulfilledCount">--</span>
+                </div>
+                <div class="profile-item">
+                    <span class="profile-item-label">Status:</span>
+                    <span class="profile-item-value" id="activityLevel">--</span>
+                </div>
+            </div>
+
+            <!-- NGO Info -->
+            <div class="profile-section" id="ngoInfoSection">
+                <div class="profile-section-title">
+                    <i class="fas fa-building"></i> NGO Details
+                </div>
+                <div class="profile-item">
+                    <span class="profile-item-label">Registration No:</span>
+                    <span class="profile-item-value" id="ngoRegNumber">---</span>
+                </div>
+                <div class="profile-item">
+                    <span class="profile-item-label">Category:</span>
+                    <span class="profile-item-value" id="ngoCategory">---</span>
+                </div>
+                <div class="profile-item">
+                    <span class="profile-item-label">Contact Person:</span>
+                    <span class="profile-item-value" id="ngoContactPerson">---</span>
+                </div>
+                <div class="profile-item">
+                    <span class="profile-item-label">Documents Uploaded:</span>
+                    <span class="profile-item-value" id="docCount">0</span>
+                </div>
+                <div style="margin-top:10px;">
+                    <button class="action-btn" onclick="openUploadModal()">
+                        <i class="fas fa-upload"></i> Upload Documents
+                    </button>
+                </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="quick-actions">
+                <button class="action-btn" onclick="editProfile()">
+                    <i class="fas fa-edit"></i> Edit Profile
+                </button>
+                <button class="action-btn" onclick="manageRequests()">
+                    <i class="fas fa-hands-helping"></i> Manage Requests
+                </button>
+                <button class="action-btn" onclick="notifications()">
+                    <i class="fas fa-bell"></i> Alerts
+                </button>
+                <button class="action-btn" onclick="myAccount()">
+                    <i class="fas fa-cog"></i> Account
+                </button>
+                <button class="action-btn logout" onclick="logoutUser()">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
+            </div>
+        </div>
+        <!-- Upload Documents Modal -->
+        <div class="modal fade" id="uploadDocsModal" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Upload NGO Documents</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="file" id="ngoDocsInput" multiple />
+                        <div class="mt-2" id="uploadedDocsList"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-primary" onclick="submitUploadDocs()">Upload</button>
+                        <button class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            /* ================= UPDATE SIDEBAR ================= */
+            function updateNgoProfile(ngo) {
+                if (!ngo) return;
+
+                // Set NGO ID globally for claiming donations
+                currentNgoId = ngo.id;
+                isNgoLoggedIn = true;
+
+                // Top header (dashboard) — show real NGO details
+                try {
+                    const topName = document.getElementById('ngoNameTop');
+                    const topEmail = document.getElementById('ngoEmailTop');
+                    if (topName) topName.textContent = ngo.name || '---';
+                    if (topEmail) topEmail.textContent = ngo.contact_email || '---';
+                } catch (e) { /* ignore if elements missing */ }
+
+                // Header
+                document.getElementById("profileName").textContent = ngo.name || "";
+                document.getElementById("profileType").textContent = "NGO";
+
+                // Contact
+                document.getElementById("profileEmail").textContent = ngo.contact_email || "---";
+                if (document.getElementById("profileEmailHeader")) document.getElementById("profileEmailHeader").textContent = ngo.contact_email || "---";
+                document.getElementById("profilePhone").textContent = ngo.phone || "---";
+                document.getElementById("profileLocation").textContent = ngo.address || "---";
+
+                // NGO details
+                document.getElementById("ngoRegNumber").textContent =
+                    ngo.registration_number || "---";
+                document.getElementById("ngoCategory").textContent =
+                    ngo.category || "---";
+                document.getElementById("ngoContactPerson").textContent =
+                    ngo.contact_person || "---";
+
+                // Verified badge
+                const badge = document.querySelector(".verify-badge");
+                if (badge) {
+                    badge.style.display = ngo.verified ? "flex" : "none";
+                }
+
+                // Show profile icon
+                document.getElementById("profileIcon").classList.add("show");
+
+                // Load NGO docs count from server
+                try {
+                    getMyDocuments(ngo.id);
+                } catch (e) { console.error('Error loading NGO documents on profile update', e); }
+
+                // Refresh donations display to show claim buttons
+                render();
+            }
+
+            /* ================= FETCH NGO FROM BACKEND ================= */
+
+            // Helper: Open My Documents (reuses upload modal for demo)
+            function openMyDocuments() {
+                try { closeProfileSidebar(); } catch (e) { }
+                try { openUploadModal(); } catch (e) { alert('Upload Documents (demo) not available'); }
+            }
+
+            // Helper: Reset password / open profile settings
+            function openResetPassword() {
+                try { closeProfileSidebar(); } catch (e) { }
+                try { editProfile(); } catch (e) { alert('To reset password, open Profile Settings'); }
+            }
+
+            async function loadNgoProfileFromBackend(ngoId) {
+                try {
+                    const res = await fetch(
+                        `http://127.0.0.1:5000/api/ngo/profile/${ngoId}`
+                    );
+
+                    const data = await res.json();
+
+                    if (!res.ok || !data.ok) {
+                        throw new Error(data.error || "Failed to load NGO profile");
+                    }
+
+                    updateNgoProfile(data.ngo);
+
+                } catch (err) {
+                    console.error("❌ Profile load error:", err);
+                    alert("Unable to load NGO profile. Please login again.");
+                    isNgoLoggedIn = false;
+                    document.getElementById("profileIcon").classList.remove("show");
+                }
+            }
+
+            window.addEventListener("load", async () => {
+                // First, check backend session
+                try {
+                    const res = await fetch("http://127.0.0.1:5000/api/ngo/me", {
+                        credentials: "include"
+                    });
+
+                    const data = await res.json();
+
+                    if (data.ok && !data.guest) {
+                        updateNgoProfile(data.ngo);
+                        return;
+                    }
+                } catch (err) {
+                    console.error("Session check error:", err);
+                }
+
+                // If no session, check URL parameters
+                const params = new URLSearchParams(window.location.search);
+                const ngoId = params.get("ngo_id");
+
+                if (!ngoId) {
+                    showGuestNgo();
+                    render(); // Call render once here
+                    return;
+                }
+
+                currentNgoId = ngoId;
+                loadNgoProfileFromBackend(ngoId);
+            });
+
+
+            /* ================= SIDEBAR ================= */
+            function openProfileSidebar() {
+                // if (!isNgoLoggedIn) return;
+
+                document.getElementById("profileSidebar").classList.add("open");
+                document.getElementById("profileOverlay").classList.add("show");
+            }
+
+            function closeProfileSidebar() {
+                document.getElementById("profileSidebar").classList.remove("open");
+                document.getElementById("profileOverlay").classList.remove("show");
+            }
+
+            function logoutUser() {
+                if (!confirm("Logout NGO account?")) return;
+
+                // 1️⃣ Reset UI to Guest
+                showGuestNgo();
+
+                // 2️⃣ Remove ngo_id from URL
+                window.history.replaceState({}, document.title, "ngo_index.html");
+
+                // 3️⃣ Redirect to login page
+                setTimeout(() => {
+                    window.location.href = "ngo_index.html";
+                }, 300);
+            }
+
+        </script>
+
+        <script>
+            /* ================= FOOD DONATION COUNTDOWN TIMER ================= */
+
+            // Update food donation timers every second
+            function updateFoodTimers() {
+                const foodTimers = document.querySelectorAll('.food-timer-display');
+
+                foodTimers.forEach(timerDiv => {
+                    const donationId = timerDiv.getAttribute('data-donation-id');
+                    const card = timerDiv.closest('.card-compact');
+
+                    if (!card) {
+                        console.warn("No card found for timer with ID:", donationId);
+                        return;
+                    }
+
+                    const claimedTimeStr = card.getAttribute('data-claimed-time');
+                    const category = card.getAttribute('data-category');
+
+                    if (category && category.toLowerCase() === 'food' && claimedTimeStr) {
+                        try {
+                            const claimedTimestamp = new Date(claimedTimeStr).getTime();
+                            const deadline = claimedTimestamp + (2 * 60 * 60 * 1000); // 2 hours in milliseconds
+                            const now = new Date().getTime();
+                            const timeRemaining = deadline - now;
+
+                            const timerText = timerDiv.querySelector('.timer-text');
+                            const statusText = timerDiv.querySelector('.status-text');
+
+                            if (timeRemaining > 0) {
+                                let h = Math.floor(timeRemaining / (60 * 60 * 1000));
+                                let m = Math.floor((timeRemaining % (60 * 60 * 1000)) / (60 * 1000));
+                                let s = Math.floor((timeRemaining % (60 * 1000)) / 1000);
+
+                                if (timerText) {
+                                    timerText.textContent = `${h}h ${m}m ${s}s`;
+                                }
+                                if (statusText) {
+                                    statusText.innerHTML = `<strong>Status: Active</strong>`;
+                                }
+
+                                // Change color if less than 30 minutes
+                                if (timeRemaining < 30 * 60 * 1000) {
+                                    timerDiv.style.borderColor = '#dc3545';
+                                    if (timerText) timerText.style.color = '#dc3545';
+                                    const alert = timerDiv.querySelector('.timer-alert');
+                                    if (alert) {
+                                        alert.className = 'alert alert-danger mb-0 py-1 px-2 timer-alert';
+                                        alert.style.backgroundColor = '#f8d7da';
+                                    }
+                                } else {
+                                    timerDiv.style.borderColor = '#ffc107';
+                                    if (timerText) timerText.style.color = '#28a745';
+                                    const alert = timerDiv.querySelector('.timer-alert');
+                                    if (alert) {
+                                        alert.className = 'alert alert-warning mb-0 py-1 px-2 timer-alert';
+                                        alert.style.backgroundColor = '#fff3cd';
+                                    }
+                                }
+                            } else {
+                                if (timerText) timerText.textContent = '0h 0m 0s';
+                                if (statusText) statusText.innerHTML = `<strong>Status: EXPIRED</strong>`;
+                                timerDiv.style.borderColor = '#dc3545';
+                                if (timerText) timerText.style.color = '#dc3545';
+                                const alert = timerDiv.querySelector('.timer-alert');
+                                if (alert) {
+                                    alert.className = 'alert alert-danger mb-0 py-1 px-2 timer-alert';
+                                    alert.style.backgroundColor = '#f8d7da';
+                                }
+                            }
+                        } catch (err) {
+                            console.error("Error updating timer for donation", donationId, ":", err);
+                        }
+                    }
+                });
+            }
+
+            // Start the timer update interval
+            setInterval(updateFoodTimers, 1000); // Update every second
+
+            // Call once immediately when page loads
+            document.addEventListener('DOMContentLoaded', () => {
+                setTimeout(updateFoodTimers, 100);
+            });
+
+            // Also call immediately (in case DOM is already loaded)
+            setTimeout(updateFoodTimers, 100);
+
+            /* ================= RESET TO GUEST ================= */
+            function showGuestNgo() {
+                document.getElementById("profileName").textContent = "Guest NGO";
+                document.getElementById("profileType").textContent = "Guest";
+
+                // Top dashboard defaults
+                try {
+                    const topName = document.getElementById('ngoNameTop');
+                    const topEmail = document.getElementById('ngoEmailTop');
+                    if (topName) topName.textContent = 'Guest NGO';
+                    if (topEmail) topEmail.textContent = '---';
+                } catch (e) { }
+
+                document.getElementById("profileEmail").textContent = "---";
+                if (document.getElementById("profileEmailHeader")) document.getElementById("profileEmailHeader").textContent = "---";
+                document.getElementById("profilePhone").textContent = "---";
+                document.getElementById("profileLocation").textContent = "---";
+
+                document.getElementById("ngoRegNumber").textContent = "---";
+                document.getElementById("ngoCategory").textContent = "---";
+                document.getElementById("ngoContactPerson").textContent = "---";
+
+                const badge = document.querySelector(".verify-badge");
+                if (badge) badge.style.display = "none";
+
+                document.getElementById("profileIcon").classList.remove("show");
+
+                // reset docs count
+                try { document.getElementById('docCount').textContent = 0; } catch (e) { }
+
+                isNgoLoggedIn = false;
+                currentNgoId = null;
+            }
+
+            // ========== FOOD DONATION TIMER LOGIC ==========
+            let timerInterval = null;
+            let claimedTimestamp = null;
+
+            const timerForm = document.getElementById('timer-form');
+            const claimedTimeInput = document.getElementById('food-claimed-time');
+            const startTimerBtn = document.getElementById('start-food-timer-btn');
+            const resetTimerBtn = document.getElementById('reset-timer-btn');
+            const timerCountdown = document.getElementById('timer-countdown');
+            const timerStatusMessage = document.getElementById('timer-status-message');
+            const timerDisplaySection = document.getElementById('timer-display-section');
+
+            // Set default time to now
+            function setDefaultTime() {
+                const now = new Date();
+                now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+                claimedTimeInput.value = now.toISOString().slice(0, 16);
+            }
+
+            setDefaultTime();
+
+            function updateFoodTimer() {
+                if (!claimedTimestamp) return;
+
+                const now = new Date().getTime();
+                const deadline = claimedTimestamp + (2 * 60 * 60 * 1000); // 2 hours
+                const timeRemaining = deadline - now;
+
+                if (timeRemaining <= 0) {
+                    timerCountdown.textContent = '0h 0m 0s';
+                    timerCountdown.style.color = '#dc3545';
+                    timerStatusMessage.innerHTML = '<i class="fas fa-exclamation-triangle me-2"></i><strong>⛔ EXPIRED:</strong> 2-hour deadline exceeded!';
+                    timerStatusMessage.className = 'alert alert-danger';
+                    clearInterval(timerInterval);
+                    startTimerBtn.textContent = '⏱️ Timer Expired';
+                    return;
+                }
+
+                const hours = Math.floor(timeRemaining / (60 * 60 * 1000));
+                const minutes = Math.floor((timeRemaining % (60 * 60 * 1000)) / (60 * 1000));
+                const seconds = Math.floor((timeRemaining % (60 * 1000)) / 1000);
+
+                timerCountdown.textContent = `${hours}h ${minutes}m ${seconds}s`;
+
+                if (timeRemaining < 30 * 60 * 1000) { // Less than 30 minutes
+                    timerCountdown.style.color = '#dc3545';
+                    timerStatusMessage.innerHTML = `<i class="fas fa-hourglass-end me-2"></i><strong>⚠️ URGENT:</strong> ${minutes}m ${seconds}s remaining!`;
+                    timerStatusMessage.className = 'alert alert-danger';
+                } else {
+                    timerCountdown.style.color = '#28a745';
+                    timerStatusMessage.innerHTML = `<i class="fas fa-clock me-2"></i><strong>📦 Status: Active</strong> - Food expires in ${hours}h ${minutes}m`;
+                    timerStatusMessage.className = 'alert alert-warning';
+                }
+            }
+
+            startTimerBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                const inputValue = claimedTimeInput.value;
+                if (!inputValue) {
+                    alert('Please select a claimed time');
+                    return;
+                }
+
+                claimedTimestamp = new Date(inputValue).getTime();
+                timerDisplaySection.style.display = 'block';
+                timerForm.style.display = 'none';
+
+                if (timerInterval) clearInterval(timerInterval);
+                updateFoodTimer();
+                timerInterval = setInterval(updateFoodTimer, 1000);
+
+                startTimerBtn.textContent = '⏱️ Timer Running...';
+                startTimerBtn.disabled = true;
+            });
+
+            resetTimerBtn.addEventListener('click', () => {
+                if (timerInterval) clearInterval(timerInterval);
+                timerInterval = null;
+                claimedTimestamp = null;
+                timerDisplaySection.style.display = 'none';
+                timerForm.style.display = 'block';
+                startTimerBtn.textContent = '▶️ Start 2-Hour Timer';
+                startTimerBtn.disabled = false;
+                setDefaultTime();
+            });
+
+        </script>
+        <script src="js/push.js"></script>
+    </body>
+
+</html>

@@ -1190,7 +1190,6 @@
                 grid-template-columns: 1fr;
             }
         }
-
     </style>
 </head>
 
@@ -1214,11 +1213,11 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                    <li class="nav-item"><a class="nav-link " href="ngo_index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="ngo_index.html">Home</a></li>
                     <li class="nav-item"><a class="nav-link active" href="ngo_about.html">About</a></li>
-                    <li class="nav-item"><a class="nav-link" href="donate.html">Donate</a></li>
-                    <li class="nav-item"><a class="nav-link" href="Directory_ngo.html">NGO Directory</a></li>
-                    <li class="nav-item"><a class="nav-link" href="dashboard.html">Dashboard</a></li>
+                   <li class="nav-item"><a class="nav-link " href="Ngo_Dashboard.html">Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link" href="directory_ngo.html">NGO Directory</a></li>
+                     <li class="nav-item"><a class="nav-link" href="ngo_history.html">History</a></li>
                     <li class="nav-item"><a class="nav-link" href="ngo_contact.html">Contact</a></li>
                 </ul>
                 <div class="d-flex ms-2">
@@ -1227,6 +1226,187 @@
             </div>
         </nav>
     </div>
+<button id="chatToggle" onclick="toggleChat()">🤖 Ask AI</button>
+    <style>
+        #chatToggle {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 14px 18px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 16px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+    </style>
+    <div id="chatbot">
+  <div id="chat-header">
+    💬 HelpReach AI
+    <button id="closeChat" onclick="closeChat()">✖</button>
+  </div>
+
+  <div id="chatbox"></div>
+
+  <div id="chat-input">
+    <input id="userInput" placeholder="Ask something..." onkeypress="handleEnter(event)" />
+    <button onclick="sendMessage()">➤</button>
+  </div>
+</div>
+    <style>
+        #chatbot {
+            display: none;
+            /* ✅ hidden by default */
+            position: fixed;
+            bottom: 80px;
+            left: 20px;
+            width: 320px;
+            height: 420px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            flex-direction: column;
+            font-family: Arial;
+        }
+
+        #closeChat {
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+
+        #chat-header {
+            background: #4CAF50;
+            color: white;
+            padding: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 15px 15px 0 0;
+        }
+
+        #chatbox {
+            flex: 1;
+            padding: 10px;
+            background: #f4f7f9;
+            overflow-y: auto;
+        }
+
+        .user-msg {
+            text-align: right;
+            margin: 6px 0;
+        }
+
+        .user-msg span {
+            background: #4CAF50;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 15px 15px 0 15px;
+            display: inline-block;
+        }
+
+        .bot-msg {
+            text-align: left;
+            margin: 6px 0;
+        }
+
+        .bot-msg span {
+            background: #e0e0e0;
+            padding: 8px 12px;
+            border-radius: 15px 15px 15px 0;
+            display: inline-block;
+        }
+
+        #chat-input {
+            display: flex;
+            border-top: 1px solid #ddd;
+        }
+
+        #chat-input input {
+            flex: 1;
+            border: none;
+            padding: 10px;
+            outline: none;
+        }
+
+        #chat-input button {
+            border: none;
+            background: #4CAF50;
+            color: white;
+            padding: 0 18px;
+            cursor: pointer;
+        }
+    </style>
+   <script>
+let greeted = false;
+
+function toggleChat() {
+  const chat = document.getElementById("chatbot");
+  const chatbox = document.getElementById("chatbox");
+
+  if (chat.style.display === "none" || chat.style.display === "") {
+    chat.style.display = "flex";
+
+    if (!greeted) {
+      chatbox.innerHTML += `
+        <div class="bot-msg">
+          <span>Hi 👋 I'm <b>HelpReach AI</b>. How can I help you today?</span>
+        </div>
+      `;
+      chatbox.scrollTop = chatbox.scrollHeight;
+      greeted = true;
+    }
+  }
+}
+
+function closeChat() {
+  document.getElementById("chatbot").style.display = "none";
+  greeted = false;
+}
+
+function handleEnter(event) {
+  if (event.key === "Enter") {
+    sendMessage();
+  }
+}
+
+function sendMessage() {
+  const input = document.getElementById("userInput");
+  const message = input.value.trim();
+  if (!message) return;
+
+  const chatbox = document.getElementById("chatbox");
+
+  chatbox.innerHTML += `
+    <div class="user-msg">
+      <span>${message}</span>
+    </div>
+  `;
+
+  fetch("http://127.0.0.1:5000/api/chatbot", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ message })
+  })
+  .then(res => res.json())
+  .then(data => {
+    chatbox.innerHTML += `
+      <div class="bot-msg">
+        <span>${data.reply}</span>
+      </div>
+    `;
+    chatbox.scrollTop = chatbox.scrollHeight;
+  });
+
+  input.value = "";
+}
+</script>
+
 
     <!-- Hero Start -->
     <section class="hero text-center text-dark">
@@ -2751,238 +2931,255 @@
     </script>
 
 
-  
 
 
 
-<!-- Profile Icon (appears after NGO login) -->
-<button class="profile-icon" id="profileIcon" onclick="openProfileSidebar()">
-    <i class="fas fa-building"></i>
-</button>
 
-<!-- Profile Overlay -->
-<div class="profile-overlay" id="profileOverlay" onclick="closeProfileSidebar()"></div>
+    <!-- Profile Icon (appears after NGO login) -->
+    <button class="profile-icon" id="profileIcon" onclick="openProfileSidebar()">
+        <i class="fas fa-building"></i>
+    </button>
 
-<!-- Profile Sidebar -->
-<div class="profile-sidebar" id="profileSidebar">
-    <button class="sidebar-close" onclick="closeProfileSidebar()">✕</button>
+    <!-- Profile Overlay -->
+    <div class="profile-overlay" id="profileOverlay" onclick="closeProfileSidebar()"></div>
 
-    <!-- Header -->
-    <div class="profile-header">
-        <div class="profile-avatar">
-            <i class="fas fa-building"></i>
+    <!-- Profile Sidebar -->
+    <div class="profile-sidebar" id="profileSidebar">
+        <button class="sidebar-close" onclick="closeProfileSidebar()">✕</button>
+
+        <!-- Header -->
+        <div class="profile-header">
+            <div class="profile-avatar">
+                <i class="fas fa-building"></i>
+            </div>
+            <div class="profile-name" id="profileName">Guest NGO</div>
+            <div class="profile-type" id="profileType">NGO</div>
+            <div class="verify-badge">
+                <i class="fas fa-check-circle"></i> Verified
+            </div>
         </div>
-        <div class="profile-name" id="profileName">Helping Hands NGO</div>
-        <div class="profile-type" id="profileType">NGO</div>
-        <div class="verify-badge">
-            <i class="fas fa-check-circle"></i> Verified
+
+        <!-- Contact Info -->
+        <div class="profile-section">
+            <div class="profile-section-title">
+                <i class="fas fa-phone"></i> Contact Info
+            </div>
+            <div class="profile-item">
+                <span class="profile-item-label">Email:</span>
+                <span class="profile-item-value" id="profileEmail">---</span>
+            </div>
+            <div class="profile-item">
+                <span class="profile-item-label">Phone:</span>
+                <span class="profile-item-value" id="profilePhone">---</span>
+            </div>
+            <div class="profile-item">
+                <span class="profile-item-label">Address:</span>
+                <span class="profile-item-value" id="profileLocation">---</span>
+            </div>
+        </div>
+
+        <!-- Account Info -->
+        <div class="profile-section">
+            <div class="profile-section-title">
+                <i class="fas fa-chart-line"></i> NGO Activity
+            </div>
+            <div class="profile-item">
+                <span class="profile-item-label">Requests Raised:</span>
+                <span class="profile-item-value" id="requestCount">--</span>
+            </div>
+            <div class="profile-item">
+                <span class="profile-item-label">Fulfilled:</span>
+                <span class="profile-item-value" id="fulfilledCount">--</span>
+            </div>
+            <div class="profile-item">
+                <span class="profile-item-label">Status:</span>
+                <span class="profile-item-value" id="activityLevel">--</span>
+            </div>
+        </div>
+
+        <!-- NGO Info -->
+        <div class="profile-section" id="ngoInfoSection">
+            <div class="profile-section-title">
+                <i class="fas fa-building"></i> NGO Details
+            </div>
+            <div class="profile-item">
+                <span class="profile-item-label">Registration No:</span>
+                <span class="profile-item-value" id="ngoRegNumber">---</span>
+            </div>
+            <div class="profile-item">
+                <span class="profile-item-label">Category:</span>
+                <span class="profile-item-value" id="ngoCategory">---</span>
+            </div>
+            <div class="profile-item">
+                <span class="profile-item-label">Contact Person:</span>
+                <span class="profile-item-value" id="ngoContactPerson">---</span>
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="quick-actions">
+            <button class="action-btn" onclick="editProfile()">
+                <i class="fas fa-edit"></i> Edit Profile
+            </button>
+            <button class="action-btn" onclick="manageRequests()">
+                <i class="fas fa-hands-helping"></i> Manage Requests
+            </button>
+            <button class="action-btn" onclick="notifications()">
+                <i class="fas fa-bell"></i> Alerts
+            </button>
+            <button class="action-btn" onclick="myAccount()">
+                <i class="fas fa-cog"></i> Account
+            </button>
+            <button class="action-btn logout" onclick="logoutUser()">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </button>
         </div>
     </div>
+    <script>
+        /* ================= GLOBALS ================= */
+        let isNgoLoggedIn = false;
+        let currentNgoId = null;
 
-    <!-- Contact Info -->
-    <div class="profile-section">
-        <div class="profile-section-title">
-            <i class="fas fa-phone"></i> Contact Info
-        </div>
-        <div class="profile-item">
-            <span class="profile-item-label">Email:</span>
-            <span class="profile-item-value" id="profileEmail">ngo@example.com</span>
-        </div>
-        <div class="profile-item">
-            <span class="profile-item-label">Phone:</span>
-            <span class="profile-item-value" id="profilePhone">+91 98765 43210</span>
-        </div>
-        <div class="profile-item">
-            <span class="profile-item-label">Address:</span>
-            <span class="profile-item-value" id="profileLocation">Pune, India</span>
-        </div>
-    </div>
+        /* ================= UPDATE SIDEBAR ================= */
+        function updateNgoProfile(ngo) {
+            if (!ngo) return;
 
-    <!-- Account Info -->
-    <div class="profile-section">
-        <div class="profile-section-title">
-            <i class="fas fa-chart-line"></i> NGO Activity
-        </div>
-        <div class="profile-item">
-            <span class="profile-item-label">Requests Raised:</span>
-            <span class="profile-item-value" id="requestCount">15</span>
-        </div>
-        <div class="profile-item">
-            <span class="profile-item-label">Fulfilled:</span>
-            <span class="profile-item-value" id="fulfilledCount">9</span>
-        </div>
-        <div class="profile-item">
-            <span class="profile-item-label">Status:</span>
-            <span class="profile-item-value" id="activityLevel">Active</span>
-        </div>
-    </div>
+            // Header
+            document.getElementById("profileName").textContent = ngo.name || "";
+            document.getElementById("profileType").textContent = "NGO";
 
-    <!-- NGO Info -->
-    <div class="profile-section" id="ngoInfoSection">
-        <div class="profile-section-title">
-            <i class="fas fa-building"></i> NGO Details
-        </div>
-        <div class="profile-item">
-            <span class="profile-item-label">Registration No:</span>
-            <span class="profile-item-value" id="ngoRegNumber">NGO-2024-001</span>
-        </div>
-        <div class="profile-item">
-            <span class="profile-item-label">Category:</span>
-            <span class="profile-item-value" id="ngoCategory">Food & Welfare</span>
-        </div>
-        <div class="profile-item">
-            <span class="profile-item-label">Contact Person:</span>
-            <span class="profile-item-value" id="ngoContactPerson">Sakhi Tapre</span>
-        </div>
-    </div>
+            // Contact
+            document.getElementById("profileEmail").textContent = ngo.contact_email || "---";
+            document.getElementById("profilePhone").textContent = ngo.phone || "---";
+            document.getElementById("profileLocation").textContent = ngo.address || "---";
 
-    <!-- Quick Actions -->
-    <div class="quick-actions">
-        <button class="action-btn" onclick="editProfile()">
-            <i class="fas fa-edit"></i> Edit Profile
-        </button>
-        <button class="action-btn" onclick="manageRequests()">
-            <i class="fas fa-hands-helping"></i> Manage Requests
-        </button>
-        <button class="action-btn" onclick="notifications()">
-            <i class="fas fa-bell"></i> Alerts
-        </button>
-        <button class="action-btn" onclick="myAccount()">
-            <i class="fas fa-cog"></i> Account
-        </button>
-        <button class="action-btn logout" onclick="logoutUser()">
-            <i class="fas fa-sign-out-alt"></i> Logout
-        </button>
-    </div>
-</div>
-<script>
-/* ================= GLOBALS ================= */
-let isNgoLoggedIn = false;
-let currentNgoId = null;
+            // NGO details
+            document.getElementById("ngoRegNumber").textContent =
+                ngo.registration_number || "---";
+            document.getElementById("ngoCategory").textContent =
+                ngo.category || "---";
+            document.getElementById("ngoContactPerson").textContent =
+                ngo.contact_person || "---";
 
-/* ================= UPDATE SIDEBAR ================= */
-function updateNgoProfile(ngo) {
-    if (!ngo) return;
+            // Verified badge
+            const badge = document.querySelector(".verify-badge");
+            if (badge) {
+                badge.style.display = ngo.verified ? "flex" : "none";
+            }
 
-    // Header
-    document.getElementById("profileName").textContent = ngo.name || "";
-    document.getElementById("profileType").textContent = "NGO";
+            // Show profile icon
+            document.getElementById("profileIcon").classList.add("show");
 
-    // Contact
-    document.getElementById("profileEmail").textContent = ngo.contact_email || "---";
-    document.getElementById("profilePhone").textContent = ngo.phone || "---";
-    document.getElementById("profileLocation").textContent = ngo.address || "---";
-
-    // NGO details
-    document.getElementById("ngoRegNumber").textContent =
-        ngo.registration_number || "---";
-    document.getElementById("ngoCategory").textContent =
-        ngo.category || "---";
-    document.getElementById("ngoContactPerson").textContent =
-        ngo.contact_person || "---";
-
-    // Verified badge
-    const badge = document.querySelector(".verify-badge");
-    if (badge) {
-        badge.style.display = ngo.verified ? "flex" : "none";
-    }
-
-    // Show profile icon
-    document.getElementById("profileIcon").classList.add("show");
-
-    isNgoLoggedIn = true;
-}
-
-/* ================= FETCH NGO FROM BACKEND ================= */
-async function loadNgoProfileFromBackend(ngoId) {
-    try {
-        const res = await fetch(
-            `http://127.0.0.1:5000/api/ngo/profile/${ngoId}`
-        );
-
-        const data = await res.json();
-
-        if (!res.ok || !data.ok) {
-            throw new Error(data.error || "Failed to load NGO profile");
+            isNgoLoggedIn = true;
         }
 
-        updateNgoProfile(data.ngo);
+        /* ================= FETCH NGO FROM BACKEND ================= */
+        async function loadNgoProfileFromBackend(ngoId) {
+            try {
+                const res = await fetch(
+                    `http://127.0.0.1:5000/api/ngo/profile/${ngoId}`
+                );
 
-    } catch (err) {
-        console.error("❌ Profile load error:", err);
-        alert("Unable to load NGO profile. Please login again.");
-        isNgoLoggedIn = false;
-        document.getElementById("profileIcon").classList.remove("show");
-    }
-}
+                const data = await res.json();
 
-window.addEventListener("load", () => {
-    const params = new URLSearchParams(window.location.search);
-    const ngoId = params.get("ngo_id");
+                if (!res.ok || !data.ok) {
+                    throw new Error(data.error || "Failed to load NGO profile");
+                }
 
-    if (!ngoId) {
-        showGuestNgo();   // 👈 IMPORTANT
-        return;
-    }
+                updateNgoProfile(data.ngo);
 
-    currentNgoId = ngoId;
-    loadNgoProfileFromBackend(ngoId);
-});
+            } catch (err) {
+                console.error("❌ Profile load error:", err);
+                alert("Unable to load NGO profile. Please login again.");
+                isNgoLoggedIn = false;
+                document.getElementById("profileIcon").classList.remove("show");
+            }
+        }
+
+        window.addEventListener("load", async () => {
+            // First, check backend session
+            try {
+                const res = await fetch("http://127.0.0.1:5000/api/ngo/me", {
+                    credentials: "include"
+                });
+
+                const data = await res.json();
+
+                if (data.ok && !data.guest) {
+                    updateNgoProfile(data.ngo);
+                    return;
+                }
+            } catch (err) {
+                console.error("Session check error:", err);
+            }
+
+            // If no session, check URL parameters
+            const params = new URLSearchParams(window.location.search);
+            const ngoId = params.get("ngo_id");
+
+            if (!ngoId) {
+                showGuestNgo();
+                return;
+            }
+
+            currentNgoId = ngoId;
+            loadNgoProfileFromBackend(ngoId);
+        });
 
 
-/* ================= SIDEBAR ================= */
-function openProfileSidebar() {
-    // if (!isNgoLoggedIn) return;
+        /* ================= SIDEBAR ================= */
+        function openProfileSidebar() {
+            // if (!isNgoLoggedIn) return;
 
-    document.getElementById("profileSidebar").classList.add("open");
-    document.getElementById("profileOverlay").classList.add("show");
-}
+            document.getElementById("profileSidebar").classList.add("open");
+            document.getElementById("profileOverlay").classList.add("show");
+        }
 
-function closeProfileSidebar() {
-    document.getElementById("profileSidebar").classList.remove("open");
-    document.getElementById("profileOverlay").classList.remove("show");
-}
+        function closeProfileSidebar() {
+            document.getElementById("profileSidebar").classList.remove("open");
+            document.getElementById("profileOverlay").classList.remove("show");
+        }
 
-function logoutUser() {
-    if (!confirm("Logout NGO account?")) return;
+        function logoutUser() {
+            if (!confirm("Logout NGO account?")) return;
 
-    // 1️⃣ Reset UI to Guest
-    showGuestNgo();
+            // 1️⃣ Reset UI to Guest
+            showGuestNgo();
 
-    // 2️⃣ Remove ngo_id from URL
-    window.history.replaceState({}, document.title, "ngo_index.html");
+            // 2️⃣ Remove ngo_id from URL
+            window.history.replaceState({}, document.title, "ngo_index.html");
 
-    // 3️⃣ Redirect to login page
-    setTimeout(() => {
-        window.location.href = "ngo_index.html";
-    }, 300);
-}
+            // 3️⃣ Redirect to login page
+            setTimeout(() => {
+                window.location.href = "ngo_index.html";
+            }, 300);
+        }
 
-</script>
+    </script>
 
-<script>
-/* ================= RESET TO GUEST ================= */
-function showGuestNgo() {
-    document.getElementById("profileName").textContent = "Guest NGO";
-    document.getElementById("profileType").textContent = "Guest";
+    <script>
+        /* ================= RESET TO GUEST ================= */
+        function showGuestNgo() {
+            document.getElementById("profileName").textContent = "Guest NGO";
+            document.getElementById("profileType").textContent = "Guest";
 
-    document.getElementById("profileEmail").textContent = "---";
-    document.getElementById("profilePhone").textContent = "---";
-    document.getElementById("profileLocation").textContent = "---";
+            document.getElementById("profileEmail").textContent = "---";
+            document.getElementById("profilePhone").textContent = "---";
+            document.getElementById("profileLocation").textContent = "---";
 
-    document.getElementById("ngoRegNumber").textContent = "---";
-    document.getElementById("ngoCategory").textContent = "---";
-    document.getElementById("ngoContactPerson").textContent = "---";
+            document.getElementById("ngoRegNumber").textContent = "---";
+            document.getElementById("ngoCategory").textContent = "---";
+            document.getElementById("ngoContactPerson").textContent = "---";
 
-    const badge = document.querySelector(".verify-badge");
-    if (badge) badge.style.display = "none";
+            const badge = document.querySelector(".verify-badge");
+            if (badge) badge.style.display = "none";
 
-    document.getElementById("profileIcon").classList.remove("show");
+            document.getElementById("profileIcon").classList.remove("show");
 
-    isNgoLoggedIn = false;
-    currentNgoId = null;
-}
-</script>
+            isNgoLoggedIn = false;
+            currentNgoId = null;
+        }
+    </script>
 </body>
 
 </html>

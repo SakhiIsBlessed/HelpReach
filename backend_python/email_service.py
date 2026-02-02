@@ -10,13 +10,23 @@ def send_email(to_email, subject, message):
     msg["From"] = sender_email
     msg["To"] = to_email
     msg["Subject"] = subject
-    msg.attach(MIMEText(message, "plain"))
+    msg.attach(MIMEText(message, "html"))
 
     try:
-        server = smtplib.SMTP_SSL("smtp.gmail.com", 465)  # ✅ FIX
+        print(f"📧 Attempting to send email to: {to_email}")
+        server = smtplib.SMTP_SSL("smtp.gmail.com", 465)
         server.login(sender_email, sender_password)
         server.send_message(msg)
         server.quit()
-        print("✅ Email sent successfully")
+        print(f"✅ Email sent successfully to {to_email}")
+        return True
+    except smtplib.SMTPAuthenticationError as e:
+        print(f"❌ Authentication error: {e}")
+        print("⚠️  Check if Gmail App Password is correct")
+        return False
+    except smtplib.SMTPException as e:
+        print(f"❌ SMTP error: {e}")
+        return False
     except Exception as e:
-        print("❌ Email error:", e)
+        print(f"❌ Email error: {e}")
+        return False

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
     <title>Active Donations — HelpReach</title>
@@ -7,8 +8,14 @@
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <style>.card-compact{box-shadow:0 6px 18px rgba(0,0,0,.05);border-radius:8px}</style>
+    <style>
+        .card-compact {
+            box-shadow: 0 6px 18px rgba(0, 0, 0, .05);
+            border-radius: 8px
+        }
+    </style>
 </head>
+
 <body>
     <!-- Navbar Start -->
     <div class="container-fluid fixed-top bg-white">
@@ -49,8 +56,14 @@
             <label class="form-label">Filters</label>
             <div class="row g-2">
                 <div class="col-md-3"><input id="fLocation" class="form-control" placeholder="Location"></div>
-                <div class="col-md-3"><select id="fType" class="form-select"><option value="">All Types</option><option>food</option><option>clothes</option><option>other</option></select></div>
-                <div class="col-md-3"><input id="fMinQty" type="number" class="form-control" placeholder="Min quantity"></div>
+                <div class="col-md-3"><select id="fType" class="form-select">
+                        <option value="">All Types</option>
+                        <option>food</option>
+                        <option>clothes</option>
+                        <option>other</option>
+                    </select></div>
+                <div class="col-md-3"><input id="fMinQty" type="number" class="form-control" placeholder="Min quantity">
+                </div>
                 <div class="col-md-3"><button id="applyFilter" class="btn btn-outline-secondary">Apply</button></div>
             </div>
         </div>
@@ -65,12 +78,16 @@
                 <!-- About Section -->
                 <div class="col-lg-3 col-md-6 footer-section">
                     <h5 class="fw-bold">HelpReach</h5>
-                    <p class="small">A platform connecting donors and NGOs to reduce food and item wastage while helping communities in need.</p>
+                    <p class="small">A platform connecting donors and NGOs to reduce food and item wastage while helping
+                        communities in need.</p>
                     <div class="social-links">
-                        <a href="#" title="Facebook" aria-label="Follow us on Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" title="Facebook" aria-label="Follow us on Facebook"><i
+                                class="fab fa-facebook-f"></i></a>
                         <a href="#" title="Twitter" aria-label="Follow us on Twitter"><i class="fab fa-twitter"></i></a>
-                        <a href="#" title="Instagram" aria-label="Follow us on Instagram"><i class="fab fa-instagram"></i></a>
-                        <a href="#" title="LinkedIn" aria-label="Follow us on LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" title="Instagram" aria-label="Follow us on Instagram"><i
+                                class="fab fa-instagram"></i></a>
+                        <a href="#" title="LinkedIn" aria-label="Follow us on LinkedIn"><i
+                                class="fab fa-linkedin-in"></i></a>
                     </div>
                 </div>
 
@@ -125,37 +142,230 @@
             <div class="footer-bottom">
                 <div class="row align-items-center">
                     <div class="col-md-6 text-center text-md-start">
-                        <p class="small mb-0">&copy; <span id="year"></span> <strong>HelpReach</strong>. All rights reserved.</p>
+                        <p class="small mb-0">&copy; <span id="year"></span> <strong>HelpReach</strong>. All rights
+                            reserved.</p>
                     </div>
                     <div class="col-md-6 text-center text-md-end">
-                        <p class="small mb-0">Made with <i class="fas fa-heart text-danger"></i> to make a difference</p>
+                        <p class="small mb-0">Made with <i class="fas fa-heart text-danger"></i> to make a difference
+                        </p>
                     </div>
                 </div>
             </div>
         </div>
     </footer>
-<script>
-async function loadDonations() {
-    try {
-        const res = await fetch("http://127.0.0.1:5000/api/donations");
-        const data = await res.json();
+    <button id="chatToggle" onclick="toggleChat()">🤖 Ask AI</button>
+    <style>
+        #chatToggle {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 14px 18px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 16px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+    </style>
+    <div id="chatbot">
+        <div id="chat-header">
+            💬 HelpReach AI
+            <button id="closeChat" onclick="closeChat()">✖</button>
+        </div>
 
-        const container = document.getElementById("listArea");
-        container.innerHTML = "";
+        <div id="chatbox"></div>
 
-        if (!data.length) {
-            container.innerHTML = `
+        <div id="chat-input">
+            <input id="userInput" placeholder="Ask something..." onkeypress="handleEnter(event)" />
+            <button onclick="sendMessage()">➤</button>
+        </div>
+    </div>
+    <style>
+        #chatbot {
+            display: none;
+            /* ✅ hidden by default */
+            position: fixed;
+            bottom: 80px;
+            left: 20px;
+            width: 320px;
+            height: 420px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            flex-direction: column;
+            font-family: Arial;
+        }
+
+        #closeChat {
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+
+        #chat-header {
+            background: #4CAF50;
+            color: white;
+            padding: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 15px 15px 0 0;
+        }
+
+        #chatbox {
+            flex: 1;
+            padding: 10px;
+            background: #f4f7f9;
+            overflow-y: auto;
+        }
+
+        .user-msg {
+            text-align: right;
+            margin: 6px 0;
+        }
+
+        .user-msg span {
+            background: #4CAF50;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 15px 15px 0 15px;
+            display: inline-block;
+        }
+
+        .bot-msg {
+            text-align: left;
+            margin: 6px 0;
+        }
+
+        .bot-msg span {
+            background: #e0e0e0;
+            padding: 8px 12px;
+            border-radius: 15px 15px 15px 0;
+            display: inline-block;
+        }
+
+        #chat-input {
+            display: flex;
+            border-top: 1px solid #ddd;
+        }
+
+        #chat-input input {
+            flex: 1;
+            border: none;
+            padding: 10px;
+            outline: none;
+        }
+
+        #chat-input button {
+            border: none;
+            background: #4CAF50;
+            color: white;
+            padding: 0 18px;
+            cursor: pointer;
+        }
+    </style>
+    <script>
+        let greeted = false;
+
+        function toggleChat() {
+            const chat = document.getElementById("chatbot");
+            const chatbox = document.getElementById("chatbox");
+
+            if (chat.style.display === "none" || chat.style.display === "") {
+                chat.style.display = "flex";
+
+                if (!greeted) {
+                    chatbox.innerHTML += `
+        <div class="bot-msg">
+          <span>Hi 👋 I'm <b>HelpReach AI</b>. How can I help you today?</span>
+        </div>
+      `;
+                    chatbox.scrollTop = chatbox.scrollHeight;
+                    greeted = true;
+                }
+            }
+        }
+
+        function closeChat() {
+            document.getElementById("chatbot").style.display = "none";
+            greeted = false;
+        }
+
+        function handleEnter(event) {
+            if (event.key === "Enter") {
+                sendMessage();
+            }
+        }
+
+        function sendMessage() {
+            const input = document.getElementById("userInput");
+            const message = input.value.trim();
+            if (!message) return;
+
+            const chatbox = document.getElementById("chatbox");
+
+            chatbox.innerHTML += `
+    <div class="user-msg">
+      <span>${message}</span>
+    </div>
+  `;
+
+            fetch("http://127.0.0.1:5000/api/chatbot", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ message })
+            })
+                .then(res => res.json())
+                .then(data => {
+                    chatbox.innerHTML += `
+      <div class="bot-msg">
+        <span>${data.reply}</span>
+      </div>
+    `;
+                    chatbox.scrollTop = chatbox.scrollHeight;
+                });
+
+            input.value = "";
+        }
+    </script>
+
+
+    <script>
+        async function loadDonations() {
+            try {
+                const res = await fetch("http://127.0.0.1:5000/api/donations");
+                const data = await res.json();
+                // Fetch globally claimed donation ids and filter them out
+                let globalClaims = [];
+                try {
+                    const claimsRes = await fetch('http://127.0.0.1:5000/api/all-claimed-donations');
+                    if (claimsRes.ok) globalClaims = await claimsRes.json();
+                } catch (err) { console.error('Error fetching global claims:', err); }
+                const claimedIdSet = new Set((globalClaims || []).map(c => c.donation_id).filter(Boolean));
+
+                const container = document.getElementById("listArea");
+                container.innerHTML = "";
+
+                // Remove claimed donations from list
+                const available = (Array.isArray(data) ? data : []).filter(d => !claimedIdSet.has(d.id));
+                if (!available.length) {
+                    container.innerHTML = `
                 <div class="alert alert-info">
                     No donations available
                 </div>`;
-            return;
-        }
+                    return;
+                }
 
-        data.forEach(d => {
-            const card = document.createElement("div");
-            card.className = "col-12";
+                available.forEach(d => {
+                    const card = document.createElement("div");
+                    card.className = "col-12";
 
-            card.innerHTML = `
+                    card.innerHTML = `
                 <div class="card p-3 card-compact">
                     <h5>${d.title}</h5>
                     <p>${d.description || ""}</p>
@@ -166,18 +376,19 @@ async function loadDonations() {
                 </div>
             `;
 
-            container.appendChild(card);
-        });
+                    container.appendChild(card);
+                });
 
-    } catch (error) {
-        console.error(error);
-        alert("Failed to load donations.");
-    }
-}
+            } catch (error) {
+                console.error(error);
+                alert("Failed to load donations.");
+            }
+        }
 
-document.addEventListener("DOMContentLoaded", loadDonations);
-</script>
+        document.addEventListener("DOMContentLoaded", loadDonations);
+    </script>
 
 
 </body>
+
 </html>

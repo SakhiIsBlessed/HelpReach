@@ -1,0 +1,1787 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Dashboard — HelpReach</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <style>
+        .card-compact {
+            box-shadow: 0 6px 18px rgba(0, 0, 0, .05);
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        /* Registration Modal & Profile Styles */
+        .registration-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1040;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .registration-overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .registration-modal {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            max-width: 500px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            animation: slideUp 0.4s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .registration-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .registration-header h3 {
+            margin: 0;
+            font-weight: 700;
+            color: #212529;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 28px;
+            cursor: pointer;
+            color: #6c757d;
+            padding: 0;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .close-btn:hover {
+            color: #212529;
+            background: #f1f3f5;
+            border-radius: 50%;
+        }
+
+        .registration-body {
+            padding: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            font-weight: 600;
+            margin-bottom: 8px;
+            display: block;
+            color: #212529;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #dee2e6;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            transition: border-color 0.2s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #0d6efd;
+            box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.1);
+        }
+
+        .user-type-selector {
+            display: flex;
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .user-type-option {
+            flex: 1;
+            padding: 15px;
+            border: 2px solid #dee2e6;
+            border-radius: 8px;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.2s ease;
+        }
+
+        .user-type-option:hover {
+            border-color: #0d6efd;
+            background: #f8f9fa;
+        }
+
+        .user-type-option input {
+            display: none;
+        }
+
+        .user-type-option input:checked+label {
+            color: #0d6efd;
+            font-weight: 700;
+        }
+
+        .user-type-option.active {
+            border-color: #0d6efd;
+            background: rgba(13, 110, 253, 0.05);
+        }
+
+        .user-type-option label {
+            margin: 0;
+            cursor: pointer;
+        }
+
+        .ngo-fields {
+            display: none;
+        }
+
+        .ngo-fields.show {
+            display: block;
+        }
+
+        .registration-footer {
+            padding: 20px 30px;
+            border-top: 1px solid #eee;
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-register {
+            flex: 1;
+            padding: 12px;
+            background: #0d6efd;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-register:hover {
+            background: #0b5ed7;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(13, 110, 253, 0.3);
+        }
+
+        .profile-icon {
+            position: fixed;
+            top: 15px;
+            right: 1px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: #0d6efd;
+            color: white;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            box-shadow: 0 4px 12px rgba(13, 110, 253, 0.3);
+            transition: all 0.3s ease;
+            z-index: 1035;
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .profile-icon.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .profile-icon:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(13, 110, 253, 0.4);
+        }
+
+        .fill-form-btn {
+            position: fixed;
+            bottom: 100px;
+            right: 20px;
+            padding: 12px 20px;
+            background: #10b981;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+            transition: all 0.3s ease;
+            z-index: 1035;
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .fill-form-btn.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .fill-form-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+        }
+
+        .profile-sidebar {
+            position: fixed;
+            right: -400px;
+            top: 0;
+            width: 400px;
+            height: 100vh;
+            background: white;
+            box-shadow: -4px 0 20px rgba(0, 0, 0, 0.1);
+            z-index: 1050;
+            transition: right 0.4s ease;
+            overflow-y: auto;
+        }
+
+        .profile-sidebar.open {
+            right: 0;
+        }
+
+        .profile-header {
+            background: linear-gradient(135deg, #0d6efd 0%, #10b981 100%);
+            padding: 30px 20px;
+            color: white;
+            position: relative;
+            text-align: center;
+        }
+
+        .profile-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: white;
+            margin: 0 auto 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            color: #0d6efd;
+            border: 3px solid white;
+        }
+
+        .profile-name {
+            font-weight: 700;
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+        }
+
+        .profile-type {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            margin-bottom: 10px;
+        }
+
+        .verify-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+        }
+
+        .profile-section {
+            padding: 20px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .profile-section-title {
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: #212529;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .profile-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            font-size: 0.95rem;
+        }
+
+        .profile-item-label {
+            color: #6c757d;
+            font-weight: 500;
+        }
+
+        .profile-item-value {
+            color: #212529;
+            font-weight: 600;
+        }
+
+        .quick-actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            padding: 20px;
+        }
+
+        .action-btn {
+            padding: 12px;
+            border: 1px solid #dee2e6;
+            background: white;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            color: #0d6efd;
+        }
+
+        .action-btn:hover {
+            background: #0d6efd;
+            color: white;
+        }
+
+        .action-btn.logout {
+            grid-column: 1 / -1;
+            background: #dc3545;
+            color: white;
+            border-color: #dc3545;
+        }
+
+        .action-btn.logout:hover {
+            background: #c82333;
+        }
+
+        .sidebar-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            transition: all 0.2s ease;
+        }
+
+        .sidebar-close:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .profile-overlay {
+            position: fixed;
+            left: 0;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.3);
+            z-index: 1045;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .profile-overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        @media (max-width: 768px) {
+            .profile-sidebar {
+                width: 100%;
+                right: -100%;
+            }
+
+            .quick-actions {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body> <!-- Navbar Start -->
+    <div class="container-fluid fixed-top bg-white">
+        <nav class="navbar navbar-expand-lg navbar-light container">
+            <a class="navbar-brand fw-bold" href="index.html">
+                <img src="logo.svg" alt="HelpReach Logo" class="me-2" style="height: 40px;">
+                HelpReach
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item"><a class="nav-link" href="ngo_index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="ngo_about.html">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="Ngo_Dashboard.html">Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link" href="directory_ngo.html">NGO Directory</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="ngo_history.html">History</a></li>
+                    <li class="nav-item"><a class="nav-link" href="ngo_contact.html">Contact</a></li>
+                </ul>
+                <div class="d-flex ms-2">
+                    <a class="btn btn-ngo-login btn-sm" href="login.html">NGO Login</a>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <!-- Navbar End -->
+    <div class="container" style="margin-top:80px;">
+        <div class="mb-5">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h2 class="mb-2"><i class="fas fa-history text-success me-2"></i>Donation History</h2>
+                    <p class="text-muted small">Track your claimed donations and delivery status</p>
+                </div>
+                <button class="btn btn-primary" onclick="downloadPDF()">
+                    <i class="fas fa-download me-2"></i>Download as PDF
+                </button>
+            </div>
+        </div>
+
+        <!-- Statistics Bar Chart -->
+        <div class="row mb-5">
+            <div class="col-lg-12">
+                <div class="card p-4 card-compact">
+                    <h5 class="mb-4"><i class="fas fa-chart-bar text-primary me-2"></i>Donation Statistics</h5>
+                    <div
+                        style="background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); padding: 20px; border-radius: 12px;">
+                        <canvas id="statsChart" style="max-height: 350px;"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Claimed Donations History -->
+        <div class="row mt-5">
+            <div class="col-lg-12">
+                <h5><i class="fas fa-hands-helping text-success me-2"></i>Claimed Donations History</h5>
+                <div id="ngoArea"></div>
+            </div>
+        </div>
+    </div>
+    <button id="chatToggle" onclick="toggleChat()">🤖 Ask AI</button>
+    <style>
+        #chatToggle {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 14px 18px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 16px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+    </style>
+    <div id="chatbot">
+        <div id="chat-header">
+            💬 HelpReach AI
+            <button id="closeChat" onclick="closeChat()">✖</button>
+        </div>
+
+        <div id="chatbox"></div>
+
+        <div id="chat-input">
+            <input id="userInput" placeholder="Ask something..." onkeypress="handleEnter(event)" />
+            <button onclick="sendMessage()">➤</button>
+        </div>
+    </div>
+    <style>
+        #chatbot {
+            display: none;
+            /* ✅ hidden by default */
+            position: fixed;
+            bottom: 80px;
+            left: 20px;
+            width: 320px;
+            height: 420px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            flex-direction: column;
+            font-family: Arial;
+        }
+
+        #closeChat {
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+
+        #chat-header {
+            background: #4CAF50;
+            color: white;
+            padding: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 15px 15px 0 0;
+        }
+
+        #chatbox {
+            flex: 1;
+            padding: 10px;
+            background: #f4f7f9;
+            overflow-y: auto;
+        }
+
+        .user-msg {
+            text-align: right;
+            margin: 6px 0;
+        }
+
+        .user-msg span {
+            background: #4CAF50;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 15px 15px 0 15px;
+            display: inline-block;
+        }
+
+        .bot-msg {
+            text-align: left;
+            margin: 6px 0;
+        }
+
+        .bot-msg span {
+            background: #e0e0e0;
+            padding: 8px 12px;
+            border-radius: 15px 15px 15px 0;
+            display: inline-block;
+        }
+
+        #chat-input {
+            display: flex;
+            border-top: 1px solid #ddd;
+        }
+
+        #chat-input input {
+            flex: 1;
+            border: none;
+            padding: 10px;
+            outline: none;
+        }
+
+        #chat-input button {
+            border: none;
+            background: #4CAF50;
+            color: white;
+            padding: 0 18px;
+            cursor: pointer;
+        }
+    </style>
+    <script>
+        let greeted = false;
+
+        function toggleChat() {
+            const chat = document.getElementById("chatbot");
+            const chatbox = document.getElementById("chatbox");
+
+            if (chat.style.display === "none" || chat.style.display === "") {
+                chat.style.display = "flex";
+
+                if (!greeted) {
+                    chatbox.innerHTML += `
+        <div class="bot-msg">
+          <span>Hi 👋 I'm <b>HelpReach AI</b>. How can I help you today?</span>
+        </div>
+      `;
+                    chatbox.scrollTop = chatbox.scrollHeight;
+                    greeted = true;
+                }
+            }
+        }
+
+        function closeChat() {
+            document.getElementById("chatbot").style.display = "none";
+            greeted = false;
+        }
+
+        function handleEnter(event) {
+            if (event.key === "Enter") {
+                sendMessage();
+            }
+        }
+
+        function sendMessage() {
+            const input = document.getElementById("userInput");
+            const message = input.value.trim();
+            if (!message) return;
+
+            const chatbox = document.getElementById("chatbox");
+
+            chatbox.innerHTML += `
+    <div class="user-msg">
+      <span>${message}</span>
+    </div>
+  `;
+
+            fetch("http://127.0.0.1:5000/api/chatbot", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ message })
+            })
+                .then(res => res.json())
+                .then(data => {
+                    chatbox.innerHTML += `
+      <div class="bot-msg">
+        <span>${data.reply}</span>
+      </div>
+    `;
+                    chatbox.scrollTop = chatbox.scrollHeight;
+                });
+
+            input.value = "";
+        }
+    </script>
+
+
+    <!-- Footer -->
+    <footer class="container-fluid bg-dark text-light py-5">
+        <div class="container">
+            <div class="row g-4">
+                <!-- About Section -->
+                <div class="col-lg-3 col-md-6 footer-section">
+                    <h5 class="fw-bold">HelpReach</h5>
+                    <p class="small">A platform connecting donors and NGOs to reduce food and item wastage while helping
+                        communities in need.</p>
+                    <div class="social-links">
+                        <a href="#" title="Facebook" aria-label="Follow us on Facebook"><i
+                                class="fab fa-facebook-f"></i></a>
+                        <a href="#" title="Twitter" aria-label="Follow us on Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" title="Instagram" aria-label="Follow us on Instagram"><i
+                                class="fab fa-instagram"></i></a>
+                        <a href="#" title="LinkedIn" aria-label="Follow us on LinkedIn"><i
+                                class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+
+                <!-- Quick Links -->
+                <div class="col-lg-3 col-md-6 footer-section">
+                    <h6>Quick Links</h6>
+                    <ul class="list-unstyled">
+                        <li><a class="text-decoration-none" href="index.html">Home</a></li>
+                        <li><a class="text-decoration-none" href="about.html">About Us</a></li>
+                        <li><a class="text-decoration-none" href="donate.html">Donate Now</a></li>
+                        <li><a class="text-decoration-none" href="listings.html">Active Donations</a></li>
+                        <li><a class="text-decoration-none" href="dashboard.html">Dashboard</a></li>
+                    </ul>
+                </div>
+
+                <!-- Important Links -->
+                <div class="col-lg-2 col-md-6 footer-section">
+                    <h6>Resources</h6>
+                    <ul class="list-unstyled">
+                        <li><a class="text-decoration-none" href="blog.html">Blog</a></li>
+                        <li><a class="text-decoration-none" href="feature.html">Features</a></li>
+                        <li><a class="text-decoration-none" href="ngo-directory.html">NGO Directory</a></li>
+                        <li><a class="text-decoration-none" href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact Info -->
+                <div class="col-lg-4 col-md-6 footer-section">
+                    <h6>Get In Touch</h6>
+                    <div class="contact-info">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>411 041 Narhe Road, Pune, India</span>
+                    </div>
+                    <div class="contact-info">
+                        <i class="fas fa-envelope"></i>
+                        <a href="mailto:helpreach18@gmail.com" class="text-decoration-none">helpreach18@gmail.com</a>
+                    </div>
+                    <div class="contact-info">
+                        <i class="fas fa-phone"></i>
+                        <div>
+                            <div><a href="tel:+918530932462" class="text-decoration-none">+91 8530932462</a></div>
+                            <div><a href="tel:+919607340088" class="text-decoration-none">+91 9607340088</a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer Divider -->
+            <div class="footer-divider"></div>
+
+            <!-- Footer Bottom -->
+            <div class="footer-bottom">
+                <div class="row align-items-center">
+                    <div class="col-md-6 text-center text-md-start">
+                        <p class="small mb-0">&copy; <span id="year"></span> <strong>HelpReach</strong>. All rights
+                            reserved.</p>
+                    </div>
+                    <div class="col-md-6 text-center text-md-end">
+                        <p class="small mb-0">Made with <i class="fas fa-heart text-danger"></i> to make a difference
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script>
+        let donationData = [];
+        let chartInstance = null;
+
+        async function render() {
+            const ngoArea = document.getElementById('ngoArea');
+            ngoArea.innerHTML = '';
+
+            try {
+                // Check if user is logged in as NGO
+                let ngoId = null;
+
+                // Try to get from backend session
+                try {
+                    const sessionRes = await fetch("http://127.0.0.1:5000/api/ngo/me", {
+                        credentials: "include"
+                    });
+                    const sessionData = await sessionRes.json();
+                    if (sessionData.ok && !sessionData.guest && sessionData.ngo) {
+                        ngoId = sessionData.ngo.id;
+                    }
+                } catch (err) {
+                    console.error("Session check error:", err);
+                }
+
+                // Try to get from URL parameter
+                if (!ngoId) {
+                    const params = new URLSearchParams(window.location.search);
+                    ngoId = params.get("ngo_id");
+                }
+
+                if (!ngoId) {
+                    ngoArea.innerHTML = `
+                <div class="alert alert-warning">
+                    <i class="fas fa-info-circle me-2"></i>Please login as NGO to view your donation history.
+                </div>`;
+                    return;
+                }
+
+                // Fetch received donations for this NGO
+                const receivedRes = await fetch(`http://127.0.0.1:5000/api/ngo/${ngoId}/received-donations`);
+
+                if (!receivedRes.ok) {
+                    throw new Error("Failed to fetch donation history");
+                }
+
+                const receivedList = await receivedRes.json();
+                donationData = receivedList;
+
+                if (!Array.isArray(receivedList) || receivedList.length === 0) {
+                    ngoArea.innerHTML = `
+                <div class="alert alert-info">
+                    <i class="fas fa-inbox me-2"></i>No donation history yet. Received donations will appear here.
+                </div>`;
+                    return;
+                }
+
+                // Calculate statistics
+                let totalReceived = receivedList.length;
+                let totalDelivered = receivedList.filter(d => d.received_at).length;
+                let totalQuantity = receivedList.reduce((sum, d) => sum + (d.quantity || 0), 0);
+
+                // Create bar chart
+                initStatsChart(totalReceived, totalDelivered, totalQuantity);
+
+                // Display received donations
+                receivedList.forEach((d, idx) => {
+                    const card = document.createElement('div');
+                    card.className = 'card p-3 mb-3 card-compact';
+
+                    // Add photo if available
+                    const photoHTML = d.photo_filename
+                        ? `<img src="http://127.0.0.1:5000/uploads/donations/${d.photo_filename}" alt="Donation photo" style="width:100%; border-radius:6px; margin-bottom:10px; max-height:200px; object-fit:cover;">`
+                        : '';
+
+                    const categoryBadge = d.category ? `<span class="badge bg-secondary me-2">${d.category}</span>` : '';
+                    const claimedDate = d.claimed_at ? new Date(d.claimed_at).toLocaleDateString() : 'N/A';
+                    const receivedDate = d.received_at ? new Date(d.received_at).toLocaleDateString() : 'N/A';
+
+                    card.innerHTML = `
+                ${photoHTML}
+                <div class="d-flex justify-content-between align-items-start">
+                    <div class="flex-grow-1">
+                        <div class="d-flex align-items-center mb-2">
+                            <h6 class="mb-0">${d.title}</h6>
+                            ${categoryBadge}
+                            <span class="badge bg-success ms-2">
+                                <i class="fas fa-check-circle me-1"></i>Received
+                            </span>
+                        </div>
+                        <p class="small mb-1">${d.description || ''}</p>
+                        <p class="small mb-1"><i class="fas fa-cubes text-success me-2"></i><strong>Qty:</strong> ${d.quantity}</p>
+                        <p class="small mb-1"><i class="fas fa-map-marker-alt text-primary me-2"></i><strong>Location:</strong> ${d.pickup_location || d.pickup_info || 'Not specified'}</p>
+                        <p class="small mb-1"><i class="fas fa-user text-info me-2"></i><strong>Donor:</strong> ${d.donor_name || 'N/A'}</p>
+                        <p class="small mb-1"><i class="fas fa-calendar text-secondary me-2"></i><strong>Claimed:</strong> ${claimedDate}</p>
+                        <p class="small mb-0"><i class="fas fa-check text-success me-2"></i><strong>Received:</strong> ${receivedDate}</p>
+                    </div>
+                </div>
+                <div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid #ddd;">
+                    <button class="btn btn-sm btn-outline-primary" onclick="downloadDonationPDF(${idx}, '${d.title.replace(/'/g, "\\'")}')">
+                        <i class="fas fa-download me-1"></i>Download Details
+                    </button>
+                </div>
+            `;
+
+                    ngoArea.appendChild(card);
+                });
+
+            } catch (err) {
+                console.error(err);
+                ngoArea.innerHTML = `
+            <div class="alert alert-danger">
+                <i class="fas fa-exclamation-triangle me-2"></i>Failed to load donation history. Please try again.
+            </div>`;
+            }
+        }
+
+        function initStatsChart(totalReceived, totalDelivered, totalQuantity) {
+            const ctx = document.getElementById('statsChart');
+            if (ctx) {
+                // Destroy previous chart if exists
+                if (chartInstance) {
+                    chartInstance.destroy();
+                }
+
+                chartInstance = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Total Claims', 'Delivered', 'Total Quantity'],
+                        datasets: [
+                            {
+                                label: 'Count',
+                                data: [totalReceived, totalDelivered, totalQuantity],
+                                backgroundColor: [
+                                    'rgba(13, 110, 253, 0.85)',
+                                    'rgba(32, 201, 151, 0.85)',
+                                    'rgba(255, 193, 7, 0.85)'
+                                ],
+                                borderColor: [
+                                    'rgba(13, 110, 253, 1)',
+                                    'rgba(32, 201, 151, 1)',
+                                    'rgba(255, 193, 7, 1)'
+                                ],
+                                borderWidth: 3,
+                                borderRadius: 8,
+                                borderSkipped: false
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: true,
+                        plugins: {
+                            legend: {
+                                display: true,
+                                labels: {
+                                    font: {
+                                        size: 14,
+                                        weight: 'bold'
+                                    },
+                                    padding: 15
+                                }
+                            },
+                            tooltip: {
+                                backgroundColor: 'rgba(0,0,0,0.8)',
+                                titleFont: { size: 14 },
+                                bodyFont: { size: 12 },
+                                padding: 12,
+                                cornerRadius: 8,
+                                displayColors: true,
+                                callbacks: {
+                                    label: function (context) {
+                                        return 'Count: ' + context.parsed.y;
+                                    }
+                                }
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                ticks: {
+                                    stepSize: 1,
+                                    font: { size: 12 }
+                                },
+                                grid: {
+                                    color: 'rgba(200, 200, 200, 0.2)'
+                                }
+                            },
+                            x: {
+                                ticks: {
+                                    font: { size: 13, weight: 'bold' }
+                                },
+                                grid: {
+                                    display: false
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+        }
+
+        function downloadPDF() {
+            const userProfile = JSON.parse(localStorage.getItem('userProfile') || '{}');
+            const element = document.createElement('div');
+            element.id = 'pdf-content';
+
+            // Calculate statistics
+            const totalReceived = donationData.length;
+            const totalDelivered = donationData.filter(d => d.received_at).length;
+            const totalQuantity = donationData.reduce((sum, d) => sum + (d.quantity || 0), 0);
+
+            // Build PDF content with proper styling
+            element.innerHTML = `
+                <div style="font-family: Arial, sans-serif; padding: 20px; background: white; color: #333;">
+                    
+                    <!-- Header -->
+                    <div style="text-align: center; margin-bottom: 30px; border-bottom: 3px solid #0d6efd; padding-bottom: 20px;">
+                        <h1 style="color: #0d6efd; margin: 0; font-size: 32px;">🤝 HelpReach</h1>
+                        <p style="margin: 5px 0; color: #666; font-size: 14px;">Connecting Donors & NGOs for Community Care</p>
+                        <p style="margin: 5px 0; color: #999; font-size: 12px;">📧 helpreach18@gmail.com | 📱 +91 8530932462 | 🏢 411 041 Narhe Road, Pune, India</p>
+                    </div>
+
+                    <!-- Document Title -->
+                    <h2 style="color: #0d6efd; text-align: center; margin: 20px 0;">Donation History Report</h2>
+                    <p style="text-align: center; color: #666; margin-bottom: 20px; font-size: 12px;">Generated on ${new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
+
+                    <!-- NGO Information -->
+                    <div style="background: #f0f4f8; padding: 15px; border-radius: 8px; margin-bottom: 25px; border-left: 4px solid #10b981;">
+                        <h3 style="color: #10b981; margin-top: 0;">NGO Information</h3>
+                        <table style="width: 100%; font-size: 13px;">
+                            <tr>
+                                <td style="padding: 8px;"><strong>Name:</strong></td>
+                                <td style="padding: 8px;">${userProfile.name || 'Not Specified'}</td>
+                                <td style="padding: 8px; padding-left: 40px;"><strong>Type:</strong></td>
+                                <td style="padding: 8px;">${userProfile.userType || 'NGO'}</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 8px;"><strong>Email:</strong></td>
+                                <td style="padding: 8px;">${userProfile.email || 'Not Specified'}</td>
+                                <td style="padding: 8px; padding-left: 40px;"><strong>Location:</strong></td>
+                                <td style="padding: 8px;">${userProfile.location || 'Not Specified'}</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 8px;"><strong>Phone:</strong></td>
+                                <td style="padding: 8px;">${userProfile.phone || 'Not Specified'}</td>
+                                <td style="padding: 8px; padding-left: 40px;"></td>
+                                <td style="padding: 8px;"></td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <!-- Statistics Summary -->
+                    <div style="background: linear-gradient(135deg, #e3f2fd 0%, #f0f4f8 100%); padding: 20px; border-radius: 8px; margin-bottom: 25px;">
+                        <h3 style="color: #0d6efd; margin-top: 0;">Donation Statistics Summary</h3>
+                        <table style="width: 100%; border-collapse: collapse;">
+                            <tr style="background: #fff;">
+                                <td style="padding: 15px; border: 1px solid #ddd; text-align: center;">
+                                    <div style="font-size: 24px; font-weight: bold; color: #0d6efd;">${totalReceived}</div>
+                                    <div style="color: #666; font-size: 13px;">Total Claims</div>
+                                </td>
+                                <td style="padding: 15px; border: 1px solid #ddd; text-align: center;">
+                                    <div style="font-size: 24px; font-weight: bold; color: #20c997;">${totalDelivered}</div>
+                                    <div style="color: #666; font-size: 13px;">Delivered</div>
+                                </td>
+                                <td style="padding: 15px; border: 1px solid #ddd; text-align: center;">
+                                    <div style="font-size: 24px; font-weight: bold; color: #ffc107;">${totalQuantity}</div>
+                                    <div style="color: #666; font-size: 13px;">Total Quantity</div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <!-- Detailed Donations List -->
+                    <h3 style="color: #0d6efd; margin-top: 25px; margin-bottom: 15px;">Claimed Donations Details</h3>
+                    ${donationData.map((d, idx) => {
+                const statusColors = {
+                    'Received': '#20c997',
+                    'Pending': '#ffc107',
+                    'Processing': '#0d6efd'
+                };
+                const receivedDate = d.received_at ? new Date(d.received_at).toLocaleDateString() : 'Pending';
+                return `
+                            <div style="border: 1px solid #ddd; border-radius: 6px; padding: 15px; margin-bottom: 15px; page-break-inside: avoid;">
+                                <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 10px;">
+                                    <div>
+                                        <h4 style="margin: 0; color: #212529; font-size: 16px;">${idx + 1}. ${d.title}</h4>
+                                        <p style="margin: 5px 0; color: #666; font-size: 12px;">${d.description || 'No description'}</p>
+                                    </div>
+                                    <div style="background: #20c997; color: white; padding: 5px 12px; border-radius: 20px; font-size: 12px; font-weight: bold;">
+                                        Received
+                                    </div>
+                                </div>
+                                <table style="width: 100%; font-size: 12px; margin-top: 10px;">
+                                    <tr>
+                                        <td style="padding: 5px;"><strong>Quantity:</strong> ${d.quantity}</td>
+                                        <td style="padding: 5px;"><strong>Category:</strong> ${d.category || 'General'}</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 5px;"><strong>Location:</strong> ${d.pickup_location || d.pickup_info || 'Not specified'}</td>
+                                        <td style="padding: 5px;"><strong>Donor:</strong> ${d.donor_name || 'N/A'}</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 5px;"><strong>Claimed Date:</strong> ${new Date(d.claimed_at).toLocaleDateString()}</td>
+                                        <td style="padding: 5px;"><strong>Received Date:</strong> ${receivedDate}</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        `;
+            }).join('')}
+
+                    <!-- Footer -->
+                    <div style="margin-top: 40px; padding-top: 20px; border-top: 2px solid #e0e0e0; text-align: center; color: #999; font-size: 11px;">
+                        <p>This is an official report from HelpReach Platform</p>
+                        <p>For more information, visit: <strong>www.helpreach.org</strong></p>
+                        <p style="margin-top: 10px;">© 2026 HelpReach. All rights reserved.</p>
+                    </div>
+                </div>
+            `;
+
+            const options = {
+                margin: 10,
+                filename: `HelpReach_Donation_History_${new Date().getTime()}.pdf`,
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2 },
+                jsPDF: { orientation: 'portrait', unit: 'mm', format: 'a4' }
+            };
+
+            html2pdf().set(options).from(element).save();
+        }
+
+        function downloadDonationPDF(idx, title) {
+            const donation = donationData[idx];
+            if (!donation) {
+                alert('Donation not found');
+                return;
+            }
+
+            const userProfile = JSON.parse(localStorage.getItem('userProfile') || '{}');
+            const element = document.createElement('div');
+            element.id = 'pdf-content-detail';
+
+            const claimedDate = donation.claimed_at ? new Date(donation.claimed_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' }) : 'N/A';
+            const receivedDate = donation.received_at ? new Date(donation.received_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' }) : 'Pending';
+            const photoURL = donation.photo_filename ? `http://127.0.0.1:5000/uploads/donations/${donation.photo_filename}` : '';
+
+            // Calculate days between claimed and received
+            let daysTaken = 'N/A';
+            if (donation.claimed_at && donation.received_at) {
+                const claimed = new Date(donation.claimed_at);
+                const received = new Date(donation.received_at);
+                daysTaken = Math.floor((received - claimed) / (1000 * 60 * 60 * 24)) + ' days';
+            }
+
+            element.innerHTML = `
+                <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; padding: 25px; background: white; color: #333; line-height: 1.6;">
+                    
+                    <!-- Header with Logo -->
+                    <div style="text-align: center; margin-bottom: 25px; padding: 20px; background: linear-gradient(135deg, #0d6efd 0%, #10b981 100%); color: white; border-radius: 10px;">
+                        <h1 style="margin: 0; font-size: 36px; font-weight: bold;">🤝 HelpReach</h1>
+                        <p style="margin: 8px 0 0 0; font-size: 16px; opacity: 0.9;">Donation Receipt & Details</p>
+                    </div>
+
+                    <!-- Organization Details Bar -->
+                    <div style="background: #f8f9fa; padding: 15px; border-left: 5px solid #0d6efd; margin-bottom: 25px; border-radius: 5px;">
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; font-size: 13px;">
+                            <div>
+                                <p style="margin: 0; color: #666;"><strong>📧 Email:</strong> helpreach18@gmail.com</p>
+                                <p style="margin: 5px 0 0 0; color: #666;"><strong>📱 Phone:</strong> +91 8530932462</p>
+                            </div>
+                            <div>
+                                <p style="margin: 0; color: #666;"><strong>📍 Address:</strong> 411 041 Narhe Road, Pune, India</p>
+                                <p style="margin: 5px 0 0 0; color: #666;"><strong>🌐 Website:</strong> www.helpreach.org</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Document Title -->
+                    <div style="text-align: center; margin-bottom: 30px;">
+                        <h2 style="color: #0d6efd; margin: 0 0 5px 0; font-size: 28px;">Donation Details Receipt</h2>
+                        <p style="color: #666; margin: 5px 0; font-size: 13px;">Document ID: ${donation.id || 'N/A'} | Generated: ${new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' })}</p>
+                    </div>
+
+                    <!-- NGO Information Section -->
+                    <div style="background: linear-gradient(135deg, #e3f2fd 0%, #f0f4f8 100%); padding: 20px; border-radius: 8px; margin-bottom: 25px; border: 2px solid #0d6efd;">
+                        <h3 style="color: #0d6efd; margin-top: 0; margin-bottom: 15px; font-size: 16px; border-bottom: 2px solid #0d6efd; padding-bottom: 10px;">
+                            📋 Receiving Organization (NGO)
+                        </h3>
+                        <table style="width: 100%; font-size: 13px; border-collapse: collapse;">
+                            <tr>
+                                <td style="padding: 10px; background: white; border-bottom: 1px solid #ddd;"><strong>Organization Name:</strong></td>
+                                <td style="padding: 10px; background: white; border-bottom: 1px solid #ddd;">${userProfile.name || 'Not Specified'}</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 10px; background: #f9f9f9; border-bottom: 1px solid #ddd;"><strong>Email:</strong></td>
+                                <td style="padding: 10px; background: #f9f9f9; border-bottom: 1px solid #ddd;">${userProfile.email || 'Not Specified'}</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 10px; background: white; border-bottom: 1px solid #ddd;"><strong>Phone:</strong></td>
+                                <td style="padding: 10px; background: white; border-bottom: 1px solid #ddd;">${userProfile.phone || 'Not Specified'}</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 10px; background: #f9f9f9; border-bottom: 1px solid #ddd;"><strong>Location/City:</strong></td>
+                                <td style="padding: 10px; background: #f9f9f9; border-bottom: 1px solid #ddd;">${userProfile.location || 'Not Specified'}</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 10px; background: white;"><strong>Organization Type:</strong></td>
+                                <td style="padding: 10px; background: white;">${userProfile.userType || 'NGO'}</td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <!-- Donor Information Section -->
+                    <div style="background: linear-gradient(135deg, #fef3e2 0%, #fff9f0 100%); padding: 20px; border-radius: 8px; margin-bottom: 25px; border: 2px solid #ffc107;">
+                        <h3 style="color: #ff8c00; margin-top: 0; margin-bottom: 15px; font-size: 16px; border-bottom: 2px solid #ffc107; padding-bottom: 10px;">
+                            👤 Donor Information
+                        </h3>
+                        <table style="width: 100%; font-size: 13px; border-collapse: collapse;">
+                            <tr>
+                                <td style="padding: 10px; background: white; border-bottom: 1px solid #ddd;"><strong>Donor Name:</strong></td>
+                                <td style="padding: 10px; background: white; border-bottom: 1px solid #ddd;">${donation.donor_name || 'Anonymous'}</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 10px; background: #f9f9f9; border-bottom: 1px solid #ddd;"><strong>Donor Location:</strong></td>
+                                <td style="padding: 10px; background: #f9f9f9; border-bottom: 1px solid #ddd;">${donation.pickup_location || 'Not specified'}</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 10px; background: white;"><strong>Contact/Notes:</strong></td>
+                                <td style="padding: 10px; background: white;">${donation.donor_contact || 'N/A'}</td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <!-- Donation Item Details Section -->
+                    <div style="background: linear-gradient(135deg, #e8f5e9 0%, #f0f7f0 100%); padding: 20px; border-radius: 8px; margin-bottom: 25px; border: 2px solid #10b981;">
+                        <h3 style="color: #10b981; margin-top: 0; margin-bottom: 15px; font-size: 16px; border-bottom: 2px solid #10b981; padding-bottom: 10px;">
+                            📦 Donation Item Details
+                        </h3>
+                        <table style="width: 100%; font-size: 13px; border-collapse: collapse;">
+                            <tr>
+                                <td style="padding: 10px; background: white; border-bottom: 1px solid #ddd;"><strong>Item Title:</strong></td>
+                                <td style="padding: 10px; background: white; border-bottom: 1px solid #ddd; font-weight: bold; color: #10b981;">${donation.title}</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 10px; background: #f9f9f9; border-bottom: 1px solid #ddd; vertical-align: top;"><strong>Description:</strong></td>
+                                <td style="padding: 10px; background: #f9f9f9; border-bottom: 1px solid #ddd;">${donation.description || 'No additional description'}</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 10px; background: white; border-bottom: 1px solid #ddd;"><strong>Category:</strong></td>
+                                <td style="padding: 10px; background: white; border-bottom: 1px solid #ddd;"><span style="background: #10b981; color: white; padding: 3px 8px; border-radius: 12px; font-size: 12px;">${donation.category || 'General'}</span></td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 10px; background: #f9f9f9; border-bottom: 1px solid #ddd;"><strong>Quantity:</strong></td>
+                                <td style="padding: 10px; background: #f9f9f9; border-bottom: 1px solid #ddd; font-weight: bold; font-size: 14px;">${donation.quantity} units</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 10px; background: white;"><strong>Unit Type:</strong></td>
+                                <td style="padding: 10px; background: white;">${donation.unit_type || 'Pieces'}</td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <!-- Timeline & Status Section -->
+                    <div style="background: linear-gradient(135deg, #f3e5f5 0%, #faf8ff 100%); padding: 20px; border-radius: 8px; margin-bottom: 25px; border: 2px solid #6f42c1;">
+                        <h3 style="color: #6f42c1; margin-top: 0; margin-bottom: 15px; font-size: 16px; border-bottom: 2px solid #6f42c1; padding-bottom: 10px;">
+                            📅 Timeline & Status
+                        </h3>
+                        <table style="width: 100%; font-size: 13px; border-collapse: collapse;">
+                            <tr>
+                                <td style="padding: 10px; background: white; border-bottom: 1px solid #ddd;"><strong>Date Claimed:</strong></td>
+                                <td style="padding: 10px; background: white; border-bottom: 1px solid #ddd;">${claimedDate}</td>
+                                <td style="padding: 10px; background: white; border-bottom: 1px solid #ddd; text-align: right; color: #6f42c1;"><strong>📍 Claim Status:</strong></td>
+                                <td style="padding: 10px; background: white; border-bottom: 1px solid #ddd;"><span style="background: #6f42c1; color: white; padding: 3px 8px; border-radius: 4px; font-size: 12px;">✓ Confirmed</span></td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 10px; background: #f9f9f9; border-bottom: 1px solid #ddd;"><strong>Date Received:</strong></td>
+                                <td style="padding: 10px; background: #f9f9f9; border-bottom: 1px solid #ddd;">${receivedDate}</td>
+                                <td style="padding: 10px; background: #f9f9f9; border-bottom: 1px solid #ddd; text-align: right; color: #20c997;"><strong>✅ Reception Status:</strong></td>
+                                <td style="padding: 10px; background: #f9f9f9; border-bottom: 1px solid #ddd;"><span style="background: #20c997; color: white; padding: 3px 8px; border-radius: 4px; font-size: 12px;">✓ Received</span></td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 10px; background: white; border-bottom: 1px solid #ddd;"><strong>Processing Time:</strong></td>
+                                <td style="padding: 10px; background: white; border-bottom: 1px solid #ddd; font-weight: bold; color: #0d6efd;">${daysTaken}</td>
+                                <td style="padding: 10px; background: white; border-bottom: 1px solid #ddd; text-align: right; color: #666;"><strong>📌 Pickup Location:</strong></td>
+                                <td style="padding: 10px; background: white; border-bottom: 1px solid #ddd;">${donation.pickup_info || 'N/A'}</td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <!-- Photo Evidence Section (if available) -->
+                    ${photoURL ? `
+                    <div style="margin-bottom: 25px; text-align: center;">
+                        <h3 style="color: #0d6efd; margin-bottom: 15px; font-size: 16px; border-bottom: 2px solid #0d6efd; padding-bottom: 10px;">
+                            📸 Photo Evidence
+                        </h3>
+                        <img src="${photoURL}" alt="Donation Photo" style="max-width: 100%; height: auto; border-radius: 8px; border: 2px solid #ddd; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                        <p style="color: #666; font-size: 12px; margin-top: 10px;">Photographic evidence of the donation received</p>
+                    </div>
+                    ` : ''}
+
+                    <!-- Summary Stats Box -->
+                    <div style="background: linear-gradient(135deg, #0d6efd 0%, #10b981 100%); color: white; padding: 20px; border-radius: 8px; margin-bottom: 25px;">
+                        <h3 style="margin-top: 0; margin-bottom: 15px; font-size: 16px;">📊 Transaction Summary</h3>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; text-align: center;">
+                            <div style="background: rgba(255,255,255,0.2); padding: 15px; border-radius: 6px;">
+                                <div style="font-size: 24px; font-weight: bold;">${donation.quantity}</div>
+                                <div style="font-size: 12px; opacity: 0.9;">Units Received</div>
+                            </div>
+                            <div style="background: rgba(255,255,255,0.2); padding: 15px; border-radius: 6px;">
+                                <div style="font-size: 24px; font-weight: bold;">${donation.category || 'General'}</div>
+                                <div style="font-size: 12px; opacity: 0.9;">Category</div>
+                            </div>
+                            <div style="background: rgba(255,255,255,0.2); padding: 15px; border-radius: 6px;">
+                                <div style="font-size: 24px; font-weight: bold;">✓</div>
+                                <div style="font-size: 12px; opacity: 0.9;">Status: Received</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Important Notes Section -->
+                    <div style="background: #fff3cd; padding: 15px; border-left: 5px solid #ffc107; border-radius: 5px; margin-bottom: 25px;">
+                        <h4 style="color: #856404; margin-top: 0; margin-bottom: 10px;">ℹ️ Important Notes:</h4>
+                        <ul style="color: #856404; font-size: 12px; margin: 0; padding-left: 20px;">
+                            <li>This receipt is a proof of donation received by the NGO</li>
+                            <li>All information is stored securely in HelpReach database</li>
+                            <li>For any queries, contact: helpreach18@gmail.com</li>
+                            <li>This transaction contributes to community welfare and social good</li>
+                        </ul>
+                    </div>
+
+                    <!-- Verification & Seal -->
+                    <div style="text-align: center; margin: 30px 0 20px 0; padding: 20px; background: #f8f9fa; border-radius: 8px; border: 2px dashed #0d6efd;">
+                        <p style="margin: 0; font-size: 48px;">🔐</p>
+                        <p style="color: #0d6efd; margin: 10px 0 0 0; font-weight: bold;">Verified Receipt</p>
+                        <p style="color: #666; font-size: 12px; margin: 5px 0;">This is an authentic HelpReach donation receipt</p>
+                    </div>
+
+                    <!-- Footer -->
+                    <div style="text-align: center; margin-top: 30px; padding-top: 20px; border-top: 3px solid #0d6efd;">
+                        <p style="color: #0d6efd; font-weight: bold; margin: 0; font-size: 14px;">🤝 HelpReach - Connecting Donors & NGOs</p>
+                        <p style="color: #666; font-size: 12px; margin: 5px 0;">Making a difference, one donation at a time</p>
+                        <p style="color: #999; font-size: 11px; margin: 8px 0 0 0;">📧 helpreach18@gmail.com | 📱 +91-8530932462 | 🌐 www.helpreach.org</p>
+                        <p style="color: #999; font-size: 10px; margin: 10px 0 0 0;">© 2026 HelpReach Foundation. All rights reserved.</p>
+                    </div>
+                </div>
+            `;
+
+            const options = {
+                margin: 8,
+                filename: `HelpReach_${donation.title.replace(/[^a-z0-9]/gi, '_').toLowerCase()}_${new Date().getTime()}.pdf`,
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2.5 },
+                jsPDF: { orientation: 'portrait', unit: 'mm', format: 'a4' }
+            };
+
+            html2pdf().set(options).from(element).save();
+        }
+
+        render();
+    </script>
+
+
+
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Template Javascript -->
+    <script src="js/main.js"></script>
+
+    <!-- Registration Modal -->
+    <div class="registration-overlay" id="registrationOverlay">
+        <div class="registration-modal">
+
+            <div class="registration-header">
+                <h3>Join HelpReach</h3>
+                <button class="close-btn" onclick="closeRegistration()">❌</button>
+            </div>
+
+            <div class="registration-body">
+
+                <!-- REGISTER FORM -->
+                <form id="registrationForm">
+                    <div class="form-group">
+                        <label>Full Name</label>
+                        <input type="text" id="regName" placeholder="Enter your full name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" id="regEmail" placeholder="Enter your email" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Phone</label>
+                        <input type="tel" id="regPhone" placeholder="Enter phone number">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" id="regPassword" placeholder="Create a password" required minlength="6">
+                    </div>
+
+                    <div class="form-group">
+                        <label>User Type</label>
+                        <div class="user-type-selector">
+                            <div class="user-type-option active" onclick="selectUserType('donor', this)">
+                                <input type="radio" name="userType" value="donor" checked>
+                                <label><i class="fas fa-gift"></i><br>Donor</label>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Location</label>
+                        <input type="text" id="regLocation" placeholder="Enter your city/location" required>
+                    </div>
+
+                    <div class="ngo-fields" id="ngoFields">
+                        <div class="form-group">
+                            <label>NGO Name</label>
+                            <input type="text" placeholder="Organization name">
+                        </div>
+                        <div class="form-group">
+                            <label>Registration Number</label>
+                            <input type="text" placeholder="NGO registration number">
+                        </div>
+                        <div class="form-group">
+                            <label>Service Area</label>
+                            <input type="text" placeholder="Area of operation">
+                        </div>
+                        <div class="form-group">
+                            <label>Upload Documents</label>
+                            <input type="file" multiple>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" required> I agree to the terms and conditions
+                        </label>
+                    </div>
+                </form>
+
+                <!-- LOGIN FORM -->
+                <form id="loginForm" style="display:none;">
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" id="loginEmail" placeholder="Enter your email" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" id="loginPassword" placeholder="Enter your password" required>
+                    </div>
+
+                    <div class="form-group" style="text-align:center;">
+                        <span>New user?</span>
+                        <a onclick="showRegisterForm()" style="color:#007bff; cursor:pointer;">
+                            Register here
+                        </a>
+                    </div>
+                </form>
+
+            </div>
+
+            <div class="registration-footer">
+                <button class="btn-register" id="authButton" onclick="submitRegistration()">
+                    Register
+                </button>
+            </div>
+
+            <div class="form-group" id="loginToggleText" style="text-align:center; margin-top:10px;">
+                <span>Already registered?</span>
+                <a onclick="showLoginForm()" style="color:#007bff; cursor:pointer;">
+                    Login here
+                </a>
+            </div>
+
+
+        </div>
+    </div>
+
+    <script>
+        function showLoginForm() {
+            document.getElementById("registrationForm").style.display = "none";
+            document.getElementById("loginForm").style.display = "block";
+            document.querySelector(".registration-header h3").textContent = "Login to HelpReach";
+
+            // hide "Already registered? Login here"
+            document.getElementById("loginToggleText").style.display = "none";
+
+            const btn = document.getElementById("authButton");
+            btn.textContent = "Login";
+            btn.onclick = submitLogin;
+        }
+
+        function showRegisterForm() {
+            document.getElementById("loginForm").style.display = "none";
+            document.getElementById("registrationForm").style.display = "block";
+            document.querySelector(".registration-header h3").textContent = "Join HelpReach";
+
+            const btn = document.getElementById("authButton");
+            btn.textContent = "Register";
+            btn.onclick = submitRegistration;
+        }
+        function submitLogin() {
+            fetch("http://127.0.0.1:5000/api/login", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    email: document.getElementById("loginEmail").value,
+                    password: document.getElementById("loginPassword").value
+                })
+            })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.ok) {
+
+                        const userData = {
+                            name: data.user.name,
+                            email: data.user.email,
+                            phone: data.user.phone,
+                            location: data.user.location,
+                            userType: data.user.role || "donor"
+                        };
+
+                        localStorage.setItem("userProfile", JSON.stringify(userData));
+                        isLoggedIn = true;
+
+                        updateProfileDisplay(userData);
+                        closeRegistration();
+
+                        alert("✅ Login successful");
+                        resetToRegistrationForm();
+                    }
+                    else {
+                        alert(data.error);
+                    }
+                })
+                .catch(() => alert("❌ Server error during login"));
+        }
+
+    </script>
+    <script>
+        function resetToRegistrationForm() {
+            document.getElementById("loginForm").style.display = "none";
+            document.getElementById("registrationForm").style.display = "block";
+            document.querySelector(".registration-header h3").textContent = "Join HelpReach";
+
+            // show "Already registered? Login here"
+            document.getElementById("loginToggleText").style.display = "block";
+
+            const btn = document.getElementById("authButton");
+            btn.textContent = "Register";
+            btn.onclick = submitRegistration;
+
+            // clear login inputs
+            document.getElementById("loginEmail").value = "";
+            document.getElementById("loginPassword").value = "";
+        }
+    </script>
+
+
+    
+    <!-- Profile Icon (appears after NGO login) -->
+    <button class="profile-icon" id="profileIcon" onclick="openProfileSidebar()">
+        <i class="fas fa-building"></i>
+    </button>
+
+    <!-- Profile Overlay -->
+    <div class="profile-overlay" id="profileOverlay" onclick="closeProfileSidebar()"></div>
+
+    <!-- Profile Sidebar -->
+    <div class="profile-sidebar" id="profileSidebar">
+        <button class="sidebar-close" onclick="closeProfileSidebar()">✕</button>
+
+        <!-- Header -->
+        <div class="profile-header">
+            <div class="profile-avatar">
+                <i class="fas fa-building"></i>
+            </div>
+            <div class="profile-name" id="profileName">Guest NGO</div>
+            <div class="profile-type" id="profileType">NGO</div>
+            <div class="verify-badge">
+                <i class="fas fa-check-circle"></i> Verified
+            </div>
+        </div>
+
+        <!-- Contact Info -->
+        <div class="profile-section">
+            <div class="profile-section-title">
+                <i class="fas fa-phone"></i> Contact Info
+            </div>
+            <div class="profile-item">
+                <span class="profile-item-label">Email:</span>
+                <span class="profile-item-value" id="profileEmail">---</span>
+            </div>
+            <div class="profile-item">
+                <span class="profile-item-label">Phone:</span>
+                <span class="profile-item-value" id="profilePhone">---</span>
+            </div>
+            <div class="profile-item">
+                <span class="profile-item-label">Address:</span>
+                <span class="profile-item-value" id="profileLocation">---</span>
+            </div>
+        </div>
+
+        <!-- Account Info -->
+        <div class="profile-section">
+            <div class="profile-section-title">
+                <i class="fas fa-chart-line"></i> NGO Activity
+            </div>
+            <div class="profile-item">
+                <span class="profile-item-label">Requests Raised:</span>
+                <span class="profile-item-value" id="requestCount">--</span>
+            </div>
+            <div class="profile-item">
+                <span class="profile-item-label">Fulfilled:</span>
+                <span class="profile-item-value" id="fulfilledCount">--</span>
+            </div>
+            <div class="profile-item">
+                <span class="profile-item-label">Status:</span>
+                <span class="profile-item-value" id="activityLevel">--</span>
+            </div>
+        </div>
+
+        <!-- NGO Info -->
+        <div class="profile-section" id="ngoInfoSection">
+            <div class="profile-section-title">
+                <i class="fas fa-building"></i> NGO Details
+            </div>
+            <div class="profile-item">
+                <span class="profile-item-label">Registration No:</span>
+                <span class="profile-item-value" id="ngoRegNumber">---</span>
+            </div>
+            <div class="profile-item">
+                <span class="profile-item-label">Category:</span>
+                <span class="profile-item-value" id="ngoCategory">---</span>
+            </div>
+            <div class="profile-item">
+                <span class="profile-item-label">Contact Person:</span>
+                <span class="profile-item-value" id="ngoContactPerson">---</span>
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="quick-actions">
+            <button class="action-btn" onclick="editProfile()">
+                <i class="fas fa-edit"></i> Edit Profile
+            </button>
+            <button class="action-btn" onclick="manageRequests()">
+                <i class="fas fa-hands-helping"></i> Manage Requests
+            </button>
+            <button class="action-btn" onclick="notifications()">
+                <i class="fas fa-bell"></i> Alerts
+            </button>
+            <button class="action-btn" onclick="myAccount()">
+                <i class="fas fa-cog"></i> Account
+            </button>
+            <button class="action-btn logout" onclick="logoutUser()">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </button>
+        </div>
+    </div>
+    <script>
+        /* ================= GLOBALS ================= */
+        let isNgoLoggedIn = false;
+        let currentNgoId = null;
+
+        /* ================= UPDATE SIDEBAR ================= */
+        function updateNgoProfile(ngo) {
+            if (!ngo) return;
+
+            // Header
+            document.getElementById("profileName").textContent = ngo.name || "";
+            document.getElementById("profileType").textContent = "NGO";
+
+            // Contact
+            document.getElementById("profileEmail").textContent = ngo.contact_email || "---";
+            document.getElementById("profilePhone").textContent = ngo.phone || "---";
+            document.getElementById("profileLocation").textContent = ngo.address || "---";
+
+            // NGO details
+            document.getElementById("ngoRegNumber").textContent =
+                ngo.registration_number || "---";
+            document.getElementById("ngoCategory").textContent =
+                ngo.category || "---";
+            document.getElementById("ngoContactPerson").textContent =
+                ngo.contact_person || "---";
+
+            // Verified badge
+            const badge = document.querySelector(".verify-badge");
+            if (badge) {
+                badge.style.display = ngo.verified ? "flex" : "none";
+            }
+
+            // Show profile icon
+            document.getElementById("profileIcon").classList.add("show");
+
+            isNgoLoggedIn = true;
+        }
+
+        /* ================= FETCH NGO FROM BACKEND ================= */
+        async function loadNgoProfileFromBackend(ngoId) {
+            try {
+                const res = await fetch(
+                    `http://127.0.0.1:5000/api/ngo/profile/${ngoId}`
+                );
+
+                const data = await res.json();
+
+                if (!res.ok || !data.ok) {
+                    throw new Error(data.error || "Failed to load NGO profile");
+                }
+
+                updateNgoProfile(data.ngo);
+
+            } catch (err) {
+                console.error("❌ Profile load error:", err);
+                alert("Unable to load NGO profile. Please login again.");
+                isNgoLoggedIn = false;
+                document.getElementById("profileIcon").classList.remove("show");
+            }
+        }
+
+        window.addEventListener("load", async () => {
+            // First, check backend session
+            try {
+                const res = await fetch("http://127.0.0.1:5000/api/ngo/me", {
+                    credentials: "include"
+                });
+
+                const data = await res.json();
+
+                if (data.ok && !data.guest) {
+                    updateNgoProfile(data.ngo);
+                    return;
+                }
+            } catch (err) {
+                console.error("Session check error:", err);
+            }
+
+            // If no session, check URL parameters
+            const params = new URLSearchParams(window.location.search);
+            const ngoId = params.get("ngo_id");
+
+            if (!ngoId) {
+                showGuestNgo();
+                return;
+            }
+
+            currentNgoId = ngoId;
+            loadNgoProfileFromBackend(ngoId);
+        });
+
+
+        /* ================= SIDEBAR ================= */
+        function openProfileSidebar() {
+            // if (!isNgoLoggedIn) return;
+
+            document.getElementById("profileSidebar").classList.add("open");
+            document.getElementById("profileOverlay").classList.add("show");
+        }
+
+        function closeProfileSidebar() {
+            document.getElementById("profileSidebar").classList.remove("open");
+            document.getElementById("profileOverlay").classList.remove("show");
+        }
+
+        function logoutUser() {
+            if (!confirm("Logout NGO account?")) return;
+
+            // 1️⃣ Reset UI to Guest
+            showGuestNgo();
+
+            // 2️⃣ Remove ngo_id from URL
+            window.history.replaceState({}, document.title, "ngo_index.html");
+
+            // 3️⃣ Redirect to login page
+            setTimeout(() => {
+                window.location.href = "ngo_index.html";
+            }, 300);
+        }
+
+    </script>
+
+    <script>
+        /* ================= RESET TO GUEST ================= */
+        function showGuestNgo() {
+            document.getElementById("profileName").textContent = "Guest NGO";
+            document.getElementById("profileType").textContent = "Guest";
+
+            document.getElementById("profileEmail").textContent = "---";
+            document.getElementById("profilePhone").textContent = "---";
+            document.getElementById("profileLocation").textContent = "---";
+
+            document.getElementById("ngoRegNumber").textContent = "---";
+            document.getElementById("ngoCategory").textContent = "---";
+            document.getElementById("ngoContactPerson").textContent = "---";
+
+            const badge = document.querySelector(".verify-badge");
+            if (badge) badge.style.display = "none";
+
+            document.getElementById("profileIcon").classList.remove("show");
+
+            isNgoLoggedIn = false;
+            currentNgoId = null;
+        }
+    </script>
+</body>
+
+</html>

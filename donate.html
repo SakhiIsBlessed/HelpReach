@@ -1070,7 +1070,7 @@
         </div>
     </div> -->
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"> -->
 
     <style>
         /* Main Container */
@@ -1718,18 +1718,43 @@
                     </div>
                     <div class="form-group-wrapper">
                         <label class="form-label">
+                            <i class="fas fa-list"></i>
+                            Category
+                        </label>
+                        <select name="category" class="form-select" required>
+                            <option value="">Select Category</option>
+                            <option value="Food">🍲 Food</option>
+                            <option value="Clothes">👕 Clothes</option>
+                            <option value="Books">📚 Books</option>
+                            <option value="Medical">💊 Medical</option>
+                            <option value="Electronics">📱 Electronics</option>
+                            <option value="Other">📦 Other</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row-divider">
+                    <div class="form-group-wrapper">
+                        <label class="form-label">
                             <i class="fas fa-calculator"></i>
                             Quantity (approx.)
                         </label>
                         <input type="number" class="form-control" name="quantity" placeholder="e.g., 50" min="1"
                             required>
                     </div>
+                    <div class="form-group-wrapper">
+                        <label class="form-label">
+                            <i class="fas fa-map-marker-alt"></i>
+                            Pickup Location / City
+                        </label>
+                        <input class="form-control" name="pickup_location" placeholder="e.g., Mumbai, Delhi" required>
+                    </div>
                 </div>
 
                 <div class="form-group-wrapper">
                     <label class="form-label">
                         <i class="fas fa-map-marker-alt"></i>
-                        Pickup Address / Event Location
+                        Full Pickup Address / Event Location
                     </label>
                     <input class="form-control" name="address" placeholder="Enter complete address for pickup" required>
                 </div>
@@ -1932,7 +1957,7 @@
     </script>
 
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script> -->
     <script src="lib/wow/wow.min.js"></script>
 
     <script>
@@ -1947,6 +1972,7 @@
         let isDeleting = false;
 
         function typeEffect() {
+            if (!typingText) return;  // Exit if element doesn't exist
             const currentText = textArray[textIndex];
 
             if (isDeleting) {
@@ -2078,9 +2104,16 @@ document.getElementById('donateForm').addEventListener('submit', async function 
                 userProfile = null;
             }
 
-            // If no user or guest → alert and stop
-            if (!userProfile || userProfile.username === "guest") {
-                alert("❌ Register first to donate!");
+            // Debug logging
+            console.log('Donation form submitted');
+            console.log('userProfile from localStorage:', userProfile);
+            console.log('isLoggedIn global:', isLoggedIn);
+
+            // If no user or no id → alert and stop
+            if (!userProfile || !userProfile.id) {
+                console.warn('User not logged in. Showing registration modal.');
+                alert("❌ You need to register/login first to donate!\n\nPlease fill the registration form above and create your account.");
+                openRegistration();
                 return;
             }
 
@@ -2089,32 +2122,43 @@ document.getElementById('donateForm').addEventListener('submit', async function 
             // Safely get donation fields
             const title = document.querySelector('input[name="item_type"]')?.value || "";
             const description = document.getElementById('donType')?.value || "";
+            const category = document.querySelector('select[name="category"]')?.value || "";
             const quantity = document.querySelector('input[name="quantity"]')?.value || "";
+            const pickup_location = document.querySelector('input[name="pickup_location"]')?.value || "";
             const address = document.querySelector('input[name="address"]')?.value || "";
             const date = document.querySelector('input[name="date"]')?.value || "";
             const time = document.querySelector('input[name="time"]')?.value || "";
+            const photosInput = document.querySelector('input[name="photos"]');
 
             // Validate required fields
-            if (!title || !description || !quantity || !address || !date || !time) {
+            if (!title || !description || !category || !quantity || !pickup_location || !address || !date || !time) {
                 alert("❌ Please fill all donation fields.");
                 return;
             }
 
-            const donationData = {
-                title,
-                description,
-                quantity,
-                pickup_info: `${address} | ${date} ${time}`,
-                donor_id: user.id ,        // keep this
-                // donor_email: user.email 
-            };
+            // Create FormData to handle file uploads
+            const formData = new FormData();
+            formData.append('title', title);
+            formData.append('description', description);
+            formData.append('category', category);
+            formData.append('quantity', quantity);
+            formData.append('pickup_location', pickup_location);
+            formData.append('pickup_info', `${address} | ${date} ${time}`);
+            formData.append('donor_id', user.id || 1);
+            formData.append('donor_email', user.email);
+
+            // Add photos if selected
+            if (photosInput && photosInput.files.length > 0) {
+                for (let i = 0; i < photosInput.files.length; i++) {
+                    formData.append('photos', photosInput.files[i]);
+                }
+            }
 
             try {
                 const response = await fetch("http://127.0.0.1:5000/api/donations", {
                     method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    credentials: "include", // 🔥 MUST
-                    body: JSON.stringify(donationData)
+                    body: formData , // Send FormData instead of JSON
+                    credentials: 'include'
                 });
 
                 const result = await response.json();
@@ -2122,9 +2166,18 @@ document.getElementById('donateForm').addEventListener('submit', async function 
                 if (result.ok) {
                     msg.style.display = "block";
                     msg.style.color = "green";
-                    msg.textContent = "✅ Donation submitted successfully!";
+                    const photoStatus = result.photo_filename ? "📸 Photo uploaded!" : "";
+                    msg.textContent = `✅ Donation submitted successfully! ${photoStatus}`;
+                    console.log("Response:", result);
                     document.getElementById("donateForm").reset();
                     alert("🙏 Thank you for your donation! Your contribution makes a difference.");
+
+                    // Update profile counts for donor immediately
+                    try {
+                        updateProfileDisplay(user);
+                    } catch (e) {
+                        console.warn('Could not update profile display after donation:', e);
+                    }
                 } else {
                     msg.style.display = "block";
                     msg.style.color = "red";
@@ -2140,131 +2193,233 @@ document.getElementById('donateForm').addEventListener('submit', async function 
         });
     </script>
 
+
     <!-- Registration Modal -->
-<div class="registration-overlay" id="registrationOverlay">
-    <div class="registration-modal">
+    <div class="registration-overlay" id="registrationOverlay">
+        <div class="registration-modal" id="registerModal">
 
-        <div class="registration-header">
-            <h3>Join HelpReach</h3>
-            <button class="close-btn" onclick="closeRegistration()">❌</button>
-        </div>
+            <div class="registration-header">
+                <h3>Join HelpReach</h3>
+                <button class="close-btn" onclick="closeRegistration()">❌</button>
+            </div>
 
-        <div class="registration-body">
+            <div class="registration-body">
 
-            <!-- REGISTER FORM -->
-            <form id="registrationForm">
-                <div class="form-group">
-                    <label>Full Name</label>
-                    <input type="text" id="regName" placeholder="Enter your full name" required>
-                </div>
+                <!-- REGISTER FORM -->
+                <form id="registrationForm">
+                    <div class="form-group">
+                        <label>Full Name</label>
+                        <input type="text" id="regName" placeholder="Enter your full name" required>
+                    </div>
 
-                <div class="form-group">
-                    <label>Email</label>
-                    <input type="email" id="regEmail" placeholder="Enter your email" required>
-                </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" id="regEmail" placeholder="Enter your email" required>
+                    </div>
 
-                <div class="form-group">
-                    <label>Phone</label>
-                    <input type="tel" id="regPhone" placeholder="Enter phone number">
-                </div>
+                    <div class="form-group">
+                        <label>Phone</label>
+                        <input type="tel" id="regPhone" placeholder="Enter phone number">
+                    </div>
 
-                <div class="form-group">
-                    <label>Password</label>
-                    <input type="password" id="regPassword" placeholder="Create a password" required minlength="6">
-                </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" id="regPassword" placeholder="Create a password" required minlength="6">
+                    </div>
 
-                <div class="form-group">
-                    <label>User Type</label>
-                    <div class="user-type-selector">
-                        <div class="user-type-option active" onclick="selectUserType('donor', this)">
-                            <input type="radio" name="userType" value="donor" checked>
-                            <label><i class="fas fa-gift"></i><br>Donor</label>
+                    <div class="form-group">
+                        <label>User Type</label>
+                        <div class="user-type-selector">
+                            <div class="user-type-option active" onclick="selectUserType('donor', this)">
+                                <input type="radio" name="userType" value="donor" checked>
+                                <label><i class="fas fa-gift"></i><br>Donor</label>
+                            </div>
+                            <div class="user-type-option" onclick="window.location.href='login.html'">
+    <input type="radio" name="userType" value="ngo">
+    <label><i class="fas fa-hands-helping"></i><br>NGO</label>
+</div>
+
                         </div>
                     </div>
-                </div>
 
-                <div class="form-group">
-                    <label>Location</label>
-                    <input type="text" id="regLocation" placeholder="Enter your city/location" required>
-                </div>
 
-                <div class="ngo-fields" id="ngoFields">
                     <div class="form-group">
-                        <label>NGO Name</label>
-                        <input type="text" placeholder="Organization name">
+                        <label>Location</label>
+                        <input type="text" id="regLocation" placeholder="Enter your city/location" required>
                     </div>
+
+                    <div class="ngo-fields" id="ngoFields">
+                        <div class="form-group">
+                            <label>NGO Name</label>
+                            <input type="text" placeholder="Organization name">
+                        </div>
+                        <div class="form-group">
+                            <label>Registration Number</label>
+                            <input type="text" placeholder="NGO registration number">
+                        </div>
+                        <div class="form-group">
+                            <label>Service Area</label>
+                            <input type="text" placeholder="Area of operation">
+                        </div>
+                        <div class="form-group">
+                            <label>Upload Documents</label>
+                            <input type="file" multiple>
+                        </div>
+                    </div>
+
                     <div class="form-group">
-                        <label>Registration Number</label>
-                        <input type="text" placeholder="NGO registration number">
+                        <label>
+                            <input type="checkbox" required> I agree to the terms and conditions
+                        </label>
                     </div>
+                </form>
+
+                <!-- LOGIN FORM -->
+                <form id="loginForm" style="display:none;">
                     <div class="form-group">
-                        <label>Service Area</label>
-                        <input type="text" placeholder="Area of operation">
+                        <label>Email</label>
+                        <input type="email" id="loginEmail" placeholder="Enter your email" required>
                     </div>
+
                     <div class="form-group">
-                        <label>Upload Documents</label>
-                        <input type="file" multiple>
+                        <label>Password</label>
+                        <input type="password" id="loginPassword" placeholder="Enter your password" required>
                     </div>
-                </div>
 
-                <div class="form-group">
-                    <label>
-                        <input type="checkbox" required> I agree to the terms and conditions
-                    </label>
-                </div>
-            </form>
+                    <div class="form-group" style="text-align:center;">
+                        <button type="button" class="btn btn-sm btn-outline-primary"
+                            onclick="requestOtpFromModalEmail()" style="width:100%; margin-bottom:10px;">
+                            🔐 Reset Password (OTP)
+                        </button>
+                    </div>
 
-            <!-- LOGIN FORM -->
-            <form id="loginForm" style="display:none;">
-                <div class="form-group">
-                    <label>Email</label>
-                    <input type="email" id="loginEmail" placeholder="Enter your email" required>
-                </div>
+                    <div class="form-group" style="text-align:center;">
+                        <span>New user?</span>
+                        <a onclick="showRegisterForm()" style="color:#007bff; cursor:pointer;">
+                            Register here
+                        </a>
+                    </div>
+                </form>
 
-                <div class="form-group">
-                    <label>Password</label>
-                    <input type="password" id="loginPassword" placeholder="Enter your password" required>
-                </div>
+            </div>
 
-                <div class="form-group" style="text-align:center;">
-                    <span>New user?</span>
-                    <a onclick="showRegisterForm()" style="color:#007bff; cursor:pointer;">
-                        Register here
-                    </a>
-                </div>
-            </form>
+            <div class="registration-footer">
+                <button class="btn-register" id="authButton" onclick="submitRegistration()">
+                    Register
+                </button>
+            </div>
+
+            <div class="form-group" id="loginToggleText" style="text-align:center; margin-top:10px;">
+                <span>Already registered?</span>
+                <a onclick="showLoginForm()" style="color:#007bff; cursor:pointer;">
+                    Login here
+                </a>
+            </div>
+
+
         </div>
-
-        <div class="registration-footer">
-            <button class="btn-register" id="authButton" onclick="submitRegistration()">
-                Register
-            </button>
-        </div>
-
-        <div class="form-group" id="loginToggleText" style="text-align:center; margin-top:10px;">
-    <span>Already registered?</span>
-    <a onclick="showLoginForm()" style="color:#007bff; cursor:pointer;">
-        Login here
-    </a>
-</div>
-
-
     </div>
-</div>
+
+    <!-- 🔐 FORGOT PASSWORD OTP MODAL (Index.html) -->
+    <div id="otpModal"
+        style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.5); z-index:2000; display:flex; align-items:center; justify-content:center;">
+        <div
+            style="background:white; border-radius:12px; width:90%; max-width:450px; padding:0; box-shadow:0 10px 40px rgba(0,0,0,0.2); animation:slideUp 0.4s ease;">
+            <div
+                style="padding:20px; border-bottom:1px solid #eee; display:flex; justify-content:space-between; align-items:center;">
+                <h3 style="margin:0; color:#212529; font-weight:700;">🔐 Reset Password</h3>
+                <button onclick="closeOtpModal()"
+                    style="background:none; border:none; font-size:24px; cursor:pointer; color:#6c757d;">✕</button>
+            </div>
+
+            <div style="padding:30px;">
+                <!-- STEP 1: OTP REQUEST -->
+                <div id="otpStep1" style="display:block;">
+                    <p style="color:#6c757d; margin-bottom:20px;">We'll send a One-Time Password (OTP) to your email.
+                        Enter it below to reset your password.</p>
+                    <div style="background:#f8f9fa; padding:15px; border-radius:8px; margin-bottom:20px;">
+                        <p style="margin:0; color:#212529; font-weight:600;" id="displayEmail"></p>
+                    </div>
+                    <button onclick="requestOtpForReset()"
+                        style="width:100%; padding:12px; background:#0d6efd; color:white; border:none; border-radius:6px; font-weight:600; cursor:pointer; transition:all 0.3s ease;">
+                        📧 Send OTP to Email
+                    </button>
+                </div>
+
+                <!-- STEP 2: OTP VERIFICATION -->
+                <div id="otpStep2" style="display:none;">
+                    <p style="color:#6c757d; margin-bottom:15px; font-size:0.9rem;">Enter the 6-digit code sent to your
+                        email</p>
+                    <input type="text" id="otpInput" maxlength="6" placeholder="000000"
+                        style="width:100%; padding:12px; border:2px solid #dee2e6; border-radius:6px; font-size:1.2rem; letter-spacing:10px; text-align:center; margin-bottom:10px; font-weight:bold;">
+                    <p style="color:#6c757d; font-size:0.85rem; margin-bottom:15px;">Attempts remaining: <strong
+                            id="otpAttempts">3</strong></p>
+                    <button onclick="verifyOtpForReset()"
+                        style="width:100%; padding:12px; background:#0d6efd; color:white; border:none; border-radius:6px; font-weight:600; cursor:pointer; margin-bottom:10px;">
+                        ✓ Verify OTP
+                    </button>
+                    <button onclick="resendOtpForReset()"
+                        style="width:100%; padding:12px; background:#6c757d; color:white; border:none; border-radius:6px; font-weight:600; cursor:pointer;"
+                        id="resendOtpBtn">
+                        🔄 Resend OTP
+                    </button>
+                    <p style="font-size:0.85rem; color:#999; text-align:center; margin-top:10px;">Resend available in
+                        <strong id="resendTimer">60</strong>s
+                    </p>
+                </div>
+
+                <!-- STEP 3: PASSWORD RESET -->
+                <div id="otpStep3" style="display:none;">
+                    <p style="color:#6c757d; margin-bottom:20px;">Create a new password</p>
+
+                    <div style="margin-bottom:15px;">
+                        <label style="display:block; margin-bottom:8px; color:#212529; font-weight:600;">New
+                            Password</label>
+                        <input type="password" id="resetPassword"
+                            placeholder="At least 8 characters with special character"
+                            style="width:100%; padding:10px; border:1px solid #dee2e6; border-radius:6px; font-size:0.95rem; box-sizing:border-box;">
+                        <div style="margin-top:8px;">
+                            <div
+                                style="width:100%; height:6px; background:#e9ecef; border-radius:3px; overflow:hidden;">
+                                <div id="passwordStrength"
+                                    style="width:0%; height:100%; background:#dc3545; transition:width 0.3s ease;">
+                                </div>
+                            </div>
+                            <p style="font-size:0.75rem; color:#6c757d; margin-top:4px;" id="passwordStrengthText">Weak
+                            </p>
+                        </div>
+                    </div>
+
+                    <div style="margin-bottom:20px;">
+                        <label style="display:block; margin-bottom:8px; color:#212529; font-weight:600;">Confirm
+                            Password</label>
+                        <input type="password" id="resetPasswordConfirm" placeholder="Re-enter your password"
+                            style="width:100%; padding:10px; border:1px solid #dee2e6; border-radius:6px; font-size:0.95rem; box-sizing:border-box;">
+                    </div>
+
+                    <button onclick="submitPasswordReset()"
+                        style="width:100%; padding:12px; background:#10b981; color:white; border:none; border-radius:6px; font-weight:600; cursor:pointer; transition:all 0.3s ease;">
+                        🔒 Reset Password
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
     <script>
         function showLoginForm() {
-    document.getElementById("registrationForm").style.display = "none";
-    document.getElementById("loginForm").style.display = "block";
-    document.querySelector(".registration-header h3").textContent = "Login to HelpReach";
+            document.getElementById("registrationForm").style.display = "none";
+            document.getElementById("loginForm").style.display = "block";
+            document.querySelector(".registration-header h3").textContent = "Login to HelpReach";
 
-    // hide "Already registered? Login here"
-    document.getElementById("loginToggleText").style.display = "none";
+            // hide "Already registered? Login here"
+            document.getElementById("loginToggleText").style.display = "none";
 
-    const btn = document.getElementById("authButton");
-    btn.textContent = "Login";
-    btn.onclick = submitLogin;
-}
+            const btn = document.getElementById("authButton");
+            btn.textContent = "Login";
+            btn.onclick = submitLogin;
+        }
 
         function showRegisterForm() {
             document.getElementById("loginForm").style.display = "none";
@@ -2275,62 +2430,65 @@ document.getElementById('donateForm').addEventListener('submit', async function 
             btn.textContent = "Register";
             btn.onclick = submitRegistration;
         }
-    function submitLogin() {
-    fetch("http://127.0.0.1:5000/api/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-            email: document.getElementById("loginEmail").value,
-            password: document.getElementById("loginPassword").value
-        })
-    })
-    .then(res => res.json())
-    .then(data => {
-        if (data.ok) {
+        function submitLogin() {
+            fetch("http://127.0.0.1:5000/api/login", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                credentials: 'include',  // IMPORTANT: Include cookies in request
+                body: JSON.stringify({
+                    email: document.getElementById("loginEmail").value,
+                    password: document.getElementById("loginPassword").value
+                })
+            })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.ok) {
 
-    const userData = {
-        name: data.user.name,
-        email: data.user.email,
-        phone: data.user.phone,
-        location: data.user.location,
-        userType: data.user.role || "donor"
-    };
+                        const userData = {
+                            id: data.user.id,
+                            name: data.user.name,
+                            email: data.user.email,
+                            phone: data.user.phone,
+                            location: data.user.location,
+                            userType: data.user.role || "donor"
+                        };
 
-    localStorage.setItem("userProfile", JSON.stringify(userData));
-    isLoggedIn = true;
+                        localStorage.setItem("userProfile", JSON.stringify(userData));
+                        userProfile = userData;  // Update global variable
+                        isLoggedIn = true;
 
-    updateProfileDisplay(userData);
-    closeRegistration();
+                        updateProfileDisplay(userData);
+                        closeRegistration();
 
-    alert("✅ Login successful");
-    resetToRegistrationForm(); 
-}
- else {
-            alert(data.error);
+                        alert("✅ Login successful");
+                        resetToRegistrationForm();
+                    }
+                    else {
+                        alert(data.error);
+                    }
+                })
+                .catch(() => alert("❌ Server error during login"));
         }
-    })
-    .catch(() => alert("❌ Server error during login"));
-}
 
     </script>
-<script>
-function resetToRegistrationForm() {
-    document.getElementById("loginForm").style.display = "none";
-    document.getElementById("registrationForm").style.display = "block";
-    document.querySelector(".registration-header h3").textContent = "Join HelpReach";
+    <script>
+        function resetToRegistrationForm() {
+            document.getElementById("loginForm").style.display = "none";
+            document.getElementById("registrationForm").style.display = "block";
+            document.querySelector(".registration-header h3").textContent = "Join HelpReach";
 
-    // show "Already registered? Login here"
-    document.getElementById("loginToggleText").style.display = "block";
+            // show "Already registered? Login here"
+            document.getElementById("loginToggleText").style.display = "block";
 
-    const btn = document.getElementById("authButton");
-    btn.textContent = "Register";
-    btn.onclick = submitRegistration;
+            const btn = document.getElementById("authButton");
+            btn.textContent = "Register";
+            btn.onclick = submitRegistration;
 
-    // clear login inputs
-    document.getElementById("loginEmail").value = "";
-    document.getElementById("loginPassword").value = "";
-}
-</script>
+            // clear login inputs
+            document.getElementById("loginEmail").value = "";
+            document.getElementById("loginPassword").value = "";
+        }
+    </script>
 
     <!-- Profile Icon (appears after registration) -->
     <button class="profile-icon" id="profileIcon" onclick="openProfileSidebar()">
@@ -2410,6 +2568,9 @@ function resetToRegistrationForm() {
             <button class="action-btn" onclick="myAccount()">
                 <i class="fas fa-cog"></i> Account
             </button>
+            <button class="action-btn" onclick="refreshSession()" style="background: #17a2b8;">
+                <i class="fas fa-sync-alt"></i> Refresh Session
+            </button>
             <button class="action-btn logout" onclick="logoutUser()">
                 <i class="fas fa-sign-out-alt"></i> Logout
             </button>
@@ -2472,6 +2633,7 @@ function resetToRegistrationForm() {
                     headers: {
                         "Content-Type": "application/json"
                     },
+                    credentials: 'include',  // IMPORTANT: Include cookies in request
                     body: JSON.stringify({
                         name,
                         email,
@@ -2489,14 +2651,16 @@ function resetToRegistrationForm() {
                 }
 
                 const userData = {
-                    name,
-                    email,
-                    location,
-                    userType: role,
-                    phone
+                    id: result.user.id,
+                    name: result.user.name,
+                    email: result.user.email,
+                    location: result.user.location,
+                    userType: result.user.role || "donor",
+                    phone: result.user.phone
                 };
 
                 localStorage.setItem("userProfile", JSON.stringify(userData));
+                userProfile = userData;  // Update global variable
                 isLoggedIn = true;
 
                 updateProfileDisplay(userData);
@@ -2505,28 +2669,48 @@ function resetToRegistrationForm() {
                 alert("✅ Registration successful!");
 
             } catch (error) {
-                console.error(error);
-                alert("❌ Server error. Please check backend connection.");
+                console.error("Registration error:", error);
+                
+                // More detailed error messages
+                if (error.message.includes("fetch")) {
+                    alert("❌ Cannot reach backend server. Is it running on http://127.0.0.1:5000?");
+                } else if (error.message.includes("email")) {
+                    alert("❌ " + error.message);
+                } else {
+                    alert("❌ Registration failed: " + (error.message || "Please check backend connection."));
+                }
             }
         }
     </script>
-
 
     <script>
         // Email sending removed. Keep globals for profile behavior.
         var guestNumber = Math.floor(Math.random() * 10000);
         var isLoggedIn = false;
+        var userProfile = null;  // Global variable for user profile
 
         // Show registration form on page load: show once per session when navigating, and also show on reload
         window.addEventListener('load', () => {
-            const userProfile = localStorage.getItem('userProfile');
+            // Reset OTP modal and forms to initial state
+            document.getElementById('otpModal').style.display = "none";
+            document.getElementById('otpStep1').style.display = "block";
+            document.getElementById('otpStep2').style.display = "none";
+            document.getElementById('otpStep3').style.display = "none";
+            document.getElementById('registrationForm').style.display = "block";
+            document.getElementById('loginForm').style.display = "none";
+            document.getElementById('loginToggleText').style.display = "block";
+            document.querySelector(".registration-header h3").textContent = "Join HelpReach";
+            currentOtpToken = null;
+            currentResetEmail = null;
+
+            userProfile = localStorage.getItem('userProfile') ? JSON.parse(localStorage.getItem('userProfile')) : null;
             const icon = document.getElementById('profileIcon'); if (icon) icon.classList.add('show');
             const fillBtn = document.getElementById('fillFormBtn'); if (fillBtn) fillBtn.classList.add('show');
 
             function getNavType() {
                 try {
                     const entries = performance.getEntriesByType && performance.getEntriesByType('navigation');
-                    if (entries && entries.length) return entries[0].type;
+                    if (entries && entries.length) return entries[0].type; // 'navigate'|'reload'|'back_forward'
                     if (performance.navigation && typeof performance.navigation.type !== 'undefined') {
                         return (performance.navigation.type === 1) ? 'reload' : 'navigate';
                     }
@@ -2539,12 +2723,12 @@ function resetToRegistrationForm() {
 
             if (userProfile) {
                 isLoggedIn = true;
-                const userData = JSON.parse(userProfile);
-                updateProfileDisplay(userData);
+                updateProfileDisplay(userProfile);
                 if (fillBtn) fillBtn.classList.remove('show');
                 return;
             }
 
+            // Show modal if this is a reload OR we haven't shown it yet this session
             if (navType === 'reload' || !sessionShown) {
                 const overlay = document.getElementById('registrationOverlay'); if (overlay) overlay.classList.add('show');
                 try { sessionStorage.setItem('registrationShown', 'true'); } catch (e) { }
@@ -2566,16 +2750,27 @@ function resetToRegistrationForm() {
 
         function showGuestProfile() {
             isLoggedIn = false;
-            document.getElementById('profileName').textContent = 'Guest #' + guestNumber;
-            document.getElementById('profileType').textContent = 'Guest';
-            document.getElementById('profileEmail').textContent = 'guest@helpreach.org';
-            document.getElementById('profilePhone').textContent = '---';
-            document.getElementById('profileLocation').textContent = 'Not specified';
-            document.getElementById('donationCount').textContent = '0';
-            document.getElementById('claimedCount').textContent = '0';
-            document.getElementById('activityLevel').textContent = 'Inactive';
-            document.getElementById('ngoInfoSection').style.display = 'none';
-            document.getElementById('profileIcon').classList.add('show');
+            const profileName = document.getElementById('profileName');
+            const profileType = document.getElementById('profileType');
+            const profileEmail = document.getElementById('profileEmail');
+            const profilePhone = document.getElementById('profilePhone');
+            const profileLocation = document.getElementById('profileLocation');
+            const donationCount = document.getElementById('donationCount');
+            const claimedCount = document.getElementById('claimedCount');
+            const activityLevel = document.getElementById('activityLevel');
+            const ngoInfoSection = document.getElementById('ngoInfoSection');
+            const profileIcon = document.getElementById('profileIcon');
+            
+            if (profileName) profileName.textContent = 'Guest #' + guestNumber;
+            if (profileType) profileType.textContent = 'Guest';
+            if (profileEmail) profileEmail.textContent = 'guest@helpreach.org';
+            if (profilePhone) profilePhone.textContent = '---';
+            if (profileLocation) profileLocation.textContent = 'Not specified';
+            if (donationCount) donationCount.textContent = '0';
+            if (claimedCount) claimedCount.textContent = '0';
+            if (activityLevel) activityLevel.textContent = 'Inactive';
+            if (ngoInfoSection) ngoInfoSection.style.display = 'none';
+            if (profileIcon) profileIcon.classList.add('show');
         }
 
         function selectUserType(type, element) {
@@ -2610,8 +2805,40 @@ function resetToRegistrationForm() {
             if (profileEmail) profileEmail.textContent = userData.email;
             if (profilePhone) profilePhone.textContent = userData.phone;
             if (profileLocation) profileLocation.textContent = userData.location;
-            if (donationCount) donationCount.textContent = '0';
-            if (claimedCount) claimedCount.textContent = '0';
+
+            // Fetch donation / claimed counts for this user
+            if (donationCount || claimedCount) {
+                (async () => {
+                    try {
+                        if (!userData || !userData.id) {
+                            if (donationCount) donationCount.textContent = '0';
+                            if (claimedCount) claimedCount.textContent = '0';
+                            return;
+                        }
+
+                        const [donRes, claimedRes] = await Promise.all([
+                            fetch('http://127.0.0.1:5000/api/donations'),
+                            fetch('http://127.0.0.1:5000/api/all-claimed-donations')
+                        ]);
+
+                        const donations = donRes.ok ? await donRes.json() : [];
+                        const claimed = claimedRes.ok ? await claimedRes.json() : [];
+
+                        const myDonations = (Array.isArray(donations) ? donations : []).filter(d => Number(d.donor_id) === Number(userData.id));
+                        const myDonationIds = new Set(myDonations.map(d => Number(d.id)));
+
+                        const myClaimed = (Array.isArray(claimed) ? claimed : []).filter(c => myDonationIds.has(Number(c.donation_id)));
+
+                        if (donationCount) donationCount.textContent = String(myDonations.length);
+                        if (claimedCount) claimedCount.textContent = String(myClaimed.length);
+                    } catch (e) {
+                        console.error('Error fetching donation counts:', e);
+                        if (donationCount) donationCount.textContent = '0';
+                        if (claimedCount) claimedCount.textContent = '0';
+                    }
+                })();
+            }
+
             if (activityLevel) activityLevel.textContent = 'New';
 
             // Ensure profile icon is visible
@@ -2690,8 +2917,242 @@ function resetToRegistrationForm() {
             }
         }
 
+        // 🔄 Refresh session - re-login to get new cookie (fixes donation issues)
+        function refreshSession() {
+            if (!isLoggedIn || !userProfile || !userProfile.email) {
+                alert('Please log in first.');
+                return;
+            }
+            
+            // Show alert with instructions
+            const confirmed = confirm(
+                '🔄 Refresh Session\n\n' +
+                'Click OK to log in again and refresh your session.\n' +
+                'This will enable donations.\n\n' +
+                'Your email: ' + userProfile.email
+            );
+            
+            if (confirmed) {
+                // Show overlay and modal (not Bootstrap, just custom CSS)
+                const overlay = document.getElementById('registrationOverlay');
+                if (overlay) overlay.classList.add('show');
+                
+                // Switch to login form
+                const loginForm = document.getElementById('loginForm');
+                const regForm = document.getElementById('registrationForm');
+                if (loginForm) loginForm.style.display = 'block';
+                if (regForm) regForm.style.display = 'none';
+                
+                // Update header
+                const header = document.querySelector(".registration-header h3");
+                if (header) header.textContent = "Refresh Session";
+                
+                // Pre-fill email
+                const emailField = document.getElementById('loginEmail');
+                if (emailField) emailField.value = userProfile.email;
+                
+                // Clear password for security
+                const passwordField = document.getElementById('loginPassword');
+                if (passwordField) passwordField.value = '';
+                
+                // Update button
+                const btn = document.getElementById("authButton");
+                if (btn) {
+                    btn.textContent = "Refresh & Login";
+                    btn.onclick = submitLogin;
+                }
+                
+                // Focus on password field
+                setTimeout(() => {
+                    if (passwordField) passwordField.focus();
+                }, 300);
+            }
+        }
+
         // Check if user is already logged in on page load (moved to window load event above)
     </script>
+    <button id="chatToggle" onclick="toggleChat()">🤖 Ask AI</button>
+    <style>
+        #chatToggle {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 14px 18px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 16px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+    </style>
+    <div id="chatbot">
+        <div id="chat-header">
+            💬 HelpReach AI
+            <button id="closeChat" onclick="closeChat()">✖</button>
+        </div>
+
+        <div id="chatbox"></div>
+
+        <div id="chat-input">
+            <input id="userInput" placeholder="Ask something..." onkeypress="handleEnter(event)" />
+            <button onclick="sendMessage()">➤</button>
+        </div>
+    </div>
+    <style>
+        #chatbot {
+            display: none;
+            /* ✅ hidden by default */
+            position: fixed;
+            bottom: 80px;
+            left: 20px;
+            width: 320px;
+            height: 420px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            flex-direction: column;
+            font-family: Arial;
+        }
+
+        #closeChat {
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+
+        #chat-header {
+            background: #4CAF50;
+            color: white;
+            padding: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 15px 15px 0 0;
+        }
+
+        #chatbox {
+            flex: 1;
+            padding: 10px;
+            background: #f4f7f9;
+            overflow-y: auto;
+        }
+
+        .user-msg {
+            text-align: right;
+            margin: 6px 0;
+        }
+
+        .user-msg span {
+            background: #4CAF50;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 15px 15px 0 15px;
+            display: inline-block;
+        }
+
+        .bot-msg {
+            text-align: left;
+            margin: 6px 0;
+        }
+
+        .bot-msg span {
+            background: #e0e0e0;
+            padding: 8px 12px;
+            border-radius: 15px 15px 15px 0;
+            display: inline-block;
+        }
+
+        #chat-input {
+            display: flex;
+            border-top: 1px solid #ddd;
+        }
+
+        #chat-input input {
+            flex: 1;
+            border: none;
+            padding: 10px;
+            outline: none;
+        }
+
+        #chat-input button {
+            border: none;
+            background: #4CAF50;
+            color: white;
+            padding: 0 18px;
+            cursor: pointer;
+        }
+    </style>
+    <script>
+        let greeted = false;
+
+        function toggleChat() {
+            const chat = document.getElementById("chatbot");
+            const chatbox = document.getElementById("chatbox");
+
+            if (chat.style.display === "none" || chat.style.display === "") {
+                chat.style.display = "flex";
+
+                if (!greeted) {
+                    chatbox.innerHTML += `
+        <div class="bot-msg">
+          <span>Hi 👋 I'm <b>HelpReach AI</b>. How can I help you today?</span>
+        </div>
+      `;
+                    chatbox.scrollTop = chatbox.scrollHeight;
+                    greeted = true;
+                }
+            }
+        }
+
+        function closeChat() {
+            document.getElementById("chatbot").style.display = "none";
+            greeted = false;
+        }
+
+        function handleEnter(event) {
+            if (event.key === "Enter") {
+                sendMessage();
+            }
+        }
+
+        function sendMessage() {
+            const input = document.getElementById("userInput");
+            const message = input.value.trim();
+            if (!message) return;
+
+            const chatbox = document.getElementById("chatbox");
+
+            chatbox.innerHTML += `
+    <div class="user-msg">
+      <span>${message}</span>
+    </div>
+  `;
+
+            fetch("http://127.0.0.1:5000/api/chatbot", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ message })
+            })
+                .then(res => res.json())
+                .then(data => {
+                    chatbox.innerHTML += `
+      <div class="bot-msg">
+        <span>${data.reply}</span>
+      </div>
+    `;
+                    chatbox.scrollTop = chatbox.scrollHeight;
+                });
+
+            input.value = "";
+        }
+    </script>
+
+
     <script src="js/api.js"></script>
 </body>
 
