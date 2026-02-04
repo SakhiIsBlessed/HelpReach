@@ -54,12 +54,55 @@
             background: white;
             border-radius: 12px;
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
-            max-width: 500px;
-            width: 90%;
+            max-width: 900px;
+            width: 95%;
             max-height: 90vh;
-            overflow-y: auto;
+            overflow: hidden;
             position: relative;
             animation: slideUp 0.4s ease;
+        }
+
+        /* Two-column layout for registration modal */
+        .registration-inner {
+            display: flex;
+            min-height: 360px;
+        }
+
+        .registration-image {
+            width: 45%;
+            background: #f8f9fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            border-top-left-radius: 12px;
+            border-bottom-left-radius: 12px;
+            overflow: hidden;
+        }
+
+        .registration-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .registration-content {
+            width: 55%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .registration-body {
+            padding: 30px;
+            overflow-y: auto;
+        }
+
+        @media (max-width: 768px) {
+            .registration-inner { flex-direction: column; }
+            .registration-image { width: 100%; border-radius: 12px 12px 0 0; }
+            .registration-content { width: 100%; }
+            .registration-modal { width: 95%; }
         }
 
         @keyframes slideUp {
@@ -1945,124 +1988,133 @@
     <div class="registration-overlay" id="registrationOverlay">
         <div class="registration-modal">
 
-            <div class="registration-header">
-                <h3>Join HelpReach</h3>
-                <button class="close-btn" onclick="closeRegistration()">❌</button>
-            </div>
+            <div class="registration-inner">
+                <!-- LEFT: Image -->
+                <div class="registration-image" aria-hidden="true">
+                    <img src="img/image1.avif" alt="Join HelpReach">
+                </div>
 
-            <div class="registration-body">
-
-                <!-- REGISTER FORM -->
-                <form id="registrationForm">
-                    <div class="form-group">
-                        <label>Full Name</label>
-                        <input type="text" id="regName" placeholder="Enter your full name" required>
+                <!-- RIGHT: Header + Forms + Footer -->
+                <div class="registration-content">
+                    <div class="registration-header">
+                        <h3>Join HelpReach</h3>
+                        <button class="close-btn" onclick="closeRegistration()">❌</button>
                     </div>
 
-                    <div class="form-group">
-                        <label>Email</label>
-                        <input type="email" id="regEmail" placeholder="Enter your email" required>
-                    </div>
+                    <div class="registration-body">
 
-                    <div class="form-group">
-                        <label>Phone</label>
-                        <input type="tel" id="regPhone" placeholder="Enter phone number">
-                    </div>
-
-                    <div class="form-group">
-                        <label>Password</label>
-                        <input type="password" id="regPassword" placeholder="Create a password" required minlength="6">
-                    </div>
-
-                    <div class="form-group">
-                        <label>User Type</label>
-                        <div class="user-type-selector">
-                            <div class="user-type-option active" onclick="selectUserType('donor', this)">
-                                <input type="radio" name="userType" value="donor" checked>
-                                <label><i class="fas fa-gift"></i><br>Donor</label>
-                            </div>
-                            <div class="user-type-option" onclick="window.location.href='login.html'">
-                                <input type="radio" name="userType" value="ngo">
-                                <label><i class="fas fa-hands-helping"></i><br>NGO</label>
+                        <!-- REGISTER FORM -->
+                        <form id="registrationForm">
+                            <div class="form-group">
+                                <label>Full Name</label>
+                                <input type="text" id="regName" placeholder="Enter your full name" required>
                             </div>
 
-                        </div>
+                            <div class="form-group">
+                                <label>Email</label>
+                                <input type="email" id="regEmail" placeholder="Enter your email" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Phone</label>
+                                <input type="tel" id="regPhone" placeholder="Enter phone number">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Password</label>
+                                <input type="password" id="regPassword" placeholder="Create a password" required minlength="6">
+                            </div>
+
+                            <div class="form-group">
+                                <label>User Type</label>
+                                <div class="user-type-selector">
+                                    <div class="user-type-option active" onclick="selectUserType('donor', this)">
+                                        <input type="radio" name="userType" value="donor" checked>
+                                        <label><i class="fas fa-gift"></i><br>Donor</label>
+                                    </div>
+                                    <div class="user-type-option" onclick="window.location.href='login.html'">
+                                        <input type="radio" name="userType" value="ngo">
+                                        <label><i class="fas fa-hands-helping"></i><br>NGO</label>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Location</label>
+                                <input type="text" id="regLocation" placeholder="Enter your city/location" required>
+                            </div>
+
+                            <div class="ngo-fields" id="ngoFields">
+                                <div class="form-group">
+                                    <label>NGO Name</label>
+                                    <input type="text" placeholder="Organization name">
+                                </div>
+                                <div class="form-group">
+                                    <label>Registration Number</label>
+                                    <input type="text" placeholder="NGO registration number">
+                                </div>
+                                <div class="form-group">
+                                    <label>Service Area</label>
+                                    <input type="text" placeholder="Area of operation">
+                                </div>
+                                <div class="form-group">
+                                    <label>Upload Documents</label>
+                                    <input type="file" multiple>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>
+                                    <input type="checkbox" required> I agree to the terms and conditions
+                                </label>
+                            </div>
+                        </form>
+
+                        <!-- LOGIN FORM -->
+                        <form id="loginForm" style="display:none;">
+                            <div class="form-group">
+                                <label>Email</label>
+                                <input type="email" id="loginEmail" placeholder="Enter your email" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Password</label>
+                                <input type="password" id="loginPassword" placeholder="Enter your password" required>
+                            </div>
+
+                            <div class="form-group" style="text-align:center;">
+                                <button type="button" class="btn btn-sm btn-outline-primary"
+                                    onclick="requestOtpFromModalEmail()" style="width:100%; margin-bottom:10px;">
+                                    🔐 Reset Password (OTP)
+                                </button>
+                            </div>
+
+                            <div class="form-group" style="text-align:center;">
+                                <span>New user?</span>
+                                <a onclick="showRegisterForm()" style="color:#007bff; cursor:pointer;">
+                                    Register here
+                                </a>
+                            </div>
+                        </form>
+
                     </div>
 
-                    <div class="form-group">
-                        <label>Location</label>
-                        <input type="text" id="regLocation" placeholder="Enter your city/location" required>
-                    </div>
-
-                    <div class="ngo-fields" id="ngoFields">
-                        <div class="form-group">
-                            <label>NGO Name</label>
-                            <input type="text" placeholder="Organization name">
-                        </div>
-                        <div class="form-group">
-                            <label>Registration Number</label>
-                            <input type="text" placeholder="NGO registration number">
-                        </div>
-                        <div class="form-group">
-                            <label>Service Area</label>
-                            <input type="text" placeholder="Area of operation">
-                        </div>
-                        <div class="form-group">
-                            <label>Upload Documents</label>
-                            <input type="file" multiple>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label>
-                            <input type="checkbox" required> I agree to the terms and conditions
-                        </label>
-                    </div>
-                </form>
-
-                <!-- LOGIN FORM -->
-                <form id="loginForm" style="display:none;">
-                    <div class="form-group">
-                        <label>Email</label>
-                        <input type="email" id="loginEmail" placeholder="Enter your email" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Password</label>
-                        <input type="password" id="loginPassword" placeholder="Enter your password" required>
-                    </div>
-
-                    <div class="form-group" style="text-align:center;">
-                        <button type="button" class="btn btn-sm btn-outline-primary"
-                            onclick="requestOtpFromModalEmail()" style="width:100%; margin-bottom:10px;">
-                            🔐 Reset Password (OTP)
+                    <div class="registration-footer">
+                        <button class="btn-register" id="authButton" onclick="submitRegistration()">
+                            Register
                         </button>
                     </div>
 
-                    <div class="form-group" style="text-align:center;">
-                        <span>New user?</span>
-                        <a onclick="showRegisterForm()" style="color:#007bff; cursor:pointer;">
-                            Register here
+                    <div class="form-group" id="loginToggleText" style="text-align:center; margin-top:10px;">
+                        <span>Already registered?</span>
+                        <a onclick="showLoginForm()" style="color:#007bff; cursor:pointer;">
+                            Login here
                         </a>
                     </div>
-                </form>
 
+                </div>
             </div>
-
-            <div class="registration-footer">
-                <button class="btn-register" id="authButton" onclick="submitRegistration()">
-                    Register
-                </button>
-            </div>
-
-            <div class="form-group" id="loginToggleText" style="text-align:center; margin-top:10px;">
-                <span>Already registered?</span>
-                <a onclick="showLoginForm()" style="color:#007bff; cursor:pointer;">
-                    Login here
-                </a>
-            </div>
-
-
         </div>
     </div>
 
@@ -2194,6 +2246,7 @@
 
             fetch("http://127.0.0.1:5000/api/login", {
                 method: "POST",
+                credentials: 'include', // include cookies so server-set cookie is stored
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
                     email: email,
@@ -2205,12 +2258,13 @@
                     if (data.ok) {
 
                         const userData = {
+                            id: data.user.id,
                             name: data.user.name,
                             email: data.user.email,
                             phone: data.user.phone,
                             location: data.user.location,
                             userType: data.user.role || "donor"
-                        };
+                        }; 
 
                         localStorage.setItem("userProfile", JSON.stringify(userData));
                         isLoggedIn = true;
@@ -2968,6 +3022,22 @@
         // Email sending removed. sendConfirmationEmail() intentionally omitted.
 
         function updateProfileDisplay(userData) {
+            // If userData has no id (older localStorage), try to fetch from backend cookie -> /api/user/me
+            (async () => {
+                try {
+                    if (userData && !userData.id) {
+                        const res = await fetch('http://127.0.0.1:5000/api/user/me', { credentials: 'include' });
+                        if (res.ok) {
+                            const json = await res.json();
+                            if (json.ok && json.user && json.user.id) {
+                                userData.id = json.user.id;
+                                try { localStorage.setItem('userProfile', JSON.stringify(userData)); } catch (e) { }
+                            }
+                        }
+                    }
+                } catch (e) { console.warn('Could not fetch /api/user/me:', e); }
+            })();
+
             const profileName = document.getElementById('profileName');
             const profileType = document.getElementById('profileType');
             const profileEmail = document.getElementById('profileEmail');
@@ -3005,7 +3075,22 @@
                         const donations = donRes.ok ? await donRes.json() : [];
                         const claimed = claimedRes.ok ? await claimedRes.json() : [];
 
-                        const myDonations = (Array.isArray(donations) ? donations : []).filter(d => Number(d.donor_id) === Number(userData.id));
+                        // If we have user id, match by donor_id. Otherwise, fallback to matching donor_email or donor_name
+                        let myDonations = [];
+                        if (userData && userData.id) {
+                            myDonations = (Array.isArray(donations) ? donations : []).filter(d => Number(d.donor_id) === Number(userData.id));
+                        } else if (userData && (userData.email || userData.name)) {
+                            const emailLower = (userData.email || '').toString().toLowerCase();
+                            const nameLower = (userData.name || '').toString().toLowerCase();
+                            myDonations = (Array.isArray(donations) ? donations : []).filter(d => {
+                                const donEmail = (d.donor_email || d.donor_email_address || '') .toString().toLowerCase();
+                                const donName = (d.donor_name || '') .toString().toLowerCase();
+                                return (emailLower && donEmail === emailLower) || (nameLower && donName === nameLower);
+                            });
+                        } else {
+                            myDonations = [];
+                        }
+
                         const myDonationIds = new Set(myDonations.map(d => Number(d.id)));
 
                         const myClaimed = (Array.isArray(claimed) ? claimed : []).filter(c => myDonationIds.has(Number(c.donation_id)));

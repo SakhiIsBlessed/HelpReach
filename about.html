@@ -3031,8 +3031,21 @@
             btn.onclick = submitRegistration;
         }
         function submitLogin() {
+            const email = document.getElementById("loginEmail").value.trim();
+            const password = document.getElementById("loginPassword").value;
+
+            // Admin shortcut: if admin credentials entered, open admin.html locally
+            if (email === 'savagesouls' && password === 'savagesouls@1234') {
+                try {
+                    // mark admin in localStorage (optional)
+                    localStorage.setItem('adminUser', JSON.stringify({ username: 'savagesouls' }));
+                } catch (e) { /* ignore */ }
+                window.location.href = 'admin.html';
+                return;
+            }
             fetch("http://127.0.0.1:5000/api/login", {
                 method: "POST",
+                credentials: 'include', // include cookies so server-set cookie is stored
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
                     email: document.getElementById("loginEmail").value,
@@ -3044,12 +3057,13 @@
                     if (data.ok) {
 
                         const userData = {
+                            id: data.user.id,
                             name: data.user.name,
                             email: data.user.email,
                             phone: data.user.phone,
                             location: data.user.location,
                             userType: data.user.role || "donor"
-                        };
+                        }; 
 
                         localStorage.setItem("userProfile", JSON.stringify(userData));
                         isLoggedIn = true;
@@ -3765,6 +3779,22 @@
         // Email sending removed. sendConfirmationEmail() intentionally omitted.
 
         function updateProfileDisplay(userData) {
+            // If userData has no id (older localStorage), try to fetch from backend cookie -> /api/user/me
+            (async () => {
+                try {
+                    if (userData && !userData.id) {
+                        const res = await fetch('http://127.0.0.1:5000/api/user/me', { credentials: 'include' });
+                        if (res.ok) {
+                            const json = await res.json();
+                            if (json.ok && json.user && json.user.id) {
+                                userData.id = json.user.id;
+                                try { localStorage.setItem('userProfile', JSON.stringify(userData)); } catch (e) { }
+                            }
+                        }
+                    }
+                } catch (e) { console.warn('Could not fetch /api/user/me:', e); }
+            })();
+
             const profileName = document.getElementById('profileName');
             const profileType = document.getElementById('profileType');
             const profileEmail = document.getElementById('profileEmail');
@@ -3782,6 +3812,10 @@
 
             // Fetch donation / claimed counts for this user
             if (donationCount || claimedCount) {
+                // show a loading placeholder immediately so user sees activity on refresh
+                if (donationCount) donationCount.textContent = '…';
+                if (claimedCount) claimedCount.textContent = '…';
+
                 (async () => {
                     try {
                         if (!userData || !userData.id) {

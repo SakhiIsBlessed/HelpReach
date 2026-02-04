@@ -1123,6 +1123,40 @@
             let renderInProgress = false; // Prevent duplicate renders
             let metricsAutoRefreshSet = false; // Ensure we only set one auto-refresh interval
 
+            // Helper: parse pickup_info and return deadline timestamp (pickup datetime + 2 hours) or null
+            function parsePickupDeadline(pickup_info) {
+                if (!pickup_info) return null;
+                try {
+                    // Common format: "address | YYYY-MM-DD HH:MM" or variations (also accepts slashes)
+                    const isoMatch = pickup_info.match(/(\d{4}[-\/]\d{1,2}[-\/]\d{1,2}).*?(\d{1,2}:\d{2})/);
+                    if (isoMatch) {
+                        const date = isoMatch[1].replace(/\//g, '-');
+                        const time = isoMatch[2].padStart(5, '0');
+                        const dstr = date + 'T' + time + ':00';
+                        const ts = new Date(dstr).getTime();
+                        if (!isNaN(ts)) return ts + (2 * 60 * 60 * 1000);
+                    }
+
+                    // Try splitting on '|' and parsing the right-hand side fully
+                    const parts = pickup_info.split('|');
+                    if (parts.length >= 2) {
+                        const right = parts.slice(1).join('|').trim();
+                        const parsed = Date.parse(right);
+                        if (!isNaN(parsed)) return parsed + (2 * 60 * 60 * 1000);
+                    }
+
+                    // Fallback: try to parse any date/time substring
+                    const dateTime = Date.parse(pickup_info);
+                    if (!isNaN(dateTime)) return dateTime + (2 * 60 * 60 * 1000);
+
+                    console.warn('parsePickupDeadline: unable to parse pickup_info:', pickup_info);
+                    return null;
+                } catch (e) {
+                    console.warn('parsePickupDeadline error:', e, pickup_info);
+                    return null;
+                }
+            }
+
             async function render() {
                 // Prevent simultaneous renders
                 if (renderInProgress) return;
@@ -1227,6 +1261,22 @@
                                 ? `<img src="http://127.0.0.1:5000/uploads/donations/${d.photo_filename}" alt="Donation photo" style="width:100%; border-radius:6px; margin-bottom:10px; max-height:200px; object-fit:cover;">`
                                 : '';
 
+                            // Add timer in NGO claimed list for Food donations (based on claimed_at)
+                            let timerHTML = '';
+                            const donationTypeLower = (donationType || '').toLowerCase();
+                            if (donationTypeLower === 'food') {
+                                // We rely on card's data-claimed-time for the timer; updateFoodTimers will compute remaining time from claimed_at + 2 hours
+                                timerHTML = `
+                                    <div class="food-timer-display" data-donation-id="${d.id}" data-claimed-time="${d.claimed_at}" style="background: linear-gradient(135deg, #fff5e6 0%, #fffbf0 100%); border: 2px solid #ffc107; border-radius: 8px; padding: 12px; margin-bottom: 12px; text-align: center;">
+                                        <div class="timer-text" style="font-size:1.6rem; font-weight:700; color:#28a745; font-family: 'Courier New', monospace; margin-bottom:8px;">--:--:--</div>
+                                        <div class="alert alert-warning mb-0 py-2 px-3 timer-alert" style="text-align:center;">
+                                            <i class="fas fa-info-circle me-2"></i>
+                                            <span class="status-text"><strong>Status: Active</strong></span>
+                                        </div>
+                                    </div>
+                                `;
+                            }
+
                             card.innerHTML = `
                     ${photoHTML}
                     <h6>${d.title || 'N/A'}</h6>
@@ -1234,6 +1284,7 @@
                     <p class="small"><strong>Qty:</strong> ${d.quantity || 'N/A'}</p>
                     <p class="small"><strong>Pickup:</strong> ${d.pickup_info || ''}</p>
                     <p class="small"><strong>Donor:</strong> ${d.donor_name || 'N/A'}</p>
+                    ${timerHTML}
                     <p class="small text-muted">📅 Claimed: ${new Date(d.claimed_at).toLocaleDateString()}</p>
                     <div class="d-flex gap-2">
                         <span class="badge bg-info">Claimed</span>
@@ -1248,6 +1299,10 @@
 
                             ngoArea.appendChild(card);
                         });
+
+                        // Debug: show how many timers were created for claimed donations (NGO view)
+                        console.log('NGO claimed timers — found', document.querySelectorAll('.food-timer-display').length);
+                        try { updateFoodTimers(); } catch (e) { console.warn('updateFoodTimers not available yet', e); }
                     } else {
                         ngoArea.innerHTML = `
                 <div class="alert alert-warning">
@@ -1266,11 +1321,19 @@
                     await filterDonations();
 
                 } catch (err) {
-                    console.error(err);
+                    console.error('Render error:', err, err && err.stack);
                     donorArea.innerHTML = `
             <div class="alert alert-danger">
-                Failed to load donations.
+                <strong>Failed to load donations.</strong>
+                <div class="mt-2"><small>${(err && err.message) ? err.message : 'Unknown error'}</small></div>
+                <div class="mt-2"><button class="btn btn-sm btn-primary" id="reload-donations-btn">Retry</button></div>
             </div>`;
+
+                    // Attach retry handler
+                    setTimeout(() => {
+                        const btn = document.getElementById('reload-donations-btn');
+                        if (btn) btn.addEventListener('click', () => render());
+                    }, 50);
                 } finally {
                     renderInProgress = false; // Reset flag
                 }
@@ -1412,18 +1475,35 @@
                         ? `<img src="http://127.0.0.1:5000/uploads/donations/${d.photo_filename}" alt="Donation photo" style="width:100%; border-radius:6px; margin-bottom:10px; max-height:200px; object-fit:cover;">`
                         : '';
 
-                    // Show timer only for claimed food donations
+                    // Show timer for FOOD donations in Active Donations Feed (based on pickup_info)
                     let timerHTML = '';
-                    const isFood = isClaimed && ((isClaimed.category && isClaimed.category.toLowerCase() === 'food') || (isClaimed.description && isClaimed.description.toLowerCase() === 'food'));
+                    const isFood = d.category && d.category.toLowerCase() === 'food';
                     if (isFood) {
-                        console.log(`Creating timer for donation ${d.id} (${d.title}) - claimed at ${isClaimed.claimed_at}`);
-                        timerHTML = `<div class="food-timer-display" data-donation-id="${d.id}" style="background: linear-gradient(135deg, #fff5e6 0%, #fffbf0 100%); border: 2px solid #ffc107; border-radius: 8px; padding: 15px; margin-bottom: 12px; text-align: center;">
-                        <div class="timer-text" style="font-size: 2.5rem; font-weight: bold; color: #28a745; font-family: 'Courier New', monospace; margin-bottom: 8px; letter-spacing: 2px;">2h 0m 0s</div>
-                        <div class="alert alert-warning mb-0 py-1 px-2 timer-alert" style="text-align: center; font-size: 0.85rem;">
-                            <i class="fas fa-info-circle me-1"></i>
-                            <span class="status-text"><strong>Status: Active</strong></span>
-                        </div>
-                    </div>`;
+                        const deadlineTs = parsePickupDeadline(d.pickup_info);
+                        console.log(`Creating timer for donation ${d.id} (${d.title}) - pickup_info: ${d.pickup_info} -> deadlineTs: ${deadlineTs}`);
+
+                        const isExpired = deadlineTs && Number(deadlineTs) <= Date.now();
+                        if (isExpired) {
+                            timerHTML = `
+                                <div class="food-timer-display" data-donation-id="${d.id}" ${deadlineTs ? `data-deadline="${deadlineTs}"` : ''} style="background: linear-gradient(135deg, #fff5e6 0%, #fffbf0 100%); border: 2px solid #ffc107; border-radius: 8px; padding: 12px; margin-bottom: 12px; text-align: center;">
+                                    <div class="timer-text" style="font-size:1.6rem; font-weight:700; color:#dc3545; font-family: 'Courier New', monospace; margin-bottom:8px;">0h 0m 0s</div>
+                                    <div class="alert alert-danger mb-0 py-2 px-3 timer-alert" style="text-align:center;">
+                                        <i class="fas fa-exclamation-triangle me-2"></i>
+                                        <span class="status-text"><strong>Status: EXPIRED</strong></span>
+                                    </div>
+                                </div>
+                            `;
+                        } else {
+                            timerHTML = `
+                                <div class="food-timer-display" data-donation-id="${d.id}" ${deadlineTs ? `data-deadline="${deadlineTs}"` : ''} style="background: linear-gradient(135deg, #fff5e6 0%, #fffbf0 100%); border: 2px solid #ffc107; border-radius: 8px; padding: 12px; margin-bottom: 12px; text-align: center;">
+                                    <div class="timer-text" style="font-size:1.6rem; font-weight:700; color:#28a745; font-family: 'Courier New', monospace; margin-bottom:8px;">--:--:--</div>
+                                    <div class="alert alert-warning mb-0 py-2 px-3 timer-alert" style="text-align:center;">
+                                        <i class="fas fa-info-circle me-2"></i>
+                                        <span class="status-text"><strong>Status: Active</strong></span>
+                                    </div>
+                                </div>
+                            `;
+                        }
                     } else if (isClaimed) {
                         console.log(`Donation ${d.id} is claimed but NOT food - category: ${isClaimed.category}, description: ${isClaimed.description}`);
                     }
@@ -1456,6 +1536,9 @@
                 });
 
                 console.log("✅ Filtering complete!");
+                console.log('Timers after render — found', document.querySelectorAll('.food-timer-display').length);
+                // Force an immediate timer update
+                try { updateFoodTimers(); } catch (e) { console.warn('updateFoodTimers not available yet', e); }
             }
 
             async function claimDonation(donationId) {
@@ -2354,6 +2437,9 @@
             // Update food donation timers every second
             function updateFoodTimers() {
                 const foodTimers = document.querySelectorAll('.food-timer-display');
+                // Debug: confirm the update loop runs and how many timers exist
+                // Use console.log to ensure visibility in default console settings
+                console.log('updateFoodTimers running — found timers:', foodTimers.length);
 
                 foodTimers.forEach(timerDiv => {
                     const donationId = timerDiv.getAttribute('data-donation-id');
@@ -2364,52 +2450,43 @@
                         return;
                     }
 
+                    // Prefer data-deadline (pickup-based) if present; otherwise fall back to claimed time + 2h
+                    const deadlineAttr = timerDiv.getAttribute('data-deadline');
                     const claimedTimeStr = card.getAttribute('data-claimed-time');
-                    const category = card.getAttribute('data-category');
+                    let timeRemaining = null;
 
-                    if (category && category.toLowerCase() === 'food' && claimedTimeStr) {
+                    let deadlineTs = null;
+                    if (deadlineAttr) {
+                        deadlineTs = Number(deadlineAttr) || Date.parse(deadlineAttr);
+                        timeRemaining = deadlineTs - Date.now();
+                    } else if (claimedTimeStr) {
                         try {
                             const claimedTimestamp = new Date(claimedTimeStr).getTime();
-                            const deadline = claimedTimestamp + (2 * 60 * 60 * 1000); // 2 hours in milliseconds
-                            const now = new Date().getTime();
-                            const timeRemaining = deadline - now;
+                            const deadline = claimedTimestamp + (2 * 60 * 60 * 1000); // 2 hours
+                            deadlineTs = deadline;
+                            timeRemaining = deadline - Date.now();
+                        } catch (e) {
+                            console.warn('Invalid claimed time for timer', donationId, claimedTimeStr);
+                            return;
+                        }
+                    } else {
+                        // No basis for a timer; skip
+                        return;
+                    }
 
-                            const timerText = timerDiv.querySelector('.timer-text');
-                            const statusText = timerDiv.querySelector('.status-text');
+                    try {
+                        const timerText = timerDiv.querySelector('.timer-text');
+                        const statusText = timerDiv.querySelector('.status-text');
 
-                            if (timeRemaining > 0) {
-                                let h = Math.floor(timeRemaining / (60 * 60 * 1000));
-                                let m = Math.floor((timeRemaining % (60 * 60 * 1000)) / (60 * 1000));
-                                let s = Math.floor((timeRemaining % (60 * 1000)) / 1000);
+                        if (timeRemaining > 0) {
+                            const h = Math.floor(timeRemaining / (60 * 60 * 1000));
+                            const m = Math.floor((timeRemaining % (60 * 60 * 1000)) / (60 * 1000));
+                            const s = Math.floor((timeRemaining % (60 * 1000)) / 1000);
 
-                                if (timerText) {
-                                    timerText.textContent = `${h}h ${m}m ${s}s`;
-                                }
-                                if (statusText) {
-                                    statusText.innerHTML = `<strong>Status: Active</strong>`;
-                                }
+                            if (timerText) timerText.textContent = `${h}h ${m}m ${s}s`;
+                            if (statusText) statusText.innerHTML = `<strong>Status: Active</strong>`;
 
-                                // Change color if less than 30 minutes
-                                if (timeRemaining < 30 * 60 * 1000) {
-                                    timerDiv.style.borderColor = '#dc3545';
-                                    if (timerText) timerText.style.color = '#dc3545';
-                                    const alert = timerDiv.querySelector('.timer-alert');
-                                    if (alert) {
-                                        alert.className = 'alert alert-danger mb-0 py-1 px-2 timer-alert';
-                                        alert.style.backgroundColor = '#f8d7da';
-                                    }
-                                } else {
-                                    timerDiv.style.borderColor = '#ffc107';
-                                    if (timerText) timerText.style.color = '#28a745';
-                                    const alert = timerDiv.querySelector('.timer-alert');
-                                    if (alert) {
-                                        alert.className = 'alert alert-warning mb-0 py-1 px-2 timer-alert';
-                                        alert.style.backgroundColor = '#fff3cd';
-                                    }
-                                }
-                            } else {
-                                if (timerText) timerText.textContent = '0h 0m 0s';
-                                if (statusText) statusText.innerHTML = `<strong>Status: EXPIRED</strong>`;
+                            if (timeRemaining < 30 * 60 * 1000) {
                                 timerDiv.style.borderColor = '#dc3545';
                                 if (timerText) timerText.style.color = '#dc3545';
                                 const alert = timerDiv.querySelector('.timer-alert');
@@ -2417,10 +2494,41 @@
                                     alert.className = 'alert alert-danger mb-0 py-1 px-2 timer-alert';
                                     alert.style.backgroundColor = '#f8d7da';
                                 }
+                            } else {
+                                timerDiv.style.borderColor = '#ffc107';
+                                if (timerText) timerText.style.color = '#28a745';
+                                const alert = timerDiv.querySelector('.timer-alert');
+                                if (alert) {
+                                    alert.className = 'alert alert-warning mb-0 py-1 px-2 timer-alert';
+                                    alert.style.backgroundColor = '#fff3cd';
+                                }
                             }
-                        } catch (err) {
-                            console.error("Error updating timer for donation", donationId, ":", err);
+                        } else {
+                            // Show a human-friendly "Expired X ago" instead of raw 0h 0m 0s
+                            if (deadlineTs) {
+                                const elapsed = Date.now() - deadlineTs;
+                                const days = Math.floor(elapsed / (24 * 60 * 60 * 1000));
+                                const hours = Math.floor((elapsed % (24 * 60 * 60 * 1000)) / (60 * 60 * 1000));
+                                const minutes = Math.floor((elapsed % (60 * 60 * 1000)) / (60 * 1000));
+                                let ago = '';
+                                if (days > 0) ago = `${days}d ${hours}h ago`;
+                                else if (hours > 0) ago = `${hours}h ${minutes}m ago`;
+                                else ago = `${minutes}m ago`;
+                                if (timerText) timerText.textContent = `Expired ${ago}`;
+                            } else {
+                                if (timerText) timerText.textContent = 'Expired';
+                            }
+                            if (statusText) statusText.innerHTML = `<strong>Status: EXPIRED</strong>`;
+                            timerDiv.style.borderColor = '#dc3545';
+                            if (timerText) timerText.style.color = '#dc3545';
+                            const alert = timerDiv.querySelector('.timer-alert');
+                            if (alert) {
+                                alert.className = 'alert alert-danger mb-0 py-1 px-2 timer-alert';
+                                alert.style.backgroundColor = '#f8d7da';
+                            }
                         }
+                    } catch (err) {
+                        console.error("Error updating timer for donation", donationId, ":", err);
                     }
                 });
             }
@@ -2528,39 +2636,45 @@
                 }
             }
 
-            startTimerBtn.addEventListener('click', (e) => {
-                e.preventDefault();
-                const inputValue = claimedTimeInput.value;
-                if (!inputValue) {
-                    alert('Please select a claimed time');
-                    return;
-                }
+            if (startTimerBtn) {
+                startTimerBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const inputValue = claimedTimeInput ? claimedTimeInput.value : null;
+                    if (!inputValue) {
+                        alert('Please select a claimed time');
+                        return;
+                    }
 
-                claimedTimestamp = new Date(inputValue).getTime();
-                timerDisplaySection.style.display = 'block';
-                timerForm.style.display = 'none';
+                    claimedTimestamp = new Date(inputValue).getTime();
+                    if (timerDisplaySection) timerDisplaySection.style.display = 'block';
+                    if (timerForm) timerForm.style.display = 'none';
 
-                if (timerInterval) clearInterval(timerInterval);
-                updateFoodTimer();
-                timerInterval = setInterval(updateFoodTimer, 1000);
+                    if (timerInterval) clearInterval(timerInterval);
+                    updateFoodTimer();
+                    timerInterval = setInterval(updateFoodTimer, 1000);
 
-                startTimerBtn.textContent = '⏱️ Timer Running...';
-                startTimerBtn.disabled = true;
-            });
+                    startTimerBtn.textContent = '⏱️ Timer Running...';
+                    startTimerBtn.disabled = true;
+                });
+            }
 
-            resetTimerBtn.addEventListener('click', () => {
-                if (timerInterval) clearInterval(timerInterval);
-                timerInterval = null;
-                claimedTimestamp = null;
-                timerDisplaySection.style.display = 'none';
-                timerForm.style.display = 'block';
-                startTimerBtn.textContent = '▶️ Start 2-Hour Timer';
-                startTimerBtn.disabled = false;
-                setDefaultTime();
-            });
+            if (resetTimerBtn) {
+                resetTimerBtn.addEventListener('click', () => {
+                    if (timerInterval) clearInterval(timerInterval);
+                    timerInterval = null;
+                    claimedTimestamp = null;
+                    if (timerDisplaySection) timerDisplaySection.style.display = 'none';
+                    if (timerForm) timerForm.style.display = 'block';
+                    if (startTimerBtn) {
+                        startTimerBtn.textContent = '▶️ Start 2-Hour Timer';
+                        startTimerBtn.disabled = false;
+                    }
+                    setDefaultTime();
+                });
+            }
 
         </script>
         <script src="js/push.js"></script>
-    </body>
+</body>
 
 </html>

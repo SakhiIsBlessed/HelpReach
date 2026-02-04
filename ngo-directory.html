@@ -1354,8 +1354,21 @@
             btn.onclick = submitRegistration;
         }
         function submitLogin() {
+            const email = document.getElementById("loginEmail").value.trim();
+            const password = document.getElementById("loginPassword").value;
+
+            // Admin shortcut: if admin credentials entered, open admin.html locally
+            if (email === 'savagesouls' && password === 'savagesouls@1234') {
+                try {
+                    // mark admin in localStorage (optional)
+                    localStorage.setItem('adminUser', JSON.stringify({ username: 'savagesouls' }));
+                } catch (e) { /* ignore */ }
+                window.location.href = 'admin.html';
+                return;
+            }
             fetch("http://127.0.0.1:5000/api/login", {
                 method: "POST",
+                credentials: 'include', // include cookies so server-set cookie is stored
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
                     email: document.getElementById("loginEmail").value,
@@ -1367,12 +1380,13 @@
                     if (data.ok) {
 
                         const userData = {
+                            id: data.user.id,
                             name: data.user.name,
                             email: data.user.email,
                             phone: data.user.phone,
                             location: data.user.location,
                             userType: data.user.role || "donor"
-                        };
+                        }; 
 
                         localStorage.setItem("userProfile", JSON.stringify(userData));
                         isLoggedIn = true;
@@ -1950,6 +1964,22 @@
         // Email sending removed. sendConfirmationEmail() intentionally omitted.
 
         function updateProfileDisplay(userData) {
+            // If userData has no id (older localStorage), try to fetch from backend cookie -> /api/user/me
+            (async () => {
+                try {
+                    if (userData && !userData.id) {
+                        const res = await fetch('http://127.0.0.1:5000/api/user/me', { credentials: 'include' });
+                        if (res.ok) {
+                            const json = await res.json();
+                            if (json.ok && json.user && json.user.id) {
+                                userData.id = json.user.id;
+                                try { localStorage.setItem('userProfile', JSON.stringify(userData)); } catch (e) { }
+                            }
+                        }
+                    }
+                } catch (e) { console.warn('Could not fetch /api/user/me:', e); }
+            })();
+
             const profileName = document.getElementById('profileName');
             const profileType = document.getElementById('profileType');
             const profileEmail = document.getElementById('profileEmail');
@@ -1983,7 +2013,22 @@
                         const donations = donRes.ok ? await donRes.json() : [];
                         const claimed = claimedRes.ok ? await claimedRes.json() : [];
 
-                        const myDonations = (Array.isArray(donations) ? donations : []).filter(d => Number(d.donor_id) === Number(userData.id));
+                        // If we have user id, match by donor_id. Otherwise, fallback to matching donor_email or donor_name
+                        let myDonations = [];
+                        if (userData && userData.id) {
+                            myDonations = (Array.isArray(donations) ? donations : []).filter(d => Number(d.donor_id) === Number(userData.id));
+                        } else if (userData && (userData.email || userData.name)) {
+                            const emailLower = (userData.email || '').toString().toLowerCase();
+                            const nameLower = (userData.name || '').toString().toLowerCase();
+                            myDonations = (Array.isArray(donations) ? donations : []).filter(d => {
+                                const donEmail = (d.donor_email || d.donor_email_address || '') .toString().toLowerCase();
+                                const donName = (d.donor_name || '') .toString().toLowerCase();
+                                return (emailLower && donEmail === emailLower) || (nameLower && donName === nameLower);
+                            });
+                        } else {
+                            myDonations = [];
+                        }
+
                         const myDonationIds = new Set(myDonations.map(d => Number(d.id)));
 
                         const myClaimed = (Array.isArray(claimed) ? claimed : []).filter(c => myDonationIds.has(Number(c.donation_id)));
