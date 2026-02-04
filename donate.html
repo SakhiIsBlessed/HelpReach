@@ -2186,6 +2186,22 @@ document.getElementById('donateForm').addEventListener('submit', async function 
                 return;
             }
 
+            // Validate pickup date/time not in the past (also prevent creating donations whose 2-hour window already expired)
+            try {
+                const pickupTs = new Date(date + 'T' + time + ':00').getTime();
+                if (isNaN(pickupTs)) {
+                    alert("❌ Invalid pickup date or time. Please correct.");
+                    return;
+                }
+                // If pickup + 2 hours is already in the past, this donation would be immediately expired
+                if (pickupTs + (2 * 60 * 60 * 1000) <= Date.now()) {
+                    alert("❌ Pickup time is in the past (or less than 2 hours remaining). Please select a future pickup time.");
+                    return;
+                }
+            } catch (e) {
+                console.warn('Pickup date validation error', e);
+            }
+
             // Create FormData to handle file uploads
             const formData = new FormData();
             formData.append('title', title);
@@ -2490,6 +2506,18 @@ document.getElementById('donateForm').addEventListener('submit', async function 
             btn.onclick = submitRegistration;
         }
         function submitLogin() {
+            const email = document.getElementById("loginEmail").value.trim();
+            const password = document.getElementById("loginPassword").value;
+
+            // Admin shortcut: if admin credentials entered, open admin.html locally
+            if (email === 'savagesouls' && password === 'savagesouls@1234') {
+                try {
+                    // mark admin in localStorage (optional)
+                    localStorage.setItem('adminUser', JSON.stringify({ username: 'savagesouls' }));
+                } catch (e) { /* ignore */ }
+                window.location.href = 'admin.html';
+                return;
+            }
             fetch("http://127.0.0.1:5000/api/login", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
@@ -2528,7 +2556,225 @@ document.getElementById('donateForm').addEventListener('submit', async function 
                 })
                 .catch(() => alert("❌ Server error during login"));
         }
+ // ==================== OTP FUNCTIONS ====================
+        let currentOtpToken = null;
+        let currentResetEmail = null;
 
+        function requestOtpFromModalEmail() {
+            const email = document.getElementById("loginEmail").value.trim();
+            if (!email) {
+                alert("⚠️ Please enter your email first");
+                return;
+            }
+            currentResetEmail = email;
+            document.getElementById("otpModal").style.display = "flex";
+            document.getElementById("displayEmail").textContent = email;
+        }
+
+        function requestOtpForReset() {
+            const email = currentResetEmail;
+            const btn = event.target;
+            btn.disabled = true;
+            btn.textContent = "📧 Sending...";
+
+            fetch("http://127.0.0.1:5000/api/user/forgot-password/request-otp", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ email })
+            })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.ok) {
+                        currentOtpToken = data.token;
+                        document.getElementById("otpStep1").style.display = "none";
+                        document.getElementById("otpStep2").style.display = "block";
+                        document.getElementById("otpAttempts").textContent = "3";
+                        document.getElementById("otpInput").value = "";
+                        startResendCooldown();
+                        alert("✅ OTP sent to " + email);
+                    } else {
+                        alert("❌ " + (data.error || "Failed to send OTP"));
+                        btn.disabled = false;
+                        btn.textContent = "📧 Send OTP to Email";
+                    }
+                })
+                .catch(err => {
+                    alert("❌ Error: " + err.message);
+                    btn.disabled = false;
+                    btn.textContent = "📧 Send OTP to Email";
+                });
+        }
+
+        function verifyOtpForReset() {
+            const otp = document.getElementById("otpInput").value.trim();
+            if (!otp || otp.length !== 6) {
+                alert("⚠️ Please enter a valid 6-digit OTP");
+                return;
+            }
+
+            fetch("http://127.0.0.1:5000/api/user/forgot-password/verify-otp", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ token: currentOtpToken, otp })
+            })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.ok) {
+                        currentOtpToken = data.token;  // ✅ Update token to verification token
+                        document.getElementById("otpStep2").style.display = "none";
+                        document.getElementById("otpStep3").style.display = "block";
+                        alert("✅ OTP verified! Now set your new password");
+                    } else {
+                        const remaining = data.attempts_remaining || 0;
+                        document.getElementById("otpAttempts").textContent = remaining;
+                        if (remaining <= 0) {
+                            alert("❌ " + data.error);
+                            closeOtpModal();
+                        } else {
+                            alert("❌ " + (data.error || "Invalid OTP") + " (" + remaining + " attempts left)");
+                        }
+                    }
+                })
+                .catch(err => alert("❌ Error: " + err.message));
+        }
+
+        function resendOtpForReset() {
+            const email = currentResetEmail;
+            const btn = event.target;
+            btn.disabled = true;
+
+            fetch("http://127.0.0.1:5000/api/user/forgot-password/resend-otp", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ token: currentOtpToken })
+            })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.ok) {
+                        currentOtpToken = data.token;
+                        document.getElementById("otpAttempts").textContent = "3";
+                        document.getElementById("otpInput").value = "";
+                        startResendCooldown();
+                        alert("✅ New OTP sent!");
+                    } else {
+                        alert("❌ " + (data.error || "Failed to resend OTP"));
+                        btn.disabled = false;
+                    }
+                })
+                .catch(err => {
+                    alert("❌ Error: " + err.message);
+                    btn.disabled = false;
+                });
+        }
+
+        function startResendCooldown() {
+            const btn = document.getElementById("resendOtpBtn");
+            const timer = document.getElementById("resendTimer");
+            let seconds = 60;
+            btn.disabled = true;
+            btn.style.opacity = "0.6";
+
+            const interval = setInterval(() => {
+                seconds--;
+                timer.textContent = seconds;
+                if (seconds <= 0) {
+                    clearInterval(interval);
+                    btn.disabled = false;
+                    btn.style.opacity = "1";
+                    timer.textContent = "60";
+                }
+            }, 1000);
+        }
+
+        function submitPasswordReset() {
+            const password = document.getElementById("resetPassword").value;
+            const passwordConfirm = document.getElementById("resetPasswordConfirm").value;
+
+            if (!password || password.length < 8) {
+                alert("⚠️ Password must be at least 8 characters");
+                return;
+            }
+            if (password !== passwordConfirm) {
+                alert("⚠️ Passwords don't match");
+                return;
+            }
+
+            const passwordPattern = /^(?=.*[!@#$%^&*]).{8,}$/;
+            if (!passwordPattern.test(password)) {
+                alert("⚠️ Password must contain at least 8 characters and 1 special character (!@#$%^&*)");
+                return;
+            }
+
+            const btn = event.target;
+            btn.disabled = true;
+            btn.textContent = "🔒 Resetting...";
+
+            fetch("http://127.0.0.1:5000/api/user/forgot-password/reset-password", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ token: currentOtpToken, new_password: password })
+            })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.ok) {
+                        alert("✅ Password reset successfully! Please login with your new password.");
+                        closeOtpModal();
+                        showLoginForm();
+                    } else {
+                        alert("❌ " + (data.error || "Failed to reset password"));
+                        btn.disabled = false;
+                        btn.textContent = "🔒 Reset Password";
+                    }
+                })
+                .catch(err => {
+                    alert("❌ Error: " + err.message);
+                    btn.disabled = false;
+                    btn.textContent = "🔒 Reset Password";
+                });
+        }
+
+        function updatePasswordStrength() {
+            const password = document.getElementById("resetPassword").value;
+            const strengthBar = document.getElementById("passwordStrength");
+            const strengthText = document.getElementById("passwordStrengthText");
+
+            let strength = 0;
+            if (password.length >= 8) strength += 25;
+            if (password.match(/[a-z]/)) strength += 25;
+            if (password.match(/[A-Z]/)) strength += 25;
+            if (password.match(/[!@#$%^&*]/)) strength += 25;
+
+            strengthBar.style.width = strength + "%";
+            if (strength < 50) {
+                strengthBar.style.background = "#dc3545";
+                strengthText.textContent = "Weak";
+            } else if (strength < 75) {
+                strengthBar.style.background = "#ffc107";
+                strengthText.textContent = "Fair";
+            } else {
+                strengthBar.style.background = "#10b981";
+                strengthText.textContent = "Strong";
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const passwordInput = document.getElementById("resetPassword");
+            if (passwordInput) {
+                passwordInput.addEventListener("input", updatePasswordStrength);
+            }
+        });
+
+        function closeOtpModal() {
+            document.getElementById("otpModal").style.display = "none";
+            document.getElementById("otpStep1").style.display = "block";
+            document.getElementById("otpStep2").style.display = "none";
+            document.getElementById("otpStep3").style.display = "none";
+            document.getElementById("otpInput").value = "";
+            document.getElementById("resetPassword").value = "";
+            document.getElementById("resetPasswordConfirm").value = "";
+            currentOtpToken = null;
+            currentResetEmail = null;
+        }
     </script>
     <script>
         function resetToRegistrationForm() {
@@ -2850,6 +3096,22 @@ document.getElementById('donateForm').addEventListener('submit', async function 
         // Email sending removed. sendConfirmationEmail() intentionally omitted.
 
         function updateProfileDisplay(userData) {
+            // If userData has no id (older localStorage), try to fetch from backend cookie -> /api/user/me
+            (async () => {
+                try {
+                    if (userData && !userData.id) {
+                        const res = await fetch('http://127.0.0.1:5000/api/user/me', { credentials: 'include' });
+                        if (res.ok) {
+                            const json = await res.json();
+                            if (json.ok && json.user && json.user.id) {
+                                userData.id = json.user.id;
+                                try { localStorage.setItem('userProfile', JSON.stringify(userData)); } catch (e) { }
+                            }
+                        }
+                    }
+                } catch (e) { console.warn('Could not fetch /api/user/me:', e); }
+            })();
+
             const profileName = document.getElementById('profileName');
             const profileType = document.getElementById('profileType');
             const profileEmail = document.getElementById('profileEmail');
@@ -2883,7 +3145,22 @@ document.getElementById('donateForm').addEventListener('submit', async function 
                         const donations = donRes.ok ? await donRes.json() : [];
                         const claimed = claimedRes.ok ? await claimedRes.json() : [];
 
-                        const myDonations = (Array.isArray(donations) ? donations : []).filter(d => Number(d.donor_id) === Number(userData.id));
+                        // If we have user id, match by donor_id. Otherwise, fallback to matching donor_email or donor_name
+                        let myDonations = [];
+                        if (userData && userData.id) {
+                            myDonations = (Array.isArray(donations) ? donations : []).filter(d => Number(d.donor_id) === Number(userData.id));
+                        } else if (userData && (userData.email || userData.name)) {
+                            const emailLower = (userData.email || '').toString().toLowerCase();
+                            const nameLower = (userData.name || '').toString().toLowerCase();
+                            myDonations = (Array.isArray(donations) ? donations : []).filter(d => {
+                                const donEmail = (d.donor_email || d.donor_email_address || '') .toString().toLowerCase();
+                                const donName = (d.donor_name || '') .toString().toLowerCase();
+                                return (emailLower && donEmail === emailLower) || (nameLower && donName === nameLower);
+                            });
+                        } else {
+                            myDonations = [];
+                        }
+
                         const myDonationIds = new Set(myDonations.map(d => Number(d.id)));
 
                         const myClaimed = (Array.isArray(claimed) ? claimed : []).filter(c => myDonationIds.has(Number(c.donation_id)));
