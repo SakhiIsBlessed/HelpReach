@@ -521,6 +521,17 @@
         .top-announcement .learn-more:hover {
             opacity: 0.9;
         }
+
+        /* Login/form error helpers */
+        .invalid-feedback {
+            color: #dc3545;
+            font-size: 0.9rem;
+            margin-top: 6px;
+            display: none;
+        }
+        .invalid-feedback.show {
+            display: block;
+        }
     </style>
 
 
@@ -2025,11 +2036,13 @@
                     <div class="form-group">
                         <label>Email</label>
                         <input type="email" id="loginEmail" placeholder="Enter your email" required>
+                        <div class="invalid-feedback" id="loginEmailError"></div>
                     </div>
 
                     <div class="form-group">
                         <label>Password</label>
                         <input type="password" id="loginPassword" placeholder="Enter your password" required>
+                        <div class="invalid-feedback" id="loginPasswordError"></div>
                     </div>
 
                     <div class="form-group" style="text-align:center;">
@@ -2178,9 +2191,40 @@
             btn.textContent = "Register";
             btn.onclick = submitRegistration;
         }
+        function isValidEmail(email) {
+            // simple email format check
+            return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+        }
+
+        function showLoginError(id, msg) {
+            const el = document.getElementById(id);
+            if (el) {
+                el.textContent = msg;
+                el.classList.add('show');
+            } else {
+                alert(msg);
+            }
+        }
+
+        function clearLoginErrors() {
+            document.querySelectorAll('#loginEmailError, #loginPasswordError').forEach(el => {
+                el.classList.remove('show');
+            });
+        }
+
         function submitLogin() {
+            clearLoginErrors();
             const email = document.getElementById("loginEmail").value.trim();
             const password = document.getElementById("loginPassword").value;
+
+            if (!isValidEmail(email)) {
+                showLoginError('loginEmailError', 'Please enter a valid email address');
+                return;
+            }
+            if (!password || password.length < 6) {
+                showLoginError('loginPasswordError', 'Password must be at least 6 characters');
+                return;
+            }
 
             // Admin shortcut: if admin credentials entered, open admin.html locally
             if (email === 'savagesouls' && password === 'savagesouls@1234') {
@@ -2233,9 +2277,10 @@
         let currentResetEmail = null;
 
         function requestOtpFromModalEmail() {
+            clearLoginErrors();
             const email = document.getElementById("loginEmail").value.trim();
-            if (!email) {
-                alert("⚠️ Please enter your email first");
+            if (!isValidEmail(email)) {
+                showLoginError('loginEmailError', 'Please enter a valid email before requesting OTP');
                 return;
             }
             currentResetEmail = email;
