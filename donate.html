@@ -1698,7 +1698,7 @@
                 <div class="form-group-wrapper">
                     <label class="form-label">
                         <i class="fas fa-cube"></i>
-                        Donation Type
+                        Donation Type <span class="text-danger">*</span>
                     </label>
                     <select id="donType" class="form-select" required>
                         <option value="">Select a donation type</option>
@@ -1712,14 +1712,14 @@
                     <div class="form-group-wrapper">
                         <label class="form-label">
                             <i class="fas fa-tag"></i>
-                            Item Type
+                            Item Type <span class="text-danger">*</span>
                         </label>
                         <input class="form-control" name="item_type" placeholder="e.g., Biryani, T-shirts" required>
                     </div>
                     <div class="form-group-wrapper">
                         <label class="form-label">
                             <i class="fas fa-list"></i>
-                            Category
+                            Category <span class="text-danger">*</span>
                         </label>
                         <select name="category" class="form-select" required>
                             <option value="">Select Category</option>
@@ -1737,7 +1737,7 @@
                     <div class="form-group-wrapper">
                         <label class="form-label">
                             <i class="fas fa-calculator"></i>
-                            Quantity (approx.)
+                            Quantity (approx.) <span class="text-danger">*</span>
                         </label>
                         <input type="number" class="form-control" name="quantity" placeholder="e.g., 50" min="1"
                             required>
@@ -1745,7 +1745,7 @@
                     <div class="form-group-wrapper">
                         <label class="form-label">
                             <i class="fas fa-map-marker-alt"></i>
-                            Pickup Location / City
+                            Pickup Location / City <span class="text-danger">*</span>
                         </label>
                         <input class="form-control" name="pickup_location" placeholder="e.g., Mumbai, Delhi" required>
                     </div>
@@ -1754,7 +1754,7 @@
                 <div class="form-group-wrapper">
                     <label class="form-label">
                         <i class="fas fa-map-marker-alt"></i>
-                        Full Pickup Address / Event Location
+                        Full Pickup Address / Event Location <span class="text-danger">*</span>
                     </label>
                     <input class="form-control" name="address" placeholder="Enter complete address for pickup" required>
                 </div>
@@ -1763,26 +1763,26 @@
                     <div class="form-group-wrapper">
                         <label class="form-label">
                             <i class="fas fa-calendar-alt"></i>
-                            Pickup Date
+                            Pickup Date <span class="text-danger">*</span>
                         </label>
-                        <input type="date" class="form-control" name="date" required>
+                        <input type="date" id="pickupDate" class="form-control" name="date" required>
                     </div>
                     <div class="form-group-wrapper">
                         <label class="form-label">
                             <i class="fas fa-clock"></i>
-                            Pickup Time
+                            Pickup Time <span class="text-danger">*</span>
                         </label>
-                        <input type="time" class="form-control" name="time" required>
+                        <input type="time" id="pickupTime" class="form-control" name="time" required>
                     </div>
                 </div>
 
                 <div class="file-input-wrapper">
                     <label class="file-input-label" for="photos">
                         <i class="fas fa-cloud-upload-alt"></i>
-                        <div>Click to upload photos (Optional)</div>
-                        <small>Helps NGOs understand your donation better</small>
+                        <div>Click to upload photos <span class="text-danger">*</span></div>
+                        <small>Photos are required — helps NGOs understand your donation better</small>
                     </label>
-                    <input type="file" id="photos" name="photos" accept="image/*" multiple>
+                    <input type="file" id="photos" name="photos" accept="image/*" multiple required>
                 </div>
 
                 <div class="form-buttons">
@@ -2213,11 +2213,21 @@ document.getElementById('donateForm').addEventListener('submit', async function 
             formData.append('donor_id', user.id || 1);
             formData.append('donor_email', user.email);
 
-            // Add photos if selected
-            if (photosInput && photosInput.files.length > 0) {
-                for (let i = 0; i < photosInput.files.length; i++) {
-                    formData.append('photos', photosInput.files[i]);
+            // Require at least one photo and append files
+            if (!photosInput || photosInput.files.length === 0) {
+                if (msg) {
+                    msg.style.display = 'block';
+                    msg.className = 'alert alert-danger';
+                    msg.textContent = '❌ Please upload at least one photo of your donation (required).';
+                    try { msg.scrollIntoView({behavior: 'smooth', block: 'center'}); } catch (e) { /* ignore */ }
+                } else {
+                    alert('❌ Please upload at least one photo of your donation (required).');
                 }
+                document.getElementById('photos')?.focus();
+                return;
+            }
+            for (let i = 0; i < photosInput.files.length; i++) {
+                formData.append('photos', photosInput.files[i]);
             }
 
             try {
@@ -2266,6 +2276,52 @@ document.getElementById('donateForm').addEventListener('submit', async function 
                 msg.textContent = "Server error. Please try again.";
             }
         });
+    </script>
+
+    <script>
+        // Date/time min and validation helpers for donation form
+        document.addEventListener('DOMContentLoaded', function () {
+            const dateInput = document.querySelector('input[name="date"]');
+            const timeInput = document.querySelector('input[name="time"]');
+            if (!dateInput || !timeInput) return;
+
+            function pad(n) { return String(n).padStart(2, '0'); }
+            const today = new Date();
+            const yyyy = today.getFullYear();
+            const mm = pad(today.getMonth() + 1);
+            const dd = pad(today.getDate());
+            const todayStr = `${yyyy}-${mm}-${dd}`;
+            dateInput.min = todayStr;
+
+            function updateTimeMin() {
+                if (dateInput.value === todayStr) {
+                    const now = new Date();
+                    now.setMinutes(now.getMinutes() + 10); // small buffer
+                    timeInput.min = pad(now.getHours()) + ':' + pad(now.getMinutes());
+                } else {
+                    timeInput.removeAttribute('min');
+                }
+            }
+
+            updateTimeMin();
+            dateInput.addEventListener('change', updateTimeMin);
+        });
+    </script>
+
+    <script>
+        // Hide top page alert when user selects photos
+        (function() {
+            const photos = document.getElementById('photos');
+            const topMsg = document.getElementById('donMsg');
+            if (!photos || !topMsg) return;
+            photos.addEventListener('change', function() {
+                if (photos.files && photos.files.length > 0) {
+                    topMsg.style.display = 'none';
+                    topMsg.textContent = '';
+                    topMsg.className = 'alert mt-3';
+                }
+            });
+        })();
     </script>
 
 
@@ -2556,7 +2612,7 @@ document.getElementById('donateForm').addEventListener('submit', async function 
                 })
                 .catch(() => alert("❌ Server error during login"));
         }
- // ==================== OTP FUNCTIONS ====================
+        // ==================== OTP FUNCTIONS ====================
         let currentOtpToken = null;
         let currentResetEmail = null;
 
@@ -3153,8 +3209,8 @@ document.getElementById('donateForm').addEventListener('submit', async function 
                             const emailLower = (userData.email || '').toString().toLowerCase();
                             const nameLower = (userData.name || '').toString().toLowerCase();
                             myDonations = (Array.isArray(donations) ? donations : []).filter(d => {
-                                const donEmail = (d.donor_email || d.donor_email_address || '') .toString().toLowerCase();
-                                const donName = (d.donor_name || '') .toString().toLowerCase();
+                                const donEmail = (d.donor_email || d.donor_email_address || '').toString().toLowerCase();
+                                const donName = (d.donor_name || '').toString().toLowerCase();
                                 return (emailLower && donEmail === emailLower) || (nameLower && donName === nameLower);
                             });
                         } else {

@@ -17,6 +17,48 @@
             transition: all 0.3s ease;
         }
 
+        /* Small statistic cards (location overview) */
+        .stat-row {
+            margin-bottom: 18px;
+        }
+
+        .stat-card {
+            background: linear-gradient(180deg, #ffffff 0%, #fbfdff 100%);
+            border-radius: 10px;
+            padding: 18px;
+            text-align: center;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.04);
+            transition: transform 0.18s ease, box-shadow 0.18s ease;
+            min-height: 90px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.06);
+        }
+
+        .stat-card .stat-title {
+            font-size: 0.85rem;
+            color: #6b7280;
+            font-weight: 700;
+        }
+
+        .stat-card .stat-value {
+            font-size: 1.6rem;
+            font-weight: 800;
+            margin-top: 6px;
+            color: #111;
+        }
+
+        .stat-card .stat-sub {
+            font-size: 0.85rem;
+            color: #9ca3af;
+            margin-top: 4px;
+        }
+
         /* Registration Modal & Profile Styles */
         .registration-overlay {
             position: fixed;
@@ -486,14 +528,57 @@
             </div>
         </div>
 
-        <!-- Statistics Bar Chart -->
+        <!-- Statistics Charts -->
         <div class="row mb-5">
             <div class="col-lg-12">
                 <div class="card p-4 card-compact">
-                    <h5 class="mb-4"><i class="fas fa-chart-bar text-primary me-2"></i>Donation Statistics</h5>
+                    <h5 class="mb-4"><i class="fas fa-chart-bar text-primary me-2"></i>Donations Overview</h5>
                     <div
                         style="background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); padding: 20px; border-radius: 12px;">
-                        <canvas id="statsChart" style="max-height: 350px;"></canvas>
+
+                        <!-- Location stats cards -->
+                        <div class="row stat-row" id="locationStatsRow">
+                            <div class="col-6 col-md-3 mb-3">
+                                <div class="stat-card" id="stat-unique-locations">
+                                    <div class="stat-title">Unique Locations</div>
+                                    <div class="stat-value">0</div>
+                                    <div class="stat-sub">Locations donors have posted</div>
+                                </div>
+                            </div>
+                            <div class="col-6 col-md-3 mb-3">
+                                <div class="stat-card" id="stat-top1">
+                                    <div class="stat-title">Top Location</div>
+                                    <div class="stat-value">—</div>
+                                    <div class="stat-sub">Donations</div>
+                                </div>
+                            </div>
+                            <div class="col-6 col-md-3 mb-3">
+                                <div class="stat-card" id="stat-top2">
+                                    <div class="stat-title">Second Location</div>
+                                    <div class="stat-value">—</div>
+                                    <div class="stat-sub">Donations</div>
+                                </div>
+                            </div>
+                            <div class="col-6 col-md-3 mb-3">
+                                <div class="stat-card" id="stat-top3">
+                                    <div class="stat-title">Third Location</div>
+                                    <div class="stat-value">—</div>
+                                    <div class="stat-sub">Donations</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row align-items-center">
+                            <!-- Left: Area chart for monthly counts (12 months) -->
+                            <div class="col-md-8 mb-3 mb-md-0">
+                                <canvas id="timeChart" style="width:100%; height:350px;"></canvas>
+                            </div>
+
+                            <!-- Right: Pie chart for category distribution -->
+                            <div class="col-md-4 d-flex align-items-center justify-content-center">
+                                <canvas id="statsChart" style="max-width:100%; max-height:350px;"></canvas>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -773,11 +858,14 @@
     </footer>
     <script>
         let donationData = [];
-        let chartInstance = null;
+        // Two separate Chart.js instances: time-series (left) and category pie (right)
+        let chartInstanceTime = null;
+        let chartInstanceCategory = null;
 
         async function render() {
             const ngoArea = document.getElementById('ngoArea');
-            ngoArea.innerHTML = '';
+            // Create a row container so we can render 3 cards per row using Bootstrap columns
+            ngoArea.innerHTML = '<div class="row g-3" id="ngoCardsRow"></div>';
 
             try {
                 // Check if user is logged in as NGO
@@ -833,17 +921,17 @@
                 let totalDelivered = receivedList.filter(d => d.received_at).length;
                 let totalQuantity = receivedList.reduce((sum, d) => sum + (d.quantity || 0), 0);
 
-                // Create bar chart
-                initStatsChart(totalReceived, totalDelivered, totalQuantity);
+                // Create category bar chart (counts across all donations)
+                initStatsChart();
 
                 // Display received donations
                 receivedList.forEach((d, idx) => {
                     const card = document.createElement('div');
                     card.className = 'card p-3 mb-3 card-compact';
 
-                    // Add photo if available
+                    // Show a compact right-side thumbnail on md+ screens, stack on small screens
                     const photoHTML = d.photo_filename
-                        ? `<img src="http://127.0.0.1:5000/uploads/donations/${d.photo_filename}" alt="Donation photo" style="width:100%; border-radius:6px; margin-bottom:10px; max-height:200px; object-fit:cover;">`
+                        ? `<div class="ms-md-3 mt-3 mt-md-0" style="width:140px; flex-shrink:0;"><img src="http://127.0.0.1:5000/uploads/donations/${d.photo_filename}" alt="Donation photo" style="width:140px; height:140px; border-radius:6px; object-fit:cover;"></div>`
                         : '';
 
                     const categoryBadge = d.category ? `<span class="badge bg-secondary me-2">${d.category}</span>` : '';
@@ -851,8 +939,7 @@
                     const receivedDate = d.received_at ? new Date(d.received_at).toLocaleDateString() : 'N/A';
 
                     card.innerHTML = `
-                ${photoHTML}
-                <div class="d-flex justify-content-between align-items-start">
+                <div class="d-flex flex-column flex-md-row align-items-start">
                     <div class="flex-grow-1">
                         <div class="d-flex align-items-center mb-2">
                             <h6 class="mb-0">${d.title}</h6>
@@ -868,6 +955,7 @@
                         <p class="small mb-1"><i class="fas fa-calendar text-secondary me-2"></i><strong>Claimed:</strong> ${claimedDate}</p>
                         <p class="small mb-0"><i class="fas fa-check text-success me-2"></i><strong>Received:</strong> ${receivedDate}</p>
                     </div>
+                    ${photoHTML}
                 </div>
                 <div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid #ddd;">
                     <button class="btn btn-sm btn-outline-primary" onclick="downloadDonationPDF(${idx}, '${d.title.replace(/'/g, "\\'")}')">
@@ -876,7 +964,11 @@
                 </div>
             `;
 
-                    ngoArea.appendChild(card);
+                    // Wrap card in a column so we can have 3 cards per row on md+ screens
+                    const col = document.createElement('div');
+                    col.className = 'col-md-4';
+                    col.appendChild(card);
+                    document.getElementById('ngoCardsRow').appendChild(col);
                 });
 
                 // Fetch expired (unclaimed) donations and render them in History with an Expired tag
@@ -891,20 +983,25 @@
                             sep.innerHTML = `<h5 class="mb-3"><i class="fas fa-clock text-danger me-2"></i>Expired Donations</h5>`;
                             ngoArea.appendChild(sep);
 
+                            // Insert a new row for expired donations so they also render in a 3-column layout
+                            const expiredRow = document.createElement('div');
+                            expiredRow.className = 'row g-3 mt-3';
+                            expiredRow.id = 'expiredRow';
+                            ngoArea.appendChild(expiredRow);
+
                             expiredList.forEach((d) => {
                                 const cardE = document.createElement('div');
                                 cardE.className = 'card p-3 mb-3 card-compact';
 
                                 const photoHTML = d.photo_filename
-                                    ? `<img src="http://127.0.0.1:5000/uploads/donations/${d.photo_filename}" alt="Donation photo" style="width:100%; border-radius:6px; margin-bottom:10px; max-height:200px; object-fit:cover;">`
+                                    ? `<div class="ms-md-3 mt-3 mt-md-0" style="width:140px; flex-shrink:0;"><img src="http://127.0.0.1:5000/uploads/donations/${d.photo_filename}" alt="Donation photo" style="width:140px; height:140px; border-radius:6px; object-fit:cover;"></div>`
                                     : '';
 
                                 const categoryBadge = d.category ? `<span class="badge bg-secondary me-2">${d.category}</span>` : '';
                                 const expiredDate = d.expired_at ? new Date(d.expired_at).toLocaleString() : 'N/A';
 
                                 cardE.innerHTML = `
-                                    ${photoHTML}
-                                    <div class="d-flex justify-content-between align-items-start">
+                                    <div class="d-flex flex-column flex-md-row align-items-start">
                                         <div class="flex-grow-1">
                                             <div class="d-flex align-items-center mb-2">
                                                 <h6 class="mb-0">${d.title}</h6>
@@ -918,10 +1015,14 @@
                                             <p class="small mb-1"><i class="fas fa-user me-2"></i><strong>Donor:</strong> ${d.donor_name || 'N/A'}</p>
                                             <p class="small mb-0"><i class="fas fa-clock me-2"></i><strong>Expired:</strong> ${expiredDate}</p>
                                         </div>
+                                        ${photoHTML}
                                     </div>
                                 `;
 
-                                ngoArea.appendChild(cardE);
+                                const colE = document.createElement('div');
+                                colE.className = 'col-md-4';
+                                colE.appendChild(cardE);
+                                document.getElementById('expiredRow').appendChild(colE);
                             });
                         }
                     }
@@ -938,88 +1039,182 @@
             }
         }
 
-        function initStatsChart(totalReceived, totalDelivered, totalQuantity) {
-            const ctx = document.getElementById('statsChart');
-            if (ctx) {
-                // Destroy previous chart if exists
-                if (chartInstance) {
-                    chartInstance.destroy();
+        async function initStatsChart() {
+            const ctxPie = document.getElementById('statsChart');
+            const ctxTime = document.getElementById('timeChart');
+
+            try {
+                // Fetch all donations and compute counts per category and per month
+                const res = await fetch('http://127.0.0.1:5000/api/donations');
+                if (!res.ok) throw new Error('Failed to fetch donations');
+                const donations = await res.json();
+
+                // --- Category counts (pie) ---
+                const counts = {};
+                donations.forEach(d => {
+                    let cat = (d.category || 'Uncategorized').trim();
+                    if (!cat) cat = 'Uncategorized';
+                    counts[cat] = (counts[cat] || 0) + 1;
+                });
+                const items = Object.entries(counts).sort((a, b) => b[1] - a[1]);
+                const catLabels = items.map(i => i[0]);
+                const catData = items.map(i => i[1]);
+                const catColors = catLabels.map((_, i) => `hsl(${(i * 40) % 360} 72% 50% / 0.95)`);
+
+                // Update location statistic cards
+                renderLocationStats(donations);
+
+                // --- Monthly counts (last 12 months) ---
+                const now = new Date();
+                const months = []; // labels like 'Feb', 'Mar'
+                const monthKeys = []; // '2026-2'
+                for (let i = 11; i >= 0; i--) {
+                    const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
+                    months.push(d.toLocaleDateString(undefined, { month: 'short' }));
+                    monthKeys.push(`${d.getFullYear()}-${d.getMonth() + 1}`);
                 }
 
-                chartInstance = new Chart(ctx, {
-                    type: 'bar',
-                    data: {
-                        labels: ['Total Claims', 'Delivered', 'Total Quantity'],
-                        datasets: [
-                            {
-                                label: 'Count',
-                                data: [totalReceived, totalDelivered, totalQuantity],
-                                backgroundColor: [
-                                    'rgba(13, 110, 253, 0.85)',
-                                    'rgba(32, 201, 151, 0.85)',
-                                    'rgba(255, 193, 7, 0.85)'
-                                ],
-                                borderColor: [
-                                    'rgba(13, 110, 253, 1)',
-                                    'rgba(32, 201, 151, 1)',
-                                    'rgba(255, 193, 7, 1)'
-                                ],
-                                borderWidth: 3,
-                                borderRadius: 8,
-                                borderSkipped: false
-                            }
-                        ]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: true,
-                        plugins: {
-                            legend: {
-                                display: true,
-                                labels: {
-                                    font: {
-                                        size: 14,
-                                        weight: 'bold'
-                                    },
-                                    padding: 15
+                const monthCounts = new Array(12).fill(0);
+                const monthIndex = new Map(monthKeys.map((k, idx) => [k, idx]));
+
+                donations.forEach(d => {
+                    const dateStr = d.created_at || d.received_at || d.posted_at || null;
+                    if (!dateStr) return;
+                    const dt = new Date(dateStr);
+                    if (isNaN(dt)) return;
+                    const key = `${dt.getFullYear()}-${dt.getMonth() + 1}`;
+                    if (monthIndex.has(key)) monthCounts[monthIndex.get(key)] += 1;
+                });
+
+                // Destroy previous charts if they exist
+                if (chartInstanceTime) chartInstanceTime.destroy();
+                if (chartInstanceCategory) chartInstanceCategory.destroy();
+
+                // --- Time-series area chart (left) ---
+                if (ctxTime) {
+                    const ctxTimeCtx = ctxTime.getContext('2d');
+                    const grad = ctxTimeCtx.createLinearGradient(0, 0, 0, 300);
+                    grad.addColorStop(0, 'rgba(13,110,253,0.65)');
+                    grad.addColorStop(1, 'rgba(13,110,253,0.06)');
+
+                    chartInstanceTime = new Chart(ctxTime, {
+                        type: 'line',
+                        data: {
+                            labels: months,
+                            datasets: [
+                                {
+                                    label: 'Donations',
+                                    data: monthCounts,
+                                    fill: true,
+                                    backgroundColor: grad,
+                                    borderColor: 'rgba(13,110,253,0.9)',
+                                    tension: 0.4,
+                                    pointRadius: 3,
+                                    pointBackgroundColor: 'rgba(13,110,253,1)'
                                 }
-                            },
-                            tooltip: {
-                                backgroundColor: 'rgba(0,0,0,0.8)',
-                                titleFont: { size: 14 },
-                                bodyFont: { size: 12 },
-                                padding: 12,
-                                cornerRadius: 8,
-                                displayColors: true,
-                                callbacks: {
-                                    label: function (context) {
-                                        return 'Count: ' + context.parsed.y;
+                            ]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: true,
+                            plugins: {
+                                legend: { display: false },
+                                tooltip: {
+                                    backgroundColor: 'rgba(0,0,0,0.8)',
+                                    callbacks: {
+                                        label: (ctx) => `Donations: ${ctx.parsed.y}`
                                     }
                                 }
-                            }
-                        },
-                        scales: {
-                            y: {
-                                beginAtZero: true,
-                                ticks: {
-                                    stepSize: 1,
-                                    font: { size: 12 }
-                                },
-                                grid: {
-                                    color: 'rgba(200, 200, 200, 0.2)'
-                                }
                             },
-                            x: {
-                                ticks: {
-                                    font: { size: 13, weight: 'bold' }
-                                },
-                                grid: {
-                                    display: false
+                            scales: {
+                                y: {
+                                    beginAtZero: true,
+                                    ticks: { stepSize: 1 }
                                 }
                             }
                         }
-                    }
+                    });
+                }
+
+                // --- Pie chart for categories (right) ---
+                if (ctxPie) {
+                    chartInstanceCategory = new Chart(ctxPie, {
+                        type: 'pie',
+                        data: {
+                            labels: catLabels,
+                            datasets: [{
+                                label: 'Donations',
+                                data: catData,
+                                backgroundColor: catColors,
+                                borderColor: '#ffffff',
+                                borderWidth: 2
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: true,
+                            plugins: {
+                                legend: { display: true, position: 'right', labels: { boxWidth: 14, padding: 12, font: { size: 12 } } },
+                                tooltip: {
+                                    backgroundColor: 'rgba(0,0,0,0.8)',
+                                    callbacks: {
+                                        label: (context) => {
+                                            const value = context.parsed || 0;
+                                            const ds = context.chart.data.datasets[context.datasetIndex];
+                                            const total = ds.data.reduce((a, b) => a + b, 0);
+                                            const pct = total ? ((value / total) * 100).toFixed(1) : '0.0';
+                                            return `Count: ${value} (${pct}%)`;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    });
+                }
+
+            } catch (err) {
+                console.error('Error creating charts:', err);
+                // Show inline warning in place of charts
+                const container = document.querySelector('#statsChart')?.parentElement?.parentElement;
+                if (container) container.innerHTML = `<div class="alert alert-warning">Unable to load charts.</div>`;
+            }
+        }
+
+        // Populate small location statistic cards (top locations)
+        function renderLocationStats(donations) {
+            try {
+                const row = document.getElementById('locationStatsRow');
+                if (!row) return;
+
+                const counts = {};
+                donations.forEach(d => {
+                    const locRaw = d.pickup_location || d.pickup_info || d.donor_location || d.location || 'Unknown';
+                    const loc = (locRaw || 'Unknown').toString().trim() || 'Unknown';
+                    counts[loc] = (counts[loc] || 0) + 1;
                 });
+
+                const items = Object.entries(counts).sort((a, b) => b[1] - a[1]);
+
+                const unique = Object.keys(counts).length;
+                const top1 = items[0] || ['—', 0];
+                const top2 = items[1] || ['—', 0];
+                const top3 = items[2] || ['—', 0];
+
+                const setCard = (id, title, value, sub) => {
+                    const el = document.getElementById(id);
+                    if (!el) return;
+                    el.querySelector('.stat-title').textContent = title;
+                    el.querySelector('.stat-value').textContent = value;
+                    el.querySelector('.stat-sub').textContent = sub;
+                };
+
+                setCard('stat-unique-locations', 'Unique Locations', unique, 'Total different locations');
+                setCard('stat-top1', 'Top Location', `${top1[0]} — ${top1[1]}`, 'Donations from top location');
+                setCard('stat-top2', '2nd Location', `${top2[0]} — ${top2[1]}`, 'Donations count');
+                setCard('stat-top3', '3rd Location', `${top3[0]} — ${top3[1]}`, 'Donations count');
+
+            } catch (err) {
+                console.error('Error rendering location stats', err);
             }
         }
 
