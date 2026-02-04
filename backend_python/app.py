@@ -1117,7 +1117,7 @@ def resend_otp():
     otp_record["resend_count"] += 1
     otp_record["expires"] = time.time() + 600  # Reset expiry
 
-    # Send new OTP
+    # Send new OTP for verification
     try:
         send_email(
             to_email=otp_record["email"],
