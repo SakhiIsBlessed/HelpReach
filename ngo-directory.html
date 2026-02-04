@@ -437,6 +437,49 @@
                 grid-template-columns: 1fr;
             }
         }
+
+        /* Prominent Register button (matching Directory_ngo) */
+        .btn-register-ngo {
+            display: inline-flex;
+            align-items: center;
+            gap: .65rem;
+            background: linear-gradient(180deg,#16a34a 0%, #34d399 100%);
+            color: #fff;
+            border: none;
+            padding: .55rem 1.1rem;
+            min-height: 42px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 1rem;
+            box-shadow: 0 8px 20px rgba(16,185,129,0.18);
+            transition: transform .15s ease, box-shadow .15s ease, opacity .15s ease;
+        }
+
+        .btn-register-ngo .btn-icon {
+            width: 34px;
+            height: 34px;
+            background: #fff;
+            color: #16a34a;
+            border-radius: 8px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+        }
+
+        .btn-register-ngo:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 14px 32px rgba(16,185,129,0.22);
+            color: #fff;
+            text-decoration: none;
+            opacity: 0.98;
+        }
+
+        .btn-register-ngo:focus {
+            outline: none;
+            box-shadow: 0 0 0 0.2rem rgba(34,197,94,0.18);
+        }
     </style>
 </head>
 
@@ -656,7 +699,7 @@
                     "Register as NGO".</p>
             </div>
             <div class="text-end">
-                <a class="btn btn-outline-primary btn-sm" href="register-ngo.html">Register as NGO</a>
+                <a class="btn btn-register-ngo" href="register-ngo.html"><span class="btn-icon" aria-hidden="true"><i class="fa fa-user-plus"></i></span><span class="btn-text ms-1">Register as NGO</span></a>
             </div>
         </div>
 
