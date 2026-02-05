@@ -459,93 +459,7 @@
             }
         }
     </style>
-    <!-- function submitRegistration() {
-            console.log('submitRegistration() called');
-            const form = document.getElementById('registrationForm');
-            if (!form) {
-                console.error('Form not found!');
-                alert('Error: Form not found');
-                return;
-            }
-
-            const userType = document.querySelector('input[name="userType"]:checked');
-            if (!userType) {
-                alert('Please select a user type');
-                return;
-            }
-
-            // Get form inputs using more specific selectors to avoid NGO field confusion
-            const formGroups = form.querySelectorAll('.form-group');
-            console.log('Form groups found:', formGroups.length);
-
-            const nameInput = formGroups[0]?.querySelector('input[type="text"]');
-            const emailInput = formGroups[1]?.querySelector('input[type="email"]');
-            const phoneInput = formGroups[2]?.querySelector('input[type="tel"]');
-            const locationInput = formGroups[4]?.querySelector('input[type="text"]');
-            const termsCheckbox = form.querySelector('input[type="checkbox"]');
-
-            console.log('Name:', nameInput?.value, 'Email:', emailInput?.value, 'Phone:', phoneInput?.value, 'Location:', locationInput?.value);
-
-            // Validate all fields
-            if (!nameInput || !nameInput.value.trim()) {
-                alert('Please enter your full name');
-                console.error('Name input missing or empty');
-                return;
-            }
-            if (!emailInput || !emailInput.value.trim()) {
-                alert('Please enter your email');
-                console.error('Email input missing or empty');
-                return;
-            }
-            if (!phoneInput || !phoneInput.value.trim()) {
-                alert('Please enter your phone number');
-                console.error('Phone input missing or empty');
-                return;
-            }
-            if (!locationInput || !locationInput.value.trim()) {
-                alert('Please enter your location');
-                console.error('Location input missing or empty');
-                return;
-            }
-            if (!termsCheckbox || !termsCheckbox.checked) {
-                alert('Please agree to the terms and conditions');
-                console.error('Terms not accepted');
-                return;
-            }
-
-            // Store user data
-            const userData = {
-                userType: userType.value,
-                name: nameInput.value.trim(),
-                email: emailInput.value.trim(),
-                phone: phoneInput.value.trim(),
-                location: locationInput.value.trim()
-            };
-
-            console.log('User data:', userData);
-            // localStorage.setItem('userProfile', JSON.stringify(userData));
-
-            isLoggedIn = true;
-
-            // Show profile icon and hide fill form button
-            const profileIcon = document.getElementById('profileIcon');
-            const fillFormBtn = document.getElementById('fillFormBtn');
-            if (profileIcon) {
-                profileIcon.classList.add('show');
-                console.log('Profile icon shown');
-            }
-            if (fillFormBtn) {
-                fillFormBtn.classList.remove('show');
-                console.log('Fill form button hidden');
-            }
-
-            // Email sending disabled — just show success message
-            alert('Registration successful!');
-            closeRegistration();
-
-            // Update profile with user data
-            updateProfileDisplay(userData);
-        } -->
+    
 
 </head>
 
@@ -2173,68 +2087,70 @@ function sendMessage() {
      
 
 
+    
     <!-- Profile Icon (appears after NGO login) -->
-<button class="profile-icon" id="profileIcon" onclick="openProfileSidebar()">
-    <i class="fas fa-building"></i>
-</button>
+    <button class="profile-icon" id="profileIcon" onclick="openProfileSidebar()">
+        <i class="fas fa-building"></i>
+    </button>
 
-<!-- Profile Overlay -->
-<div class="profile-overlay" id="profileOverlay" onclick="closeProfileSidebar()"></div>
+    <!-- Profile Overlay -->
+    <div class="profile-overlay" id="profileOverlay" onclick="closeProfileSidebar()"></div>
 
-<!-- Profile Sidebar -->
-<div class="profile-sidebar" id="profileSidebar">
-    <button class="sidebar-close" onclick="closeProfileSidebar()">✕</button>
+    <!-- Profile Sidebar -->
+    <div class="profile-sidebar" id="profileSidebar">
+        <button class="sidebar-close" onclick="closeProfileSidebar()">✕</button>
 
-    <!-- Header -->
-    <div class="profile-header">
-        <div class="profile-avatar">
-            <i class="fas fa-building"></i>
+        <!-- Header -->
+        <div class="profile-header">
+            <div class="profile-avatar">
+                <i class="fas fa-building"></i>
+            </div>
+            <div class="profile-name" id="profileName">Guest NGO</div>
+            <div class="profile-type" id="profileType">NGO</div>
+            <div class="verify-badge">
+                <i class="fas fa-check-circle"></i> Verified
+            </div>
         </div>
-        <div class="profile-name" id="profileName">Guest NGO</div>
-        <div class="profile-type" id="profileType">NGO</div>
-        <div class="verify-badge">
-            <i class="fas fa-check-circle"></i> Verified
-        </div>
-    </div>
 
-    <!-- Contact Info -->
-    <div class="profile-section">
-        <div class="profile-section-title">
-            <i class="fas fa-phone"></i> Contact Info
+        <!-- Contact Info -->
+        <div class="profile-section">
+            <div class="profile-section-title">
+                <i class="fas fa-phone"></i> Contact Info
+            </div>
+            <div class="profile-item">
+                <span class="profile-item-label">Email:</span>
+                <span class="profile-item-value" id="profileEmail">---</span>
+            </div>
+            <div class="profile-item">
+                <span class="profile-item-label">Phone:</span>
+                <span class="profile-item-value" id="profilePhone">---</span>
+            </div>
+            <div class="profile-item">
+                <span class="profile-item-label">Address:</span>
+                <span class="profile-item-value" id="profileLocation">---</span>
+            </div>
         </div>
-        <div class="profile-item">
-            <span class="profile-item-label">Email:</span>
-            <span class="profile-item-value" id="profileEmail">---</span>
-        </div>
-        <div class="profile-item">
-            <span class="profile-item-label">Phone:</span>
-            <span class="profile-item-value" id="profilePhone">---</span>
-        </div>
-        <div class="profile-item">
-            <span class="profile-item-label">Address:</span>
-            <span class="profile-item-value" id="profileLocation">---</span>
-        </div>
-    </div>
 
-  
-    <!-- NGO Info -->
-    <div class="profile-section" id="ngoInfoSection">
-        <div class="profile-section-title">
-            <i class="fas fa-building"></i> NGO Details
-        </div>
-        <div class="profile-item">
-            <span class="profile-item-label">Registration No:</span>
-            <span class="profile-item-value" id="ngoRegNumber">---</span>
-        </div>
-        <div class="profile-item">
-            <span class="profile-item-label">Category:</span>
-            <span class="profile-item-value" id="ngoCategory">---</span>
-        </div>
-        <div class="profile-item">
-            <span class="profile-item-label">Contact Person:</span>
-            <span class="profile-item-value" id="ngoContactPerson">---</span>
-        </div>
-        <div class="profile-item">
+        
+
+        <!-- NGO Info -->
+            <div class="profile-section" id="ngoInfoSection">
+                <div class="profile-section-title">
+                    <i class="fas fa-building"></i> NGO Details
+                </div>
+                <div class="profile-item">
+                    <span class="profile-item-label">Registration No:</span>
+                    <span class="profile-item-value" id="ngoRegNumber">---</span>
+                </div>
+                <div class="profile-item">
+                    <span class="profile-item-label">Category:</span>
+                    <span class="profile-item-value" id="ngoCategory">---</span>
+                </div>
+                <div class="profile-item">
+                    <span class="profile-item-label">Contact Person:</span>
+                    <span class="profile-item-value" id="ngoContactPerson">---</span>
+                </div>
+                <div class="profile-item">
                     <span class="profile-item-label">Documents Uploaded:</span>
                     <span class="profile-item-value" id="docCount">0</span>
                 </div>
@@ -2340,130 +2256,112 @@ function openUploadModal() {
             </button>
         </div>
     </div>
-    </div>
+    <script>
+        /* ================= GLOBALS ================= */
+        let isNgoLoggedIn = false;
+        let currentNgoId = null;
 
-    <!-- Quick Actions -->
-    <div class="quick-actions">
-        <button class="action-btn" onclick="editProfile()">
-            <i class="fas fa-edit"></i> Edit Profile
-        </button>
-        <button class="action-btn" onclick="manageRequests()">
-            <i class="fas fa-hands-helping"></i> Manage Requests
-        </button>
-        <button class="action-btn" onclick="notifications()">
-            <i class="fas fa-bell"></i> Alerts
-        </button>
-        <button class="action-btn" onclick="myAccount()">
-            <i class="fas fa-cog"></i> Account
-        </button>
-        <button class="action-btn logout" onclick="logoutUser()">
-            <i class="fas fa-sign-out-alt"></i> Logout
-        </button>
-    </div>
-</div>
-<script>
-/* ================= GLOBALS ================= */
-let isNgoLoggedIn = false;
-let currentNgoId = null;
+        /* ================= UPDATE SIDEBAR ================= */
+        function updateNgoProfile(ngo) {
+            if (!ngo) return;
 
-/* ================= UPDATE SIDEBAR ================= */
-function updateNgoProfile(ngo) {
-    if (!ngo) return;
+            // Header
+            document.getElementById("profileName").textContent = ngo.name || "";
+            document.getElementById("profileType").textContent = "NGO";
 
-    // Header
-    document.getElementById("profileName").textContent = ngo.name || "";
-    document.getElementById("profileType").textContent = "NGO";
+            // Contact
+            document.getElementById("profileEmail").textContent = ngo.contact_email || "---";
+            document.getElementById("profilePhone").textContent = ngo.phone || "---";
+            document.getElementById("profileLocation").textContent = ngo.address || "---";
 
-    // Contact
-    document.getElementById("profileEmail").textContent = ngo.contact_email || "---";
-    document.getElementById("profilePhone").textContent = ngo.phone || "---";
-    document.getElementById("profileLocation").textContent = ngo.address || "---";
+            // NGO details
+            document.getElementById("ngoRegNumber").textContent =
+                ngo.registration_number || "---";
+            document.getElementById("ngoCategory").textContent =
+                ngo.category || "---";
+            document.getElementById("ngoContactPerson").textContent =
+                ngo.contact_person || "---";
 
-    // NGO details
-    document.getElementById("ngoRegNumber").textContent =
-        ngo.registration_number || "---";
-    document.getElementById("ngoCategory").textContent =
-        ngo.category || "---";
-    document.getElementById("ngoContactPerson").textContent =
-        ngo.contact_person || "---";
+            // Verified badge
+            const badge = document.querySelector(".verify-badge");
+            if (badge) {
+                badge.style.display = ngo.verified ? "flex" : "none";
+            }
 
-    // Verified badge
-    const badge = document.querySelector(".verify-badge");
-    if (badge) {
-        badge.style.display = ngo.verified ? "flex" : "none";
-    }
+            // Show profile icon
+            document.getElementById("profileIcon").classList.add("show");
 
-    // Show profile icon
-    document.getElementById("profileIcon").classList.add("show");
-
-    isNgoLoggedIn = true;
-}
-
-/* ================= FETCH NGO FROM BACKEND ================= */
-async function loadNgoProfileFromBackend(ngoId) {
-    try {
-        const res = await fetch(
-            `http://127.0.0.1:5000/api/ngo/profile/${ngoId}`
-        );
-
-        const data = await res.json();
-
-        if (!res.ok || !data.ok) {
-            throw new Error(data.error || "Failed to load NGO profile");
+            isNgoLoggedIn = true;
         }
 
-        updateNgoProfile(data.ngo);
+        /* ================= FETCH NGO FROM BACKEND ================= */
+        async function loadNgoProfileFromBackend(ngoId) {
+            try {
+                const res = await fetch(
+                    `http://127.0.0.1:5000/api/ngo/profile/${ngoId}`
+                );
 
-    } catch (err) {
-        console.error("❌ Profile load error:", err);
-        alert("Unable to load NGO profile. Please login again.");
-        isNgoLoggedIn = false;
-        document.getElementById("profileIcon").classList.remove("show");
-    }
-}
-window.addEventListener("load", async () => {
-    const res = await fetch("http://127.0.0.1:5000/api/ngo/me", {
-        credentials: "include"
-    });
+                const data = await res.json();
 
-    const data = await res.json();
+                if (!res.ok || !data.ok) {
+                    throw new Error(data.error || "Failed to load NGO profile");
+                }
 
-    if (!data.ok || data.guest) {
-        showGuestNgo();
-        return;
-    }
+                updateNgoProfile(data.ngo);
 
-    updateNgoProfile(data.ngo);
-});
+            } catch (err) {
+                console.error("❌ Profile load error:", err);
+                alert("Unable to load NGO profile. Please login again.");
+                isNgoLoggedIn = false;
+                document.getElementById("profileIcon").classList.remove("show");
+            }
+        }
 
-window.addEventListener("load", () => {
-    const params = new URLSearchParams(window.location.search);
-    const ngoId = params.get("ngo_id");
+        window.addEventListener("load", async () => {
+            // First, check backend session
+            try {
+                const res = await fetch("http://127.0.0.1:5000/api/ngo/me", {
+                    credentials: "include"
+                });
 
-    if (!ngoId) {
-        showGuestNgo();   // 👈 IMPORTANT
-        return;
-    }
+                const data = await res.json();
 
-    currentNgoId = ngoId;
-    loadNgoProfileFromBackend(ngoId);
-});
+                if (data.ok && !data.guest) {
+                    updateNgoProfile(data.ngo);
+                    return;
+                }
+            } catch (err) {
+                console.error("Session check error:", err);
+            }
+
+            // If no session, check URL parameters
+            const params = new URLSearchParams(window.location.search);
+            const ngoId = params.get("ngo_id");
+
+            if (!ngoId) {
+                showGuestNgo();
+                return;
+            }
+
+            currentNgoId = ngoId;
+            loadNgoProfileFromBackend(ngoId);
+        });
 
 
-/* ================= SIDEBAR ================= */
-function openProfileSidebar() {
-    // if (!isNgoLoggedIn) return;
+        /* ================= SIDEBAR ================= */
+        function openProfileSidebar() {
+            // if (!isNgoLoggedIn) return;
 
-    document.getElementById("profileSidebar").classList.add("open");
-    document.getElementById("profileOverlay").classList.add("show");
-}
+            document.getElementById("profileSidebar").classList.add("open");
+            document.getElementById("profileOverlay").classList.add("show");
+        }
 
-function closeProfileSidebar() {
-    document.getElementById("profileSidebar").classList.remove("open");
-    document.getElementById("profileOverlay").classList.remove("show");
-}
+        function closeProfileSidebar() {
+            document.getElementById("profileSidebar").classList.remove("open");
+            document.getElementById("profileOverlay").classList.remove("show");
+        }
 
-function logoutUser() {
+        function logoutUser() {
             if (!confirm("Logout NGO account?")) return;
 
             // 1️⃣ Clear local storage/session

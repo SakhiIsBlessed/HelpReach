@@ -1215,9 +1215,9 @@
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                     <li class="nav-item"><a class="nav-link" href="ngo_index.html">Home</a></li>
                     <li class="nav-item"><a class="nav-link active" href="ngo_about.html">About</a></li>
-                   <li class="nav-item"><a class="nav-link " href="Ngo_Dashboard.html">Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link " href="Ngo_Dashboard.html">Dashboard</a></li>
                     <li class="nav-item"><a class="nav-link" href="directory_ngo.html">NGO Directory</a></li>
-                     <li class="nav-item"><a class="nav-link" href="ngo_history.html">History</a></li>
+                    <li class="nav-item"><a class="nav-link" href="ngo_history.html">History</a></li>
                     <li class="nav-item"><a class="nav-link" href="ngo_contact.html">Contact</a></li>
                 </ul>
                 <div class="d-flex ms-2">
@@ -1226,7 +1226,7 @@
             </div>
         </nav>
     </div>
-<button id="chatToggle" onclick="toggleChat()">🤖 Ask AI</button>
+    <button id="chatToggle" onclick="toggleChat()">🤖 Ask AI</button>
     <style>
         #chatToggle {
             position: fixed;
@@ -1243,18 +1243,18 @@
         }
     </style>
     <div id="chatbot">
-  <div id="chat-header">
-    💬 HelpReach AI
-    <button id="closeChat" onclick="closeChat()">✖</button>
-  </div>
+        <div id="chat-header">
+            💬 HelpReach AI
+            <button id="closeChat" onclick="closeChat()">✖</button>
+        </div>
 
-  <div id="chatbox"></div>
+        <div id="chatbox"></div>
 
-  <div id="chat-input">
-    <input id="userInput" placeholder="Ask something..." onkeypress="handleEnter(event)" />
-    <button onclick="sendMessage()">➤</button>
-  </div>
-</div>
+        <div id="chat-input">
+            <input id="userInput" placeholder="Ask something..." onkeypress="handleEnter(event)" />
+            <button onclick="sendMessage()">➤</button>
+        </div>
+    </div>
     <style>
         #chatbot {
             display: none;
@@ -1342,70 +1342,70 @@
             cursor: pointer;
         }
     </style>
-   <script>
-let greeted = false;
+    <script>
+        let greeted = false;
 
-function toggleChat() {
-  const chat = document.getElementById("chatbot");
-  const chatbox = document.getElementById("chatbox");
+        function toggleChat() {
+            const chat = document.getElementById("chatbot");
+            const chatbox = document.getElementById("chatbox");
 
-  if (chat.style.display === "none" || chat.style.display === "") {
-    chat.style.display = "flex";
+            if (chat.style.display === "none" || chat.style.display === "") {
+                chat.style.display = "flex";
 
-    if (!greeted) {
-      chatbox.innerHTML += `
+                if (!greeted) {
+                    chatbox.innerHTML += `
         <div class="bot-msg">
           <span>Hi 👋 I'm <b>HelpReach AI</b>. How can I help you today?</span>
         </div>
       `;
-      chatbox.scrollTop = chatbox.scrollHeight;
-      greeted = true;
-    }
-  }
-}
+                    chatbox.scrollTop = chatbox.scrollHeight;
+                    greeted = true;
+                }
+            }
+        }
 
-function closeChat() {
-  document.getElementById("chatbot").style.display = "none";
-  greeted = false;
-}
+        function closeChat() {
+            document.getElementById("chatbot").style.display = "none";
+            greeted = false;
+        }
 
-function handleEnter(event) {
-  if (event.key === "Enter") {
-    sendMessage();
-  }
-}
+        function handleEnter(event) {
+            if (event.key === "Enter") {
+                sendMessage();
+            }
+        }
 
-function sendMessage() {
-  const input = document.getElementById("userInput");
-  const message = input.value.trim();
-  if (!message) return;
+        function sendMessage() {
+            const input = document.getElementById("userInput");
+            const message = input.value.trim();
+            if (!message) return;
 
-  const chatbox = document.getElementById("chatbox");
+            const chatbox = document.getElementById("chatbox");
 
-  chatbox.innerHTML += `
+            chatbox.innerHTML += `
     <div class="user-msg">
       <span>${message}</span>
     </div>
   `;
 
-  fetch("http://127.0.0.1:5000/api/chatbot", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ message })
-  })
-  .then(res => res.json())
-  .then(data => {
-    chatbox.innerHTML += `
+            fetch("http://127.0.0.1:5000/api/chatbot", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ message })
+            })
+                .then(res => res.json())
+                .then(data => {
+                    chatbox.innerHTML += `
       <div class="bot-msg">
         <span>${data.reply}</span>
       </div>
     `;
-    chatbox.scrollTop = chatbox.scrollHeight;
-  });
+                    chatbox.scrollTop = chatbox.scrollHeight;
+                });
 
-  input.value = "";
-}
-</script>
+            input.value = "";
+        }
+    </script>
 
 
     <!-- Hero Start -->
@@ -1417,7 +1417,8 @@ function sendMessage() {
                         <h1 class="display-4 fw-bold typing-text" id="typingText"></h1>
                         <span class="typing-cursor"></span>
                     </div>
-                    <p class="lead mb-5">HelpReach connects event organizers and community partners with verified NGOs so surplus resources are matched and delivered to communities quickly and responsibly.</p>
+                    <p class="lead mb-5">HelpReach connects event organizers and community partners with verified NGOs
+                        so surplus resources are matched and delivered to communities quickly and responsibly.</p>
 
                     <!-- Animated Stats or Icons -->
                     <div class="row g-4 justify-content-center mb-5">
@@ -1468,13 +1469,20 @@ function sendMessage() {
             <div class="row g-5 align-items-center">
                 <div class="col-lg-6 wow fadeInLeft" data-wow-delay="0.1s">
                     <h2>Our Mission</h2>
-                    <p class="mb-3">We reduce food and item wastage by making it effortless for event organizers and community partners to connect surplus with registered NGOs. Registered NGOs receive real-time alerts and can claim available resources, ensuring extra supplies are redirected to communities in need.</p>
+                    <p class="mb-3">We reduce food and item wastage by making it effortless for event organizers and
+                        community partners to connect surplus with registered NGOs. Registered NGOs receive real-time
+                        alerts and can claim available resources, ensuring extra supplies are redirected to communities
+                        in need.</p>
                     <h5>Why we started</h5>
-                    <p>Each year, tonnes of food and usable goods are discarded after events while many communities lack timely support. HelpReach bridges that gap by providing NGOs with a simple workflow to claim, coordinate, and distribute available resources.</p>
+                    <p>Each year, tonnes of food and usable goods are discarded after events while many communities lack
+                        timely support. HelpReach bridges that gap by providing NGOs with a simple workflow to claim,
+                        coordinate, and distribute available resources.</p>
                 </div>
                 <div class="col-lg-6 wow fadeInRight" data-wow-delay="0.2s">
                     <h2>Our Story</h2>
-                    <p class="mb-3">What began as a volunteer initiative to connect leftover meals from community events has grown into a platform used by organizers and NGO partners. We focus on speed, safety and transparency so coordinated support makes real impact.</p>
+                    <p class="mb-3">What began as a volunteer initiative to connect leftover meals from community events
+                        has grown into a platform used by organizers and NGO partners. We focus on speed, safety and
+                        transparency so coordinated support makes real impact.</p>
                     <ul class="list-unstyled">
                         <li><i class="fa fa-check text-primary me-2"></i>Verified NGO partners</li>
                         <li><i class="fa fa-check text-primary me-2"></i>Simple listing & claim workflow for NGOs</li>
@@ -1492,7 +1500,9 @@ function sendMessage() {
             <div class="row g-5 align-items-center">
                 <div class="col-lg-6 wow fadeInLeft" data-wow-delay="0.1s">
                     <h2>We Are Non Profit Organization</h2>
-                    <p class="mb-3">Our organisation supports NGOs to receive and redistribute surplus food and clothing to underserved communities, reducing waste and strengthening local resilience. Resources are managed and distributed by verified NGO partners, ensuring transparency and trust.</p>
+                    <p class="mb-3">Our organisation supports NGOs to receive and redistribute surplus food and clothing
+                        to underserved communities, reducing waste and strengthening local resilience. Resources are
+                        managed and distributed by verified NGO partners, ensuring transparency and trust.</p>
 
                     <div class="row g-3 align-items-start">
                         <div class="col-auto">
@@ -1506,11 +1516,17 @@ function sendMessage() {
                         </div>
                         <div class="col">
                             <div id="missionContent" class="mission-vision-content">
-                                <p class="small text-muted">Our Mission: To strengthen local NGOs' ability to respond to community needs by providing a trusted platform to receive, manage, and track resources. We coordinate with verified partners and volunteers to ensure each resource transfer creates impact. We prioritise safety, speed and dignity while coordinating distribution of surplus food and items.</p>
+                                <p class="small text-muted">Our Mission: To strengthen local NGOs' ability to respond to
+                                    community needs by providing a trusted platform to receive, manage, and track
+                                    resources. We coordinate with verified partners and volunteers to ensure each
+                                    resource transfer creates impact. We prioritise safety, speed and dignity while
+                                    coordinating distribution of surplus food and items.</p>
                             </div>
 
                             <div id="visionContent" class="mission-vision-content d-none" aria-hidden="true">
-                                <p class="small text-muted">Our Vision: A future where surplus from gatherings and events is efficiently redirected to community partners — where every extra meal and usable item is coordinated by NGOs to support resilient communities.</p>
+                                <p class="small text-muted">Our Vision: A future where surplus from gatherings and
+                                    events is efficiently redirected to community partners — where every extra meal and
+                                    usable item is coordinated by NGOs to support resilient communities.</p>
                             </div>
                         </div>
                     </div>
@@ -1542,7 +1558,10 @@ function sendMessage() {
                 </div>
                 <div class="col-lg-6 wow fadeInRight" data-wow-delay="0.2s">
                     <h2>We Are A Strong Team</h2>
-                    <p class="mb-3">Our team is made up of volunteers, logistics coordinators and partnership managers who support NGOs in coordinating resources for communities. We coordinate pickups, perform safety checks, and maintain strong relationships with our NGO network to ensure every transfer is managed responsibly.</p>
+                    <p class="mb-3">Our team is made up of volunteers, logistics coordinators and partnership managers
+                        who support NGOs in coordinating resources for communities. We coordinate pickups, perform
+                        safety checks, and maintain strong relationships with our NGO network to ensure every transfer
+                        is managed responsibly.</p>
                     <ul class="list-unstyled">
                         <li><i class="fa fa-check text-primary me-2"></i>Experienced logistics volunteers</li>
                         <li><i class="fa fa-check text-primary me-2"></i>Community outreach coordinators</li>
@@ -2091,7 +2110,8 @@ function sendMessage() {
         <div class="container">
             <div class="section-header text-center mx-auto mb-5" style="max-width: 700px;">
                 <h1 class="display-5 mb-3">Our Focus</h1>
-                <p>We focus on connecting surplus food and usable items with verified NGO partners to serve communities efficiently. See how we support NGO operations:</p>
+                <p>We focus on connecting surplus food and usable items with verified NGO partners to serve communities
+                    efficiently. See how we support NGO operations:</p>
             </div>
             <div class="row g-4">
                 <div class="col-md-4 text-center wow fadeInUp" data-wow-delay="0.1s">
@@ -2100,7 +2120,8 @@ function sendMessage() {
                             <i class="bi bi-basket-fill" aria-hidden="true"></i>
                         </div>
                         <h5>Fresh Food Support</h5>
-                        <p class="small mb-3">Coordinate and receive surplus meals from events to ensure nutritious food is distributed to communities in need.</p>
+                        <p class="small mb-3">Coordinate and receive surplus meals from events to ensure nutritious food
+                            is distributed to communities in need.</p>
                         <a href="information.html#our-focus" class="read-more-link">Read More <i
                                 class="fa fa-arrow-right ms-2"></i></a>
                     </div>
@@ -2123,7 +2144,8 @@ function sendMessage() {
                             <i class="bi bi-people-fill" aria-hidden="true"></i>
                         </div>
                         <h5>Community Partnership</h5>
-                        <p class="small mb-3">Build strong networks between organizers and NGOs to create a sustainable ecosystem for coordinating resources and support.</p>
+                        <p class="small mb-3">Build strong networks between organizers and NGOs to create a sustainable
+                            ecosystem for coordinating resources and support.</p>
                         <a href="information.html#our-focus" class="read-more-link">Read More <i
                                 class="fa fa-arrow-right ms-2"></i></a>
                     </div>
@@ -2134,7 +2156,8 @@ function sendMessage() {
                             <i class="bi bi-truck" aria-hidden="true"></i>
                         </div>
                         <h5>Quick Logistics</h5>
-                        <p class="small mb-3">Ensure swift pickup and delivery of resources, minimizing waste and maximizing impact in real-time.</p>
+                        <p class="small mb-3">Ensure swift pickup and delivery of resources, minimizing waste and
+                            maximizing impact in real-time.</p>
                         <a href="information.html#our-focus" class="read-more-link">Read More <i
                                 class="fa fa-arrow-right ms-2"></i></a>
                     </div>
@@ -2145,7 +2168,8 @@ function sendMessage() {
                             <i class="bi bi-patch-check-fill" aria-hidden="true"></i>
                         </div>
                         <h5>Verified NGOs</h5>
-                        <p class="small mb-3">Work with verified and trusted NGO partners to ensure resources reach communities responsibly.</p>
+                        <p class="small mb-3">Work with verified and trusted NGO partners to ensure resources reach
+                            communities responsibly.</p>
                         <a href="information.html#our-focus" class="read-more-link">Read More <i
                                 class="fa fa-arrow-right ms-2"></i></a>
                     </div>
@@ -2438,21 +2462,26 @@ function sendMessage() {
                         <!-- Testimonial Cards (auto-rotates, only 1 visible) -->
                         <div class="testimonial-card active" data-index="0">
                             <div class="testimonial-stars">⭐⭐⭐⭐⭐</div>
-                            <p class="testimonial-text">"HelpReach helps our organization claim surplus meals from local events so we can serve families the same day. The process is fast, respectful, and increases our impact."</p>
+                            <p class="testimonial-text">"HelpReach helps our organization claim surplus meals from local
+                                events so we can serve families the same day. The process is fast, respectful, and
+                                increases our impact."</p>
                             <div class="testimonial-author">Ritika</div>
                             <div class="testimonial-author-role">NGO Partner</div>
                         </div>
 
                         <div class="testimonial-card" data-index="1">
                             <div class="testimonial-stars">⭐⭐⭐⭐⭐</div>
-                            <p class="testimonial-text">"As an event organizer, listing leftover food took minutes and our partner NGOs handled pickups smoothly. The coordination is seamless."</p>
+                            <p class="testimonial-text">"As an event organizer, listing leftover food took minutes and
+                                our partner NGOs handled pickups smoothly. The coordination is seamless."</p>
                             <div class="testimonial-author">Raj</div>
                             <div class="testimonial-author-role">Event Organizer</div>
                         </div>
 
                         <div class="testimonial-card" data-index="2">
                             <div class="testimonial-stars">⭐⭐⭐⭐⭐</div>
-                            <p class="testimonial-text">"Coordinating clothing drives through HelpReach allowed our NGO partners to distribute items quickly and responsibly. The results were immediate for the communities we serve."</p>
+                            <p class="testimonial-text">"Coordinating clothing drives through HelpReach allowed our NGO
+                                partners to distribute items quickly and responsibly. The results were immediate for the
+                                communities we serve."</p>
                             <div class="testimonial-author">Meera</div>
                             <div class="testimonial-author-role">NGO Partner</div>
                         </div>
@@ -2530,7 +2559,8 @@ function sendMessage() {
             <div class="row g-4 align-items-center">
                 <div class="col-lg-6 wow fadeInLeft" data-wow-delay="0.1s">
                     <h3>NGO Verification & Safety</h3>
-                    <p class="mb-3">We verify NGOs during registration to maintain trust. Every claim shows NGO details to the organizer and includes collection confirmation to close the loop.</p>
+                    <p class="mb-3">We verify NGOs during registration to maintain trust. Every claim shows NGO details
+                        to the organizer and includes collection confirmation to close the loop.</p>
                     <ul>
                         <li>Basic identity checks</li>
                         <li>Address and operation verification</li>
@@ -2539,7 +2569,8 @@ function sendMessage() {
                 </div>
                 <div class="col-lg-6 wow fadeInRight" data-wow-delay="0.2s">
                     <h3>Privacy & Food Safety</h3>
-                    <p class="mb-3">We advise organizers to list only safe, properly packed food and to follow local health guidelines. Personal contact info is shared only for coordination purposes.</p>
+                    <p class="mb-3">We advise organizers to list only safe, properly packed food and to follow local
+                        health guidelines. Personal contact info is shared only for coordination purposes.</p>
                 </div>
             </div>
         </div>
@@ -2632,7 +2663,8 @@ function sendMessage() {
                 <!-- About Section -->
                 <div class="col-lg-3 col-md-6 footer-section">
                     <h5 class="fw-bold">HelpReach</h5>
-                    <p class="small">A platform connecting organizers and NGOs to reduce food and item wastage while helping communities in need.</p>
+                    <p class="small">A platform connecting organizers and NGOs to reduce food and item wastage while
+                        helping communities in need.</p>
                     <div class="social-links">
                         <a href="#" title="Facebook" aria-label="Follow us on Facebook"><i
                                 class="fab fa-facebook-f"></i>
@@ -2943,36 +2975,36 @@ function sendMessage() {
             </div>
         </div>
 
-        
+
 
         <!-- NGO Info -->
-            <div class="profile-section" id="ngoInfoSection">
-                <div class="profile-section-title">
-                    <i class="fas fa-building"></i> NGO Details
-                </div>
-                <div class="profile-item">
-                    <span class="profile-item-label">Registration No:</span>
-                    <span class="profile-item-value" id="ngoRegNumber">---</span>
-                </div>
-                <div class="profile-item">
-                    <span class="profile-item-label">Category:</span>
-                    <span class="profile-item-value" id="ngoCategory">---</span>
-                </div>
-                <div class="profile-item">
-                    <span class="profile-item-label">Contact Person:</span>
-                    <span class="profile-item-value" id="ngoContactPerson">---</span>
-                </div>
-                <div class="profile-item">
-                    <span class="profile-item-label">Documents Uploaded:</span>
-                    <span class="profile-item-value" id="docCount">0</span>
-                </div>
-                <div style="margin-top:10px;">
-                    <button class="action-btn" onclick="openUploadModal()">
-                        <i class="fas fa-upload"></i> Upload Documents
-                    </button>
-                </div>
+        <div class="profile-section" id="ngoInfoSection">
+            <div class="profile-section-title">
+                <i class="fas fa-building"></i> NGO Details
             </div>
-            <!-- Upload Documents Modal -->
+            <div class="profile-item">
+                <span class="profile-item-label">Registration No:</span>
+                <span class="profile-item-value" id="ngoRegNumber">---</span>
+            </div>
+            <div class="profile-item">
+                <span class="profile-item-label">Category:</span>
+                <span class="profile-item-value" id="ngoCategory">---</span>
+            </div>
+            <div class="profile-item">
+                <span class="profile-item-label">Contact Person:</span>
+                <span class="profile-item-value" id="ngoContactPerson">---</span>
+            </div>
+            <div class="profile-item">
+                <span class="profile-item-label">Documents Uploaded:</span>
+                <span class="profile-item-value" id="docCount">0</span>
+            </div>
+            <div style="margin-top:10px;">
+                <button class="action-btn" onclick="openUploadModal()">
+                    <i class="fas fa-upload"></i> Upload Documents
+                </button>
+            </div>
+        </div>
+        <!-- Upload Documents Modal -->
         <div class="modal fade" id="uploadDocsModal" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -2991,12 +3023,12 @@ function sendMessage() {
                 </div>
             </div>
         </div>
-<script>
-    function openMyDocuments() {
+        <script>
+            function openMyDocuments() {
                 try { closeProfileSidebar(); } catch (e) { }
                 try { openUploadModal(); } catch (e) { alert('Upload Documents (demo) not available'); }
             }
-function openUploadModal() {
+            function openUploadModal() {
                 const modalEl = document.getElementById('uploadDocsModal');
                 if (!modalEl) return;
                 document.getElementById('ngoDocsInput').value = null;
@@ -3048,7 +3080,7 @@ function openUploadModal() {
                     alert('Upload failed');
                 }
             }
-</script>
+        </script>
         <!-- Quick Actions -->
         <div class="quick-actions">
             <button class="action-btn" onclick="editProfile()">
