@@ -2290,7 +2290,7 @@
                             phone: data.user.phone,
                             location: data.user.location,
                             userType: data.user.role || "donor"
-                        }; 
+                        };
 
                         localStorage.setItem("userProfile", JSON.stringify(userData));
                         isLoggedIn = true;
@@ -2662,8 +2662,8 @@
                             const emailLower = (userData.email || '').toString().toLowerCase();
                             const nameLower = (userData.name || '').toString().toLowerCase();
                             myDonations = (Array.isArray(donations) ? donations : []).filter(d => {
-                                const donEmail = (d.donor_email || d.donor_email_address || '') .toString().toLowerCase();
-                                const donName = (d.donor_name || '') .toString().toLowerCase();
+                                const donEmail = (d.donor_email || d.donor_email_address || '').toString().toLowerCase();
+                                const donName = (d.donor_name || '').toString().toLowerCase();
                                 return (emailLower && donEmail === emailLower) || (nameLower && donName === nameLower);
                             });
                         } else {

@@ -1204,24 +1204,7 @@
             </div>
         </div>
 
-        <!-- Account Info -->
-        <div class="profile-section">
-            <div class="profile-section-title">
-                <i class="fas fa-chart-line"></i> NGO Activity
-            </div>
-            <div class="profile-item">
-                <span class="profile-item-label">Requests Raised:</span>
-                <span class="profile-item-value" id="requestCount">--</span>
-            </div>
-            <div class="profile-item">
-                <span class="profile-item-label">Fulfilled:</span>
-                <span class="profile-item-value" id="fulfilledCount">--</span>
-            </div>
-            <div class="profile-item">
-                <span class="profile-item-label">Status:</span>
-                <span class="profile-item-value" id="activityLevel">--</span>
-            </div>
-        </div>
+       
 
         <!-- NGO Info -->
         <div class="profile-section" id="ngoInfoSection">
@@ -1240,6 +1223,112 @@
                 <span class="profile-item-label">Contact Person:</span>
                 <span class="profile-item-value" id="ngoContactPerson">---</span>
             </div>
+            <div class="profile-item">
+                    <span class="profile-item-label">Documents Uploaded:</span>
+                    <span class="profile-item-value" id="docCount">0</span>
+                </div>
+                <div style="margin-top:10px;">
+                    <button class="action-btn" onclick="openUploadModal()">
+                        <i class="fas fa-upload"></i> Upload Documents
+                    </button>
+                </div>
+            </div>
+            <!-- Upload Documents Modal -->
+        <div class="modal fade" id="uploadDocsModal" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Upload NGO Documents</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="file" id="ngoDocsInput" multiple />
+                        <div class="mt-2" id="uploadedDocsList"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-primary" onclick="submitUploadDocs()">Upload</button>
+                        <button class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+<script>
+    function openMyDocuments() {
+                try { closeProfileSidebar(); } catch (e) { }
+                try { openUploadModal(); } catch (e) { alert('Upload Documents (demo) not available'); }
+            }
+function openUploadModal() {
+                const modalEl = document.getElementById('uploadDocsModal');
+                if (!modalEl) return;
+                document.getElementById('ngoDocsInput').value = null;
+                const bs = new bootstrap.Modal(modalEl);
+                bs.show();
+                // Load current documents from server
+                getMyDocuments(currentNgoId);
+            }
+
+            async function submitUploadDocs() {
+                const input = document.getElementById('ngoDocsInput');
+                if (!input || !input.files || input.files.length === 0) {
+                    alert('Please select one or more files to upload.');
+                    return;
+                }
+
+                if (!currentNgoId) { alert('Please login as NGO first'); return; }
+
+                const form = new FormData();
+                Array.from(input.files).forEach(f => form.append('documents', f));
+
+                try {
+                    const uploadBtn = document.querySelector('#uploadDocsModal .modal-footer .btn-primary');
+                    const prevText = uploadBtn.textContent;
+                    uploadBtn.textContent = 'Uploading...';
+                    uploadBtn.disabled = true;
+
+                    const res = await fetch(`http://127.0.0.1:5000/api/ngo/${currentNgoId}/documents`, {
+                        method: 'POST',
+                        credentials: 'include',
+                        body: form
+                    });
+
+                    const data = await res.json();
+
+                    if (res.ok && data.ok) {
+                        alert('Files uploaded successfully');
+                        // Refresh list
+                        getMyDocuments(currentNgoId);
+                    } else {
+                        alert('Upload failed: ' + (data.error || 'Unknown error'));
+                    }
+
+                    uploadBtn.textContent = prevText;
+                    uploadBtn.disabled = false;
+
+                } catch (err) {
+                    console.error('Upload error:', err);
+                    alert('Upload failed');
+                }
+            }
+</script>
+        <!-- Quick Actions -->
+        <div class="quick-actions">
+            <button class="action-btn" onclick="editProfile()">
+                <i class="fas fa-edit"></i> Edit Profile
+            </button>
+            <button class="action-btn" onclick="manageRequests()">
+                <i class="fas fa-hands-helping"></i> Manage Requests
+            </button>
+            <button class="action-btn" onclick="notifications()">
+                <i class="fas fa-bell"></i> Alerts
+            </button>
+            <button class="action-btn" onclick="myAccount()">
+                <i class="fas fa-cog"></i> Account
+            </button>
+            <button class="action-btn logout" onclick="logoutUser()">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </button>
+        </div>
+    </div>
         </div>
 
         <!-- Quick Actions -->
@@ -1366,16 +1455,27 @@
             document.getElementById("profileOverlay").classList.remove("show");
         }
 
-        function logoutUser() {
+         function logoutUser() {
             if (!confirm("Logout NGO account?")) return;
 
-            // 1️⃣ Reset UI to Guest
+            // 1️⃣ Clear local storage/session
+            localStorage.removeItem("ngo_id");
+            sessionStorage.removeItem("ngo_id");
+
+            // 2️⃣ Reset UI to Guest
             showGuestNgo();
 
-            // 2️⃣ Remove ngo_id from URL
-            window.history.replaceState({}, document.title, "ngo_index.html");
+            // 3️⃣ Call logout API to clear backend session
+            fetch("http://127.0.0.1:5000/api/ngo/logout", {
+                method: "POST",
+                credentials: "include"
+            }).catch(err => console.error("Logout error:", err));
 
-            // 3️⃣ Redirect to login page
+            // 4️⃣ Remove ngo_id from URL
+            window.history.replaceState({}, document.title, "ngo_about.html");
+
+            // 5️⃣ Close sidebar and redirect
+            closeProfileSidebar();
             setTimeout(() => {
                 window.location.href = "ngo_index.html";
             }, 300);
@@ -1386,27 +1486,44 @@
     <script>
         /* ================= RESET TO GUEST ================= */
         function showGuestNgo() {
+            // Reset all profile information
             document.getElementById("profileName").textContent = "Guest NGO";
             document.getElementById("profileType").textContent = "Guest";
 
+            // Clear contact info
             document.getElementById("profileEmail").textContent = "---";
             document.getElementById("profilePhone").textContent = "---";
             document.getElementById("profileLocation").textContent = "---";
 
+            // Clear NGO details
             document.getElementById("ngoRegNumber").textContent = "---";
             document.getElementById("ngoCategory").textContent = "---";
             document.getElementById("ngoContactPerson").textContent = "---";
 
+            // Hide verification badge
             const badge = document.querySelector(".verify-badge");
             if (badge) badge.style.display = "none";
 
-            document.getElementById("profileIcon").classList.remove("show");
+            // Hide profile icon
+            const profileIcon = document.getElementById("profileIcon");
+            if (profileIcon) {
+                profileIcon.classList.remove("show");
+                profileIcon.style.display = "none";
+            }
 
+            // Reset global state
             isNgoLoggedIn = false;
             currentNgoId = null;
+
+            // Close any open sidebar
+            const sidebar = document.getElementById("profileSidebar");
+            if (sidebar) sidebar.classList.remove("open");
+
+            // Clear overlay
+            const overlay = document.getElementById("profileOverlay");
+            if (overlay) overlay.classList.remove("show");
         }
     </script>
-
 
 </body>
 

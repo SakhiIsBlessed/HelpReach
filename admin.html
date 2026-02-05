@@ -292,7 +292,8 @@
 
     <!-- Navbar Start -->
     <!-- Sidebar -->
-    <div class="sidebar bg-white shadow-sm" id="sidebar" style="width:240px;position:fixed;top:0;left:0;bottom:0;overflow:auto;z-index:1030;">
+    <div class="sidebar bg-white shadow-sm" id="sidebar"
+        style="width:240px;position:fixed;top:0;left:0;bottom:0;overflow:auto;z-index:1030;">
         <div class="sidebar-header p-3 border-bottom">
             <a class="d-flex align-items-center text-decoration-none" href="index.html">
                 <img src="logo.svg" alt="HelpReach" style="height:32px" class="me-2">
@@ -300,28 +301,39 @@
             </a>
         </div>
         <nav class="nav flex-column p-2">
-            <a class="nav-link active d-flex align-items-center py-2" href="#dashboardSection"><i class="fa fa-tachometer-alt me-2 text-primary"></i> Dashboard</a>
-            <a class="nav-link d-flex align-items-center py-2" href="#usersSection"><i class="fa fa-users me-2 text-primary"></i> Users</a>
-            <a class="nav-link d-flex align-items-center py-2" href="#ngosSection"><i class="fa fa-hand-holding-heart me-2 text-primary"></i> NGOs</a>
-            <a class="nav-link d-flex align-items-center py-2" href="#donationsSection"><i class="fa fa-gift me-2 text-primary"></i> Donations</a>
-            <a class="nav-link d-flex align-items-center py-2" href="#reportsSection"><i class="fa fa-chart-line me-2 text-primary"></i> Reports</a>
-            <a class="nav-link d-flex align-items-center py-2" href="#notificationsSection"><i class="fa fa-bell me-2 text-primary"></i> Notifications</a>
-            <a class="nav-link d-flex align-items-center py-2" href="#settingsSection"><i class="fa fa-cog me-2 text-primary"></i> Settings</a>
-            <a class="nav-link text-danger d-flex align-items-center py-2 mt-2" href="#" onclick="onLogout()"><i class="fa fa-sign-out-alt me-2"></i> Logout</a>
+            <a class="nav-link active d-flex align-items-center py-2" href="#dashboardSection"><i
+                    class="fa fa-tachometer-alt me-2 text-primary"></i> Dashboard</a>
+            <a class="nav-link d-flex align-items-center py-2" href="#usersSection"><i
+                    class="fa fa-users me-2 text-primary"></i> Users</a>
+            <a class="nav-link d-flex align-items-center py-2" href="#ngosSection"><i
+                    class="fa fa-hand-holding-heart me-2 text-primary"></i> NGOs</a>
+            <a class="nav-link d-flex align-items-center py-2" href="#donationsSection"><i
+                    class="fa fa-gift me-2 text-primary"></i> Donations</a>
+            <a class="nav-link d-flex align-items-center py-2" href="#reportsSection"><i
+                    class="fa fa-chart-line me-2 text-primary"></i> Reports</a>
+            <a class="nav-link d-flex align-items-center py-2" href="#notificationsSection"><i
+                    class="fa fa-bell me-2 text-primary"></i> Notifications</a>
+            <a class="nav-link d-flex align-items-center py-2" href="#settingsSection"><i
+                    class="fa fa-cog me-2 text-primary"></i> Settings</a>
+            <a class="nav-link text-danger d-flex align-items-center py-2 mt-2" href="#" onclick="onLogout()"><i
+                    class="fa fa-sign-out-alt me-2"></i> Logout</a>
         </nav>
     </div>
 
     <!-- Topbar -->
-    <nav class="topbar navbar navbar-light bg-white shadow-sm fixed-top d-flex" style="left:240px;right:0;height:64px;z-index:1020;border-bottom:1px solid #eef2f6;">
+    <nav class="topbar navbar navbar-light bg-white shadow-sm fixed-top d-flex"
+        style="left:240px;right:0;height:64px;z-index:1020;border-bottom:1px solid #eef2f6;">
         <div class="container-fluid d-flex align-items-center justify-content-between">
             <div class="d-flex align-items-center gap-2">
-                <button class="btn btn-outline-secondary d-md-none" onclick="toggleSidebar()"><i class="fa fa-bars"></i></button>
+                <button class="btn btn-outline-secondary d-md-none" onclick="toggleSidebar()"><i
+                        class="fa fa-bars"></i></button>
                 <h4 class="mb-0">Admin Dashboard</h4>
             </div>
             <div class="d-flex align-items-center gap-3">
                 <div class="position-relative">
                     <button class="btn btn-outline-secondary" id="notifBtn"><i class="fa fa-bell"></i></button>
-                    <span id="notifBadge" class="badge bg-danger position-absolute top-0 start-100 translate-middle" style="font-size:10px;">3</span>
+                    <span id="notifBadge" class="badge bg-danger position-absolute top-0 start-100 translate-middle"
+                        style="font-size:10px;">3</span>
                 </div>
                 <div class="dropdown">
                     <a href="#" class="d-flex align-items-center text-decoration-none" data-bs-toggle="dropdown">
@@ -334,7 +346,9 @@
                     <ul class="dropdown-menu dropdown-menu-end">
                         <li><a class="dropdown-item" href="#">Profile</a></li>
                         <li><a class="dropdown-item" href="#">Settings</a></li>
-                        <li><hr class="dropdown-divider"></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
                         <li><a class="dropdown-item text-danger" href="#" onclick="onLogout()">Logout</a></li>
                     </ul>
                 </div>
@@ -349,7 +363,8 @@
                     <div class="small text-muted">Manage donors, NGOs, and donations</div>
                 </div>
                 <div class="d-flex gap-2 align-items-center">
-                    <input id="globalSearch" class="form-control form-control-sm" placeholder="Search users, NGOs, donations..." style="width:320px">
+                    <input id="globalSearch" class="form-control form-control-sm"
+                        placeholder="Search users, NGOs, donations..." style="width:320px">
                     <button class="btn btn-outline-secondary btn-sm" onclick="refreshDashboard()">Refresh</button>
                 </div>
             </div>
@@ -360,7 +375,9 @@
                     <div class="col-6 col-md-3">
                         <div class="card p-3 shadow-sm rounded-lg border-0">
                             <div class="d-flex align-items-center">
-                                <div class="me-3 bg-primary text-white rounded-circle p-2" style="width:44px;height:44px;display:flex;align-items:center;justify-content:center"><i class="fa fa-users fa-lg"></i></div>
+                                <div class="me-3 bg-primary text-white rounded-circle p-2"
+                                    style="width:44px;height:44px;display:flex;align-items:center;justify-content:center">
+                                    <i class="fa fa-users fa-lg"></i></div>
                                 <div>
                                     <div class="small text-muted">Total Users</div>
                                     <div class="h5 fw-bold" id="cardUsers">0</div>
@@ -371,7 +388,9 @@
                     <div class="col-6 col-md-3">
                         <div class="card p-3 shadow-sm rounded-lg border-0">
                             <div class="d-flex align-items-center">
-                                <div class="me-3 bg-primary text-white rounded-circle p-2" style="width:44px;height:44px;display:flex;align-items:center;justify-content:center"><i class="fa fa-gift fa-lg"></i></div>
+                                <div class="me-3 bg-primary text-white rounded-circle p-2"
+                                    style="width:44px;height:44px;display:flex;align-items:center;justify-content:center">
+                                    <i class="fa fa-gift fa-lg"></i></div>
                                 <div>
                                     <div class="small text-muted">Total Donations</div>
                                     <div class="h5 fw-bold" id="cardTotalDonations">0</div>
@@ -382,7 +401,9 @@
                     <div class="col-6 col-md-3">
                         <div class="card p-3 shadow-sm rounded-lg border-0">
                             <div class="d-flex align-items-center">
-                                <div class="me-3 bg-primary text-white rounded-circle p-2" style="width:44px;height:44px;display:flex;align-items:center;justify-content:center"><i class="fa fa-circle-notch fa-lg"></i></div>
+                                <div class="me-3 bg-primary text-white rounded-circle p-2"
+                                    style="width:44px;height:44px;display:flex;align-items:center;justify-content:center">
+                                    <i class="fa fa-circle-notch fa-lg"></i></div>
                                 <div>
                                     <div class="small text-muted">Active Donations</div>
                                     <div class="h5 fw-bold" id="cardActive">0</div>
@@ -393,7 +414,9 @@
                     <div class="col-6 col-md-3">
                         <div class="card p-3 shadow-sm rounded-lg border-0">
                             <div class="d-flex align-items-center">
-                                <div class="me-3 bg-primary text-white rounded-circle p-2" style="width:44px;height:44px;display:flex;align-items:center;justify-content:center"><i class="fa fa-check fa-lg"></i></div>
+                                <div class="me-3 bg-primary text-white rounded-circle p-2"
+                                    style="width:44px;height:44px;display:flex;align-items:center;justify-content:center">
+                                    <i class="fa fa-check fa-lg"></i></div>
                                 <div>
                                     <div class="small text-muted">Completed Donations</div>
                                     <div class="h5 fw-bold" id="cardCompleted">0</div>
@@ -422,7 +445,12 @@
                             <div class="table-responsive">
                                 <table class="table table-sm" id="latestDonations">
                                     <thead>
-                                        <tr><th>Name</th><th>Donor</th><th>Amount</th><th>Status</th></tr>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Donor</th>
+                                            <th>Amount</th>
+                                            <th>Status</th>
+                                        </tr>
                                     </thead>
                                     <tbody></tbody>
                                 </table>
@@ -449,7 +477,8 @@
                         <div class="card p-3 shadow-sm">
                             <h5 class="mb-2">Recent Activity</h5>
                             <ul id="recentActivity" class="list-unstyled small text-muted mb-0">
-                                <li class="py-2 border-bottom">No recent activity — your dashboard will populate as donations and NGOs are added.</li>
+                                <li class="py-2 border-bottom">No recent activity — your dashboard will populate as
+                                    donations and NGOs are added.</li>
                             </ul>
                         </div>
                     </div>
@@ -460,10 +489,17 @@
             <section id="usersSection" class="section d-none">
                 <div class="card p-3 shadow-sm">
                     <h5>User Management</h5>
-                    <input id="userSearchSection" class="form-control form-control-sm mb-3" placeholder="Search users...">
+                    <input id="userSearchSection" class="form-control form-control-sm mb-3"
+                        placeholder="Search users...">
                     <div class="table-responsive" style="max-height:420px;overflow:auto">
                         <table class="table table-sm" id="userTableSection">
-                            <thead><tr><th>Name</th><th>Email</th><th>Actions</th></tr></thead>
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
                             <tbody></tbody>
                         </table>
                     </div>
@@ -490,7 +526,8 @@
                                 <option value="Claimed">Claimed</option>
                                 <option value="Completed">Completed</option>
                             </select>
-                            <input id="donationSearchSection" class="form-control form-control-sm" placeholder="Search donations..." style="width:220px">
+                            <input id="donationSearchSection" class="form-control form-control-sm"
+                                placeholder="Search donations..." style="width:220px">
                         </div>
                     </div>
                     <div class="table-responsive" style="max-height:520px;overflow:auto">
@@ -531,201 +568,342 @@
             <section id="settingsSection" class="section d-none">
                 <div class="card p-3 shadow-sm">
                     <h5>Settings</h5>
-                    <p class="small text-muted">Manage site settings, email templates, and other admin preferences here.</p>
+                    <p class="small text-muted">Manage site settings, email templates, and other admin preferences here.
+                    </p>
                 </div>
             </section>
 
-    <style>
-        /* Visual polish: stronger contrast, bolder text, smooth rendering */
-        html,body{ -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; text-rendering:optimizeLegibility }
-        body{ color:#0f1724 !important; font-weight:500; background:linear-gradient(180deg,#fbfcfe 0%, #ffffff 100%) }
-        h1,h2,h3,h4,h5{ font-weight:800; color:#0b1724 }
-        .small.text-muted, .muted{ color:#6b7280; font-weight:600 }
+            <style>
+                /* Visual polish: stronger contrast, bolder text, smooth rendering */
+                html,
+                body {
+                    -webkit-font-smoothing: antialiased;
+                    -moz-osx-font-smoothing: grayscale;
+                    text-rendering: optimizeLegibility
+                }
 
-        /* Sidebar */
-        .sidebar{ background:#ffffff; border-right:1px solid #edf2f7 }
-        .sidebar .nav-link{ color:#0b1724; border-radius:8px; padding-left:18px; font-weight:700; display:flex; align-items:center; gap:10px; transition:all .14s ease }
-        .sidebar .nav-link i{ color:#06b6d4; width:22px; text-align:center }
+                body {
+                    color: #0f1724 !important;
+                    font-weight: 500;
+                    background: linear-gradient(180deg, #fbfcfe 0%, #ffffff 100%)
+                }
 
-        /* Make table headers more prominent ✅ */
-        /* Targets Donations (both full and latest) and User Management */
-        #donationTableSection thead th,
-        #latestDonations thead th,
-        #userTableSection thead th {
-            font-weight: 900 !important; /* stronger bold */
-            color: #0b1724 !important; /* darker for contrast */
-            font-size: 14px; /* slightly larger for clarity */
-            letter-spacing: 0.2px;
-        }
-        .sidebar .nav-link:hover{ background:#f1f9ff; transform:translateX(4px) }
-        .sidebar .nav-link.active{ background:linear-gradient(90deg,#e6f7ff,#fff); box-shadow:inset 0 0 0 1px rgba(6,182,212,0.08); border-left:4px solid #06b6d4 }
+                h1,
+                h2,
+                h3,
+                h4,
+                h5 {
+                    font-weight: 800;
+                    color: #0b1724
+                }
 
-        /* Topbar */
-        .topbar{ background:#fff; border-bottom:1px solid #eef2f6 }
-        .topbar h4 { font-weight:800 }
-        .topbar .btn-outline-secondary{ border-color:#e6eef8 }
+                .small.text-muted,
+                .muted {
+                    color: #6b7280;
+                    font-weight: 600
+                }
 
-        /* Cards, tables, buttons */
-        .card{ border-radius:14px; transition:transform .16s ease, box-shadow .16s ease; border:1px solid #eef2f6 }
-        .card:hover{ transform:translateY(-6px); box-shadow:0 12px 30px rgba(16,24,40,0.06) }
-        .table-sm th{ font-weight:700; color:#0b1724; }
-        .table-sm td{ font-weight:600; color:#1f2937 }
+                /* Sidebar */
+                .sidebar {
+                    background: #ffffff;
+                    border-right: 1px solid #edf2f7
+                }
 
-        /* Badges */
-        .badge-status-open{background:#e7f5ff;color:#055160}
-        .badge-status-claimed{background:#fff4e6;color:#7a3e00}
-        .badge-status-completed{background:#e6ffed;color:#03543f}
+                .sidebar .nav-link {
+                    color: #0b1724;
+                    border-radius: 8px;
+                    padding-left: 18px;
+                    font-weight: 700;
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
+                    transition: all .14s ease
+                }
 
-        /* Buttons */
-        .btn-primary-custom{ background:linear-gradient(90deg,#06b6d4,#3b82f6); border:0; color:#fff; box-shadow:0 6px 18px rgba(59,130,246,0.12) }
-        .btn-outline-secondary{ border-radius:8px }
+                .sidebar .nav-link i {
+                    color: #06b6d4;
+                    width: 22px;
+                    text-align: center
+                }
 
-        /* Misc */
-        #latestDonations td, #latestDonations th{font-size:13px}
-        .list-unstyled li{ font-weight:600 }
-        .rounded-lg{ border-radius:12px }
+                /* Make table headers more prominent ✅ */
+                /* Targets Donations (both full and latest) and User Management */
+                #donationTableSection thead th,
+                #latestDonations thead th,
+                #userTableSection thead th {
+                    font-weight: 900 !important;
+                    /* stronger bold */
+                    color: #0b1724 !important;
+                    /* darker for contrast */
+                    font-size: 14px;
+                    /* slightly larger for clarity */
+                    letter-spacing: 0.2px;
+                }
 
-        @media (max-width:991px){
-            .sidebar{left:-100%;transition:left .16s ease}
-            .sidebar.open{left:0}
-            .topbar{left:0}
-            .main-content{margin-left:0;padding-top:84px}
-        }
-    </style>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script>
-        // New dashboard scripts
-        let users = [], donations = [], ngos = [];
-        let donationChart = null;
+                .sidebar .nav-link:hover {
+                    background: #f1f9ff;
+                    transform: translateX(4px)
+                }
 
-        async function fetchData(){
-            try{
-                const [uRes,dRes,cRes,nRes] = await Promise.all([
-                    fetch('http://127.0.0.1:5000/api/users'),
-                    fetch('http://127.0.0.1:5000/api/donations'),
-                    fetch('http://127.0.0.1:5000/api/all-claimed-donations'),
-                    fetch('http://127.0.0.1:5000/api/ngos')
-                ]);
-                users = uRes.ok ? await uRes.json() : [];
-                const donationsRaw = dRes.ok ? await dRes.json() : [];
-                const claimedRaw = cRes.ok ? await cRes.json() : [];
-                ngos = nRes.ok ? await nRes.json() : [];
-                const claimedSet = new Set((claimedRaw||[]).map(c=>Number(c.donation_id)));
-                donations = (Array.isArray(donationsRaw)?donationsRaw:[]).map(d=>({
-                    id:d.id,name:d.title||'',donor:d.donor_name||'',amount:d.amount||d.quantity||'',requirement:d.category||d.description||'',status: claimedSet.has(Number(d.id)) ? 'Claimed' : (d.status||'Open')
-                }));
-            }catch(e){
-                console.error('fetch error',e);
-                users = [{name:'Alex Green',email:'alex@example.com'},{name:'Priya Singh',email:'priya@example.com'}];
-                donations = [{id:1,name:'Winter Clothes',donor:'John',amount:'100',requirement:'Children',status:'Open'},{id:2,name:'Canned Food',donor:'Maria',amount:'50',requirement:'Families',status:'Claimed'},{id:3,name:'School Books',donor:'Local',amount:'200',requirement:'Education',status:'Completed'}];
-                ngos = [{name:'Care Org',approved:false,location:'City'},{name:'Hope Foundation',approved:true,location:'Town'}];
-            }
-            renderAll();
-        }
+                .sidebar .nav-link.active {
+                    background: linear-gradient(90deg, #e6f7ff, #fff);
+                    box-shadow: inset 0 0 0 1px rgba(6, 182, 212, 0.08);
+                    border-left: 4px solid #06b6d4
+                }
 
-        function renderAll(){ renderStats(); renderDonationTable(); renderUserTable(); renderNgoApprovals(); renderNotifications(); renderChart(); }
+                /* Topbar */
+                .topbar {
+                    background: #fff;
+                    border-bottom: 1px solid #eef2f6
+                }
 
-        // Section navigation helper
-        function showSection(id){
-            document.querySelectorAll('main .section').forEach(s=> s.classList.add('d-none'));
-            const el = document.getElementById(id);
-            if(el) el.classList.remove('d-none');
-            document.querySelectorAll('.sidebar .nav-link').forEach(a=> a.classList.toggle('active', a.getAttribute('href') === '#'+id));
-        }
+                .topbar h4 {
+                    font-weight: 800
+                }
 
-        function renderStats(){ document.getElementById('cardUsers').textContent = users.length || 0; document.getElementById('cardTotalDonations').textContent = donations.length || 0; document.getElementById('cardActive').textContent = donations.filter(d=>d.status==='Open').length || 0; document.getElementById('cardCompleted').textContent = donations.filter(d=>d.status==='Completed').length || 0; }
+                .topbar .btn-outline-secondary {
+                    border-color: #e6eef8
+                }
 
-        function renderDonationTable(){
-            const tbody = document.querySelector('#donationTableSection tbody') || document.querySelector('#donationTable tbody');
-            if(!tbody) return;
-            tbody.innerHTML = '';
-            const searchEl = document.getElementById('donationSearch') || document.getElementById('donationSearchSection');
-            const statusEl = document.getElementById('donationStatusFilter') || document.getElementById('donationStatusFilterSection');
-            const q = (searchEl && (searchEl.value||'') || '').toLowerCase();
-            const statusFilter = (statusEl && statusEl.value) || '';
-            donations.filter(d=>{
-                if(statusFilter && d.status !== statusFilter) return false;
-                if(q && !((d.name||'').toLowerCase().includes(q) || (d.donor||'').toLowerCase().includes(q) || (d.requirement||'').toLowerCase().includes(q))) return false;
-                return true;
-            }).forEach(d=>{
-                const tr = document.createElement('tr');
-                const badgeClass = d.status==='Open' ? 'badge-status-open' : d.status==='Claimed' ? 'badge-status-claimed' : 'badge-status-completed';
-                tr.innerHTML = `<td>${escapeHtml(d.name)}</td><td>${escapeHtml(d.donor)}</td><td>${escapeHtml(d.amount)}</td><td>${escapeHtml(d.requirement)}</td><td><span class="badge ${badgeClass} p-2 rounded">${escapeHtml(d.status)}</span></td><td><button type="button" class="btn btn-sm btn-outline-secondary" onclick="viewDonation(${d.id})">View</button> <button type="button" class="btn btn-sm btn-danger ms-1" onclick="deleteDonationById(${d.id})">Delete</button></td>`;
-                tbody.appendChild(tr);
-            });
+                /* Cards, tables, buttons */
+                .card {
+                    border-radius: 14px;
+                    transition: transform .16s ease, box-shadow .16s ease;
+                    border: 1px solid #eef2f6
+                }
 
-            // dashboard preview
-            const latestTbody = document.querySelector('#latestDonations tbody');
-            if(latestTbody){ latestTbody.innerHTML=''; donations.slice(0,5).forEach(d=>{ const tr=document.createElement('tr'); tr.innerHTML = `<td>${escapeHtml(d.name)}</td><td>${escapeHtml(d.donor)}</td><td>${escapeHtml(d.amount)}</td><td><span class="badge ${d.status==='Open'?'badge-status-open':d.status==='Claimed'?'badge-status-claimed':'badge-status-completed'} p-2 rounded">${escapeHtml(d.status)}</span></td>`; latestTbody.appendChild(tr); }); }
-        }
+                .card:hover {
+                    transform: translateY(-6px);
+                    box-shadow: 0 12px 30px rgba(16, 24, 40, 0.06)
+                }
 
-        function renderUserTable(){
-            const tbody = document.querySelector('#userTableSection tbody') || document.querySelector('#userTable tbody');
-            if(!tbody) return;
-            tbody.innerHTML = '';
-            const searchEl = document.getElementById('userSearch') || document.getElementById('userSearchSection');
-            const q = (searchEl && (searchEl.value||'') || '').toLowerCase();
-            users.filter(u=>{ if(!q) return true; return (u.name||'').toLowerCase().includes(q) || (u.email||'').toLowerCase().includes(q); }).forEach(u=>{ const tr=document.createElement('tr'); tr.innerHTML = `<td>${escapeHtml(u.name||u.full_name||'—')}</td><td>${escapeHtml(u.email||'—')}</td><td><button type="button" class="btn btn-sm btn-outline-secondary" onclick="viewUser('${escapeHtml(u.email||'') }')">View</button></td>`; tbody.appendChild(tr); });
+                .table-sm th {
+                    font-weight: 700;
+                    color: #0b1724;
+                }
 
-            const snap = document.getElementById('userSnapshotList'); if(snap){ snap.innerHTML=''; users.slice(0,5).forEach(u=>{ const d=document.createElement('div'); d.className='d-flex align-items-center justify-content-between py-2 border-bottom'; d.innerHTML = `<div><div class="fw-bold">${escapeHtml(u.name||'—')}</div><div class="small text-muted">${escapeHtml(u.email||'—')}</div></div>`; snap.appendChild(d); }); }
-        }
+                .table-sm td {
+                    font-weight: 600;
+                    color: #1f2937
+                }
 
-        function renderNgoApprovals(){ const wrapPreview = document.getElementById('ngoApprovalsPreview'); const wrapFull = document.getElementById('ngoApprovalsFull'); if(wrapPreview) wrapPreview.innerHTML=''; if(wrapFull) wrapFull.innerHTML=''; ngos.forEach((n,i)=>{ const html = `<div class="d-flex align-items-center justify-content-between py-2 border-bottom"><div><div class="fw-bold">${escapeHtml(n.name||'Unknown')}</div><div class="small text-muted">${escapeHtml(n.location||'—')}</div></div><div>${n.approved?'<span class="badge bg-success">Approved</span>':'<button type="button" class="btn btn-sm btn-success me-1" onclick="approveNgo('+i+')">Approve</button><button type="button" class="btn btn-sm btn-danger" onclick="rejectNgo('+i+')">Reject</button>'}</div></div>`; if(wrapPreview) wrapPreview.insertAdjacentHTML('beforeend', html); if(wrapFull) wrapFull.insertAdjacentHTML('beforeend', html); }); }
+                /* Badges */
+                .badge-status-open {
+                    background: #e7f5ff;
+                    color: #055160
+                }
 
-        function renderNotifications(){ const wrap = document.getElementById('notificationsList') || document.getElementById('notifications'); if(!wrap) return; wrap.innerHTML=''; const items = [{txt:'New donation received: Winter Clothes',time:'2h ago'},{txt:'NGO application pending review',time:'1d ago'}]; items.forEach(it=>{ const d=document.createElement('div'); d.className='d-flex justify-content-between py-2 border-bottom'; d.innerHTML=`<div>${escapeHtml(it.txt)}</div><div class="small text-muted">${escapeHtml(it.time)}</div>`; wrap.appendChild(d); }); }
+                .badge-status-claimed {
+                    background: #fff4e6;
+                    color: #7a3e00
+                }
 
-        function approveNgo(i){ if(!confirm('Approve this NGO?')) return; ngos[i].approved=true; renderNgoApprovals(); }
-        function rejectNgo(i){ if(!confirm('Reject this NGO?')) return; ngos.splice(i,1); renderNgoApprovals(); }
+                .badge-status-completed {
+                    background: #e6ffed;
+                    color: #03543f
+                }
 
-        function viewDonation(id){ const d = donations.find(x=>x.id==id); alert(JSON.stringify(d, null, 2)); }
-        function deleteDonationById(id){ if(!confirm('Delete donation?')) return; donations = donations.filter(x=>x.id!=id); renderDonationTable(); renderStats(); }
-        function viewUser(email){ alert('User: '+email); }
-        function refreshDashboard(){ fetchData(); }
-        function toggleSidebar(){ document.getElementById('sidebar').classList.toggle('open'); }
+                /* Buttons */
+                .btn-primary-custom {
+                    background: linear-gradient(90deg, #06b6d4, #3b82f6);
+                    border: 0;
+                    color: #fff;
+                    box-shadow: 0 6px 18px rgba(59, 130, 246, 0.12)
+                }
 
-        function renderChart(){ const counts = {Open:0,Claimed:0,Completed:0}; donations.forEach(d=> counts[d.status] = (counts[d.status]||0)+1 ); const data = { labels:['Open','Claimed','Completed'], datasets:[{label:'Donations',data:[counts.Open,counts.Claimed,counts.Completed],backgroundColor:['#60a5fa','#facc15','#34d399']}] };
-            // dashboard chart
-            const ctx = document.getElementById('donationChart'); if(ctx){ const ctx2 = ctx.getContext('2d'); if(donationChart) donationChart.destroy(); donationChart = new Chart(ctx2, { type:'bar', data, options:{responsive:true,plugins:{legend:{display:false}}} }); }
-            // reports chart (bigger canvas)
-            const rep = document.getElementById('reportChart'); if(rep){ const repCtx = rep.getContext('2d'); if(window.reportChart) window.reportChart.destroy(); window.reportChart = new Chart(repCtx, { type:'line', data:{ labels: data.labels, datasets:[{label:'Donations', data:[counts.Open,counts.Claimed,counts.Completed], borderColor:'#3b82f6', backgroundColor:'rgba(59,130,246,0.08)', fill:true }] }, options:{responsive:true, plugins:{legend:{display:false}}} }); } }
+                .btn-outline-secondary {
+                    border-radius: 8px
+                }
 
-        document.addEventListener('DOMContentLoaded', ()=>{
-            // safe wiring for search/filter inputs (works with both 'Section' IDs and older IDs)
-            const ds = document.getElementById('donationSearch') || document.getElementById('donationSearchSection');
-            if(ds) ds.addEventListener('input', renderDonationTable);
-            const dsf = document.getElementById('donationStatusFilter') || document.getElementById('donationStatusFilterSection');
-            if(dsf) dsf.addEventListener('change', renderDonationTable);
-            const us = document.getElementById('userSearch') || document.getElementById('userSearchSection') || document.getElementById('userSearchSection');
-            if(us) us.addEventListener('input', renderUserTable);
+                /* Misc */
+                #latestDonations td,
+                #latestDonations th {
+                    font-size: 13px
+                }
 
-            const global = document.getElementById('globalSearch');
-            if(global) global.addEventListener('input', ()=>{
-                const val = global.value || '';
-                const u = document.getElementById('userSearch') || document.getElementById('userSearchSection'); if(u) u.value = val;
-                const d = document.getElementById('donationSearch') || document.getElementById('donationSearchSection'); if(d) d.value = val;
-                renderUserTable(); renderDonationTable();
-            });
+                .list-unstyled li {
+                    font-weight: 600
+                }
 
-            // sidebar navigation
-            document.querySelectorAll('.sidebar .nav-link').forEach(a=>{
-                a.addEventListener('click', e=>{
-                    e.preventDefault();
-                    const href = a.getAttribute('href') || '';
-                    if(href && href.startsWith('#')) showSection(href.substring(1));
+                .rounded-lg {
+                    border-radius: 12px
+                }
+
+                @media (max-width:991px) {
+                    .sidebar {
+                        left: -100%;
+                        transition: left .16s ease
+                    }
+
+                    .sidebar.open {
+                        left: 0
+                    }
+
+                    .topbar {
+                        left: 0
+                    }
+
+                    .main-content {
+                        margin-left: 0;
+                        padding-top: 84px
+                    }
+                }
+            </style>
+            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+            <script>
+                // New dashboard scripts
+                let users = [], donations = [], ngos = [];
+                let donationChart = null;
+
+                async function fetchData() {
+                    try {
+                        const [uRes, dRes, cRes, nRes] = await Promise.all([
+                            fetch('http://127.0.0.1:5000/api/users'),
+                            fetch('http://127.0.0.1:5000/api/donations'),
+                            fetch('http://127.0.0.1:5000/api/all-claimed-donations'),
+                            fetch('http://127.0.0.1:5000/api/ngos')
+                        ]);
+                        users = uRes.ok ? await uRes.json() : [];
+                        const donationsRaw = dRes.ok ? await dRes.json() : [];
+                        const claimedRaw = cRes.ok ? await cRes.json() : [];
+                        ngos = nRes.ok ? await nRes.json() : [];
+                        const claimedMap = new Map((claimedRaw || []).map(c => [Number(c.donation_id), c]));
+                        donations = (Array.isArray(donationsRaw) ? donationsRaw : []).map(d => ({
+                            id: d.id,
+                            name: d.title || '',
+                            donor: d.donor_name || '',
+                            amount: d.amount || d.quantity || '',
+                            requirement: d.category || d.description || '',
+                            status: (function (s, id) {
+                                // normalize various backend status values to the dashboard categories
+                                if (typeof s !== 'string') s = '' + (s || '');
+                                s = s.trim().toLowerCase();
+                                const claim = claimedMap.get(Number(id));
+                                if (claim) {
+                                    const cs = (claim.status || '').toString().trim().toLowerCase();
+                                    if (cs === 'completed' || cs === 'done') return 'Completed';
+                                    return 'Claimed';
+                                }
+                                if (s === 'available' || s === 'open' || s === 'pending') return 'Open';
+                                if (s === 'completed' || s === 'done') return 'Completed';
+                                // fallback: capitalize
+                                return s ? s.charAt(0).toUpperCase() + s.slice(1) : 'Open';
+                            })(d.status, d.id)
+                        }));
+                    } catch (e) {
+                        console.error('fetch error', e);
+                        users = [{ name: 'Alex Green', email: 'alex@example.com' }, { name: 'Priya Singh', email: 'priya@example.com' }];
+                        donations = [{ id: 1, name: 'Winter Clothes', donor: 'John', amount: '100', requirement: 'Children', status: 'Open' }, { id: 2, name: 'Canned Food', donor: 'Maria', amount: '50', requirement: 'Families', status: 'Claimed' }, { id: 3, name: 'School Books', donor: 'Local', amount: '200', requirement: 'Education', status: 'Completed' }];
+                        ngos = [{ name: 'Care Org', approved: false, location: 'City' }, { name: 'Hope Foundation', approved: true, location: 'Town' }];
+                    }
+                    renderAll();
+                }
+
+                function renderAll() { renderStats(); renderDonationTable(); renderUserTable(); renderNgoApprovals(); renderNotifications(); renderChart(); }
+
+                // Section navigation helper
+                function showSection(id) {
+                    document.querySelectorAll('main .section').forEach(s => s.classList.add('d-none'));
+                    const el = document.getElementById(id);
+                    if (el) el.classList.remove('d-none');
+                    document.querySelectorAll('.sidebar .nav-link').forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + id));
+                }
+
+                function renderStats() { document.getElementById('cardUsers').textContent = users.length || 0; document.getElementById('cardTotalDonations').textContent = donations.length || 0; document.getElementById('cardActive').textContent = donations.filter(d => d.status === 'Open').length || 0; document.getElementById('cardCompleted').textContent = donations.filter(d => d.status === 'Completed').length || 0; }
+
+                function renderDonationTable() {
+                    const tbody = document.querySelector('#donationTableSection tbody') || document.querySelector('#donationTable tbody');
+                    if (!tbody) return;
+                    tbody.innerHTML = '';
+                    const searchEl = document.getElementById('donationSearch') || document.getElementById('donationSearchSection');
+                    const statusEl = document.getElementById('donationStatusFilter') || document.getElementById('donationStatusFilterSection');
+                    const q = (searchEl && (searchEl.value || '') || '').toLowerCase();
+                    const statusFilter = (statusEl && statusEl.value) || '';
+                    donations.filter(d => {
+                        if (statusFilter && d.status !== statusFilter) return false;
+                        if (q && !((d.name || '').toLowerCase().includes(q) || (d.donor || '').toLowerCase().includes(q) || (d.requirement || '').toLowerCase().includes(q))) return false;
+                        return true;
+                    }).forEach(d => {
+                        const tr = document.createElement('tr');
+                        const badgeClass = d.status === 'Open' ? 'badge-status-open' : d.status === 'Claimed' ? 'badge-status-claimed' : 'badge-status-completed';
+                        tr.innerHTML = `<td>${escapeHtml(d.name)}</td><td>${escapeHtml(d.donor)}</td><td>${escapeHtml(d.amount)}</td><td>${escapeHtml(d.requirement)}</td><td><span class="badge ${badgeClass} p-2 rounded">${escapeHtml(d.status)}</span></td><td><button type="button" class="btn btn-sm btn-outline-secondary" onclick="viewDonation(${d.id})">View</button> <button type="button" class="btn btn-sm btn-danger ms-1" onclick="deleteDonationById(${d.id})">Delete</button></td>`;
+                        tbody.appendChild(tr);
+                    });
+
+                    // dashboard preview
+                    const latestTbody = document.querySelector('#latestDonations tbody');
+                    if (latestTbody) { latestTbody.innerHTML = ''; donations.slice(0, 5).forEach(d => { const tr = document.createElement('tr'); tr.innerHTML = `<td>${escapeHtml(d.name)}</td><td>${escapeHtml(d.donor)}</td><td>${escapeHtml(d.amount)}</td><td><span class="badge ${d.status === 'Open' ? 'badge-status-open' : d.status === 'Claimed' ? 'badge-status-claimed' : 'badge-status-completed'} p-2 rounded">${escapeHtml(d.status)}</span></td>`; latestTbody.appendChild(tr); }); }
+                }
+
+                function renderUserTable() {
+                    const tbody = document.querySelector('#userTableSection tbody') || document.querySelector('#userTable tbody');
+                    if (!tbody) return;
+                    tbody.innerHTML = '';
+                    const searchEl = document.getElementById('userSearch') || document.getElementById('userSearchSection');
+                    const q = (searchEl && (searchEl.value || '') || '').toLowerCase();
+                    users.filter(u => { if (!q) return true; return (u.name || '').toLowerCase().includes(q) || (u.email || '').toLowerCase().includes(q); }).forEach(u => { const tr = document.createElement('tr'); tr.innerHTML = `<td>${escapeHtml(u.name || u.full_name || '—')}</td><td>${escapeHtml(u.email || '—')}</td><td><button type="button" class="btn btn-sm btn-outline-secondary" onclick="viewUser('${escapeHtml(u.email || '')}')">View</button></td>`; tbody.appendChild(tr); });
+
+                    const snap = document.getElementById('userSnapshotList'); if (snap) { snap.innerHTML = ''; users.slice(0, 5).forEach(u => { const d = document.createElement('div'); d.className = 'd-flex align-items-center justify-content-between py-2 border-bottom'; d.innerHTML = `<div><div class="fw-bold">${escapeHtml(u.name || '—')}</div><div class="small text-muted">${escapeHtml(u.email || '—')}</div></div>`; snap.appendChild(d); }); }
+                }
+
+                function renderNgoApprovals() { const wrapPreview = document.getElementById('ngoApprovalsPreview'); const wrapFull = document.getElementById('ngoApprovalsFull'); if (wrapPreview) wrapPreview.innerHTML = ''; if (wrapFull) wrapFull.innerHTML = ''; ngos.forEach((n, i) => { const html = `<div class="d-flex align-items-center justify-content-between py-2 border-bottom"><div><div class="fw-bold">${escapeHtml(n.name || 'Unknown')}</div><div class="small text-muted">${escapeHtml(n.location || '—')}</div></div><div>${n.approved ? '<span class="badge bg-success">Approved</span>' : '<button type="button" class="btn btn-sm btn-success me-1" onclick="approveNgo(' + i + ')">Approve</button><button type="button" class="btn btn-sm btn-danger" onclick="rejectNgo(' + i + ')">Reject</button>'}</div></div>`; if (wrapPreview) wrapPreview.insertAdjacentHTML('beforeend', html); if (wrapFull) wrapFull.insertAdjacentHTML('beforeend', html); }); }
+
+                function renderNotifications() { const wrap = document.getElementById('notificationsList') || document.getElementById('notifications'); if (!wrap) return; wrap.innerHTML = ''; const items = [{ txt: 'New donation received: Winter Clothes', time: '2h ago' }, { txt: 'NGO application pending review', time: '1d ago' }]; items.forEach(it => { const d = document.createElement('div'); d.className = 'd-flex justify-content-between py-2 border-bottom'; d.innerHTML = `<div>${escapeHtml(it.txt)}</div><div class="small text-muted">${escapeHtml(it.time)}</div>`; wrap.appendChild(d); }); }
+
+                function approveNgo(i) { if (!confirm('Approve this NGO?')) return; ngos[i].approved = true; renderNgoApprovals(); }
+                function rejectNgo(i) { if (!confirm('Reject this NGO?')) return; ngos.splice(i, 1); renderNgoApprovals(); }
+
+                function viewDonation(id) { const d = donations.find(x => x.id == id); alert(JSON.stringify(d, null, 2)); }
+                function deleteDonationById(id) { if (!confirm('Delete donation?')) return; donations = donations.filter(x => x.id != id); renderDonationTable(); renderStats(); }
+                function viewUser(email) { alert('User: ' + email); }
+                function refreshDashboard() { fetchData(); }
+                function toggleSidebar() { document.getElementById('sidebar').classList.toggle('open'); }
+
+                function renderChart() {
+                    const counts = { Open: 0, Claimed: 0, Completed: 0 }; donations.forEach(d => counts[d.status] = (counts[d.status] || 0) + 1); const data = { labels: ['Open', 'Claimed', 'Completed'], datasets: [{ label: 'Donations', data: [counts.Open, counts.Claimed, counts.Completed], backgroundColor: ['#60a5fa', '#facc15', '#34d399'] }] };
+                    // dashboard chart
+                    const ctx = document.getElementById('donationChart'); if (ctx) { const ctx2 = ctx.getContext('2d'); if (donationChart && typeof donationChart.destroy === 'function') donationChart.destroy(); donationChart = new Chart(ctx2, { type: 'bar', data, options: { responsive: true, plugins: { legend: { display: false } } } }); }
+                    // reports chart (bigger canvas)
+                    const rep = document.getElementById('reportChart'); if (rep) { const repCtx = rep.getContext('2d'); if (window.reportChart && typeof window.reportChart.destroy === 'function') window.reportChart.destroy(); window.reportChart = new Chart(repCtx, { type: 'line', data: { labels: data.labels, datasets: [{ label: 'Donations', data: [counts.Open, counts.Claimed, counts.Completed], borderColor: '#3b82f6', backgroundColor: 'rgba(59,130,246,0.08)', fill: true }] }, options: { responsive: true, plugins: { legend: { display: false } } } }); }
+                }
+
+                document.addEventListener('DOMContentLoaded', () => {
+                    // safe wiring for search/filter inputs (works with both 'Section' IDs and older IDs)
+                    const ds = document.getElementById('donationSearch') || document.getElementById('donationSearchSection');
+                    if (ds) ds.addEventListener('input', renderDonationTable);
+                    const dsf = document.getElementById('donationStatusFilter') || document.getElementById('donationStatusFilterSection');
+                    if (dsf) dsf.addEventListener('change', renderDonationTable);
+                    const us = document.getElementById('userSearch') || document.getElementById('userSearchSection') || document.getElementById('userSearchSection');
+                    if (us) us.addEventListener('input', renderUserTable);
+
+                    const global = document.getElementById('globalSearch');
+                    if (global) global.addEventListener('input', () => {
+                        const val = global.value || '';
+                        const u = document.getElementById('userSearch') || document.getElementById('userSearchSection'); if (u) u.value = val;
+                        const d = document.getElementById('donationSearch') || document.getElementById('donationSearchSection'); if (d) d.value = val;
+                        renderUserTable(); renderDonationTable();
+                    });
+
+                    // sidebar navigation
+                    document.querySelectorAll('.sidebar .nav-link').forEach(a => {
+                        a.addEventListener('click', e => {
+                            e.preventDefault();
+                            const href = a.getAttribute('href') || '';
+                            if (href && href.startsWith('#')) showSection(href.substring(1));
+                        });
+                    });
+
+                    // default visible section
+                    showSection('dashboardSection');
+
+                    // load data
+                    fetchData();
                 });
-            });
 
-            // default visible section
-            showSection('dashboardSection');
+                function escapeHtml(str) { if (!str && str !== 0) return ''; return String(str).replace(/[&<>"']/g, s => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": "&#39;" })[s]); }
 
-            // load data
-            fetchData();
-        });
-
-        function escapeHtml(str){ if(!str && str!==0) return ''; return String(str).replace(/[&<>"']/g, s=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":"&#39;"})[s]); }
-
-        function onLogout(){ alert('Logged out (demo)'); }
-    </script>
+                function onLogout() { alert('Logged out (demo)'); }
+            </script>
 </body>
 
 </html>

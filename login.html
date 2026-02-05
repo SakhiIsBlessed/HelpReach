@@ -1176,7 +1176,7 @@
                     const res = await fetch('http://127.0.0.1:5000/api/ngo/forgot-password/reset-password', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ token: currentOtpToken, password })
+                        body: JSON.stringify({ token: currentOtpToken, new_password: password })
                     });
 
                     const data = await res.json();

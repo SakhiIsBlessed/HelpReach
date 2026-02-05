@@ -106,6 +106,63 @@ def ngo_documents(ngo_id):
         except Exception:
             pass
 
+    # GET -> list documents
+    if request.method == 'GET':
+        print(f"🔍 Fetching NGO documents for ngo_id={ngo_id}")
+        try:
+            db = get_db_connection()
+            cursor = db.cursor(dictionary=True)
+            cursor.execute("SELECT id, filename, original_filename, uploaded_at FROM ngo_documents WHERE ngo_id=%s ORDER BY uploaded_at DESC", (ngo_id,))
+            docs = cursor.fetchall()
+            cursor.close()
+            db.close()
+
+            print(f"🔔 Found {len(docs)} documents for NGO {ngo_id}")
+            for d in docs:
+                d['url'] = f"/uploads/ngo_documents/{d['filename']}"
+
+            return jsonify({"ok": True, "documents": docs})
+        except Exception as e:
+            print("❌ Error fetching ngo documents:", e)
+            return {"error": "Server error"}, 500
+
+    # POST -> upload files
+    if 'documents' not in request.files:
+        return {"error": "No files uploaded"}, 400
+
+    files = request.files.getlist('documents')
+    saved = []
+
+    try:
+        db = get_db_connection()
+        cursor = db.cursor()
+
+        for file in files:
+            if file and file.filename and allowed_doc_file(file.filename):
+                orig = secure_filename(file.filename)
+                fname = secure_filename(f"{uuid.uuid4()}_{orig}")
+                path = os.path.join(UPLOAD_FOLDER_DOCS, fname)
+                try:
+                    file.save(path)
+                    cursor.execute("INSERT INTO ngo_documents (ngo_id, filename, original_filename) VALUES (%s, %s, %s)", (ngo_id, fname, orig))
+                    db.commit()
+                    doc_id = cursor.lastrowid
+                    saved.append({"id": doc_id, "filename": fname, "original_filename": orig, "url": f"/uploads/ngo_documents/{fname}"})
+                    print(f"✅ NGO document saved: {fname}")
+                except Exception as e:
+                    print("❌ Error saving NGO document:", e)
+            else:
+                print("⚠️  NGO document not allowed or empty:", getattr(file, 'filename', None))
+
+        cursor.close()
+        db.close()
+
+        return jsonify({"ok": True, "saved": saved})
+
+    except Exception as e:
+        print("❌ Error processing NGO document upload:", e)
+        return {"error": "Server error"}, 500
+
 
 @app.route('/api/vapid_public_key', methods=['GET'])
 def vapid_public_key():
@@ -189,60 +246,7 @@ def send_push(subscription_info, payload):
         print('❌ WebPush error:', repr(ex))
         return False
 
-    # GET -> list documents
-    if request.method == 'GET':
-        try:
-            db = get_db_connection()
-            cursor = db.cursor(dictionary=True)
-            cursor.execute("SELECT id, filename, original_filename, uploaded_at FROM ngo_documents WHERE ngo_id=%s ORDER BY uploaded_at DESC", (ngo_id,))
-            docs = cursor.fetchall()
-            cursor.close()
-            db.close()
-
-            for d in docs:
-                d['url'] = f"/uploads/ngo_documents/{d['filename']}"
-
-            return jsonify({"ok": True, "documents": docs})
-        except Exception as e:
-            print("❌ Error fetching ngo documents:", e)
-            return {"error": "Server error"}, 500
-
-    # POST -> upload files
-    if 'documents' not in request.files:
-        return {"error": "No files uploaded"}, 400
-
-    files = request.files.getlist('documents')
-    saved = []
-
-    try:
-        db = get_db_connection()
-        cursor = db.cursor()
-
-        for file in files:
-            if file and file.filename and allowed_doc_file(file.filename):
-                orig = secure_filename(file.filename)
-                fname = secure_filename(f"{uuid.uuid4()}_{orig}")
-                path = os.path.join(UPLOAD_FOLDER_DOCS, fname)
-                try:
-                    file.save(path)
-                    cursor.execute("INSERT INTO ngo_documents (ngo_id, filename, original_filename) VALUES (%s, %s, %s)", (ngo_id, fname, orig))
-                    db.commit()
-                    doc_id = cursor.lastrowid
-                    saved.append({"id": doc_id, "filename": fname, "original_filename": orig, "url": f"/uploads/ngo_documents/{fname}"})
-                    print(f"✅ NGO document saved: {fname}")
-                except Exception as e:
-                    print("❌ Error saving NGO document:", e)
-            else:
-                print("⚠️  NGO document not allowed or empty:", getattr(file, 'filename', None))
-
-        cursor.close()
-        db.close()
-
-        return jsonify({"ok": True, "saved": saved})
-
-    except Exception as e:
-        print("❌ Error processing NGO document upload:", e)
-        return {"error": "Server error"}, 500
+    # (GET/POST logic moved into the ngo_documents route earlier to fix indentation bug)
 
 # (Moved static file route to bottom so API routes are matched first)
 
@@ -464,6 +468,17 @@ def api_donations():
     if not title:
         return {"error": "Missing donation title"}, 400
         
+    # Server-side validation: For FOOD donations, ensure pickup_info yields a future pickup + 2 hours window
+    try:
+        if category and isinstance(category, str) and category.lower() == 'food':
+            pickup_dt = parse_pickup_datetime(pickup_info)
+            if pickup_dt:
+                from datetime import datetime, timedelta
+                # compare with UTC now — parse_pickup_datetime returns naive datetime (assumed local); using UTC for conservative check
+                if pickup_dt + timedelta(hours=2) <= datetime.utcnow():
+                    return {"error": "Pickup time causes donation to be already expired (pickup + 2 hours <= now). Choose a future pickup time."}, 400
+    except Exception as e:
+        print('⚠️ pickup validation error:', e)
 
     db = get_db_connection()
     cursor = db.cursor()
@@ -589,23 +604,41 @@ Team HelpReach
 
 @app.route("/api/active-donations", methods=["GET", "OPTIONS"])
 def api_active_donations():
-    """Return donations that are not yet claimed (active/pending to claim)."""
+    """Return donations that are not yet claimed (active/pending to claim).
+    Also runs a quick expiration pass to mark overdue food donations as expired."""
     if request.method == "OPTIONS":
         return jsonify({"ok": True}), 200
 
     try:
+        # Run server-side expiry check so active endpoints are accurate
+        try:
+            expire_due_donations()
+        except Exception as e:
+            print('⚠️ expire_due_donations failed during active-donations run:', e)
+
         db = get_db_connection()
         cursor = db.cursor(dictionary=True)
 
-        # Select donations that do not have a matching claimed_donations entry
-        cursor.execute("""
-            SELECT d.*, u.name AS donor_name
-            FROM donations d
-            JOIN users u ON u.id = d.donor_id
-            LEFT JOIN claimed_donations cd ON cd.donation_id = d.id
-            WHERE cd.donation_id IS NULL
-            ORDER BY d.created_at DESC
-        """)
+        # Choose query depending on whether expired_at exists to avoid SQL errors
+        if column_exists('donations', 'expired_at'):
+            cursor.execute("""
+                SELECT d.*, u.name AS donor_name
+                FROM donations d
+                JOIN users u ON u.id = d.donor_id
+                LEFT JOIN claimed_donations cd ON cd.donation_id = d.id
+                WHERE cd.donation_id IS NULL AND d.expired_at IS NULL
+                ORDER BY d.created_at DESC
+            """)
+        else:
+            print("⚠️ 'expired_at' column missing; returning active donations without expired filter. Run migration to enable expiry features.")
+            cursor.execute("""
+                SELECT d.*, u.name AS donor_name
+                FROM donations d
+                JOIN users u ON u.id = d.donor_id
+                LEFT JOIN claimed_donations cd ON cd.donation_id = d.id
+                WHERE cd.donation_id IS NULL
+                ORDER BY d.created_at DESC
+            """)
 
         data = cursor.fetchall()
         cursor.close()
@@ -620,6 +653,132 @@ def api_active_donations():
         except Exception:
             pass
         return jsonify([])
+
+# Helper: Parse pickup_info server-side
+def parse_pickup_datetime(pickup_info):
+    """Try to extract a datetime from pickup_info string. Expected common format: 'address | YYYY-MM-DD HH:MM' or variants."""
+    if not pickup_info:
+        return None
+    try:
+        import re
+        # Common patterns: YYYY-MM-DD HH:MM or YYYY/MM/DD HH:MM or DD-MM-YYYY etc.
+        patterns = [
+            r"(20\d{2})[-\\/](\d{1,2})[-\\/](\d{1,2})[ T]+(\d{1,2}):(\d{2})",  # 2026-02-03 13:31
+            r"(\d{1,2})[-\\/](\d{1,2})[-\\/](20\d{2})[ T]+(\d{1,2}):(\d{2})",  # 03-02-2026 13:31
+            r"(20\d{2})(\d{2})(\d{2})[ T]+(\d{1,2})(\d{2})"  # compact 20260203 1331
+        ]
+        for p in patterns:
+            m = re.search(p, pickup_info)
+            if m:
+                parts = list(map(int, m.groups()))
+                if len(parts) == 5:
+                    # determine order by pattern
+                    if p.startswith('(20'):
+                        year, month, day, hour, minute = parts
+                    else:
+                        day, month, year, hour, minute = parts
+                    from datetime import datetime
+                    return datetime(year, month, day, hour, minute)
+        # fallback: try to find HH:MM and a nearby YYYY
+        m2 = re.search(r"(20\d{2}).{0,20}(\d{1,2}):(\d{2})", pickup_info)
+        if m2:
+            year = int(m2.group(1)); hour = int(m2.group(2)); minute = int(m2.group(3))
+            # best-effort: try extract month/day earlier
+            m3 = re.search(r"(\d{1,2})[-\\/](\d{1,2})[-\\/](20\d{2})", pickup_info)
+            if m3:
+                month, day = int(m3.group(1)), int(m3.group(2))
+                from datetime import datetime
+                return datetime(year, month, day, hour, minute)
+        return None
+    except Exception as e:
+        print('⚠️ parse_pickup_datetime error:', e, 'pickup_info=', pickup_info)
+        return None
+
+
+# Helper: Check if a column exists in a table
+def column_exists(table, column):
+    try:
+        db = get_db_connection()
+        cursor = db.cursor()
+        cursor.execute("""
+            SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS
+            WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = %s AND COLUMN_NAME = %s
+        """, (table, column))
+        cnt = cursor.fetchone()[0]
+        cursor.close(); db.close()
+        return cnt > 0
+    except Exception as e:
+        print('⚠️ column_exists error:', e)
+        try:
+            cursor.close(); db.close()
+        except Exception:
+            pass
+        return False
+
+
+# Endpoint to expire due food donations (can be triggered manually or via active-donations)
+@app.route('/api/expire-donations', methods=['POST', 'GET'])
+def expire_donations_endpoint():
+    try:
+        # If DB schema is missing, return informative error
+        if not column_exists('donations', 'expired_at'):
+            msg = "Server schema missing 'expired_at' column. Run backend_python/add_expired_column.py and restart the server."
+            print('❌ expire_donations_endpoint:', msg)
+            return jsonify({'error': msg}), 500
+
+        count = expire_due_donations()
+        return jsonify({'ok': True, 'expired_count': count})
+    except Exception as e:
+        import traceback
+        print('❌ Error in expire_donations_endpoint:', e)
+        traceback.print_exc()
+        return jsonify({'error': 'Server error', 'detail': str(e)}), 500
+
+
+def expire_due_donations():
+    """Find all unclaimed food donations whose pickup time + 2 hours is past, and mark expired_at."""
+    db = get_db_connection()
+    cursor = db.cursor(dictionary=True)
+    updated = 0
+
+    # If the DB doesn't have the expired_at column yet, exit early (migration required)
+    if not column_exists('donations', 'expired_at'):
+        print("⚠️ expire_due_donations: 'expired_at' column missing. Run backend_python/add_expired_column.py and restart the server.")
+        try:
+            cursor.close(); db.close()
+        except Exception:
+            pass
+        return 0
+
+    try:
+        # Get unclaimed, not-yet-expired food donations
+        cursor.execute("""
+            SELECT d.id, d.pickup_info
+            FROM donations d
+            LEFT JOIN claimed_donations cd ON cd.donation_id = d.id
+            WHERE d.category = 'Food' AND cd.donation_id IS NULL AND d.expired_at IS NULL
+        """)
+        rows = cursor.fetchall()
+
+        from datetime import datetime, timedelta
+
+        for r in rows:
+            pickup_dt = parse_pickup_datetime(r.get('pickup_info'))
+            if not pickup_dt:
+                continue
+            deadline = pickup_dt + timedelta(hours=2)
+            if deadline <= datetime.utcnow():
+                # mark expired
+                cursor.execute("UPDATE donations SET expired_at = NOW() WHERE id = %s", (r['id'],))
+                updated += 1
+        if updated:
+            db.commit()
+    finally:
+        cursor.close()
+        db.close()
+    if updated:
+        print(f"⏱️ Expired {updated} food donations (auto-check)")
+    return updated
 
 
 @app.route("/api/ngo/register", methods=["POST", "OPTIONS"])
@@ -1775,8 +1934,13 @@ def claim_donation():
 
     try:
         # Check if donation exists and get donation details
+        # If expired_at column is missing, return an informative error
+        if not column_exists('donations', 'expired_at'):
+            print("❌ claim_donation: 'expired_at' column missing in DB. Run backend_python/add_expired_column.py")
+            return jsonify({"error": "Server schema missing 'expired_at' column. Run migration to enable expiry checks."}), 500
+
         cursor.execute("""
-            SELECT d.id, d.title, d.description, d.quantity, d.donor_id, u.name as donor_name, u.email as donor_email
+            SELECT d.id, d.title, d.description, d.quantity, d.donor_id, u.name as donor_name, u.email as donor_email, d.expired_at
             FROM donations d
             JOIN users u ON d.donor_id = u.id
             WHERE d.id = %s
@@ -1784,6 +1948,10 @@ def claim_donation():
         donation = cursor.fetchone()
         if not donation:
             return jsonify({"error": "Donation not found"}), 404
+
+        # Server-side: prevent claiming expired donations
+        if donation.get('expired_at') is not None:
+            return jsonify({"error": "Donation has expired and cannot be claimed"}), 400
 
         # Check if already claimed by this NGO
         cursor.execute("""
@@ -2183,6 +2351,36 @@ def get_received_donations(ngo_id):
         db.close()
 
 
+# ============= GET EXPIRED DONATIONS (unclaimed) =============
+@app.route("/api/expired-donations", methods=["GET"])
+def get_expired_donations():
+    """Return donations that were marked expired and are unclaimed."""
+    # Ensure the column exists before running the query
+    if not column_exists('donations', 'expired_at'):
+        print("❌ get_expired_donations: 'expired_at' column missing. Run backend_python/add_expired_column.py and restart the server.")
+        return jsonify({"error": "Server schema missing 'expired_at' column. Run migration to enable expired donations."}), 500
+
+    db = get_db_connection()
+    cursor = db.cursor(dictionary=True)
+    try:
+        cursor.execute("""
+            SELECT d.*, u.name AS donor_name, d.expired_at
+            FROM donations d
+            JOIN users u ON u.id = d.donor_id
+            LEFT JOIN claimed_donations cd ON cd.donation_id = d.id
+            WHERE d.expired_at IS NOT NULL AND cd.donation_id IS NULL
+            ORDER BY d.expired_at DESC
+        """)
+        rows = cursor.fetchall()
+        return jsonify(rows)
+    except Exception as e:
+        print(f"❌ Error fetching expired donations: {e}")
+        return jsonify({"error": "Server error"}), 500
+    finally:
+        cursor.close()
+        db.close()
+
+
 # Get all claimed donations (for donor dashboard)
 @app.route("/api/all-claimed-donations", methods=["GET"])
 def get_all_claimed_donations():
@@ -2193,6 +2391,8 @@ def get_all_claimed_donations():
         cursor.execute("""
             SELECT 
                 cd.donation_id,
+                cd.status,
+                cd.received_at,
                 cd.ngo_id,
                 n.name AS ngo_name,
                 n.contact_email AS ngo_email,
@@ -2375,4 +2575,5 @@ def chatbot():
 
 
 if __name__ == "__main__":
-    app.run(debug=False)
+    # Enable debug for development to show traceback during fixes
+    app.run(debug=True)
