@@ -323,7 +323,7 @@ Team HelpReach
     str(new_user["id"]),
     max_age=86400,
     httponly=True,
-    samesite="Lax",  # Lax works better for local testing
+    samesite="Lax",  # Works with HTTP for local development
     secure=False  # True only on HTTPS
 )
 
@@ -393,7 +393,7 @@ Team HelpReach
     str(user["id"]),
     max_age=86400,
     httponly=True,
-    samesite="Lax",  # Lax works better for local testing
+    samesite="Lax",  # Works with HTTP for local development
     secure=False  # True only on HTTPS
 )
 
@@ -862,7 +862,7 @@ Team HelpReach
             "ngo_id",
             str(ngo["id"]),
             httponly=True,
-            samesite="Lax",
+            samesite="Lax",  # Works with HTTP for local development
             max_age=86400 * 7  # 7 days
         )
 
@@ -1872,7 +1872,7 @@ def user_login():
         str(user["id"]),
         max_age=86400,
         httponly=True,
-        samesite="Lax",
+        samesite="Lax",  # Works with HTTP for local development
         secure=False
     )
 
@@ -2576,4 +2576,4 @@ def chatbot():
 
 if __name__ == "__main__":
     # Enable debug for development to show traceback during fixes
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=5000, debug=True)
