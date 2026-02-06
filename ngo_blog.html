@@ -1,0 +1,995 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Blog — HelpReach</title>
+    <!-- Favicon -->
+    <link href="img/favicon.ico" rel="icon">
+
+    <!-- Fonts & Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="lib/animate/animate.min.css" rel="stylesheet">
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+
+    <!-- Bootstrap + Template Styles -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+
+    <style>
+        /* Blog category filter styles */
+        .category-filter {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 24px 0 36px;
+        }
+
+        .category-btn {
+            padding: 10px 16px;
+            border-radius: 999px;
+            border: 1px solid rgba(13, 110, 253, 0.12);
+            background: #fff;
+            cursor: pointer;
+            font-weight: 600;
+            color: #0d6efd;
+            transition: all .25s ease;
+            box-shadow: 0 6px 18px rgba(13, 110, 253, 0.04);
+        }
+
+        .category-btn:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 14px 30px rgba(13, 110, 253, 0.09);
+        }
+
+        .category-btn.active {
+            background: linear-gradient(90deg, #0d6efd, #10b981);
+            color: #fff;
+            border-color: transparent;
+            box-shadow: 0 18px 45px rgba(13, 110, 253, 0.12);
+        }
+
+        /* Post card enhancements */
+        .post-card {
+            border-radius: 12px;
+            overflow: hidden;
+            background: #fff;
+            transition: transform .35s cubic-bezier(.2, .9, .3, 1), box-shadow .35s;
+            box-shadow: 0 8px 24px rgba(6, 24, 44, 0.06);
+        }
+
+        .post-card:hover {
+            transform: translateY(-10px) rotateZ(-0.5deg);
+            box-shadow: 0 30px 60px rgba(6, 24, 44, 0.12);
+        }
+
+        .post-card img {
+            display: block;
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+        }
+
+        .post-card .bg-light {
+            background: linear-gradient(180deg, #ffffff, #f8fbff);
+        }
+
+        .post-badge {
+            display: inline-block;
+            padding: 6px 10px;
+            border-radius: 8px;
+            font-size: .85rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .badge-food {
+            background: rgba(16, 185, 129, 0.12);
+            color: #10b981;
+        }
+
+        .badge-clothes {
+            background: rgba(59, 130, 246, 0.10);
+            color: #0d6efd;
+        }
+
+        .badge-books {
+            background: rgba(168, 85, 247, 0.10);
+            color: #a855f7;
+        }
+
+        .badge-electronics {
+            background: rgba(245, 158, 11, 0.10);
+            color: #f59e0b;
+        }
+
+        .badge-other {
+            background: rgba(107, 114, 128, 0.08);
+            color: #6b7280;
+        }
+
+        /* Small reveal animation for JS (fallback if wow not running) */
+        .invisible {
+            opacity: 0;
+            transform: translateY(12px);
+            transition: all .6s cubic-bezier(.2, .9, .3, 1);
+        }
+
+        .visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Page theme variables */
+        :root {
+            --primary: #0d6efd;
+            --accent: #10b981;
+            --muted: #6b7280;
+        }
+
+        /* Hero / Section header enhancements */
+        .section-hero {
+            position: relative;
+            padding: 60px 24px;
+            border-radius: 16px;
+            overflow: visible;
+            background: linear-gradient(180deg, #f8fbff, #ffffff);
+            box-shadow: 0 8px 40px rgba(13, 110, 253, 0.04);
+        }
+
+        .hero-blob {
+            position: absolute;
+            filter: blur(18px);
+            opacity: .28;
+            pointer-events: none;
+            border-radius: 50%;
+            transform: translate3d(0, 0, 0);
+        }
+
+        .blob-1 {
+            width: 280px;
+            height: 280px;
+            background: linear-gradient(90deg, var(--primary), #7c3aed);
+            top: -80px;
+            left: -60px;
+        }
+
+        .blob-2 {
+            width: 200px;
+            height: 200px;
+            background: linear-gradient(90deg, var(--accent), #34d399);
+            bottom: -60px;
+            right: -40px;
+        }
+
+        /* Image micro-interactions */
+        .post-card img {
+            transition: transform .6s cubic-bezier(.2, .9, .3, 1), filter .4s;
+        }
+
+        .post-card:hover img {
+            transform: scale(1.06) rotateZ(-0.7deg);
+            filter: brightness(.98) saturate(1.05);
+        }
+
+        /* Badge pulse */
+        .post-badge {
+            position: relative;
+        }
+
+        .post-badge::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 72px;
+            height: 72px;
+            border-radius: 50%;
+            background: currentColor;
+            opacity: .06;
+            animation: badgePulse 2.6s infinite;
+            z-index: -1;
+        }
+
+        @keyframes badgePulse {
+            0% {
+                transform: translate(-50%, -50%) scale(.8);
+                opacity: .06
+            }
+
+            50% {
+                transform: translate(-50%, -50%) scale(1.12);
+                opacity: .02
+            }
+
+            100% {
+                transform: translate(-50%, -50%) scale(.8);
+                opacity: .06
+            }
+        }
+
+        /* Filter underline */
+        .category-filter {
+            position: relative;
+        }
+
+        .filter-underline {
+            position: absolute;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            bottom: -6px;
+            left: 50%;
+            width: 120px;
+            transform: translateX(-50%);
+            border-radius: 6px;
+            transition: all .32s cubic-bezier(.2, .9, .3, 1);
+        }
+
+        .category-btn {
+            position: relative;
+        }
+
+        @media (max-width:576px) {
+            .post-card img {
+                height: 160px;
+            }
+        }
+
+        /* Featured carousel and extras */
+        .featured-carousel .item {
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 18px 40px rgba(6, 24, 44, 0.08);
+            background: #fff;
+        }
+
+        .featured-card {
+            position: relative;
+        }
+
+        .featured-card img {
+            width: 100%;
+            height: 260px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .featured-card .fc-body {
+            padding: 18px;
+        }
+
+        .tag-cloud {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin: 18px 0;
+        }
+
+        .tag-cloud .tag {
+            padding: 6px 12px;
+            border-radius: 999px;
+            border: 1px solid rgba(0, 0, 0, 0.06);
+            background: #fff;
+            color: var(--muted);
+            cursor: pointer;
+            transition: all .18s;
+        }
+
+        .tag-cloud .tag:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(6, 24, 44, 0.06);
+        }
+
+        /* Simple fade animations for post cards (stable across browsers) */
+        .fade-in {
+            opacity: 1 !important;
+            transform: translateY(0) !important;
+            transition: opacity 380ms cubic-bezier(.2, .9, .3, 1), transform 380ms cubic-bezier(.2, .9, .3, 1);
+        }
+
+        .fade-out {
+            opacity: 0 !important;
+            transform: translateY(-12px) !important;
+            transition: opacity 260ms cubic-bezier(.2, .9, .3, 1), transform 260ms cubic-bezier(.2, .9, .3, 1);
+        }
+
+        /* Highlight / dim styles used by the filter (no layout reflow) */
+        .post-card.dimmed {
+            opacity: 0.36 !important;
+            filter: grayscale(.28) contrast(.92) saturate(.9);
+            transform: scale(0.996);
+            transition: opacity 320ms ease, transform 320ms ease, filter 320ms ease;
+            box-shadow: none !important;
+        }
+
+        .post-card.highlight {
+            box-shadow: 0 30px 60px rgba(6, 24, 44, 0.12) !important;
+            transform: translateY(-6px) scale(1.01) !important;
+            transition: transform 260ms cubic-bezier(.2, .9, .3, 1), box-shadow 260ms ease;
+            z-index: 2;
+        }
+
+        .author-card {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            padding: 12px;
+            border-radius: 10px;
+            background: linear-gradient(180deg, #fff, #fbfeff);
+            box-shadow: 0 8px 24px rgba(6, 24, 44, 0.04);
+        }
+
+        .author-card img {
+            width: 64px;
+            height: 64px;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        .counters {
+            display: flex;
+            gap: 28px;
+            justify-content: center;
+            margin-top: 16px;
+        }
+
+        .counter {
+            text-align: center;
+        }
+
+        .counter .num {
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: var(--primary);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar Start -->
+    <div class="container-fluid fixed-top bg-white">
+        <nav class="navbar navbar-expand-lg navbar-light container">
+            <a class="navbar-brand fw-bold" href="index.html">
+                <img src="logo.svg" alt="HelpReach Logo" class="me-2">
+                HelpReach
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
+                aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item"><a class="nav-link" href="ngo_index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="ngo_about.html">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="Ngo_Dashboard.html">Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link" href="Directory_ngo.html">NGO Directory</a></li>
+                    <li class="nav-item"><a class="nav-link" href="ngo_history.html">History</a></li>
+                    <li class="nav-item"><a class="nav-link" href="ngo_contact.html">Contact</a></li>
+                </ul>
+                <div class="d-flex ms-2">
+                    <a class="btn btn-ngo-login btn-sm" href="login.html">NGO Login</a>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <!-- Navbar End -->
+    <!-- Navbar End -->
+
+
+
+
+
+    <!-- Blog Start -->
+    <div class="container-xxl py-6">
+        <div class="container">
+            <div class="section-header text-center mx-auto mb-5" style="max-width: 900px;">
+                <div class="section-hero wow fadeInUp" data-wow-delay="0.08s">
+                    <div class="hero-blob blob-1"></div>
+                    <div class="hero-blob blob-2"></div>
+                    <h1 class="display-5 mb-3">Latest Blog</h1>
+                    <p class="lead mb-0">Stories and guides on donating food, clothing, books, electronics and more —
+                        made easy and safe.</p>
+                </div>
+            </div>
+            <!-- Featured Carousel -->
+            <div class="mb-4">
+                <div class="featured-carousel owl-carousel owl-theme">
+                    <div class="item">
+                        <div class="featured-card">
+                            <img src="img/Food Drive.jpg" alt="Featured: Food Drive">
+                            <div class="fc-body">
+                                <span class="post-badge badge-food">Featured</span>
+                                <h5 class="mt-2">City-wide Food Drive: How you can help</h5>
+                                <p class="small text-muted mb-0">Join local NGOs in collecting surplus meals and
+                                    distributing them safely.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="featured-card">
+                            <img src="img/clothing donation.webp" alt="Featured: Clothing Donation">
+                            <div class="fc-body">
+                                <span class="post-badge badge-clothes">Featured</span>
+                                <h5 class="mt-2">Clothing Drives: Sorting and care tips</h5>
+                                <p class="small text-muted mb-0">Best practices for making clothing donations useful and
+                                    dignified.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="featured-card">
+                            <img src="img\book donation.jpg" alt="Featured: Book Donation">
+                            <div class="fc-body">
+                                <span class="post-badge badge-books">Featured</span>
+                                <h5 class="mt-2">Book Drives: Building community libraries</h5>
+                                <p class="small text-muted mb-0">How to collect, catalogue and share books with schools
+                                    and shelters.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+            <!-- Category Filter -->
+            <div class="category-filter">
+                <button class="category-btn active" data-filter="all">All</button>
+                <button class="category-btn" data-filter="food">Food Donation</button>
+                <button class="category-btn" data-filter="clothes">Clothing</button>
+                <button class="category-btn" data-filter="books">Books</button>
+                <button class="category-btn" data-filter="electronics">Electronics</button>
+                <button class="category-btn" data-filter="other">Other</button>
+            </div>
+            <div class="row g-4">
+                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                    <div class="post-card invisible" data-category="food">
+                        <img class="img-fluid" src="img/How to safely donate excess food in your community.jpg" alt="">
+                        <div class="bg-light p-4">
+                            <span class="post-badge badge-food">Food Donation</span>
+                            <a class="d-block h5 lh-base mb-4" href="">How to safely donate excess food in your
+                                community</a>
+                            <div class="text-muted border-top pt-4">
+                                <small class="me-3"><i class="fa fa-user text-primary me-2"></i>Admin</small>
+                                <small class="me-3"><i class="fa fa-calendar text-primary me-2"></i>01 Jan, 2045</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
+                    <div class="post-card invisible" data-category="clothes">
+                        <img class="img-fluid" src="img/Guidelines for donating gently used clothing.jpg" alt="">
+                        <div class="bg-light p-4">
+                            <span class="post-badge badge-clothes">Clothing</span>
+                            <a class="d-block h5 lh-base mb-4" href="">Guidelines for donating gently used clothing</a>
+                            <div class="text-muted border-top pt-4">
+                                <small class="me-3"><i class="fa fa-user text-primary me-2"></i>Admin</small>
+                                <small class="me-3"><i class="fa fa-calendar text-primary me-2"></i>01 Jan, 2045</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
+                    <div class="post-card invisible" data-category="books">
+                        <img class="img-fluid" src="img/Collecting and donating books.jpg" alt="">
+                        <div class="bg-light p-4">
+                            <span class="post-badge badge-books">Books</span>
+                            <a class="d-block h5 lh-base mb-4" href="">Collecting and donating books: best practices</a>
+                            <div class="text-muted border-top pt-4">
+                                <small class="me-3"><i class="fa fa-user text-primary me-2"></i>Admin</small>
+                                <small class="me-3"><i class="fa fa-calendar text-primary me-2"></i>01 Jan, 2045</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                    <div class="post-card invisible" data-category="electronics">
+                        <img class="img-fluid" src="img/How to safely donate small electronics.jpg" alt="">
+                        <div class="bg-light p-4">
+                            <span class="post-badge badge-electronics">Electronics</span>
+                            <a class="d-block h5 lh-base mb-4" href="">How to safely donate small electronics</a>
+                            <div class="text-muted border-top pt-4">
+                                <small class="me-3"><i class="fa fa-user text-primary me-2"></i>Admin</small>
+                                <small class="me-3"><i class="fa fa-calendar text-primary me-2"></i>01 Jan, 2045</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
+                    <div class="post-card invisible" data-category="food">
+                        <img class="img-fluid" src="img/Neighborhood food-sharing programs that work.jpg" alt="">
+                        <div class="bg-light p-4">
+                            <span class="post-badge badge-food">Food Donation</span>
+                            <a class="d-block h5 lh-base mb-4" href="">Neighborhood food-sharing programs that work</a>
+                            <div class="text-muted border-top pt-4">
+                                <small class="me-3"><i class="fa fa-user text-primary me-2"></i>Admin</small>
+                                <small class="me-3"><i class="fa fa-calendar text-primary me-2"></i>01 Jan, 2045</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
+                    <div class="post-card invisible" data-category="clothes">
+                        <img class="img-fluid" src="img/Preparing winter clothes for donation drives.jpg" alt="">
+                        <div class="bg-light p-4">
+                            <span class="post-badge badge-clothes">Clothing</span>
+                            <a class="d-block h5 lh-base mb-4" href="">Preparing winter clothes for donation drives</a>
+                            <div class="text-muted border-top pt-4">
+                                <small class="me-3"><i class="fa fa-user text-primary me-2"></i>Admin</small>
+                                <small class="me-3"><i class="fa fa-calendar text-primary me-2"></i>01 Jan, 2045</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                    <div class="post-card invisible" data-category="books">
+                        <img class="img-fluid" src="img/Setting up community book exchanges.jpg" alt="">
+                        <div class="bg-light p-4">
+                            <span class="post-badge badge-books">Books</span>
+                            <a class="d-block h5 lh-base mb-4" href="">Setting up community book exchanges</a>
+                            <div class="text-muted border-top pt-4">
+                                <small class="me-3"><i class="fa fa-user text-primary me-2"></i>Admin</small>
+                                <small class="me-3"><i class="fa fa-calendar text-primary me-2"></i>01 Jan, 2045</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
+                    <div class="post-card invisible" data-category="electronics">
+                        <img class="img-fluid" src="img/Repair cafes and donating usable electronics.jpg" alt="">
+                        <div class="bg-light p-4">
+                            <span class="post-badge badge-electronics">Electronics</span>
+                            <a class="d-block h5 lh-base mb-4" href="">Repair cafes and donating usable electronics</a>
+                            <div class="text-muted border-top pt-4">
+                                <small class="me-3"><i class="fa fa-user text-primary me-2"></i>Admin</small>
+                                <small class="me-3"><i class="fa fa-calendar text-primary me-2"></i>01 Jan, 2045</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
+                    <div class="post-card invisible" data-category="other">
+                        <img class="img-fluid" src="img/creative reuse and upcycling.jpg" alt="">
+                        <div class="bg-light p-4">
+                            <span class="post-badge badge-other">Other</span>
+                            <a class="d-block h5 lh-base mb-4" href="">Community stories: creative reuse and
+                                upcycling</a>
+                            <div class="text-muted border-top pt-4">
+                                <small class="me-3"><i class="fa fa-user text-primary me-2"></i>Admin</small>
+                                <small class="me-3"><i class="fa fa-calendar text-primary me-2"></i>01 Jan, 2045</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 text-center wow fadeInUp" data-wow-delay="0.1s">
+                    <a class="btn btn-primary rounded-pill py-3 px-5" href="information.html">Read More</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Blog End -->
+    <!-- Removed an old filtering script that reordered columns and caused layout/footer jumps.
+     Filtering is handled by the enhanced script below which toggles visibility and animations. -->
+
+    <!-- Footer Start -->
+    <script>
+        // Enhanced category filter + animations
+        (function () {
+            function initWOW() {
+                try { if (typeof WOW !== 'undefined') new WOW().init(); } catch (e) { }
+            }
+
+            function qs(sel) { return document.querySelector(sel); }
+            function qsa(sel) { return Array.from(document.querySelectorAll(sel)); }
+
+            const buttons = qsa('.category-btn');
+            const posts = qsa('.post-card');
+            // derive column containers from posts so we can hide the full column
+            const columns = Array.from(new Set(posts.map(p => p.closest('.col-lg-4, .col-md-6, .col-12'))));
+            const filterWrap = qs('.category-filter');
+
+            // add underline element for active button
+            const underline = document.createElement('div');
+            underline.className = 'filter-underline';
+            filterWrap.appendChild(underline);
+
+            function positionUnderline(activeBtn) {
+                if (!activeBtn) return;
+                const rect = activeBtn.getBoundingClientRect();
+                const wrapRect = filterWrap.getBoundingClientRect();
+                const left = rect.left - wrapRect.left + rect.width / 2;
+                underline.style.left = left + 'px';
+                underline.style.width = Math.max(80, rect.width * 0.9) + 'px';
+            }
+
+            // New behavior: keep all cards visible; highlight matches and dim others.
+            function showPosts(filter) {
+                let firstMatch = null;
+                posts.forEach((p, idx) => {
+                    const cat = p.getAttribute('data-category');
+                    // clear prior state
+                    p.classList.remove('fade-in', 'fade-out', 'visible', 'invisible', 'highlight', 'dimmed');
+                    p.style.animationDelay = '';
+
+                    // always make sure card is visible in layout (we won't hide columns)
+                    // remove any d-none on column containers if present
+                    const col = p.closest('.col-lg-4, .col-md-6, .col-12');
+                    if (col && col.classList.contains('d-none')) col.classList.remove('d-none');
+
+                    if (filter === 'all' || cat === filter) {
+                        // highlight matching card
+                        p.classList.add('highlight');
+                        p.classList.remove('dimmed');
+                        if (!firstMatch) firstMatch = p;
+                    } else {
+                        // dim non-matching card
+                        p.classList.add('dimmed');
+                        p.classList.remove('highlight');
+                    }
+                });
+
+                // remove any initial 'invisible' so all cards render
+                posts.forEach(p => p.classList.remove('invisible'));
+            }
+
+            buttons.forEach(b => b.addEventListener('click', (e) => {
+                buttons.forEach(x => x.classList.remove('active'));
+                b.classList.add('active');
+                positionUnderline(b);
+                showPosts(b.getAttribute('data-filter'));
+            }));
+
+            // initialize on DOM ready
+            document.addEventListener('DOMContentLoaded', () => {
+                initWOW();
+                // position underline on first active button
+                const active = qs('.category-btn.active') || buttons[0];
+                positionUnderline(active);
+                // small timeout so layout settles
+                setTimeout(() => showPosts((active && active.getAttribute('data-filter')) || 'all'), 80);
+                // reposition on resize
+                window.addEventListener('resize', () => positionUnderline(qs('.category-btn.active')));
+            });
+        })();
+    </script>
+    <script>
+        // Init carousel and counters
+        (function () {
+            function initCarousel() {
+                try {
+                    if (typeof $ !== 'undefined' && typeof $.fn.owlCarousel !== 'undefined') {
+                        $('.featured-carousel').owlCarousel({
+                            loop: true, margin: 20, nav: true, dots: false, autoplay: true, autoplayTimeout: 4200, autoplayHoverPause: true,
+                            responsive: { 0: { items: 1 }, 768: { items: 2 }, 992: { items: 3 } }
+                        });
+                    }
+                } catch (e) { console.warn('Carousel init failed', e); }
+            }
+
+            function animateCounters() {
+                const counters = document.querySelectorAll('.num[data-target]');
+                const easeOut = (t) => 1 - Math.pow(1 - t, 3);
+                counters.forEach(c => {
+                    const target = +c.getAttribute('data-target');
+                    let started = false;
+                    const onView = () => {
+                        if (started) return; started = true;
+                        const duration = 1200; const start = performance.now();
+                        function step(ts) {
+                            const p = Math.min(1, (ts - start) / duration);
+                            c.textContent = Math.floor(easeOut(p) * target);
+                            if (p < 1) requestAnimationFrame(step);
+                            else c.textContent = target;
+                        }
+                        requestAnimationFrame(step);
+                    };
+                    // use IntersectionObserver
+                    if ('IntersectionObserver' in window) {
+                        const io = new IntersectionObserver((entries, obs) => { if (entries[0].isIntersecting) { onView(); obs.disconnect(); } });
+                        io.observe(c);
+                    } else { onView(); }
+                });
+            }
+
+            document.addEventListener('DOMContentLoaded', () => {
+                initCarousel();
+                animateCounters();
+            });
+        })();
+    </script>
+    <button id="chatToggle" onclick="toggleChat()">🤖 Ask AI</button>
+    <style>
+        #chatToggle {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 14px 18px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 16px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+    </style>
+    <div id="chatbot">
+        <div id="chat-header">
+            💬 HelpReach AI
+            <button id="closeChat" onclick="closeChat()">✖</button>
+        </div>
+
+        <div id="chatbox"></div>
+
+        <div id="chat-input">
+            <input id="userInput" placeholder="Ask something..." onkeypress="handleEnter(event)" />
+            <button onclick="sendMessage()">➤</button>
+        </div>
+    </div>
+    <style>
+        #chatbot {
+            display: none;
+            /* ✅ hidden by default */
+            position: fixed;
+            bottom: 80px;
+            left: 20px;
+            width: 320px;
+            height: 420px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            flex-direction: column;
+            font-family: Arial;
+        }
+
+        #closeChat {
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+
+        #chat-header {
+            background: #4CAF50;
+            color: white;
+            padding: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 15px 15px 0 0;
+        }
+
+        #chatbox {
+            flex: 1;
+            padding: 10px;
+            background: #f4f7f9;
+            overflow-y: auto;
+        }
+
+        .user-msg {
+            text-align: right;
+            margin: 6px 0;
+        }
+
+        .user-msg span {
+            background: #4CAF50;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 15px 15px 0 15px;
+            display: inline-block;
+        }
+
+        .bot-msg {
+            text-align: left;
+            margin: 6px 0;
+        }
+
+        .bot-msg span {
+            background: #e0e0e0;
+            padding: 8px 12px;
+            border-radius: 15px 15px 15px 0;
+            display: inline-block;
+        }
+
+        #chat-input {
+            display: flex;
+            border-top: 1px solid #ddd;
+        }
+
+        #chat-input input {
+            flex: 1;
+            border: none;
+            padding: 10px;
+            outline: none;
+        }
+
+        #chat-input button {
+            border: none;
+            background: #4CAF50;
+            color: white;
+            padding: 0 18px;
+            cursor: pointer;
+        }
+    </style>
+    <script>
+        let greeted = false;
+
+        function toggleChat() {
+            const chat = document.getElementById("chatbot");
+            const chatbox = document.getElementById("chatbox");
+
+            if (chat.style.display === "none" || chat.style.display === "") {
+                chat.style.display = "flex";
+
+                if (!greeted) {
+                    chatbox.innerHTML += `
+        <div class="bot-msg">
+          <span>Hi 👋 I'm <b>HelpReach AI</b>. How can I help you today?</span>
+        </div>
+      `;
+                    chatbox.scrollTop = chatbox.scrollHeight;
+                    greeted = true;
+                }
+            }
+        }
+
+        function closeChat() {
+            document.getElementById("chatbot").style.display = "none";
+            greeted = false;
+        }
+
+        function handleEnter(event) {
+            if (event.key === "Enter") {
+                sendMessage();
+            }
+        }
+
+        function sendMessage() {
+            const input = document.getElementById("userInput");
+            const message = input.value.trim();
+            if (!message) return;
+
+            const chatbox = document.getElementById("chatbox");
+
+            chatbox.innerHTML += `
+    <div class="user-msg">
+      <span>${message}</span>
+    </div>
+  `;
+
+            fetch("http://127.0.0.1:5000/api/chatbot", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ message })
+            })
+                .then(res => res.json())
+                .then(data => {
+                    chatbox.innerHTML += `
+      <div class="bot-msg">
+        <span>${data.reply}</span>
+      </div>
+    `;
+                    chatbox.scrollTop = chatbox.scrollHeight;
+                });
+
+            input.value = "";
+        }
+    </script>
+
+
+   <!-- Footer -->
+    <footer class="container-fluid bg-dark text-light py-5">
+        <div class="container">
+            <div class="row g-4">
+                <!-- About Section -->
+                <div class="col-lg-3 col-md-6 footer-section">
+                    <h5 class="fw-bold">HelpReach</h5>
+                    <p class="small">A platform connecting donors and NGOs to reduce food and item wastage while helping
+                        communities in need.</p>
+                    <div class="social-links">
+                        <a href="#" title="Facebook" aria-label="Follow us on Facebook"><i
+                                class="fab fa-facebook-f"></i></a>
+                        <a href="#" title="Twitter" aria-label="Follow us on Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" title="Instagram" aria-label="Follow us on Instagram"><i
+                                class="fab fa-instagram"></i></a>
+                        <a href="#" title="LinkedIn" aria-label="Follow us on LinkedIn"><i
+                                class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+
+                <!-- Quick Links -->
+                <div class="col-lg-3 col-md-6 footer-section">
+                    <h6>Quick Links</h6>
+                    <ul class="list-unstyled">
+                        <li><a class="text-decoration-none" href="ngo_index.html">Home</a></li>
+                        <li><a class="text-decoration-none" href="ngo_about.html">About Us</a></li>
+                        <li><a class="text-decoration-none" href="Ngo_Dashboard.html">Dashboard</a></li>
+                        <li><a class="text-decoration-none" href="Ngo_Dashboard.html">Active Donation</a></li>
+                        <li><a class="text-decoration-none" href="ngo_history.html">History</a></li>
+                    </ul>
+                </div>
+
+                <!-- Important Links -->
+                <div class="col-lg-2 col-md-6 footer-section">
+                    <h6>Resources</h6>
+                    <ul class="list-unstyled">
+                        <li><a class="text-decoration-none" href="ngo_blog.html">Blog</a></li>
+                        <li><a class="text-decoration-none" href="ngo_features.html">Features</a></li>
+                        <li><a class="text-decoration-none" href="Directory_ngo.html">NGO Directory</a></li>
+                        <li><a class="text-decoration-none" href="ngo_contact.html">Contact</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact Info -->
+                <div class="col-lg-4 col-md-6 footer-section">
+                    <h6>Get In Touch</h6>
+                    <div class="contact-info">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>411 041 Narhe Road, Pune, India</span>
+                    </div>
+                    <div class="contact-info">
+                        <i class="fas fa-envelope"></i>
+                        <a href="mailto:helpreach18@gmail.com" class="text-decoration-none">helpreach18@gmail.com</a>
+                    </div>
+                    <div class="contact-info">
+                        <i class="fas fa-phone"></i>
+                        <div>
+                            <div><a href="tel:+918530932462" class="text-decoration-none">+91 8530932462</a></div>
+                            <div><a href="tel:+919607340088" class="text-decoration-none">+91 9607340088</a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer Divider -->
+            <div class="footer-divider"></div>
+
+            <!-- Footer Bottom -->
+            <div class="footer-bottom">
+                <div class="row align-items-center">
+                    <div class="col-md-6 text-center text-md-start">
+                        <p class="small mb-0">&copy; <span id="year"></span> <strong>HelpReach</strong>. All rights
+                            reserved.</p>
+                    </div>
+                    <div class="col-md-6 text-center text-md-end">
+                        <p class="small mb-0">Made with <i class="fas fa-heart text-danger"></i> to make a difference
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Footer End -->
+    <script>
+        document.getElementById('year').textContent = new Date().getFullYear();
+    </script>
+
+
+    <!-- Back to Top -->
+    <a href="#" class="btn btn-lg btn-primary btn-lg-square rounded-circle back-to-top"><i
+            class="bi bi-arrow-up"></i></a>
+
+
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="lib/wow/wow.min.js"></script>
+    <script src="lib/easing/easing.min.js"></script>
+    <script src="lib/waypoints/waypoints.min.js"></script>
+    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+
+    <!-- Template Javascript -->
+    <script src="js/main.js"></script>
+</body>
+
+</html>
