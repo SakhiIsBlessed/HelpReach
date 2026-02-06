@@ -595,7 +595,7 @@
                         <a href="Ngo_Dashboard.html" class="menu-item" onclick="openMyDocuments(); return false;">
                             <i class="fas fa-folder me-2"></i> My Documents
                         </a>
-                        <a href="Ngo_Dashboard.html" class="menu-item" onclick="openResetPassword(); return false;">
+                        <a href="login.html#verifyOtpForm" class="menu-item" onclick="openResetPassword(); return false;">
                             <i class="fas fa-user-cog me-2"></i> Profile Settings
                         </a>
                         <a href="Ngo_Dashboard.html" class="menu-item logout" onclick="logoutUser(); return false;">
@@ -2367,10 +2367,10 @@
             }
 
             // Helper: Reset password / open profile settings
-            function openResetPassword() {
-                try { closeProfileSidebar(); } catch (e) { }
-                try { editProfile(); } catch (e) { alert('To reset password, open Profile Settings'); }
-            }
+            // function openResetPassword() {
+            //     try { closeProfileSidebar(); } catch (e) { }
+            //     try { editProfile(); } catch (e) { alert('To reset password, open Profile Settings'); }
+            // }
 
             async function loadNgoProfileFromBackend(ngoId) {
                 try {
