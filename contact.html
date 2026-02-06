@@ -2232,18 +2232,7 @@
             currentOtpToken = null;
             currentResetEmail = null;
         }
-
-    </script>
-    <script>
-        function resetToRegistrationForm() {
-            document.getElementById("loginForm").style.display = "none";
-            document.getElementById("registrationForm").style.display = "block";
-            document.querySelector(".registration-header h3").textContent = "Join HelpReach";
-
-            // show "Already registered? Login here"
-            document.getElementById("loginToggleText").style.display = "block";
-
-            const btn = document.getElementById("authButton");
+etElementById("authButton");
             btn.textContent = "Register";
             btn.onclick = submitRegistration;
 

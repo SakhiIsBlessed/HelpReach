@@ -699,7 +699,7 @@
 
                     <h6 class="mb-1 fw-bold">Upload Documents</h6>
 
-                    <div id="docMessage" class="text-muted small mb-2">
+                    <div id="docMessage" class="text-muted small mb-3">
                         No documents uploaded yet
                     </div>
 
@@ -713,10 +713,15 @@
                     <input type="file" id="documentUpload" class="d-none" multiple>
 
                     <!-- Button that opens file picker -->
-                    <button class="btn btn-sm btn-outline-primary"
-                        onclick="document.getElementById('documentUpload').click()">
-                        Upload Now
-                    </button>
+                    <div class="mx-auto" style="max-width: 300px;">
+                        <button class="btn btn-success w-100 py-3 mt-3 rounded-pill"
+                            style="font-weight: 500; font-size: 1rem; transition: all 0.3s ease; border: none;"
+                            onmouseover="this.style.backgroundColor='#157347';"
+                            onmouseout="this.style.backgroundColor='';"
+                            onclick="document.getElementById('documentUpload').click()">
+                            <i class="fas fa-cloud-upload-alt me-2"></i>Upload Documents
+                        </button>
+                    </div>
                 </div>
 
 
