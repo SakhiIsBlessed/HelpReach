@@ -492,7 +492,7 @@
 <body> <!-- Navbar Start -->
     <div class="container-fluid fixed-top bg-white">
         <nav class="navbar navbar-expand-lg navbar-light container">
-            <a class="navbar-brand fw-bold" href="index.html">
+            <a class="navbar-brand fw-bold" href="ngo_index.html">
                 <img src="logo.svg" alt="HelpReach Logo" class="me-2" style="height: 40px;">
                 HelpReach
             </a>
@@ -1875,6 +1875,43 @@
             </div>
         </div>
 <script>
+     // Documents upload helpers (server-backed)
+            async function getMyDocuments(ngoId) {
+                const list = document.getElementById('uploadedDocsList');
+                list.innerHTML = '<div class="text-muted">Loading documents...</div>';
+
+                if (!ngoId) {
+                    list.innerHTML = '<div class="text-muted">Please login as NGO to view documents.</div>';
+                    return;
+                }
+
+                try {
+                    const res = await fetch(`http://127.0.0.1:5000/api/ngo/${ngoId}/documents`, { credentials: 'include' });
+                    const data = await res.json();
+                    if (!res.ok || !data.ok) {
+                        list.innerHTML = '<div class="text-muted">No documents uploaded yet.</div>';
+                        try { document.getElementById('docCount').textContent = 0; } catch (e) { }
+                        return;
+                    }
+
+                    list.innerHTML = '';
+                    const docs = data.documents || [];
+                    if (docs.length === 0) {
+                        list.innerHTML = '<div class="text-muted">No documents uploaded yet.</div>';
+                    } else {
+                        docs.forEach(d => {
+                            const row = document.createElement('div');
+                            row.innerHTML = `<a href="${d.url}" target="_blank">${d.original_filename || d.filename}</a> <span class="text-muted small"> — ${new Date(d.uploaded_at).toLocaleString()}</span>`;
+                            list.appendChild(row);
+                        });
+                    }
+                    try { document.getElementById('docCount').textContent = docs.length || 0; } catch (e) { }
+
+                } catch (err) {
+                    console.error('Error loading NGO documents:', err);
+                    list.innerHTML = '<div class="text-muted">Failed to load documents.</div>';
+                }
+            }
     function openMyDocuments() {
                 try { closeProfileSidebar(); } catch (e) { }
                 try { openUploadModal(); } catch (e) { alert('Upload Documents (demo) not available'); }
@@ -1935,24 +1972,123 @@ function openUploadModal() {
         
 
         <!-- Quick Actions -->
-        <div class="quick-actions">
-            <button class="action-btn" onclick="editProfile()">
-                <i class="fas fa-edit"></i> Edit Profile
-            </button>
-            <button class="action-btn" onclick="manageRequests()">
-                <i class="fas fa-hands-helping"></i> Manage Requests
-            </button>
-            <button class="action-btn" onclick="notifications()">
-                <i class="fas fa-bell"></i> Alerts
-            </button>
-            <button class="action-btn" onclick="myAccount()">
-                <i class="fas fa-cog"></i> Account
-            </button>
-            <button class="action-btn logout" onclick="logoutUser()">
-                <i class="fas fa-sign-out-alt"></i> Logout
-            </button>
-        </div>
+<div class="quick-actions">
+    <button class="action-btn" onclick="goToResetPassword()">
+        <i class="fas fa-edit"></i> Edit Profile
+    </button>
+
+    <button class="action-btn" onclick="goToNgoAccount()">
+        <i class="fas fa-cog"></i> Account
+    </button>
+
+    <button class="action-btn logout" onclick="logoutUser()">
+        <i class="fas fa-sign-out-alt"></i> Logout
+    </button>
+</div>
+
+<script>
+function goToResetPassword() {
+    localStorage.setItem("openResetPassword", "true");
+    window.location.href = "login.html";
+}
+
+function goToNgoAccount() {
+    window.location.href = "ngo_dashboard.html";
+}
+</script>
     </div>
+    <script>
+                    async function refreshDocumentList() {
+                        const list = document.getElementById('uploadedDocsList');
+                        const msg = document.getElementById('docMessage');
+                        list.innerHTML = '<div class="text-muted">Loading documents...</div>';
+
+                        if (!currentNgoId) {
+                            list.innerHTML = '<div class="text-muted">Please login to view documents.</div>';
+                            try { msg.textContent = 'No documents uploaded yet'; } catch (e) { }
+                            try { document.getElementById('docCount').textContent = 0; } catch (e) { }
+                            return;
+                        }
+
+                        try {
+                            const res = await fetch(`http://127.0.0.1:5000/api/ngo/${currentNgoId}/documents`, { credentials: 'include' });
+                            const data = await res.json();
+
+                            if (res.ok && data.ok) {
+                                const docs = data.documents || [];
+                                if (docs.length === 0) {
+                                    list.innerHTML = '<div class="text-muted">No documents uploaded yet.</div>';
+                                    msg.textContent = 'No documents uploaded yet';
+                                    try { document.getElementById('uploadedDocsListSecondary').innerHTML = '<div class="text-muted">No documents uploaded yet.</div>'; } catch (e) { }
+                                } else {
+                                    list.innerHTML = '';
+                                    docs.forEach(d => {
+                                        const row = document.createElement('div');
+                                        row.innerHTML = `<a href="${d.url}" target="_blank">${d.original_filename || d.filename}</a> <span class="text-muted small"> — ${new Date(d.uploaded_at).toLocaleString()}</span>`;
+                                        list.appendChild(row);
+                                    });
+                                    msg.textContent = '';
+                                    try { document.getElementById('uploadedDocsListSecondary').innerHTML = list.innerHTML; } catch (e) { }
+                                }
+                                try { document.getElementById('docCount').textContent = docs.length || 0; } catch (e) { }
+                            } else {
+                                list.innerHTML = '<div class="text-muted">Failed to load documents.</div>';
+                            }
+                        } catch (err) {
+                            console.error('Error loading NGO documents:', err);
+                            list.innerHTML = '<div class="text-muted">Failed to load documents.</div>';
+                        }
+                    }
+
+                    function showUploadAlert(message, type = 'success', timeout = 4000) {
+                        const container = document.getElementById('uploadAlertContainer');
+                        container.innerHTML = `<div class="alert alert-${type}">${message}</div>`;
+                        if (timeout) {
+                            setTimeout(() => { container.innerHTML = ''; }, timeout);
+                        }
+                    }
+
+                    // Upload handler
+                    document.getElementById('documentUpload').addEventListener('change', async function () {
+                        if (!this.files || this.files.length === 0) return;
+
+                        if (!currentNgoId) {
+                            showUploadAlert('Please login as NGO to upload documents', 'warning');
+                            this.value = '';
+                            return;
+                        }
+
+                        const form = new FormData();
+                        Array.from(this.files).forEach(f => form.append('documents', f));
+
+                        showUploadAlert('Uploading...', 'info', 0);
+
+                        try {
+                            const res = await fetch(`http://127.0.0.1:5000/api/ngo/${currentNgoId}/documents`, {
+                                method: 'POST',
+                                credentials: 'include',
+                                body: form
+                            });
+                            const data = await res.json();
+
+                            if (res.ok && data.ok) {
+                                showUploadAlert('File(s) uploaded successfully', 'success');
+                                // Refresh using existing helper
+                                try { getMyDocuments(currentNgoId); } catch (e) { console.error('Error refreshing documents', e); }
+                            } else {
+                                showUploadAlert('Upload failed: ' + (data.error || 'Server error'), 'danger');
+                            }
+                        } catch (err) {
+                            console.error('Upload error:', err);
+                            showUploadAlert('Upload failed: Network error', 'danger');
+                        } finally {
+                            this.value = '';
+                        }
+                    });
+
+                    // Expose for page init and profile update
+                    if (typeof getMyDocuments === 'function') getMyDocuments(currentNgoId);
+                </script>
     <script>
         /* ================= GLOBALS ================= */
         let isNgoLoggedIn = false;
@@ -1989,6 +2125,11 @@ function openUploadModal() {
             document.getElementById("profileIcon").classList.add("show");
 
             isNgoLoggedIn = true;
+            // Load NGO docs count from server
+                try {
+                    getMyDocuments(ngo.id);
+                } catch (e) { console.error('Error loading NGO documents on profile update', e); }
+
         }
 
         /* ================= FETCH NGO FROM BACKEND ================= */

@@ -292,15 +292,27 @@ def register():#This function runs whenever /api/register is called
                     to_email=email,
                     subject="Welcome to HelpReach 🎉",
                     message=f"""
-Hello {name},
+<html>
+  <body style="font-family: Arial, sans-serif; line-height:1.6; color:#333;">
+    <p>Hello <strong>{name}</strong>,</p>
 
-Welcome to the HelpReach family. We're glad you're here.
-You can now start donating items and supporting NGOs to make a real difference.
+    <p>Welcome to the <strong>HelpReach</strong> family! 🎉</p>
 
-If you need help getting started, reply to this email and we'll assist you.
+    <p>
+      You can now start donating items and supporting NGOs to make a real difference
+      in the community.
+    </p>
 
-Warm regards,
-Team HelpReach
+    <p>
+      If you need help getting started, simply reply to this email — we’re happy to help.
+    </p>
+
+    <p>
+      Warm regards,<br>
+      <strong>Team HelpReach</strong> 💚
+    </p>
+  </body>
+</html>
 """
                 )
             except Exception as email_error:
@@ -374,13 +386,22 @@ def login():
                 to_email=user["email"],
                 subject="Login Successful – HelpReach",
                 message=f"""
-Hello {user['name']},
+<html>
+  <body style="font-family: Arial, sans-serif; line-height:1.6; color:#333;">
+    <p>Hello <strong>{user['name']}</strong>,</p>
 
-You have successfully logged in to your HelpReach account.
+    <p>You have successfully logged in to your <strong>HelpReach</strong> account.</p>
 
-If you did not log in, please reset your password or contact support immediately.
+    <p style="color:#c62828;">
+      ⚠️ If this wasn’t you, please reset your password or contact support immediately.
+    </p>
 
-Team HelpReach
+    <p>
+      Best regards,<br>
+      <strong>Team HelpReach</strong>
+    </p>
+  </body>
+</html>
 """
             )
         except Exception as e:
@@ -505,14 +526,29 @@ def api_donations():
                 to_email=user["email"],
                 subject="Thank you for your donation ❤️",
                 message=f"""
-Hello {user['name']},
+<html>
+  <body style="font-family: Arial, sans-serif; line-height:1.6; color:#333;">
+    <p>Hello <strong>{user['name']}</strong>,</p>
 
-Thank you for your generous donation of "{title}". Your support helps NGOs continue their important work and reach those in need.
+    <p>
+      Thank you for your generous donation of
+      <strong>"{title}"</strong>.
+    </p>
 
-We appreciate your kindness. If you would like updates on how your donation is being used, reply to this email or check your dashboard.
+    <p>
+      Your kindness helps NGOs continue their important work and reach those in need.
+    </p>
 
-With heartfelt gratitude,
-Team HelpReach
+    <p>
+      You can track updates anytime from your dashboard.
+    </p>
+
+    <p>
+      With heartfelt gratitude,<br>
+      <strong>Team HelpReach</strong> ❤️
+    </p>
+  </body>
+</html>
 """
             )
             print(f"✅ Donation thank-you email sent to {user['email']}")
@@ -540,22 +576,34 @@ Team HelpReach
         
         for ngo in ngos:
             ngo_subject = f"🎁 New Donation Available: {title}"
+
             ngo_message = f"""
-Hello {ngo['name']},
+<html>
+  <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
+    <p>Hello <strong>{ngo['name']}</strong>,</p>
 
-A new donation is available on HelpReach and may be relevant to your work. Here are the key details:
+    <p>
+      A new donation has been posted on <strong>HelpReach</strong> that may be relevant to your work.
+    </p>
 
-Title: {title}
-Description: {description or 'N/A'}
-Quantity: {quantity}
-Pickup Info: {pickup_info or 'Contact donor for details'}
+    <h3 style="color:#2e7d32;">📦 Donation Details</h3>
+    <ul>
+      <li><strong>Title:</strong> {title}</li>
+      <li><strong>Description:</strong> {description or 'N/A'}</li>
+      <li><strong>Quantity:</strong> {quantity}</li>
+      <li><strong>Pickup Info:</strong> {pickup_info or 'Contact donor for details'}</li>
+    </ul>
 
-To claim this donation, please log in to your HelpReach Dashboard and follow the claim steps.
+    <p>
+      👉 To claim this donation, please log in to your
+      <strong>HelpReach Dashboard</strong> and follow the claim steps.
+    </p>
 
-Best regards,
-Team HelpReach
+    <p>Best regards,<br>
+    <strong>Team HelpReach</strong> 💚</p>
+  </body>
+</html>
 """
-            
             print(f"   📧 Notifying: {ngo['name']} ({ngo['contact_email']})")
             send_email(ngo['contact_email'], ngo_subject, ngo_message)
         
@@ -826,13 +874,25 @@ def register_ngo():
             send_email(
                 to_email=contact_email,
                 subject="NGO Registration Successful ✔️",
-                message=f"""Hello {contact_person},
+                message=f"""<html>
+  <body style="font-family: Arial, sans-serif; line-height:1.6; color:#333;">
+    <p>Hello <strong>{contact_person}</strong>,</p>
 
-Congratulations — your NGO "{name}" is now registered on HelpReach. You can log in using your registered email and password to manage your profile and view donations.
+    <p>
+      🎉 Congratulations! Your NGO <strong>"{name}"</strong>
+      has been successfully registered on <strong>HelpReach</strong>.
+    </p>
 
-If you have any questions, reply to this email and we'll assist.
+    <p>
+      You can now log in to manage your profile and view available donations.
+    </p>
 
-Team HelpReach
+    <p>
+      Best wishes,<br>
+      <strong>Team HelpReach</strong> 💚
+    </p>
+  </body>
+</html>
 """
             )
         except Exception as email_error:
@@ -1082,13 +1142,22 @@ def ngo_login():
                 to_email=ngo["contact_email"],
                 subject="NGO Login Alert 🔔",
                 message=f"""
-Hello {ngo['name']},
+<html>
+  <body style="font-family: Arial, sans-serif; line-height:1.6; color:#333;">
+    <p>Hello <strong>{ngo['name']}</strong>,</p>
 
-Your NGO account has just logged in to HelpReach.
+    <p>Your NGO account has just logged in to <strong>HelpReach</strong>.</p>
 
-If this was not you, please reset your password or contact support immediately.
+    <p style="color:#c62828;">
+      ⚠️ If this was not you, please reset your password or contact support immediately.
+    </p>
 
-Team HelpReach
+    <p>
+      Regards,<br>
+      <strong>Team HelpReach</strong>
+    </p>
+  </body>
+</html>
 """
             )
         except Exception as email_err:
@@ -1489,22 +1558,28 @@ def user_request_otp():
                 to_email=email,
                 subject="🔐 Password Reset OTP - HelpReach",
                 message=f"""
-Hello {user['name']},
+<html>
+  <body style="font-family: Arial, sans-serif; line-height:1.6; color:#333;">
+    <p>Hello <strong>{user['name']}</strong>,</p>
 
-You requested to reset your HelpReach password. Your One-Time Password (OTP) is:
+    <p>You requested to reset your HelpReach password.</p>
 
-{otp}
+    <h3 style="color:#2e7d32;">🔑 Your OTP</h3>
+    <p style="font-size:18px;"><strong>{otp}</strong></p>
 
-This OTP is valid for 10 minutes.
+    <p>This OTP is valid for <strong>10 minutes</strong>.</p>
 
-Security note:
-- Never share this OTP with anyone.
-- HelpReach staff will never ask for your OTP.
+    <ul>
+      <li>Never share this OTP with anyone</li>
+      <li>HelpReach staff will never ask for your OTP</li>
+    </ul>
 
-If you did not request this, please ignore this email or contact support.
-
-Best regards,
-Team HelpReach
+    <p>
+      Best regards,<br>
+      <strong>Team HelpReach</strong>
+    </p>
+  </body>
+</html>
 """
             )
             print(f"✅ OTP sent to {email}: {otp}")
@@ -1979,29 +2054,60 @@ def claim_donation():
 
         # Send email to NGO
         ngo_subject = "🎉 Donation Claimed Successfully!"
+
         ngo_message = f"""
-Hello {ngo['name']},
+<html>
+<body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
+  <p>Hello <strong>{ngo['name']}</strong>,</p>
 
-You have successfully claimed the donation titled "{donation['title']}".
+  <p>
+    You have successfully claimed the donation titled:
+    <strong>{donation['title']}</strong>.
+  </p>
 
-Please arrange pickup with the donor at your earliest convenience. If you need contact details, reply to this email.
+  <p>
+    Please arrange the pickup with the donor at your earliest convenience.
+    If you need contact details, simply reply to this email.
+  </p>
 
-Best regards,
-Team HelpReach
+  <p>
+    Best regards,<br>
+    <strong>Team HelpReach</strong>
+  </p>
+</body>
+</html>
 """
+
         print(f"  📧 Sending email to NGO at: {ngo['contact_email']}")
         
         donor_subject = "✅ Your Donation Has Been Claimed!"
+
         donor_message = f"""
-Hello {donation['donor_name']},
+<html>
+<body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
+  <p>Hello <strong>{donation['donor_name']}</strong>,</p>
 
-Your donation "{donation['title']}" has been claimed by {ngo['name']}. The NGO will contact you soon to arrange the pickup.
+  <p>
+    Your donation titled <strong>{donation['title']}</strong> has been
+    successfully claimed by <strong>{ngo['name']}</strong>.
+  </p>
 
-Thank you for making a difference.
+  <p>
+    The NGO will contact you soon to arrange the pickup.
+  </p>
 
-Best regards,
-Team HelpReach
+  <p>
+    Thank you for making a difference 🙏
+  </p>
+
+  <p>
+    Best regards,<br>
+    <strong>Team HelpReach</strong>
+  </p>
+</body>
+</html>
 """
+
         sys.stdout.flush()
         ngo_email_sent = send_email(ngo['contact_email'], ngo_subject, ngo_message)
         sys.stdout.flush()
@@ -2245,19 +2351,31 @@ def donation_delivered():
             # Send completion email to donor
             donor_subject = "🎉 Your Donation Journey Complete!"
             donor_message = f"""
-Hi {donation_info['donor_name']},
+<html>
+  <body style="font-family: Arial, sans-serif; line-height:1.6; color:#333;">
+    <p>Hello <strong>{donation_info['donor_name']}</strong>,</p>
 
-Wonderful news! Your donation has been successfully delivered!
+    <p>
+      Wonderful news! Your donation has been successfully delivered 🎉
+    </p>
 
-📦 Donation: {donation_info['title']}
-✅ Status: Completed
-📍 Received by: {donation_info['ngo_name']}
+    <ul>
+      <li><strong>Donation:</strong> {donation_info['title']}</li>
+      <li><strong>Status:</strong> Completed</li>
+      <li><strong>Received by:</strong> {donation_info['ngo_name']}</li>
+    </ul>
 
-Your generosity is making a real difference in the community. Thank you!
+    <p>
+      Your generosity is making a real difference in the community.
+    </p>
 
-Best regards,
-HelpReach Team
-            """
+    <p>
+      With gratitude,<br>
+      <strong>Team HelpReach</strong> 💚
+    </p>
+  </body>
+</html>
+"""
             send_email(donation_info['donor_email'], donor_subject, donor_message)
         
         return jsonify({

@@ -376,12 +376,30 @@
         </form>
 
         <div class="alt-actions">
-            <div style="text-align:center">
-                <p style="margin:0;color:#6c757d">Forgot your password?</p>
-                <a href="#" onclick="requestOtpFromLoginEmail()"
-                    style="cursor:pointer;color:#007bff;font-weight:600">Reset OTP</a>
-            </div>
-        </div>
+    <div style="text-align:center">
+        <p style="margin:0;color:#6c757d">Forgot your password?</p>
+        <a href="#" onclick="requestOtpFromLoginEmail()"
+           style="cursor:pointer;color:#007bff;font-weight:600">
+           Reset Password
+        </a>
+    </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const shouldOpenReset = localStorage.getItem("openResetPassword");
+
+    if (shouldOpenReset === "true") {
+        localStorage.removeItem("openResetPassword");
+
+        // Small delay ensures page + inputs are ready
+        setTimeout(() => {
+            requestOtpFromLoginEmail();
+        }, 300);
+    }
+});
+</script>
+
 
         <div class="alt-actions">
             <div style="text-align:center">

@@ -532,7 +532,7 @@
 <body> <!-- Navbar Start -->
     <div class="container-fluid fixed-top bg-white">
         <nav class="navbar navbar-expand-lg navbar-light container">
-            <a class="navbar-brand fw-bold" href="index.html">
+            <a class="navbar-brand fw-bold" href="ngo_index.html">
                 <img src="logo.svg" alt="HelpReach Logo" class="me-2" style="height: 40px;">
                 HelpReach
             </a>
@@ -682,7 +682,7 @@
                     }
                 </style>
 
-                <div class="card mt-3 p-3 text-center" style="border:1px solid #eef2f5;min-width:929px">
+                <!-- <div class="card mt-3 p-3 text-center" style="border:1px solid #eef2f5;min-width:929px"> -->
                     <div style="
                 width:56px;
                 height:56px;
@@ -699,9 +699,9 @@
 
                     <h6 class="mb-1 fw-bold">Upload Documents</h6>
 
-                    <div id="docMessage" class="text-muted small mb-3">
+                    <!-- <div id="docMessage" class="text-muted small mb-3">
                         No documents uploaded yet
-                    </div>
+                    </div> -->
 
                     <!-- Alert area (success/error) -->
                     <div id="uploadAlertContainer" class="mt-2"></div>
@@ -1058,8 +1058,8 @@
         </script>
 
 
-        <!-- Footer -->
-        <!-- Footer -->
+        
+   <!-- Footer -->
     <footer class="container-fluid bg-dark text-light py-5">
         <div class="container">
             <div class="row g-4">
@@ -1141,7 +1141,6 @@
             </div>
         </div>
     </footer>
-    
         <script>
             let isNgoLoggedIn = false;
             let currentNgoId = null;
@@ -2115,7 +2114,10 @@
                     list.innerHTML = '<div class="text-muted">Failed to load documents.</div>';
                 }
             }
-
+function openMyDocuments() {
+                try { closeProfileSidebar(); } catch (e) { }
+                try { openUploadModal(); } catch (e) { alert('Upload Documents (demo) not available'); }
+            }
             function openUploadModal() {
                 const modalEl = document.getElementById('uploadDocsModal');
                 if (!modalEl) return;
@@ -2272,24 +2274,31 @@
                 </div>
             </div>
 
-            <!-- Quick Actions -->
-            <div class="quick-actions">
-                <button class="action-btn" onclick="editProfile()">
-                    <i class="fas fa-edit"></i> Edit Profile
-                </button>
-                <button class="action-btn" onclick="manageRequests()">
-                    <i class="fas fa-hands-helping"></i> Manage Requests
-                </button>
-                <button class="action-btn" onclick="notifications()">
-                    <i class="fas fa-bell"></i> Alerts
-                </button>
-                <button class="action-btn" onclick="myAccount()">
-                    <i class="fas fa-cog"></i> Account
-                </button>
-                <button class="action-btn logout" onclick="logoutUser()">
-                    <i class="fas fa-sign-out-alt"></i> Logout
-                </button>
-            </div>
+           <!-- Quick Actions -->
+<div class="quick-actions">
+    <button class="action-btn" onclick="goToResetPassword()">
+        <i class="fas fa-edit"></i> Edit Profile
+    </button>
+
+    <button class="action-btn" onclick="goToNgoAccount()">
+        <i class="fas fa-cog"></i> Account
+    </button>
+
+    <button class="action-btn logout" onclick="logoutUser()">
+        <i class="fas fa-sign-out-alt"></i> Logout
+    </button>
+</div>
+
+<script>
+function goToResetPassword() {
+    localStorage.setItem("openResetPassword", "true");
+    window.location.href = "login.html";
+}
+
+function goToNgoAccount() {
+    window.location.href = "ngo_dashboard.html";
+}
+</script>
         </div>
         <!-- Upload Documents Modal -->
         <div class="modal fade" id="uploadDocsModal" tabindex="-1" aria-hidden="true">
