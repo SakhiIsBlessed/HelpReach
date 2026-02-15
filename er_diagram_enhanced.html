@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HelpReach ER Diagram - Enhanced</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+        .mermaid {
+            display: flex;
+            justify-content: center;
+            overflow-x: auto;
+            background-color: #fafafa;
+            padding: 20px;
+            border-radius: 4px;
+        }
+        .export-button {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 14px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            background-color: #1abc9c;
+            color: white;
+        }
+        button:hover {
+            background-color: #16a085;
+        }
+        .legend {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 4px;
+            border-left: 4px solid #1abc9c;
+        }
+        .legend h3 {
+            margin-top: 0;
+            color: #333;
+        }
+        .entity-box {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f0f0f0;
+            border-radius: 4px;
+            border-left: 3px solid #1abc9c;
+        }
+        .entity-box strong {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-size: 14px;
+        }
+        .entity-attrs {
+            margin-left: 15px;
+            font-size: 12px;
+            color: #555;
+        }
+        .entity-attrs li {
+            margin: 4px 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        table th {
+            background-color: #1abc9c;
+            color: white;
+            padding: 10px;
+            text-align: left;
+        }
+        table td {
+            padding: 8px;
+            border-bottom: 1px solid #ddd;
+        }
+        table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🗄️ HelpReach Entity-Relationship Diagram</h1>
+        <p class="subtitle">Database Schema Design - Entities & Relationships</p>
+        
+        <div class="mermaid">
+erDiagram
+
+    USER ||--o{ DONATION : creates
+    USER ||--o{ PUSH_SUBSCRIPTION : subscribes
+    USER {
+        int user_id PK
+        string name
+        string email UK
+        string phone
+        string location
+        string password_hash
+        string role
+        datetime created_at
+    }
+
+    NGO ||--o{ DONATION_CLAIM : receives
+    NGO ||--o{ NGO_DOCUMENTS : uploads
+    NGO ||--o{ NGO_BANK_ACCOUNT : maintains
+    NGO {
+        int ngo_id PK
+        string ngo_name
+        string email
+        string phone
+        string address
+        string registration_number
+        text mission_statement
+        string password_hash
+        datetime created_at
+    }
+
+    DONATION ||--|| DONATION_ITEM : contains
+    DONATION ||--o{ DONATION_PHOTO : has
+    DONATION ||--o{ DONATION_CLAIM : "claimed by"
+    DONATION {
+        int donation_id PK
+        int user_id FK
+        int ngo_id FK
+        text description
+        string status
+        datetime created_at
+        datetime updated_at
+    }
+
+    DONATION_ITEM {
+        int item_id PK
+        int donation_id FK
+        string item_name
+        int quantity
+        string condition
+        datetime created_at
+    }
+
+    DONATION_PHOTO {
+        int photo_id PK
+        int donation_id FK
+        string filename
+        string filepath
+        datetime uploaded_at
+    }
+
+    NGO_DOCUMENTS {
+        int doc_id PK
+        int ngo_id FK
+        string filename
+        string original_filename
+        string doc_type
+        datetime uploaded_at
+    }
+
+    NGO_BANK_ACCOUNT {
+        int bank_id PK
+        int ngo_id FK
+        string account_holder_name
+        string account_number
+        string bank_name
+        string ifsc_code
+        datetime created_at
+    }
+
+    DONATION_CLAIM {
+        int claim_id PK
+        int donation_id FK
+        int ngo_id FK
+        string status
+        datetime claimed_at
+        datetime updated_at
+    }
+
+    PUSH_SUBSCRIPTION {
+        int subscription_id PK
+        string endpoint UK
+        string p256dh
+        string auth_key
+        datetime created_at
+    }
+
+    EMAIL_LOG {
+        int email_id PK
+        string recipient_email
+        string subject
+        string email_type
+        datetime sent_at
+    }
+
+        </div>
+
+        <div class="export-button">
+            <button onclick="exportPNG()">📥 Export as PNG</button>
+            <button onclick="exportSVG()">📤 Export as SVG</button>
+            <button onclick="printDiagram()">🖨️ Print</button>
+        </div>
+
+        <div class="legend">
+            <h3>📋 ER Diagram Components & Relationships</h3>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Entity</th>
+                        <th>Primary Entity</th>
+                        <th>Key Attributes</th>
+                        <th>Relationships</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>USER</strong></td>
+                        <td>👤 Donor</td>
+                        <td>user_id, name, email, phone, location</td>
+                        <td>creates Donations, subscribes to Notifications</td>
+                    </tr>
+                    <tr>
+                        <td><strong>NGO</strong></td>
+                        <td>🏢 Organization</td>
+                        <td>ngo_id, name, email, address, registration_number</td>
+                        <td>receives Claims, uploads Documents, maintains Bank Accounts</td>
+                    </tr>
+                    <tr>
+                        <td><strong>DONATION</strong></td>
+                        <td>🎁 Core Entity</td>
+                        <td>donation_id, description, status, created_at</td>
+                        <td>contains Items, has Photos, can be Claimed</td>
+                    </tr>
+                    <tr>
+                        <td><strong>DONATION_ITEM</strong></td>
+                        <td>📦 Child Entity</td>
+                        <td>item_id, item_name, quantity, condition</td>
+                        <td>belongs to one Donation</td>
+                    </tr>
+                    <tr>
+                        <td><strong>DONATION_PHOTO</strong></td>
+                        <td>📸 Media</td>
+                        <td>photo_id, filename, filepath, uploaded_at</td>
+                        <td>belongs to one Donation</td>
+                    </tr>
+                    <tr>
+                        <td><strong>DONATION_CLAIM</strong></td>
+                        <td>✅ Interaction</td>
+                        <td>claim_id, status, claimed_at</td>
+                        <td>links Donation to NGO</td>
+                    </tr>
+                    <tr>
+                        <td><strong>NGO_DOCUMENTS</strong></td>
+                        <td>📄 Verification</td>
+                        <td>doc_id, filename, doc_type, uploaded_at</td>
+                        <td>uploaded by NGO</td>
+                    </tr>
+                    <tr>
+                        <td><strong>NGO_BANK_ACCOUNT</strong></td>
+                        <td>🏦 Financial</td>
+                        <td>bank_id, account_number, bank_name, ifsc_code</td>
+                        <td>maintained by NGO</td>
+                    </tr>
+                    <tr>
+                        <td><strong>PUSH_SUBSCRIPTION</strong></td>
+                        <td>🔔 Notification</td>
+                        <td>subscription_id, endpoint, p256dh, auth_key</td>
+                        <td>subscribed by User</td>
+                    </tr>
+                    <tr>
+                        <td><strong>EMAIL_LOG</strong></td>
+                        <td>📧 Audit Trail</td>
+                        <td>email_id, recipient_email, subject, sent_at</td>
+                        <td>logs all system emails</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="entity-box">
+                <strong>🔑 Key Terms Explained</strong>
+                <div class="entity-attrs">
+                    <strong>PK (Primary Key):</strong> Unique identifier for each record (e.g., user_id)<br>
+                    <strong>FK (Foreign Key):</strong> Reference to another table's primary key (e.g., user_id in Donation)<br>
+                    <strong>UK (Unique Key):</strong> Value must be unique but not primary key (e.g., email)<br>
+                    <strong>||--o{:</strong> One-to-Many relationship (1 User creates many Donations)<br>
+                    <strong>||--||:</strong> One-to-One relationship (1 Donation contains 1 Item)<br>
+                    <strong>o{--||:</strong> Many-to-One relationship (Many Claims belong to 1 NGO)
+                </div>
+            </div>
+
+            <div class="entity-box">
+                <strong>📊 Relationship Analysis</strong>
+                <div class="entity-attrs">
+                    <strong>USER creates DONATION (1 : Many):</strong>
+                    One user can create multiple donations over time<br><br>
+                    
+                    <strong>DONATION contains DONATION_ITEM (1 : 1):</strong>
+                    Each donation record contains one item entry (could be expanded to many)<br><br>
+                    
+                    <strong>DONATION has DONATION_PHOTO (1 : Many):</strong>
+                    One donation can have multiple photos from different angles<br><br>
+                    
+                    <strong>NGO receives DONATION_CLAIM (1 : Many):</strong>
+                    One NGO can claim multiple donations<br><br>
+                    
+                    <strong>DONATION claimed by DONATION_CLAIM (1 : Many):</strong>
+                    One donation can have multiple claims from different NGOs<br><br>
+                    
+                    <strong>NGO uploads NGO_DOCUMENTS (1 : Many):</strong>
+                    One NGO uploads multiple verification documents<br><br>
+                    
+                    <strong>NGO maintains NGO_BANK_ACCOUNT (1 : Many):</strong>
+                    One NGO can have multiple bank accounts<br><br>
+                    
+                    <strong>USER subscribes PUSH_SUBSCRIPTION (1 : Many):</strong>
+                    One user can have multiple device subscriptions
+                </div>
+            </div>
+
+            <div class="entity-box">
+                <strong>🔄 Data Flow in the System</strong>
+                <div class="entity-attrs">
+                    <strong>1. Registration Phase:</strong>
+                    USER & NGO entities are created → NGO uploads NGO_DOCUMENTS → NGO adds NGO_BANK_ACCOUNT<br><br>
+                    
+                    <strong>2. Donation Creation Phase:</strong>
+                    USER creates DONATION → Adds DONATION_ITEM details → Uploads DONATION_PHOTO(s)<br><br>
+                    
+                    <strong>3. Notification Phase:</strong>
+                    System queries EMAIL_LOG → Sends emails to matching NGOs → Creates PUSH_SUBSCRIPTION<br><br>
+                    
+                    <strong>4. Claim & Verification Phase:</strong>
+                    NGO creates DONATION_CLAIM → System verifies NGO (checks NGO_DOCUMENTS) → Updates claim status<br><br>
+                    
+                    <strong>5. Completion Phase:</strong>
+                    Pickup instructions sent → DONATION_CLAIM status updated → DONATION marked complete
+                </div>
+            </div>
+
+            <div class="entity-box">
+                <strong>📝 Status Values by Entity</strong>
+                <div class="entity-attrs">
+                    <strong>DONATION.status:</strong> pending, claimed, approved, rejected, completed, expired<br>
+                    <strong>DONATION_CLAIM.status:</strong> pending, approved, rejected, completed<br>
+                    <strong>NGO_DOCUMENTS.status:</strong> uploaded, verified, rejected, pending
+                </div>
+            </div>
+
+            <div class="entity-box">
+                <strong>✨ Design Notes</strong>
+                <div class="entity-attrs">
+                    • All entities have timestamps (created_at, updated_at) for audit trails<br>
+                    • PASSWORD_HASH stored instead of plain text for security<br>
+                    • DONATION_PHOTO stores filename and filepath for flexible storage (local/cloud)<br>
+                    • EMAIL_LOG enables recovery and audit of all communications<br>
+                    • NGO_DOCUMENTS allows verification of organizational legitimacy<br>
+                    • PUSH_SUBSCRIPTION enables browser notifications without polling
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        mermaid.initialize({ startOnLoad: true, theme: 'default', securityLevel: 'loose' });
+        mermaid.contentLoaded();
+
+        function exportPNG() {
+            const script = document.createElement('script');
+            script.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
+            document.head.appendChild(script);
+            
+            script.onload = function() {
+                const mermaidDiv = document.querySelector('.mermaid');
+                html2canvas(mermaidDiv, { backgroundColor: '#ffffff', scale: 2 }).then(canvas => {
+                    const link = document.createElement('a');
+                    link.href = canvas.toDataURL('image/png');
+                    link.download = 'HelpReach-ER-Diagram-Enhanced.png';
+                    link.click();
+                });
+            };
+        }
+
+        function exportSVG() {
+            const svg = document.querySelector('.mermaid svg');
+            if (svg) {
+                const svgData = new XMLSerializer().serializeToString(svg);
+                const blob = new Blob([svgData], { type: 'image/svg+xml' });
+                const url = URL.createObjectURL(blob);
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = 'HelpReach-ER-Diagram-Enhanced.svg';
+                link.click();
+                URL.revokeObjectURL(url);
+            }
+        }
+
+        function printDiagram() {
+            window.print();
+        }
+    </script>
+</body>
+</html>

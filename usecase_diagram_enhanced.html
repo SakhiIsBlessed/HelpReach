@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HelpReach Use Case Diagram - Enhanced</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+        .mermaid {
+            display: flex;
+            justify-content: center;
+            overflow-x: auto;
+            background-color: #fafafa;
+            padding: 20px;
+            border-radius: 4px;
+        }
+        .export-button {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 14px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            background-color: #e74c3c;
+            color: white;
+        }
+        button:hover {
+            background-color: #c0392b;
+        }
+        .legend {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 4px;
+            border-left: 4px solid #e74c3c;
+        }
+        .legend h3 {
+            margin-top: 0;
+            color: #333;
+        }
+        .actor-section {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f0f0f0;
+            border-radius: 4px;
+            border-left: 3px solid #e74c3c;
+        }
+        .actor-section strong {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+        .usecase-list {
+            margin-left: 15px;
+            font-size: 12px;
+            color: #555;
+        }
+        .usecase-list li {
+            margin: 5px 0;
+            line-height: 1.5;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        table th {
+            background-color: #e74c3c;
+            color: white;
+            padding: 10px;
+            text-align: left;
+        }
+        table td {
+            padding: 8px;
+            border-bottom: 1px solid #ddd;
+        }
+        table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎭 HelpReach Use Case Diagram - Enhanced</h1>
+        <p class="subtitle">User Roles & System Functionalities - Detailed View</p>
+        
+        <div class="mermaid">
+usecaseDiagram
+    actor Donor
+    actor NGO
+    actor Admin
+
+    Donor --> (Register / Login)
+    Donor --> (View NGO Directory)
+    Donor --> (Search NGOs)
+    Donor --> (Create Donation)
+    Donor --> (Upload Photos)
+    Donor --> (Add Item Details)
+    Donor --> (View History)
+    Donor --> (Track Status)
+    Donor --> (View Dashboard)
+    Donor --> (Manage Profile)
+    Donor --> (Notifications)
+
+    NGO --> (Register / Login)
+    NGO --> (View Donations)
+    NGO --> (Search Donations)
+    NGO --> (Claim Donation)
+    NGO --> (Upload Documents)
+    NGO --> (Bank Accounts)
+    NGO --> (Received Donations)
+    NGO --> (Accept/Reject)
+    NGO --> (Update Profile)
+    NGO --> (NGO Dashboard)
+    NGO --> (Track Items)
+
+    Admin --> (Register / Login)
+    Admin --> (Manage Users)
+    Admin --> (Manage NGOs)
+    Admin --> (Verify Documents)
+    Admin --> (Monitor Donations)
+    Admin --> (View Reports)
+    Admin --> (Email Settings)
+    Admin --> (Block Users)
+    Admin --> (System Settings)
+    Admin --> (View Analytics)
+    Admin --> (Disputes)
+
+        </div>
+
+        <div class="export-button">
+            <button onclick="exportPNG()">📥 Export as PNG</button>
+            <button onclick="exportSVG()">📤 Export as SVG</button>
+            <button onclick="printDiagram()">🖨️ Print</button>
+        </div>
+
+        <div class="legend">
+            <h3>📋 Use Case Diagram - Detailed Breakdown</h3>
+
+            <div class="actor-section">
+                <strong>👤 DONOR ACTOR (Left Side)</strong>
+                <div class="usecase-list">
+                    <strong>Primary Function:</strong> Users who donate items to NGOs<br><br>
+                    <strong>Use Cases:</strong>
+                    <ul>
+                        <li><strong>Register / Login:</strong> Create account or access existing account</li>
+                        <li><strong>View NGO Directory:</strong> Browse all registered NGOs</li>
+                        <li><strong>Search & Filter NGOs:</strong> Find specific NGOs by name, area, mission</li>
+                        <li><strong>Create Donation:</strong> Post new donation with details</li>
+                        <li><strong>Upload Donation Photos:</strong> Add images of items</li>
+                        <li><strong>Add Item Details:</strong> Specify item name, quantity, condition</li>
+                        <li><strong>View Donation History:</strong> See all past donations</li>
+                        <li><strong>Track Donation Status:</strong> Monitor if/when donation was claimed</li>
+                        <li><strong>View Dashboard:</strong> Personalized summary and stats</li>
+                        <li><strong>Manage Profile:</strong> Update personal information</li>
+                        <li><strong>Subscribe for Notifications:</strong> Enable alerts about donations</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="actor-section">
+                <strong>🏢 NGO ACTOR (Right Side)</strong>
+                <div class="usecase-list">
+                    <strong>Primary Function:</strong> Organizations that receive donations<br><br>
+                    <strong>Use Cases:</strong>
+                    <ul>
+                        <li><strong>Register / Login:</strong> Create NGO account or login</li>
+                        <li><strong>View NGO Directory:</strong> Browse other NGOs (optional)</li>
+                        <li><strong>View Available Donations:</strong> See all donations posted</li>
+                        <li><strong>Search Donations:</strong> Find items matching NGO needs</li>
+                        <li><strong>Claim Donation:</strong> Request/claim items from donors</li>
+                        <li><strong>Upload NGO Documents:</strong> Submit registration/verification files</li>
+                        <li><strong>Manage Bank Accounts:</strong> Add/update payment information</li>
+                        <li><strong>View Received Donations:</strong> See all claimed items</li>
+                        <li><strong>Accept/Reject Donation:</strong> Confirm or decline claimed items</li>
+                        <li><strong>Update Profile:</strong> Manage NGO information</li>
+                        <li><strong>View NGO Dashboard:</strong> Organization-level statistics</li>
+                        <li><strong>Track Claimed Items:</strong> Monitor pickup/status</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="actor-section">
+                <strong>👨‍💼 ADMIN ACTOR (Top)</strong>
+                <div class="usecase-list">
+                    <strong>Primary Function:</strong> System administrators managing platform<br><br>
+                    <strong>Use Cases:</strong>
+                    <ul>
+                        <li><strong>Manage Users:</strong> Create, edit, disable user accounts</li>
+                        <li><strong>Manage NGOs:</strong> Create, edit, delete NGO accounts</li>
+                        <li><strong>Verify NGO Documents:</strong> Approve/reject NGO verification files</li>
+                        <li><strong>Monitor Donations:</strong> Track all donations and claims</li>
+                        <li><strong>View System Reports:</strong> Analytics and statistics</li>
+                        <li><strong>Manage Email Settings:</strong> Configure notification templates</li>
+                        <li><strong>Block/Unblock Users:</strong> Suspend malicious accounts</li>
+                        <li><strong>System Settings & Configuration:</strong> Platform-wide settings</li>
+                        <li><strong>View Analytics:</strong> User engagement, donation metrics</li>
+                        <li><strong>Manage Disputes:</strong> Handle complaints and disputes</li>
+                    </ul>
+                </div>
+            </div>
+
+            <hr style="margin: 20px 0; border: none; border-top: 1px solid #ddd;">
+
+            <div class="actor-section">
+                <strong>🔗 Relationship Types</strong>
+                <div class="usecase-list">
+                    <strong>──></strong> Represents an association between actor and use case<br>
+                    <strong>include:</strong> One use case must be performed with another<br>
+                    <strong>extend:</strong> One use case may optionally extend another
+                </div>
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Use Case</th>
+                        <th>Primary Actor</th>
+                        <th>Secondary Actors</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Register / Login</td>
+                        <td>All</td>
+                        <td>System</td>
+                        <td>Authentication entry point for all users</td>
+                    </tr>
+                    <tr>
+                        <td>Create Donation</td>
+                        <td>Donor</td>
+                        <td>System, Database</td>
+                        <td>Post new donation with full details</td>
+                    </tr>
+                    <tr>
+                        <td>View Available Donations</td>
+                        <td>NGO</td>
+                        <td>Donor</td>
+                        <td>Browse all donations posted by donors</td>
+                    </tr>
+                    <tr>
+                        <td>Claim Donation</td>
+                        <td>NGO</td>
+                        <td>Donor, Admin</td>
+                        <td>NGO claims/requests a donation</td>
+                    </tr>
+                    <tr>
+                        <td>Verify NGO Documents</td>
+                        <td>Admin</td>
+                        <td>NGO, System</td>
+                        <td>Admin validates NGO credentials</td>
+                    </tr>
+                    <tr>
+                        <td>Manage Users</td>
+                        <td>Admin</td>
+                        <td>System, Database</td>
+                        <td>Create/edit/delete user accounts</td>
+                    </tr>
+                    <tr>
+                        <td>View Dashboard</td>
+                        <td>Donor, NGO, Admin</td>
+                        <td>System</td>
+                        <td>Personalized user summary/stats</td>
+                    </tr>
+                    <tr>
+                        <td>Track Donation Status</td>
+                        <td>Donor, NGO</td>
+                        <td>System</td>
+                        <td>Monitor donation claim/completion</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="actor-section">
+                <strong>📊 Use Case Workflow Example</strong>
+                <div class="usecase-list">
+                    <strong>Donor Workflow:</strong><br>
+                    Register/Login → View NGO Directory → Create Donation → Upload Photos → Submit → Track Status → View Dashboard<br><br>
+                    
+                    <strong>NGO Workflow:</strong><br>
+                    Register/Login → Upload Documents → View Available Donations → Claim Item → Accept Donation → Track Pickup<br><br>
+                    
+                    <strong>Admin Workflow:</strong><br>
+                    Login → Verify NGO Documents → Monitor Donations → Manage Users → View Reports → System Settings
+                </div>
+            </div>
+
+            <div class="actor-section">
+                <strong>✨ Key Features of This Diagram</strong>
+                <div class="usecase-list">
+                    • <strong>Three Distinct Actors:</strong> Donor (left), NGO (right), Admin (center)<br>
+                    • <strong>Oval Use Cases:</strong> Represent system functionalities<br>
+                    • <strong>Connection Lines:</strong> Show which actors can perform which use cases<br>
+                    • <strong>System Boundary:</strong> Rectangle containing all use cases<br>
+                    • <strong>Include/Extend:</strong> Show relationships between use cases<br>
+                    • <strong>User-Centric:</strong> Focuses on who does what and why
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        mermaid.initialize({ startOnLoad: true, theme: 'default', securityLevel: 'loose' });
+        mermaid.contentLoaded();
+
+        function exportPNG() {
+            const script = document.createElement('script');
+            script.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
+            document.head.appendChild(script);
+            
+            script.onload = function() {
+                const mermaidDiv = document.querySelector('.mermaid');
+                html2canvas(mermaidDiv, { backgroundColor: '#ffffff', scale: 2 }).then(canvas => {
+                    const link = document.createElement('a');
+                    link.href = canvas.toDataURL('image/png');
+                    link.download = 'HelpReach-UseCase-Diagram-Enhanced.png';
+                    link.click();
+                });
+            };
+        }
+
+        function exportSVG() {
+            const svg = document.querySelector('.mermaid svg');
+            if (svg) {
+                const svgData = new XMLSerializer().serializeToString(svg);
+                const blob = new Blob([svgData], { type: 'image/svg+xml' });
+                const url = URL.createObjectURL(blob);
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = 'HelpReach-UseCase-Diagram-Enhanced.svg';
+                link.click();
+                URL.revokeObjectURL(url);
+            }
+        }
+
+        function printDiagram() {
+            window.print();
+        }
+    </script>
+</body>
+</html>

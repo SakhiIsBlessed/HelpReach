@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HelpReach Sequence Diagram</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 1500px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+        .mermaid {
+            display: flex;
+            justify-content: center;
+            overflow-x: auto;
+            background-color: #fafafa;
+            padding: 20px;
+            border-radius: 4px;
+        }
+        .export-button {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 14px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            background-color: #2ecc71;
+            color: white;
+        }
+        button:hover {
+            background-color: #27ae60;
+        }
+        .legend {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 4px;
+            border-left: 4px solid #2ecc71;
+        }
+        .legend h3 {
+            margin-top: 0;
+            color: #333;
+        }
+        .legend-item {
+            margin: 12px 0;
+            font-size: 13px;
+            color: #666;
+        }
+        .flow-section {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f0f0f0;
+            border-radius: 4px;
+        }
+        .flow-section strong {
+            display: block;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        .interaction-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        .interaction-table th {
+            background-color: #2ecc71;
+            color: white;
+            padding: 10px;
+            text-align: left;
+        }
+        .interaction-table td {
+            padding: 8px;
+            border-bottom: 1px solid #ddd;
+        }
+        .interaction-table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔄 HelpReach Sequence Diagram</h1>
+        <p class="subtitle">Donation Flow - Interactions Between System Components</p>
+        
+        <div class="mermaid">
+sequenceDiagram
+    participant Donor as 👤 Donor
+    participant FrontEnd as 🌐 Frontend
+    participant API as ⚙️ Backend API
+    participant DB as 🗄️ Database
+    participant Email as 📧 Email Service
+    participant NGO as 🏢 NGO
+
+    Donor->>FrontEnd: 1. Click Create Donation
+    FrontEnd->>Donor: Display Donation Form
+    Donor->>FrontEnd: 2. Fill Form & Upload Photos
+    FrontEnd->>API: 3. POST /api/donations (with files)
+    API->>DB: 4. Store Donation Record
+    DB-->>API: Donation ID Created
+    API->>DB: 5. Store Photo References
+    DB-->>API: Photos Saved
+    API-->>FrontEnd: 6. Success Response (Donation Created)
+    FrontEnd-->>Donor: Show Confirmation
+
+    Email->>DB: 7. Query Matching NGOs
+    DB-->>Email: NGO Email Addresses
+    Email->>Email: 8. Generate Email Content
+    Email->>Email: 9. Add Donation Details
+    Email->>NGO: 10. Send Notification Email
+    NGO-->>Email: Email Received
+
+    NGO->>FrontEnd: 11. Click Claim Donation
+    FrontEnd->>API: 12. POST /api/donations/:id/claim
+    API->>DB: 13. Create Claim Record
+    DB-->>API: Claim Created
+    API->>Email: 14. Trigger Notification
+    Email->>Donor: 15. Notify: NGO Claimed Your Donation
+    Donor-->>Email: Notification Received
+
+    API->>DB: 16. Check NGO Verification Status
+    DB-->>API: NGO Documents Retrieved
+    API->>API: 17. Validate NGO Credentials
+    
+    alt NGO Verified
+        API->>DB: 18a. Approve Claim
+        DB-->>API: Claim Status: Approved
+        API->>Email: 19a. Send Pickup Instructions
+        Email->>NGO: Donation Ready for Pickup
+    else NGO Not Verified
+        API->>DB: 18b. Reject Claim
+        DB-->>API: Claim Status: Rejected
+        API->>Email: 19b. Notify Rejection
+        Email->>Donor: Claim Rejected - Donation Available
+    end
+
+    API-->>FrontEnd: 20. Transaction Complete
+    FrontEnd-->>NGO: Show Status Update
+    FrontEnd-->>Donor: Show Status Update
+
+        </div>
+
+        <div class="export-button">
+            <button onclick="exportPNG()">📥 Export as PNG</button>
+            <button onclick="exportSVG()">📤 Export as SVG</button>
+            <button onclick="printDiagram()">🖨️ Print</button>
+        </div>
+
+        <div class="legend">
+            <h3>📋 Sequence Diagram Components</h3>
+            
+            <div class="flow-section">
+                <strong>🎭 Actors/Components (Top Row)</strong>
+                <div class="legend-item">
+                    <strong>👤 Donor:</strong> User creating donations<br>
+                    <strong>🌐 Frontend:</strong> Web browser interface<br>
+                    <strong>⚙️ Backend API:</strong> Flask server processing requests<br>
+                    <strong>🗄️ Database:</strong> MySQL storing all data<br>
+                    <strong>📧 Email Service:</strong> SMTP sending notifications<br>
+                    <strong>🏢 NGO:</strong> Organization receiving donations
+                </div>
+            </div>
+
+            <div class="flow-section">
+                <strong>📨 Message Types</strong>
+                <div class="legend-item">
+                    <strong>→ Solid Arrow:</strong> Synchronous call (waits for response)<br>
+                    <strong>-->> Dashed Arrow:</strong> Response/Return value<br>
+                    <strong>Numbered (1,2,3...):</strong> Sequence of interactions
+                </div>
+            </div>
+
+            <div class="flow-section">
+                <strong>🔵 Main Interactions</strong>
+                <table class="interaction-table">
+                    <thead>
+                        <tr>
+                            <th>Step</th>
+                            <th>From</th>
+                            <th>To</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>Donor</td>
+                            <td>Frontend</td>
+                            <td>Click Create Donation Button</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Donor</td>
+                            <td>Frontend</td>
+                            <td>Fill donation form & upload photos</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>Frontend</td>
+                            <td>Backend API</td>
+                            <td>POST request with donation data & files</td>
+                        </tr>
+                        <tr>
+                            <td>4-5</td>
+                            <td>Backend API</td>
+                            <td>Database</td>
+                            <td>Store donation record & photos</td>
+                        </tr>
+                        <tr>
+                            <td>6</td>
+                            <td>Backend API</td>
+                            <td>Frontend</td>
+                            <td>Return success response</td>
+                        </tr>
+                        <tr>
+                            <td>7-10</td>
+                            <td>Email Service</td>
+                            <td>NGO</td>
+                            <td>Query matching NGOs & send notification email</td>
+                        </tr>
+                        <tr>
+                            <td>11-15</td>
+                            <td>NGO</td>
+                            <td>Donor</td>
+                            <td>NGO claims donation → Notify donor</td>
+                        </tr>
+                        <tr>
+                            <td>16-17</td>
+                            <td>Backend API</td>
+                            <td>Database</td>
+                            <td>Verify NGO credentials</td>
+                        </tr>
+                        <tr>
+                            <td>18-19a</td>
+                            <td colspan="3">✅ If Valid: Approve claim & send pickup instructions</td>
+                        </tr>
+                        <tr>
+                            <td>18-19b</td>
+                            <td colspan="3">❌ If Invalid: Reject claim & notify donor</td>
+                        </tr>
+                        <tr>
+                            <td>20</td>
+                            <td>Backend API</td>
+                            <td>Frontend</td>
+                            <td>Transaction complete - update UI</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="flow-section">
+                <strong>🔄 Complete Donation Process Flow</strong>
+                <div class="legend-item">
+                    <strong>Phase 1 - Donation Creation:</strong><br>
+                    Donor fills form → Frontend sends to API → API stores in DB → Confirmation shown<br><br>
+                    
+                    <strong>Phase 2 - NGO Notification:</strong><br>
+                    Email service queries matching NGOs → Sends notifications → NGOs receive alerts<br><br>
+                    
+                    <strong>Phase 3 - Claim & Verification:</strong><br>
+                    NGO claims donation → System verifies credentials → Either approve or reject<br><br>
+                    
+                    <strong>Phase 4 - Completion:</strong><br>
+                    If approved: Send pickup instructions → Donation tracking begins<br>
+                    If rejected: Notify donor → Donation available for other NGOs
+                </div>
+            </div>
+
+            <div class="flow-section">
+                <strong>⚡ Key Technical Details</strong>
+                <div class="legend-item">
+                    <strong>Lifelines:</strong> Vertical dashed lines represent the lifespan of each component<br>
+                    <strong>Activation Box:</strong> Thick bars show when a component is active/processing<br>
+                    <strong>Alt/Loop:</strong> Diamond decision shows different paths (Verified vs Not Verified)<br>
+                    <strong>Response Time:</strong> Dashed lines show return values from function calls
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        mermaid.initialize({ startOnLoad: true, theme: 'default', securityLevel: 'loose' });
+        mermaid.contentLoaded();
+
+        function exportPNG() {
+            const script = document.createElement('script');
+            script.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
+            document.head.appendChild(script);
+            
+            script.onload = function() {
+                const mermaidDiv = document.querySelector('.mermaid');
+                html2canvas(mermaidDiv, { backgroundColor: '#ffffff', scale: 2 }).then(canvas => {
+                    const link = document.createElement('a');
+                    link.href = canvas.toDataURL('image/png');
+                    link.download = 'HelpReach-Sequence-Diagram.png';
+                    link.click();
+                });
+            };
+        }
+
+        function exportSVG() {
+            const svg = document.querySelector('.mermaid svg');
+            if (svg) {
+                const svgData = new XMLSerializer().serializeToString(svg);
+                const blob = new Blob([svgData], { type: 'image/svg+xml' });
+                const url = URL.createObjectURL(blob);
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = 'HelpReach-Sequence-Diagram.svg';
+                link.click();
+                URL.revokeObjectURL(url);
+            }
+        }
+
+        function printDiagram() {
+            window.print();
+        }
+    </script>
+</body>
+</html>

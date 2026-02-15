@@ -198,7 +198,7 @@
         el.addEventListener('click', () => { try { if (heartTimer) clearTimeout(heartTimer); el.remove(); positionFlyboxes(); } catch (e) { } });
 
         // Auto-hide after 30 seconds with heart rise animation
-        const HEART_DELAY_MS = 30 * 1000; // 30 seconds
+        const HEART_DELAY_MS = 10 * 1000; // 30 seconds
         heartTimer = setTimeout(() => {
             try {
                 const heart = document.createElement('div');

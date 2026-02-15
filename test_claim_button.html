@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>NGO Dashboard - Claim Button Test</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        body {
+            padding: 20px;
+            background: #f5f5f5;
+        }
+
+        .container-test {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .card-compact {
+            box-shadow: 0 6px 18px rgba(0, 0, 0, .05);
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .btn {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container-test">
+        <h1>🧪 NGO Dashboard - Claim Button Test</h1>
+        <p class="text-muted">Testing if claim buttons appear and work correctly</p>
+
+        <div class="row">
+            <div class="col-lg-6">
+                <h3>Left: NGO Claims</h3>
+                <div id="ngoArea">Loading...</div>
+            </div>
+            <div class="col-lg-6">
+                <h3>Right: Donor Donations with CLAIM BUTTONS ✅</h3>
+                <div id="donorArea">Loading...</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let isNgoLoggedIn = false;
+        let currentNgoId = null;
+
+        async function render() {
+            const donorArea = document.getElementById('donorArea');
+            const ngoArea = document.getElementById('ngoArea');
+
+            donorArea.innerHTML = '';
+            ngoArea.innerHTML = '';
+
+            try {
+                const res = await fetch("http://127.0.0.1:5000/api/donations");
+
+                if (!res.ok) {
+                    throw new Error("Server error");
+                }
+
+                const list = await res.json();
+
+                // Load claimed donations for the current NGO
+                let claimedDonations = [];
+                if (isNgoLoggedIn && currentNgoId) {
+                    try {
+                        const claimedRes = await fetch(`http://127.0.0.1:5000/api/ngo/${currentNgoId}/claimed-donations`);
+                        if (claimedRes.ok) {
+                            const claimedData = await claimedRes.json();
+                            claimedDonations = Array.isArray(claimedData) ? claimedData : (claimedData.donations || []);
+                        }
+                    } catch (err) {
+                        console.error("Error loading claimed donations:", err);
+                    }
+                }
+
+                // Display claimed donations
+                if (claimedDonations.length > 0) {
+                    claimedDonations.forEach(d => {
+                        const card = document.createElement('div');
+                        card.className = 'card p-3 mb-3 card-compact';
+
+                        card.innerHTML = `
+                    <h6>${d.title || 'N/A'}</h6>
+                    <p class="small">${d.description || ''}</p>
+                    <p class="small"><strong>Qty:</strong> ${d.quantity || 'N/A'}</p>
+                    <p class="small"><strong>Pickup:</strong> ${d.pickup_info || ''}</p>
+                    <span class="badge bg-info">Claimed</span>
+                `;
+
+                        ngoArea.appendChild(card);
+                    });
+                } else {
+                    ngoArea.innerHTML = `
+                <div class="alert alert-warning">
+                    No claimed donations yet.
+                </div>`;
+                }
+
+                if (!Array.isArray(list) || list.length === 0) {
+                    donorArea.innerHTML = `
+                <div class="alert alert-info">
+                    No donations available yet.
+                </div>`;
+                    return;
+                }
+
+                list.forEach(d => {
+                    const card = document.createElement('div');
+                    card.className = 'card p-3 mb-3 card-compact';
+
+                    let actionButton = '';
+                    if (isNgoLoggedIn && currentNgoId) {
+                        const isClaimed = claimedDonations.some(cd => cd.id === d.id);
+                        if (isClaimed) {
+                            actionButton = `<button class="btn btn-sm btn-info disabled" disabled>
+                        <i class="fas fa-check"></i> Claimed
+                    </button>`;
+                        } else {
+                            actionButton = `<button class="btn btn-sm btn-success" onclick="claimDonation(${d.id})">
+                        <i class="fas fa-hand-holding-heart"></i> Claim
+                    </button>`;
+                        }
+                    }
+
+                    card.innerHTML = `
+                <h6>${d.title}</h6>
+                <p class="small">${d.description || ''}</p>
+                <p class="small"><strong>Qty:</strong> ${d.quantity}</p>
+                <p class="small"><strong>Pickup:</strong> ${d.pickup_info || ''}</p>
+                <p class="small"><strong>Donor:</strong> ${d.donor_name || 'Anonymous'}</p>
+                <div class="d-flex justify-content-between align-items-center">
+                    <span class="badge bg-success">Active</span>
+                    ${actionButton}
+                </div>
+            `;
+
+                    donorArea.appendChild(card);
+                });
+
+            } catch (err) {
+                console.error(err);
+                donorArea.innerHTML = `
+            <div class="alert alert-danger">
+                Failed to load donations: ${err.message}
+            </div>`;
+            }
+        }
+
+        async function claimDonation(donationId) {
+            if (!isNgoLoggedIn || !currentNgoId) {
+                alert("❌ Please login as NGO to claim donations");
+                return;
+            }
+
+            if (!confirm("Are you sure you want to claim this donation?")) {
+                return;
+            }
+
+            try {
+                const res = await fetch("http://127.0.0.1:5000/api/claim-donation", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        donation_id: donationId,
+                        ngo_id: currentNgoId
+                    })
+                });
+
+                const data = await res.json();
+
+                if (data.ok) {
+                    alert("✅ Donation claimed successfully!");
+                    render(); // Refresh the display
+                } else {
+                    alert(`❌ ${data.error || "Failed to claim donation"}`);
+                }
+            } catch (err) {
+                console.error("Error claiming donation:", err);
+                alert("❌ Error claiming donation");
+            }
+        }
+
+        // Simulate login for testing
+        function testLogin() {
+            isNgoLoggedIn = true;
+            currentNgoId = 1; // Test with NGO ID 1
+            alert("✅ Test login successful! NGO ID: 1");
+            render();
+        }
+
+        // Auto-render on load
+        render();
+    </script>
+
+    <hr style="margin: 40px 0;">
+
+    <div class="container-test">
+        <h3>🧪 Test Instructions</h3>
+        <p>
+            <button class="btn btn-primary" onclick="testLogin()">
+                🔐 Simulate NGO Login (Test ID: 1)
+            </button>
+        </p>
+        <ol>
+            <li>Click "Simulate NGO Login" button above</li>
+            <li>Look at the RIGHT column - you should see <strong style="color: green;">green [Claim] buttons</strong>
+            </li>
+            <li>Click any [Claim] button</li>
+            <li>Confirm the dialog</li>
+            <li>See the donation move to LEFT column as "Claimed"</li>
+            <li>Button should change to blue [Claimed] (disabled)</li>
+        </ol>
+
+        <h4>✅ Expected Results:</h4>
+        <ul>
+            <li>✅ Donations load from database</li>
+            <li>✅ NO buttons appear until login</li>
+            <li>✅ After login, GREEN [Claim] buttons appear</li>
+            <li>✅ Clicking [Claim] shows confirmation</li>
+            <li>✅ After claim, donation moves to left column</li>
+            <li>✅ Button changes to BLUE [Claimed]</li>
+            <li>✅ Claimed donations list updates</li>
+        </ul>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>

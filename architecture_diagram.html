@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HelpReach Architecture Diagram</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+        .mermaid {
+            display: flex;
+            justify-content: center;
+        }
+        .export-button {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 14px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            background-color: #007bff;
+            color: white;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🏢 HelpReach Architecture Diagram</h1>
+        <p class="subtitle">Donation Management Platform - System Architecture Overview</p>
+        
+        <div class="mermaid">
+flowchart LR
+    Browser["🌐 Browser / Client<br/>Static HTML & JS<br/>(index.html, donate.html, etc.)"]
+    StaticFiles["📁 Static Assets<br/>/css/, /js/, /img/<br/>HTML Pages"]
+    Flask["⚙️ Flask API Server<br/>(backend_python/app.py)<br/>Port: 5000"]
+    DB["🗄️ MySQL Database<br/>(helpreach_db)<br/>Users, Donations, Subscriptions"]
+    Storage["💾 File Storage<br/>(uploads/donations/)<br/>(uploads/ngo_documents/)"]
+    Email["📧 Email Service<br/>(SMTP)<br/>Registration, Notifications"]
+    Push["🔔 Web Push Service<br/>(VAPID Keys)<br/>Browser Notifications"]
+
+    Browser -->|"HTTP GET"| StaticFiles
+    Browser -->|"REST API Calls<br/>(JSON)"| Flask
+    Browser -->|"Subscribe Push"| Flask
+    Flask -->|"Read/Write<br/>SQL"| DB
+    Flask -->|"Save & Serve<br/>Files"| Storage
+    Flask -->|"SMTP Send"| Email
+    Flask -->|"WebPush<br/>Notifications"| Push
+    StaticFiles -->|"Served by<br/>Flask"| Flask
+
+    classDef client fill:#e1f5ff,stroke:#01579b,stroke-width:2px,color:#000;
+    classDef api fill:#f3e5f5,stroke:#4a148c,stroke-width:2px,color:#000;
+    classDef data fill:#e8f5e9,stroke:#1b5e20,stroke-width:2px,color:#000;
+    classDef external fill:#fff3e0,stroke:#e65100,stroke-width:2px,color:#000;
+    
+    class Browser,StaticFiles client;
+    class Flask api;
+    class DB,Storage data;
+    class Email,Push external;
+        </div>
+
+        <div class="export-button">
+            <button onclick="exportPNG()">📥 Export as PNG</button>
+            <button onclick="exportSVG()">📤 Export as SVG</button>
+            <button onclick="printDiagram()">🖨️ Print</button>
+        </div>
+    </div>
+
+    <script>
+        mermaid.initialize({ startOnLoad: true, theme: 'default', securityLevel: 'loose' });
+        mermaid.contentLoaded();
+
+        function exportPNG() {
+            // Use html2canvas library to capture the diagram
+            const script = document.createElement('script');
+            script.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
+            document.head.appendChild(script);
+            
+            script.onload = function() {
+                const mermaidDiv = document.querySelector('.mermaid');
+                html2canvas(mermaidDiv, { backgroundColor: '#ffffff', scale: 2 }).then(canvas => {
+                    const link = document.createElement('a');
+                    link.href = canvas.toDataURL('image/png');
+                    link.download = 'HelpReach-Architecture-Diagram.png';
+                    link.click();
+                });
+            };
+        }
+
+        function exportSVG() {
+            // Export Mermaid as SVG
+            const svg = document.querySelector('.mermaid svg');
+            if (svg) {
+                const svgData = new XMLSerializer().serializeToString(svg);
+                const blob = new Blob([svgData], { type: 'image/svg+xml' });
+                const url = URL.createObjectURL(blob);
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = 'HelpReach-Architecture-Diagram.svg';
+                link.click();
+                URL.revokeObjectURL(url);
+            }
+        }
+
+        function printDiagram() {
+            window.print();
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HelpReach Activity Diagram</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+        .mermaid {
+            display: flex;
+            justify-content: center;
+            overflow-x: auto;
+        }
+        .export-button {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 14px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            background-color: #667eea;
+            color: white;
+        }
+        button:hover {
+            background-color: #5568d3;
+        }
+        .legend {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 4px;
+            border-left: 4px solid #667eea;
+        }
+        .legend h3 {
+            margin-top: 0;
+            color: #333;
+        }
+        .legend-item {
+            margin: 12px 0;
+            font-size: 13px;
+            color: #666;
+        }
+        .flow-section {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f0f0f0;
+            border-radius: 4px;
+        }
+        .flow-section strong {
+            display: block;
+            margin-bottom: 10px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📊 HelpReach Activity Diagram - Donation Flow</h1>
+        <p class="subtitle">User Journey & System Processes</p>
+        
+        <div class="mermaid">
+flowchart TD
+    Start([👤 User Starts]) --> Login{Logged In?}
+    Login -->|No| Register["📝 Register / Login"]
+    Register --> DashBoard["📱 View Dashboard"]
+    Login -->|Yes| DashBoard
+    
+    DashBoard --> Browse["🔍 Browse NGO Directory"]
+    Browse --> SelectNGO["🏢 Select NGO"]
+    SelectNGO --> CreateDonation["✏️ Create Donation"]
+    
+    CreateDonation --> AddItems["📋 Add Item Details<br/>Name, Quantity, Condition"]
+    AddItems --> UploadPhotos["📸 Upload Photos"]
+    UploadPhotos --> AddDescription["📝 Add Description<br/>& Instructions"]
+    
+    AddDescription --> Review{Review OK?}
+    Review -->|No, Edit| EditDonation["✏️ Edit Donation"]
+    EditDonation --> AddItems
+    Review -->|Yes| Submit["✅ Submit Donation"]
+    
+    Submit --> NotifyNGOs["📧 Notify Matching NGOs"]
+    NotifyNGOs --> DonationPosted["✅ Donation Posted"]
+    
+    DonationPosted --> WaitForClaim{"NGO Claims<br/>Donation?"}
+    WaitForClaim -->|Yes| NGOClaimed["🏢 NGO Claimed Item"]
+    WaitForClaim -->|No| ExpireCheck{"30 Days<br/>Passed?"}
+    ExpireCheck -->|Yes| Expired["⏰ Donation Expired"]
+    ExpireCheck -->|No| WaitForClaim
+    
+    NGOClaimed --> AdminVerify["👨‍💼 Admin Verifies<br/>NGO Credentials"]
+    AdminVerify --> Verified{Valid NGO?}
+    
+    Verified -->|No| Rejected["❌ Claim Rejected"]
+    Verified -->|Yes| Approved["✅ Claim Approved"]
+    
+    Approved --> SendPickup["📬 Send Pickup Instructions"]
+    SendPickup --> TrackingActive["📍 Donation Tracking Active"]
+    
+    Rejected --> NotifyDonor["📧 Notify Donor of Rejection"]
+    NotifyDonor --> AvailableAgain["🔄 Available for Other NGOs"]
+    AvailableAgain --> WaitForClaim
+    
+    Expired --> ArchiveDonation["📦 Archive Donation"]
+    TrackingActive --> Complete(["✅ Donation Complete"])
+    ArchiveDonation --> Complete
+
+        </div>
+
+        <div class="export-button">
+            <button onclick="exportPNG()">📥 Export as PNG</button>
+            <button onclick="exportSVG()">📤 Export as SVG</button>
+            <button onclick="printDiagram()">🖨️ Print</button>
+        </div>
+
+        <div class="legend">
+            <h3>📋 Activity Diagram Walkthrough</h3>
+            
+            <div class="flow-section">
+                <strong>🟢 Start: User Initiates Action</strong>
+                <div class="legend-item">
+                    The user either logs in (if account exists) or registers a new account before accessing any donation features.
+                </div>
+            </div>
+
+            <div class="flow-section">
+                <strong>🔵 Main Donation Creation Flow</strong>
+                <div class="legend-item">
+                    <strong>1. Browse & Select:</strong> Donor views the NGO directory and selects their target NGO<br>
+                    <strong>2. Create Donation:</strong> Initiates the donation posting process<br>
+                    <strong>3. Add Details:</strong> Enters item name, quantity, and condition<br>
+                    <strong>4. Upload Photos:</strong> Attaches images of the item(s)<br>
+                    <strong>5. Add Description:</strong> Provides detailed information and pickup instructions
+                </div>
+            </div>
+
+            <div class="flow-section">
+                <strong>🟡 Decision Point: Review & Validation</strong>
+                <div class="legend-item">
+                    Before submission, the system checks if all required information is complete. If the donor finds an error, they can edit and correct it. Once satisfied, they submit the donation.
+                </div>
+            </div>
+
+            <div class="flow-section">
+                <strong>🟣 Notification & Waiting Phase</strong>
+                <div class="legend-item">
+                    After posting, the system automatically notifies all matching NGOs about the available donation. The donation enters a waiting state for NGO claims (up to 30 days).
+                </div>
+            </div>
+
+            <div class="flow-section">
+                <strong>🟠 NGO Claim Process</strong>
+                <div class="legend-item">
+                    When an NGO claims the donation, the admin receives a notification to verify the NGO's credentials, documents, and legitimacy.
+                </div>
+            </div>
+
+            <div class="flow-section">
+                <strong>🔴 Admin Verification Decision Point</strong>
+                <div class="legend-item">
+                    <strong>If Valid:</strong> Claim is approved → Pickup instructions sent → Tracking becomes active<br>
+                    <strong>If Invalid:</strong> Claim is rejected → Donor notified → Donation becomes available for other NGOs again
+                </div>
+            </div>
+
+            <div class="flow-section">
+                <strong>⚫ End States</strong>
+                <div class="legend-item">
+                    <strong>✅ Donation Complete:</strong> Successfully claimed and approved by admin<br>
+                    <strong>⏰ Donation Expired:</strong> No NGO claimed within 30 days - donation archived<br>
+                    <strong>❌ Rejected:</strong> NGO claim denied - donation remains available
+                </div>
+            </div>
+
+            <hr style="margin: 20px 0; border: none; border-top: 1px solid #ddd;">
+
+            <div class="legend-item">
+                <strong>Key Process Elements:</strong>
+            </div>
+
+            <div class="legend-item" style="margin-left: 20px;">
+                <strong>Rectangles:</strong> Actions/Activities performed by users or system<br>
+                <strong>Diamonds:</strong> Decision points requiring validation or user choice<br>
+                <strong>Arrows:</strong> Flow direction and process steps<br>
+                <strong>Circles:</strong> Start and end points of the process
+            </div>
+        </div>
+    </div>
+
+    <script>
+        mermaid.initialize({ startOnLoad: true, theme: 'default', securityLevel: 'loose' });
+        mermaid.contentLoaded();
+
+        function exportPNG() {
+            const script = document.createElement('script');
+            script.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
+            document.head.appendChild(script);
+            
+            script.onload = function() {
+                const mermaidDiv = document.querySelector('.mermaid');
+                html2canvas(mermaidDiv, { backgroundColor: '#ffffff', scale: 2 }).then(canvas => {
+                    const link = document.createElement('a');
+                    link.href = canvas.toDataURL('image/png');
+                    link.download = 'HelpReach-Activity-Diagram.png';
+                    link.click();
+                });
+            };
+        }
+
+        function exportSVG() {
+            const svg = document.querySelector('.mermaid svg');
+            if (svg) {
+                const svgData = new XMLSerializer().serializeToString(svg);
+                const blob = new Blob([svgData], { type: 'image/svg+xml' });
+                const url = URL.createObjectURL(blob);
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = 'HelpReach-Activity-Diagram.svg';
+                link.click();
+                URL.revokeObjectURL(url);
+            }
+        }
+
+        function printDiagram() {
+            window.print();
+        }
+    </script>
+</body>
+</html>

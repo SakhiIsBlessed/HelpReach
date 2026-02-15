@@ -1649,6 +1649,40 @@ function goToNgoAccount() {
             if (overlay) overlay.classList.remove("show");
         }
     </script>
+<!-- ...existing code... -->
+<!-- NGO Details Modal (insert before </body>) -->
+<div class="modal fade" id="ngoModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header" style="background: linear-gradient(90deg,#0d6efd,#10b981); color:#fff; border-bottom:none;">
+        <h5 class="modal-title">NGO Details</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="mb-2">
+          <strong class="d-block mb-1">Location</strong>
+          <div class="modal-location text-muted">—</div>
+        </div>
+        <div class="mb-2">
+          <strong class="d-block mb-1">Phone</strong>
+          <a class="modal-call btn btn-sm btn-outline-primary" href="#"><span class="modal-phone">—</span></a>
+        </div>
+        <div class="mb-2">
+          <strong class="d-block mb-1">Email</strong>
+          <a class="modal-email-link btn btn-sm btn-outline-secondary" href="#"><span class="modal-email">—</span></a>
+        </div>
+        <div class="mt-3">
+          <strong class="d-block mb-1">Services</strong>
+          <div class="modal-services small text-muted">—</div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-success modal-directions" target="_blank" rel="noopener">Directions</a>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 </body>
 

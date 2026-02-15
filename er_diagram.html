@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HelpReach ER Diagram</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+        .mermaid {
+            display: flex;
+            justify-content: center;
+            overflow-x: auto;
+        }
+        .export-button {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 14px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            background-color: #28a745;
+            color: white;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        .legend {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 4px;
+            border-left: 4px solid #28a745;
+        }
+        .legend h3 {
+            margin-top: 0;
+            color: #333;
+        }
+        .legend p {
+            margin: 8px 0;
+            font-size: 13px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📊 HelpReach Entity-Relationship Diagram</h1>
+        <p class="subtitle">Database Schema - Donation Management Platform</p>
+        
+        <div class="mermaid">
+erDiagram
+
+    USER ||--o{ DONATION : creates
+    USER ||--o{ PUSH_SUBSCRIPTION : subscribes
+    USER {
+        int id PK
+        string name
+        string email UK
+        string password_hash
+        string role
+        string phone
+        string location
+    }
+
+    NGO ||--o{ DONATION : receives
+    NGO ||--o{ NGO_DOCUMENTS : uploads
+    NGO ||--o{ NGO_BANK_ACCOUNT : maintains
+    NGO {
+        int id PK
+        string ngo_name UK
+        string email
+        string password_hash
+        string phone
+        string address
+        string registration_number
+        text mission_statement
+    }
+
+    DONATION ||--|| DONATION_ITEM : contains
+    DONATION ||--o{ DONATION_PHOTO : has
+    DONATION {
+        int id PK
+        int donor_id FK
+        int ngo_id FK
+        text description
+        string status
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    DONATION_ITEM {
+        int id PK
+        int donation_id FK
+        string item_name
+        int quantity
+        string condition
+    }
+
+    DONATION_PHOTO {
+        int id PK
+        int donation_id FK
+        string filename
+        string filepath
+        timestamp uploaded_at
+    }
+
+    NGO_DOCUMENTS {
+        int id PK
+        int ngo_id FK
+        string filename
+        string original_filename
+        timestamp uploaded_at
+    }
+
+    NGO_BANK_ACCOUNT {
+        int id PK
+        int ngo_id FK
+        string account_holder_name
+        string account_number
+        string bank_name
+        string ifsc_code
+        timestamp created_at
+    }
+
+    PUSH_SUBSCRIPTION {
+        int id PK
+        string endpoint UK
+        string p256dh
+        string auth
+        timestamp created_at
+    }
+
+    DONATION_CLAIM ||--|| NGO : "claimed by"
+    DONATION_CLAIM ||--|| DONATION : "claims"
+    DONATION_CLAIM {
+        int id PK
+        int donation_id FK
+        int ngo_id FK
+        string status
+        timestamp claimed_at
+        timestamp updated_at
+    }
+
+    EMAIL_LOG {
+        int id PK
+        string recipient_email
+        string subject
+        string email_type
+        timestamp sent_at
+    }
+
+        </div>
+
+        <div class="export-button">
+            <button onclick="exportPNG()">📥 Export as PNG</button>
+            <button onclick="exportSVG()">📤 Export as SVG</button>
+            <button onclick="printDiagram()">🖨️ Print</button>
+        </div>
+
+        <div class="legend">
+            <h3>📋 ER Diagram Legend</h3>
+            <p><strong>PK</strong> = Primary Key (Unique identifier for each record)</p>
+            <p><strong>FK</strong> = Foreign Key (Links to another table)</p>
+            <p><strong>UK</strong> = Unique Key (Must be unique, like email)</p>
+            <p><strong>||--o{</strong> = One-to-Many relationship (One user creates many donations)</p>
+            <p><strong>||--||</strong> = One-to-One relationship (One donation contains one donation_item)</p>
+            <p><strong>Relationships:</strong></p>
+            <p style="margin-left: 20px;">• A <strong>User</strong> creates <strong>Donations</strong> and subscribes for <strong>Push Notifications</strong></p>
+            <p style="margin-left: 20px;">• An <strong>NGO</strong> receives <strong>Donations</strong>, uploads <strong>Documents</strong>, and maintains <strong>Bank Accounts</strong></p>
+            <p style="margin-left: 20px;">• A <strong>Donation</strong> contains <strong>Items</strong>, has <strong>Photos</strong>, and can be <strong>Claimed</strong> by NGOs</p>
+            <p style="margin-left: 20px;">• <strong>NGO Documents</strong> store verification files for NGO registration</p>
+            <p style="margin-left: 20px;">• <strong>Email Log</strong> tracks all sent emails for auditing</p>
+        </div>
+    </div>
+
+    <script>
+        mermaid.initialize({ startOnLoad: true, theme: 'default', securityLevel: 'loose' });
+        mermaid.contentLoaded();
+
+        function exportPNG() {
+            const script = document.createElement('script');
+            script.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
+            document.head.appendChild(script);
+            
+            script.onload = function() {
+                const mermaidDiv = document.querySelector('.mermaid');
+                html2canvas(mermaidDiv, { backgroundColor: '#ffffff', scale: 2 }).then(canvas => {
+                    const link = document.createElement('a');
+                    link.href = canvas.toDataURL('image/png');
+                    link.download = 'HelpReach-ER-Diagram.png';
+                    link.click();
+                });
+            };
+        }
+
+        function exportSVG() {
+            const svg = document.querySelector('.mermaid svg');
+            if (svg) {
+                const svgData = new XMLSerializer().serializeToString(svg);
+                const blob = new Blob([svgData], { type: 'image/svg+xml' });
+                const url = URL.createObjectURL(blob);
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = 'HelpReach-ER-Diagram.svg';
+                link.click();
+                URL.revokeObjectURL(url);
+            }
+        }
+
+        function printDiagram() {
+            window.print();
+        }
+    </script>
+</body>
+</html>

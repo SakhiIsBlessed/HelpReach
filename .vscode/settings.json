@@ -15,5 +15,6 @@
             "password": "root",
             "name": "HelpReach-MySQL"
         }
-    ]
+    ],
+    "liveServer.settings.port": 5501
 }

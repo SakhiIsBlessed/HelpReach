@@ -1912,10 +1912,10 @@
         // ✅ API Configuration for multiple environments (Chrome, Live Server, etc.)
         // Detect if backend is accessible on port 5000, otherwise use current origin
         window.BACKEND_URL = 'http://127.0.0.1:5000';
-        
+
         // Safe localStorage wrapper to handle Tracking Prevention
         window.SafeStorage = {
-            getItem: function(key) {
+            getItem: function (key) {
                 try {
                     return localStorage.getItem(key);
                 } catch (e) {
@@ -1923,14 +1923,14 @@
                     return null;
                 }
             },
-            setItem: function(key, value) {
+            setItem: function (key, value) {
                 try {
                     localStorage.setItem(key, value);
                 } catch (e) {
                     console.warn('⚠️ localStorage write blocked (Tracking Prevention):', e.message);
                 }
             },
-            removeItem: function(key) {
+            removeItem: function (key) {
                 try {
                     localStorage.removeItem(key);
                 } catch (e) {
@@ -2170,6 +2170,34 @@ document.getElementById('donateForm').addEventListener('submit', async function 
 </script> -->
 
     <script>
+        window.onload = function () {
+    requestNotificationPermission();
+};
+function requestNotificationPermission() {
+    if (!("Notification" in window)) {
+        console.log("Browser does not support notifications");
+        return;
+    }
+
+    if (Notification.permission === "default") {
+        Notification.requestPermission().then(permission => {
+            if (permission === "granted") {
+                new Notification("Notifications Enabled ✅", {
+                    body: "You will now receive alerts."
+                });
+            }
+        });
+    }
+}
+function sendNotification() {
+    if (Notification.permission === "granted") {
+        new Notification("🚨 HelpReach Alert", {
+            body: "A new donation request requires your attention!",
+        });
+    }
+}
+
+
         document.getElementById('donateForm').addEventListener('submit', async function (e) {
             e.preventDefault();
 
@@ -2249,7 +2277,7 @@ document.getElementById('donateForm').addEventListener('submit', async function 
                     msg.style.display = 'block';
                     msg.className = 'alert alert-danger';
                     msg.textContent = '❌ Please upload at least one photo of your donation (required).';
-                    try { msg.scrollIntoView({behavior: 'smooth', block: 'center'}); } catch (e) { /* ignore */ }
+                    try { msg.scrollIntoView({ behavior: 'smooth', block: 'center' }); } catch (e) { /* ignore */ }
                 } else {
                     alert('❌ Please upload at least one photo of your donation (required).');
                 }
@@ -2340,11 +2368,11 @@ document.getElementById('donateForm').addEventListener('submit', async function 
 
     <script>
         // Hide top page alert when user selects photos
-        (function() {
+        (function () {
             const photos = document.getElementById('photos');
             const topMsg = document.getElementById('donMsg');
             if (!photos || !topMsg) return;
-            photos.addEventListener('change', function() {
+            photos.addEventListener('change', function () {
                 if (photos.files && photos.files.length > 0) {
                     topMsg.style.display = 'none';
                     topMsg.textContent = '';
