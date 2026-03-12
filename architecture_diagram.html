@@ -1,125 +1,379 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HelpReach Architecture Diagram</title>
     <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
     <style>
-        body {
+        * {
             margin: 0;
-            padding: 20px;
-            font-family: Arial, sans-serif;
-            background-color: #f5f5f5;
+            padding: 0;
+            box-sizing: border-box;
         }
-        .container {
-            max-width: 1400px;
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .main-wrapper {
+            max-width: 1600px;
             margin: 0 auto;
-            background-color: white;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
-        h1 {
+
+        .header {
             text-align: center;
-            color: #333;
-            margin-bottom: 10px;
+            color: white;
+            margin-bottom: 50px;
+            animation: slideDown 0.6s ease-out;
         }
-        .subtitle {
+
+        .header h1 {
+            font-size: 3em;
+            font-weight: 700;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            letter-spacing: 1px;
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.95;
+            font-weight: 300;
+        }
+
+        .container {
+            background: white;
+            padding: 50px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            animation: fadeIn 0.8s ease-out 0.2s both;
+        }
+
+        .diagram-title {
+            text-align: center;
+            font-size: 1.8em;
+            color: #667eea;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .diagram-subtitle {
             text-align: center;
             color: #666;
-            margin-bottom: 30px;
-            font-size: 14px;
+            margin-bottom: 40px;
+            font-size: 1em;
+            opacity: 0.8;
         }
+
         .mermaid {
             display: flex;
             justify-content: center;
+            background: #fafafa;
+            padding: 30px;
+            border-radius: 15px;
+            border: 2px solid #f0f0f0;
+            overflow-x: auto;
         }
+
+        .legend {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 50px;
+            padding-top: 40px;
+            border-top: 2px solid #f0f0f0;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 4px solid;
+        }
+
+        .legend-item.client {
+            border-left-color: #01579b;
+            background: #e1f5ff;
+        }
+
+        .legend-item.api {
+            border-left-color: #4a148c;
+            background: #f3e5f5;
+        }
+
+        .legend-item.data {
+            border-left-color: #1b5e20;
+            background: #e8f5e9;
+        }
+
+        .legend-item.external {
+            border-left-color: #e65100;
+            background: #fff3e0;
+        }
+
+        .legend-icon {
+            font-size: 1.5em;
+        }
+
+        .legend-text {
+            font-weight: 500;
+            color: #333;
+        }
+
         .export-button {
             display: flex;
-            gap: 10px;
+            gap: 15px;
             justify-content: center;
-            margin-top: 30px;
+            margin-top: 40px;
+            flex-wrap: wrap;
+            animation: fadeIn 0.8s ease-out 0.4s both;
         }
+
         button {
-            padding: 10px 20px;
-            font-size: 14px;
+            padding: 12px 28px;
+            font-size: 1em;
+            font-weight: 600;
             border: none;
-            border-radius: 4px;
+            border-radius: 10px;
             cursor: pointer;
-            background-color: #007bff;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
         }
-        button:hover {
-            background-color: #0056b3;
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(245, 87, 108, 0.4);
+        }
+
+        .btn-tertiary {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+        }
+
+        .btn-tertiary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(79, 172, 254, 0.4);
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2em;
+            }
+
+            .container {
+                padding: 30px;
+            }
+
+            .mermaid {
+                padding: 20px;
+            }
+
+            .export-button {
+                flex-direction: column;
+            }
+
+            button {
+                width: 100%;
+            }
         }
     </style>
 </head>
+
 <body>
-    <div class="container">
-        <h1>🏢 HelpReach Architecture Diagram</h1>
-        <p class="subtitle">Donation Management Platform - System Architecture Overview</p>
-        
-        <div class="mermaid">
-flowchart LR
-    Browser["🌐 Browser / Client<br/>Static HTML & JS<br/>(index.html, donate.html, etc.)"]
-    StaticFiles["📁 Static Assets<br/>/css/, /js/, /img/<br/>HTML Pages"]
-    Flask["⚙️ Flask API Server<br/>(backend_python/app.py)<br/>Port: 5000"]
-    DB["🗄️ MySQL Database<br/>(helpreach_db)<br/>Users, Donations, Subscriptions"]
-    Storage["💾 File Storage<br/>(uploads/donations/)<br/>(uploads/ngo_documents/)"]
-    Email["📧 Email Service<br/>(SMTP)<br/>Registration, Notifications"]
-    Push["🔔 Web Push Service<br/>(VAPID Keys)<br/>Browser Notifications"]
-
-    Browser -->|"HTTP GET"| StaticFiles
-    Browser -->|"REST API Calls<br/>(JSON)"| Flask
-    Browser -->|"Subscribe Push"| Flask
-    Flask -->|"Read/Write<br/>SQL"| DB
-    Flask -->|"Save & Serve<br/>Files"| Storage
-    Flask -->|"SMTP Send"| Email
-    Flask -->|"WebPush<br/>Notifications"| Push
-    StaticFiles -->|"Served by<br/>Flask"| Flask
-
-    classDef client fill:#e1f5ff,stroke:#01579b,stroke-width:2px,color:#000;
-    classDef api fill:#f3e5f5,stroke:#4a148c,stroke-width:2px,color:#000;
-    classDef data fill:#e8f5e9,stroke:#1b5e20,stroke-width:2px,color:#000;
-    classDef external fill:#fff3e0,stroke:#e65100,stroke-width:2px,color:#000;
-    
-    class Browser,StaticFiles client;
-    class Flask api;
-    class DB,Storage data;
-    class Email,Push external;
+    <div class="main-wrapper">
+        <div class="header">
+            <h1>🏢 HelpReach Architecture</h1>
+            <p>Complete System Architecture & Technology Stack</p>
         </div>
 
-        <div class="export-button">
-            <button onclick="exportPNG()">📥 Export as PNG</button>
-            <button onclick="exportSVG()">📤 Export as SVG</button>
-            <button onclick="printDiagram()">🖨️ Print</button>
+        <div class="container">
+            <div class="diagram-title">System Architecture Overview</div>
+            <div class="diagram-subtitle">Multi-layered Architecture with Frontend, Backend, Database, and External
+                Services</div>
+
+            <div class="mermaid">
+                graph TB
+                subgraph Client["👥 CLIENT TIER"]
+                Web["🌐 Web Browser<br />HTML5, CSS3, JavaScript"]
+                Mobile["📱 Mobile Responsive<br />Adaptive Design"]
+                end
+
+                subgraph Frontend["🎨 FRONTEND LAYER"]
+                Pages["📄 Pages<br />index.html<br />donate.html<br />dashboard.html<br />login.html"]
+                Assets["🎯 Static Assets<br />CSS, JS, Images<br />Bootstrap Library"]
+                ServiceWorker["⚡ Service Worker<br />sw.js<br />Offline Support"]
+                end
+
+                subgraph Backend["⚙️ BACKEND LAYER - FLASK API Server"]
+                Server["🖥️ Flask App<br />backend_python/app.py<br />Port: 5000"]
+                Auth["🔐 Authentication<br />Login, Register<br />Password Reset"]
+                Donations["💳 Donation Manager<br />Create, Claim<br />Track Donations"]
+                NGO["🏢 NGO Manager<br />Registration<br />Dashboard"]
+                Notifications["📢 Notification Engine<br />Email Alerts<br />Push Notifications"]
+                end
+
+                subgraph Data["💾 DATA LAYER"]
+                MySQL["🗄️ MySQL Database<br />helpreach_db<br />Users, NGOs<br />Donations, Subscriptions"]
+                FileStore["📁 File Storage<br />/uploads/donations/<br />/uploads/ngo_documents/"]
+                Cache["⚡ Cache Layer<br />Session Management"]
+                end
+
+                subgraph External["🌍 EXTERNAL SERVICES"]
+                Email["📧 SMTP Email Service<br />Registration Emails<br />Donation Confirmations<br />Notifications"]
+                WebPush["🔔 Web Push Service<br />VAPID Keys<br />Browser Notifications<br />Real-time Alerts"]
+                Analytics["📊 Analytics<br />Tracking & Monitoring<br />User Behavior"]
+                end
+
+                Client -->|HTTP Requests| Frontend
+                Frontend -->|Static Files| Web
+                Frontend -->|Static Files| Mobile
+                Web -->|REST API - JSON| Backend
+                Mobile -->|REST API - JSON| Backend
+                ServiceWorker -->|Cache Strategy| Backend
+
+                Backend --> Auth
+                Backend --> Donations
+                Backend --> NGO
+                Backend --> Notifications
+
+                Auth -->|Query/Update| MySQL
+                Donations -->|Query/Update| MySQL
+                NGO -->|Query/Update| MySQL
+
+                Donations -->|File Operations| FileStore
+                NGO -->|File Operations| FileStore
+
+                Notifications -->|Send Emails| Email
+                Notifications -->|Send Push| WebPush
+
+                Backend -->|Logs & Events| Analytics
+
+                classDef client fill:#e1f5ff,stroke:#01579b,stroke-width:3px,color:#000,font-size:13px;
+                classDef frontend fill:#fff9c4,stroke:#f57f17,stroke-width:3px,color:#000,font-size:13px;
+                classDef api fill:#f3e5f5,stroke:#6a1b9a,stroke-width:3px,color:#000,font-size:13px;
+                classDef data fill:#e8f5e9,stroke:#1b5e20,stroke-width:3px,color:#000,font-size:13px;
+                classDef external fill:#fff3e0,stroke:#e65100,stroke-width:3px,color:#000,font-size:13px;
+
+                class Client,Web,Mobile client;
+                class Frontend,Pages,Assets,ServiceWorker frontend;
+                class Backend,Server,Auth,Donations,NGO,Notifications api;
+                class Data,MySQL,FileStore,Cache data;
+                class External,Email,WebPush,Analytics external;
+            </div>
+
+            <div class="legend">
+                <div class="legend-item client">
+                    <span class="legend-icon">👥</span>
+                    <span class="legend-text">Client Layer</span>
+                </div>
+                <div class="legend-item" style="border-left-color: #f57f17; background: #fff9c4;">
+                    <span class="legend-icon">🎨</span>
+                    <span class="legend-text">Frontend Layer</span>
+                </div>
+                <div class="legend-item api">
+                    <span class="legend-icon">⚙️</span>
+                    <span class="legend-text">Backend API Layer</span>
+                </div>
+                <div class="legend-item data">
+                    <span class="legend-icon">💾</span>
+                    <span class="legend-text">Data & Storage Layer</span>
+                </div>
+                <div class="legend-item external">
+                    <span class="legend-icon">🌍</span>
+                    <span class="legend-text">External Services</span>
+                </div>
+            </div>
+
+
+            <div class="export-button">
+                <button class="btn-primary" onclick="exportPNG()">📥 Export as PNG</button>
+                <button class="btn-secondary" onclick="exportSVG()">📤 Export as SVG</button>
+                <button class="btn-tertiary" onclick="printDiagram()">🖨️ Print Diagram</button>
+            </div>
         </div>
     </div>
 
     <script>
-        mermaid.initialize({ startOnLoad: true, theme: 'default', securityLevel: 'loose' });
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            securityLevel: 'loose',
+            flowchart: {
+                useMaxWidth: true,
+                htmlLabels: true,
+                curve: 'linear'
+            }
+        });
         mermaid.contentLoaded();
 
         function exportPNG() {
-            // Use html2canvas library to capture the diagram
             const script = document.createElement('script');
             script.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
             document.head.appendChild(script);
-            
-            script.onload = function() {
+
+            script.onload = function () {
                 const mermaidDiv = document.querySelector('.mermaid');
-                html2canvas(mermaidDiv, { backgroundColor: '#ffffff', scale: 2 }).then(canvas => {
+                html2canvas(mermaidDiv, {
+                    backgroundColor: '#ffffff',
+                    scale: 2,
+                    logging: false
+                }).then(canvas => {
                     const link = document.createElement('a');
                     link.href = canvas.toDataURL('image/png');
                     link.download = 'HelpReach-Architecture-Diagram.png';
                     link.click();
+                }).catch(err => {
+                    alert('Error exporting PNG: ' + err);
                 });
             };
         }
 
         function exportSVG() {
-            // Export Mermaid as SVG
             const svg = document.querySelector('.mermaid svg');
             if (svg) {
                 const svgData = new XMLSerializer().serializeToString(svg);
@@ -130,6 +384,8 @@ flowchart LR
                 link.download = 'HelpReach-Architecture-Diagram.svg';
                 link.click();
                 URL.revokeObjectURL(url);
+            } else {
+                alert('SVG diagram not found. Please wait for the diagram to load.');
             }
         }
 
@@ -138,4 +394,5 @@ flowchart LR
         }
     </script>
 </body>
+
 </html>
