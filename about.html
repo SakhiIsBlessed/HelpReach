@@ -3043,7 +3043,7 @@
                 window.location.href = 'admin.html';
                 return;
             }
-            fetch("http://127.0.0.1:5000/api/login", {
+            fetch("https://helpreach-production-0562.up.railway.app/api/login", {
                 method: "POST",
                 credentials: 'include', // include cookies so server-set cookie is stored
                 headers: { "Content-Type": "application/json" },
@@ -3101,7 +3101,7 @@
             btn.disabled = true;
             btn.textContent = "📧 Sending...";
 
-            fetch("http://127.0.0.1:5000/api/user/forgot-password/request-otp", {
+            fetch("https://helpreach-production-0562.up.railway.app/api/user/forgot-password/request-otp", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ email })
@@ -3136,7 +3136,7 @@
                 return;
             }
 
-            fetch("http://127.0.0.1:5000/api/user/forgot-password/verify-otp", {
+            fetch("https://helpreach-production-0562.up.railway.app/api/user/forgot-password/verify-otp", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ token: currentOtpToken, otp })
@@ -3167,7 +3167,7 @@
             const btn = event.target;
             btn.disabled = true;
 
-            fetch("http://127.0.0.1:5000/api/user/forgot-password/resend-otp", {
+            fetch("https://helpreach-production-0562.up.railway.app/api/user/forgot-password/resend-otp", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ token: currentOtpToken })
@@ -3233,7 +3233,7 @@
             btn.disabled = true;
             btn.textContent = "🔒 Resetting...";
 
-            fetch("http://127.0.0.1:5000/api/user/forgot-password/reset-password", {
+            fetch("https://helpreach-production-0562.up.railway.app/api/user/forgot-password/reset-password", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ token: currentOtpToken, new_password: password })
@@ -3481,7 +3481,7 @@
     </div>
   `;
 
-            fetch("http://127.0.0.1:5000/api/chatbot", {
+            fetch("https://helpreach-production-0562.up.railway.app/api/chatbot", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ message })
@@ -3638,7 +3638,7 @@
 
             // ================= API CALL =================
             try {
-                const res = await fetch("http://127.0.0.1:5000/api/register", {
+                const res = await fetch("https://helpreach-production-0562.up.railway.app/api/register", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json"
@@ -3783,7 +3783,7 @@
             (async () => {
                 try {
                     if (userData && !userData.id) {
-                        const res = await fetch('http://127.0.0.1:5000/api/user/me', { credentials: 'include' });
+                        const res = await fetch('https://helpreach-production-0562.up.railway.app/api/user/me', { credentials: 'include' });
                         if (res.ok) {
                             const json = await res.json();
                             if (json.ok && json.user && json.user.id) {
@@ -3825,8 +3825,8 @@
                         }
 
                         const [donRes, claimedRes] = await Promise.all([
-                            fetch('http://127.0.0.1:5000/api/donations'),
-                            fetch('http://127.0.0.1:5000/api/all-claimed-donations')
+                            fetch('https://helpreach-production-0562.up.railway.app/api/donations'),
+                            fetch('https://helpreach-production-0562.up.railway.app/api/all-claimed-donations')
                         ]);
 
                         const donations = donRes.ok ? await donRes.json() : [];

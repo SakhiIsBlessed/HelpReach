@@ -739,7 +739,7 @@
                         }
 
                         try {
-                            const res = await fetch(`http://127.0.0.1:5000/api/ngo/${currentNgoId}/documents`, { credentials: 'include' });
+                            const res = await fetch(`https://helpreach-production-0562.up.railway.app/api/ngo/${currentNgoId}/documents`, { credentials: 'include' });
                             const data = await res.json();
 
                             if (res.ok && data.ok) {
@@ -792,7 +792,7 @@
                         showUploadAlert('Uploading...', 'info', 0);
 
                         try {
-                            const res = await fetch(`http://127.0.0.1:5000/api/ngo/${currentNgoId}/documents`, {
+                            const res = await fetch(`https://helpreach-production-0562.up.railway.app/api/ngo/${currentNgoId}/documents`, {
                                 method: 'POST',
                                 credentials: 'include',
                                 body: form
@@ -1038,7 +1038,7 @@
     </div>
   `;
 
-                fetch("http://127.0.0.1:5000/api/chatbot", {
+                fetch("https://helpreach-production-0562.up.railway.app/api/chatbot", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ message })
@@ -1194,7 +1194,7 @@
                 ngoArea.innerHTML = '';
 
                 try {
-                    const res = await fetch("http://127.0.0.1:5000/api/donations");
+                    const res = await fetch("https://helpreach-production-0562.up.railway.app/api/donations");
 
                     if (!res.ok) {
                         throw new Error("Server error");
@@ -1216,7 +1216,7 @@
                     let receivedDonations = []; // donations marked received (history)
                     if (isNgoLoggedIn && currentNgoId) {
                         try {
-                            const claimedRes = await fetch(`http://127.0.0.1:5000/api/ngo/${currentNgoId}/claimed-donations`);
+                            const claimedRes = await fetch(`https://helpreach-production-0562.up.railway.app/api/ngo/${currentNgoId}/claimed-donations`);
                             if (claimedRes.ok) {
                                 const claimedData = await claimedRes.json();
                                 claimedDonations = Array.isArray(claimedData) ? claimedData : (claimedData.donations || []);
@@ -1234,7 +1234,7 @@
                         }
                         // Also load received (completed) donations for NGO history
                         try {
-                            const receivedRes = await fetch(`http://127.0.0.1:5000/api/ngo/${currentNgoId}/received-donations`);
+                            const receivedRes = await fetch(`https://helpreach-production-0562.up.railway.app/api/ngo/${currentNgoId}/received-donations`);
                             if (receivedRes.ok) {
                                 const receivedData = await receivedRes.json();
                                 receivedDonations = Array.isArray(receivedData) ? receivedData : (receivedData.donations || []);
@@ -1246,7 +1246,7 @@
                         // Also fetch global claimed donation ids to accurately compute pending
                         var allClaimedIdsForMetrics = new Set();
                         try {
-                            const allClaimsRes = await fetch(`http://127.0.0.1:5000/api/all-claimed-donations`);
+                            const allClaimsRes = await fetch(`https://helpreach-production-0562.up.railway.app/api/all-claimed-donations`);
                             if (allClaimsRes.ok) {
                                 const allClaims = await allClaimsRes.json();
                                 if (Array.isArray(allClaims)) {
@@ -1283,7 +1283,7 @@
 
                             // Add photo if available (use donation-photo class and right column layout)
                             const photoHTML = d.photo_filename
-                                ? `<img class="donation-photo" src="http://127.0.0.1:5000/uploads/donations/${d.photo_filename}" alt="Donation photo" style="width:100%; border-radius:6px; margin-bottom:10px; max-height:200px; object-fit:cover;">`
+                                ? `<img class="donation-photo" src="https://helpreach-production-0562.up.railway.app/uploads/donations/${d.photo_filename}" alt="Donation photo" style="width:100%; border-radius:6px; margin-bottom:10px; max-height:200px; object-fit:cover;">`
                                 : '';
 
                             card.innerHTML = `
@@ -1384,7 +1384,7 @@
                 let globallyClaimedIds = new Set();
                 if (isNgoLoggedIn && currentNgoId) {
                     try {
-                        const res = await fetch(`http://127.0.0.1:5000/api/ngo/${currentNgoId}/claimed-donations`);
+                        const res = await fetch(`https://helpreach-production-0562.up.railway.app/api/ngo/${currentNgoId}/claimed-donations`);
                         if (res.ok) {
                             const data = await res.json();
                             const claims = Array.isArray(data) ? data : (data.donations || []);
@@ -1400,7 +1400,7 @@
 
                 // Fetch all claimed donations (global) and build a set of claimed donation ids
                 try {
-                    const allClaimsRes = await fetch(`http://127.0.0.1:5000/api/all-claimed-donations`);
+                    const allClaimsRes = await fetch(`https://helpreach-production-0562.up.railway.app/api/all-claimed-donations`);
                     if (allClaimsRes.ok) {
                         const allClaims = await allClaimsRes.json();
                         if (Array.isArray(allClaims)) {
@@ -1496,7 +1496,7 @@
                     const categoryBadge = d.category ? `<span class="badge bg-secondary me-2">${d.category}</span>` : '';
                     const createdDate = d.created_at ? new Date(d.created_at).toLocaleDateString() : 'N/A';
                     const photoHTML = d.photo_filename
-                        ? `<img class="donation-photo" src="http://127.0.0.1:5000/uploads/donations/${d.photo_filename}" alt="Donation photo" style="width:100%; border-radius:6px; margin-bottom:10px; max-height:200px; object-fit:cover;">`
+                        ? `<img class="donation-photo" src="https://helpreach-production-0562.up.railway.app/uploads/donations/${d.photo_filename}" alt="Donation photo" style="width:100%; border-radius:6px; margin-bottom:10px; max-height:200px; object-fit:cover;">`
                         : '';
 
                     // Show timer for FOOD donations in Active Donations Feed (based on pickup_info)
@@ -1582,7 +1582,7 @@
                 }
 
                 try {
-                    const res = await fetch("http://127.0.0.1:5000/api/claim-donation", {
+                    const res = await fetch("https://helpreach-production-0562.up.railway.app/api/claim-donation", {
                         method: "POST",
                         headers: {
                             "Content-Type": "application/json"
@@ -1625,7 +1625,7 @@
                 let claimStatus = null;
                 let claimRecord = null;
                 try {
-                    const res = await fetch(`http://127.0.0.1:5000/api/ngo/${currentNgoId}/claimed-donations`);
+                    const res = await fetch(`https://helpreach-production-0562.up.railway.app/api/ngo/${currentNgoId}/claimed-donations`);
                     if (res.ok) {
                         const claims = await res.json();
                         claimStatus = claims.find(c => c.id === donationId);
@@ -1633,7 +1633,7 @@
                     }
 
                     // Get detailed claim status
-                    const statusRes = await fetch(`http://127.0.0.1:5000/api/donation-claim-status/${donationId}/${currentNgoId}`);
+                    const statusRes = await fetch(`https://helpreach-production-0562.up.railway.app/api/donation-claim-status/${donationId}/${currentNgoId}`);
                     if (statusRes.ok) {
                         const statusData = await statusRes.json();
                         claimRecord = statusData.claim;
@@ -1829,7 +1829,7 @@
 
                         try {
                             // Fetch updated claim status from backend
-                            const res = await fetch(`http://127.0.0.1:5000/api/ngo/${currentNgoId}/claimed-donations`);
+                            const res = await fetch(`https://helpreach-production-0562.up.railway.app/api/ngo/${currentNgoId}/claimed-donations`);
                             if (res.ok) {
                                 const claims = await res.json();
                                 const updatedClaim = claims.find(c => c.id === donationId);
@@ -1880,7 +1880,7 @@
                         pickedUpBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i> Updating...';
 
                         try {
-                            const res = await fetch("http://127.0.0.1:5000/api/donation-picked-up", {
+                            const res = await fetch("https://helpreach-production-0562.up.railway.app/api/donation-picked-up", {
                                 method: "POST",
                                 headers: { "Content-Type": "application/json" },
                                 body: JSON.stringify({
@@ -1940,7 +1940,7 @@
                         deliveredBtn.innerHTML = '<i class="fas flatedt-spinner fa-spin me-2"></i> Updating...';
 
                         try {
-                            const res = await fetch("http://127.0.0.1:5000/api/donation-delivered", {
+                            const res = await fetch("https://helpreach-production-0562.up.railway.app/api/donation-delivered", {
                                 method: "POST",
                                 headers: { "Content-Type": "application/json" },
                                 body: JSON.stringify({
@@ -2008,7 +2008,7 @@
                 }
 
                 try {
-                    const res = await fetch("http://127.0.0.1:5000/api/mark-donation-received", {
+                    const res = await fetch("https://helpreach-production-0562.up.railway.app/api/mark-donation-received", {
                         method: "POST",
                         headers: {
                             "Content-Type": "application/json"
@@ -2088,7 +2088,7 @@
                 }
 
                 try {
-                    const res = await fetch(`http://127.0.0.1:5000/api/ngo/${ngoId}/documents`, { credentials: 'include' });
+                    const res = await fetch(`https://helpreach-production-0562.up.railway.app/api/ngo/${ngoId}/documents`, { credentials: 'include' });
                     const data = await res.json();
                     if (!res.ok || !data.ok) {
                         list.innerHTML = '<div class="text-muted">No documents uploaded yet.</div>';
@@ -2146,7 +2146,7 @@ function openMyDocuments() {
                     uploadBtn.textContent = 'Uploading...';
                     uploadBtn.disabled = true;
 
-                    const res = await fetch(`http://127.0.0.1:5000/api/ngo/${currentNgoId}/documents`, {
+                    const res = await fetch(`https://helpreach-production-0562.up.railway.app/api/ngo/${currentNgoId}/documents`, {
                         method: 'POST',
                         credentials: 'include',
                         body: form
@@ -2387,7 +2387,7 @@ function goToNgoAccount() {
             async function loadNgoProfileFromBackend(ngoId) {
                 try {
                     const res = await fetch(
-                        `http://127.0.0.1:5000/api/ngo/profile/${ngoId}`
+                        `https://helpreach-production-0562.up.railway.app/api/ngo/profile/${ngoId}`
                     );
 
                     const data = await res.json();
@@ -2409,7 +2409,7 @@ function goToNgoAccount() {
             window.addEventListener("load", async () => {
                 // First, check backend session
                 try {
-                    const res = await fetch("http://127.0.0.1:5000/api/ngo/me", {
+                    const res = await fetch("https://helpreach-production-0562.up.railway.app/api/ngo/me", {
                         credentials: "include"
                     });
 

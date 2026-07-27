@@ -1062,7 +1062,7 @@
                 if (!validateForm()) return;
 
                 try {
-                    const res = await fetch("http://127.0.0.1:5000/api/ngo/register", {
+                    const res = await fetch("https://helpreach-production-0562.up.railway.app/api/ngo/register", {
                         method: "POST",
                         credentials: "include",
                         headers: { "Content-Type": "application/json" },
@@ -1268,7 +1268,7 @@ function sendMessage() {
     </div>
   `;
 
-  fetch("http://127.0.0.1:5000/api/chatbot", {
+  fetch("https://helpreach-production-0562.up.railway.app/api/chatbot", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ message })

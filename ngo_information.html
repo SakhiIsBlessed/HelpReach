@@ -2226,7 +2226,7 @@
     </div>
   `;
 
-            fetch("http://127.0.0.1:5000/api/chatbot", {
+            fetch("https://helpreach-production-0562.up.railway.app/api/chatbot", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ message })
@@ -2270,7 +2270,7 @@
             btn.onclick = submitRegistration;
         }
         function submitLogin() {
-            fetch("http://127.0.0.1:5000/api/login", {
+            fetch("https://helpreach-production-0562.up.railway.app/api/login", {
                 method: "POST",
                 credentials: 'include', // include cookies so server-set cookie is stored
                 headers: { "Content-Type": "application/json" },
@@ -2453,7 +2453,7 @@ function openUploadModal() {
                     uploadBtn.textContent = 'Uploading...';
                     uploadBtn.disabled = true;
 
-                    const res = await fetch(`http://127.0.0.1:5000/api/ngo/${currentNgoId}/documents`, {
+                    const res = await fetch(`https://helpreach-production-0562.up.railway.app/api/ngo/${currentNgoId}/documents`, {
                         method: 'POST',
                         credentials: 'include',
                         body: form
@@ -2516,7 +2516,7 @@ function goToNgoAccount() {
                 }
 
                 try {
-                    const res = await fetch(`http://127.0.0.1:5000/api/ngo/${ngoId}/documents`, { credentials: 'include' });
+                    const res = await fetch(`https://helpreach-production-0562.up.railway.app/api/ngo/${ngoId}/documents`, { credentials: 'include' });
                     const data = await res.json();
                     if (!res.ok || !data.ok) {
                         list.innerHTML = '<div class="text-muted">No documents uploaded yet.</div>';
@@ -2555,7 +2555,7 @@ function goToNgoAccount() {
                         }
 
                         try {
-                            const res = await fetch(`http://127.0.0.1:5000/api/ngo/${currentNgoId}/documents`, { credentials: 'include' });
+                            const res = await fetch(`https://helpreach-production-0562.up.railway.app/api/ngo/${currentNgoId}/documents`, { credentials: 'include' });
                             const data = await res.json();
 
                             if (res.ok && data.ok) {
@@ -2608,7 +2608,7 @@ function goToNgoAccount() {
                         showUploadAlert('Uploading...', 'info', 0);
 
                         try {
-                            const res = await fetch(`http://127.0.0.1:5000/api/ngo/${currentNgoId}/documents`, {
+                            const res = await fetch(`https://helpreach-production-0562.up.railway.app/api/ngo/${currentNgoId}/documents`, {
                                 method: 'POST',
                                 credentials: 'include',
                                 body: form
@@ -2680,7 +2680,7 @@ function goToNgoAccount() {
         async function loadNgoProfileFromBackend(ngoId) {
             try {
                 const res = await fetch(
-                    `http://127.0.0.1:5000/api/ngo/profile/${ngoId}`
+                    `https://helpreach-production-0562.up.railway.app/api/ngo/profile/${ngoId}`
                 );
 
                 const data = await res.json();
@@ -2702,7 +2702,7 @@ function goToNgoAccount() {
         window.addEventListener("load", async () => {
             // First, check backend session
             try {
-                const res = await fetch("http://127.0.0.1:5000/api/ngo/me", {
+                const res = await fetch("https://helpreach-production-0562.up.railway.app/api/ngo/me", {
                     credentials: "include"
                 });
 
@@ -2754,7 +2754,7 @@ function goToNgoAccount() {
             showGuestNgo();
 
             // 3️⃣ Call logout API to clear backend session
-            fetch("http://127.0.0.1:5000/api/ngo/logout", {
+            fetch("https://helpreach-production-0562.up.railway.app/api/ngo/logout", {
                 method: "POST",
                 credentials: "include"
             }).catch(err => console.error("Logout error:", err));

@@ -2226,7 +2226,7 @@
     </div>
   `;
 
-            fetch("http://127.0.0.1:5000/api/chatbot", {
+            fetch("https://helpreach-production-0562.up.railway.app/api/chatbot", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ message })
@@ -2270,7 +2270,7 @@
             btn.onclick = submitRegistration;
         }
         function submitLogin() {
-            fetch("http://127.0.0.1:5000/api/login", {
+            fetch("https://helpreach-production-0562.up.railway.app/api/login", {
                 method: "POST",
                 credentials: 'include', // include cookies so server-set cookie is stored
                 headers: { "Content-Type": "application/json" },
@@ -2609,7 +2609,7 @@
             (async () => {
                 try {
                     if (userData && !userData.id) {
-                        const res = await fetch('http://127.0.0.1:5000/api/user/me', { credentials: 'include' });
+                        const res = await fetch('https://helpreach-production-0562.up.railway.app/api/user/me', { credentials: 'include' });
                         if (res.ok) {
                             const json = await res.json();
                             if (json.ok && json.user && json.user.id) {
@@ -2647,8 +2647,8 @@
                         }
 
                         const [donRes, claimedRes] = await Promise.all([
-                            fetch('http://127.0.0.1:5000/api/donations'),
-                            fetch('http://127.0.0.1:5000/api/all-claimed-donations')
+                            fetch('https://helpreach-production-0562.up.railway.app/api/donations'),
+                            fetch('https://helpreach-production-0562.up.railway.app/api/all-claimed-donations')
                         ]);
 
                         const donations = donRes.ok ? await donRes.json() : [];

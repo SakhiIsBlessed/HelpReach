@@ -12,7 +12,7 @@
     }
 
     // backend origin — ensure requests go to Flask backend, not Live Server origin
-    const BACKEND = window.BACKEND_URL || 'http://127.0.0.1:5000';
+    const BACKEND = window.BACKEND_URL || 'https://helpreach-production-0562.up.railway.app';
 
     if (!('serviceWorker' in navigator) || !('PushManager' in window)) {
         console.log('Push messaging not supported');
