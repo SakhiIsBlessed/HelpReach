@@ -1,93 +1,91 @@
-from flask import Flask, request, jsonify, send_from_directory  #Flask:Web framework that is use to create backend Api,request:Reads the data sent from fromtend,jsonify:Converts python data into json
-from flask_cors import CORS #Cross-Origin Resource Sharing:Allows frontend (html,js) to call backend api
-from db import get_db_connection #custom function used to connect to mysql database
-import json
+from flask import Flask, request, jsonify, send_from_directory  # Import Flask tools: Flask creates the web app, request handles incoming data, jsonify converts data to JSON format, send_from_directory serves files
+from flask_cors import CORS  # CORS allows the frontend (HTML/JS) to talk to this backend safely
+from db import get_db_connection  # Our custom function to connect to the MySQL database
+import json  # JSON is a format to send data between frontend and backend
 try:
-    from pywebpush import webpush, WebPushException
+    from pywebpush import webpush, WebPushException  # Try to import push notification tools
 except Exception:
-    # pywebpush may not be installed in some environments (linting / CI)
-    # Provide safe fallbacks so the app can run without the package.
+    # If pywebpush isn't installed (maybe in testing), provide fake versions so the app doesn't crash
     webpush = None
     class WebPushException(Exception):
         pass
-import hashlib # used to securely hashed passwords bcoz we should not store password in plain text
-import random # used to generate random OTP
-from email_service import send_email
-import os
-import sys
-import time # used for OTP expiry
-import uuid # used to generate unique tokens
-from werkzeug.utils import secure_filename
+import hashlib  # Used to securely hash passwords (so we don't store plain text passwords)
+import random  # Used to generate random OTP codes
+from email_service import send_email  # Our custom function to send emails
+import os  # OS module helps with file paths and folders
+import sys  # System module (not used much here)
+import time  # Used for timing things like OTP expiry
+import uuid  # Generates unique IDs for files and tokens
+from werkzeug.utils import secure_filename  # Makes filenames safe for saving
 
-app = Flask(__name__, static_folder='..', static_url_path='') # serves static files from parent directory
+app = Flask(__name__, static_folder='..', static_url_path='')  # Create the Flask app, serve static files from parent directory
 
-# VAPID config (set these in your environment):
-VAPID_PUBLIC_KEY = os.environ.get('VAPID_PUBLIC_KEY')
-VAPID_PRIVATE_KEY = os.environ.get('VAPID_PRIVATE_KEY')
-VAPID_CLAIMS = {"sub": os.environ.get('VAPID_SUB', 'mailto:admin@example.com')}
+# # VAPID config for push notifications (set these in your environment variables):
+# VAPID_PUBLIC_KEY = os.environ.get('VAPID_PUBLIC_KEY')  # Public key for push notifications
+# VAPID_PRIVATE_KEY = os.environ.get('VAPID_PRIVATE_KEY')  # Private key for push notifications
+# VAPID_CLAIMS = {"sub": os.environ.get('VAPID_SUB', 'mailto:helpreach18@gmail.com')}  # Email for push service
 
 # 📁 File upload configuration
-UPLOAD_FOLDER = os.path.join('..', 'uploads', 'donations')
+UPLOAD_FOLDER = os.path.join('..', 'uploads', 'donations')  # Folder to save donation photos
 # Documents upload folder for NGO files
-UPLOAD_FOLDER_DOCS = os.path.join('..', 'uploads', 'ngo_documents')
-ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', 'webp'}
-ALLOWED_DOC_EXTENSIONS = {'pdf', 'png', 'jpg', 'jpeg', 'doc', 'docx', 'txt'}
+UPLOAD_FOLDER_DOCS = os.path.join('..', 'uploads', 'ngo_documents')  # Folder to save NGO documents
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', 'webp'}  # Allowed image file types
+ALLOWED_DOC_EXTENSIONS = {'pdf', 'png', 'jpg', 'jpeg', 'doc', 'docx', 'txt'}  # Allowed document file types
 
 # Create upload folders if they don't exist
-os.makedirs(UPLOAD_FOLDER, exist_ok=True)
-os.makedirs(UPLOAD_FOLDER_DOCS, exist_ok=True)
+os.makedirs(UPLOAD_FOLDER, exist_ok=True)  # Make sure donation upload folder exists
+os.makedirs(UPLOAD_FOLDER_DOCS, exist_ok=True)  # Make sure NGO document folder exists
 
-def allowed_file(filename):
+def allowed_file(filename):  # Function to check if a file is an allowed image type
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-
-def allowed_doc_file(filename):
+def allowed_doc_file(filename):  # Function to check if a file is an allowed document type
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_DOC_EXTENSIONS
 
 # 🔹 Enhanced CORS configuration to support credentials
 # For local development allow all origins so static files opened from filesystem or other ports can call APIs.
-CORS(
+CORS(  # Set up CORS to allow frontend to call backend
     app,
-    origins="*",
-    allow_headers=["Content-Type", "X-Requested-With"],
-    supports_credentials=True
+    origins="*",  # Allow any website to call (for development)
+    allow_headers=["Content-Type", "X-Requested-With"],  # Allow these headers
+    supports_credentials=True  # Allow cookies/credentials
 )
 
 # Dictionary to store OTP temporarily
-otp_store = {}
+otp_store = {}  # Temporary storage for OTP codes (in memory, not database)
 
 # � Serve uploaded donation photos
-@app.route('/uploads/donations/<filename>')
-def serve_photo(filename):
-    """Serve uploaded donation photos"""
-    return send_from_directory(UPLOAD_FOLDER, filename)
+@app.route('/uploads/donations/<filename>')  # This route serves donation photos when requested
+def serve_photo(filename):  # Function to send the photo file to the browser
+    """Serve uploaded donation photos"""  # Docstring explaining what this function does
+    return send_from_directory(UPLOAD_FOLDER, filename)  # Send the file from the upload folder
 
 # 🗂️ Serve NGO uploaded documents
-@app.route('/uploads/ngo_documents/<filename>')
-def serve_ngo_doc(filename):
-    """Serve uploaded NGO document files"""
-    return send_from_directory(UPLOAD_FOLDER_DOCS, filename)
+@app.route('/uploads/ngo_documents/<filename>')  # Route to serve NGO document files
+def serve_ngo_doc(filename):  # Function to send NGO documents
+    """Serve uploaded NGO document files"""  # Explanation
+    return send_from_directory(UPLOAD_FOLDER_DOCS, filename)  # Send the document file
 
-@app.route('/api/ngo/<int:ngo_id>/documents', methods=['GET', 'POST', 'OPTIONS'])
-def ngo_documents(ngo_id):
-    """Upload or list NGO documents. Authenticated via 'ngo_id' cookie."""
-    if request.method == 'OPTIONS':
-        return jsonify({"ok": True}), 200
+@app.route('/api/ngo/<int:ngo_id>/documents', methods=['GET', 'POST', 'OPTIONS'])  # API route for NGO documents, allows GET (list), POST (upload), OPTIONS (check)
+def ngo_documents(ngo_id):  # Function to handle NGO document uploads and listings
+    """Upload or list NGO documents. Authenticated via 'ngo_id' cookie."""  # Only logged-in NGOs can access
+    if request.method == 'OPTIONS':  # Handle pre-flight CORS check
+        return jsonify({"ok": True}), 200  # Return OK for CORS
 
-    cookie_ngo_id = request.cookies.get('ngo_id')
-    print(f"🔍 /api/ngo/{ngo_id}/documents called. Cookie ngo_id=", cookie_ngo_id)
+    cookie_ngo_id = request.cookies.get('ngo_id')  # Get NGO ID from browser cookie
+    print(f"🔍 /api/ngo/{ngo_id}/documents called. Cookie ngo_id=", cookie_ngo_id)  # Debug print
 
-    if not cookie_ngo_id:
-        return {"error": "Not logged in as NGO"}, 401
+    if not cookie_ngo_id:  # If no cookie, not logged in
+        return {"error": "Not logged in as NGO"}, 401  # Return error
 
-    if str(cookie_ngo_id) != str(ngo_id):
-        return {"error": "Permission denied"}, 403
+    if str(cookie_ngo_id) != str(ngo_id):  # Check if cookie matches the requested NGO ID
+        return {"error": "Permission denied"}, 403  # No permission
 
     # Ensure DB table exists (safe to run repeatedly)
-    try:
-        db = get_db_connection()
-        cursor = db.cursor()
-        cursor.execute("""
+    try:  # Try to create the table if it doesn't exist
+        db = get_db_connection()  # Connect to database
+        cursor = db.cursor()  # Create cursor for queries
+        cursor.execute("""  # SQL to create table for NGO documents
             CREATE TABLE IF NOT EXISTS ngo_documents (
                 id INT AUTO_INCREMENT PRIMARY KEY,
                 ngo_id INT NOT NULL,
@@ -96,202 +94,198 @@ def ngo_documents(ngo_id):
                 uploaded_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             ) ENGINE=InnoDB
         """)
-        db.commit()
-    except Exception as e:
-        print("❌ Error ensuring ngo_documents table:", e)
-    finally:
+        db.commit()  # Save the table creation
+    except Exception as e:  # If error creating table
+        print("❌ Error ensuring ngo_documents table:", e)  # Print error
+    finally:  # Always close connections
         try:
-            cursor.close()
-            db.close()
+            cursor.close()  # Close cursor
+            db.close()  # Close database
         except Exception:
-            pass
+            pass  # Ignore errors here
 
     # GET -> list documents
-    if request.method == 'GET':
-        print(f"🔍 Fetching NGO documents for ngo_id={ngo_id}")
+    if request.method == 'GET':  # If request is to list documents
+        print(f"🔍 Fetching NGO documents for ngo_id={ngo_id}")  # Debug
         try:
-            db = get_db_connection()
-            cursor = db.cursor(dictionary=True)
-            cursor.execute("SELECT id, filename, original_filename, uploaded_at FROM ngo_documents WHERE ngo_id=%s ORDER BY uploaded_at DESC", (ngo_id,))
-            docs = cursor.fetchall()
-            cursor.close()
-            db.close()
+            db = get_db_connection()  # Connect to DB
+            cursor = db.cursor(dictionary=True)  # Cursor that returns results as dictionaries
+            cursor.execute("SELECT id, filename, original_filename, uploaded_at FROM ngo_documents WHERE ngo_id=%s ORDER BY uploaded_at DESC", (ngo_id,))  # Query documents for this NGO
+            docs = cursor.fetchall()  # Get all results
+            cursor.close()  # Close cursor
+            db.close()  # Close DB
 
-            print(f"🔔 Found {len(docs)} documents for NGO {ngo_id}")
-            for d in docs:
-                d['url'] = f"/uploads/ngo_documents/{d['filename']}"
+            print(f"🔔 Found {len(docs)} documents for NGO {ngo_id}")  # Debug count
+            for d in docs:  # For each document
+                d['url'] = f"/uploads/ngo_documents/{d['filename']}"  # Add URL to access the file
 
-            return jsonify({"ok": True, "documents": docs})
-        except Exception as e:
-            print("❌ Error fetching ngo documents:", e)
-            return {"error": "Server error"}, 500
+            return jsonify({"ok": True, "documents": docs})  # Return documents as JSON
+        except Exception as e:  # If error fetching
+            print("❌ Error fetching ngo documents:", e)  # Print error
+            return {"error": "Server error"}, 500  # Return server error
 
     # POST -> upload files
-    if 'documents' not in request.files:
-        return {"error": "No files uploaded"}, 400
+    if 'documents' not in request.files:  # If no files uploaded
+        return {"error": "No files uploaded"}, 400  # Error
 
-    files = request.files.getlist('documents')
-    saved = []
+    files = request.files.getlist('documents')  # Get list of uploaded files
+    saved = []  # List to store successfully saved files
 
     try:
-        db = get_db_connection()
-        cursor = db.cursor()
+        db = get_db_connection()  # Connect to DB
+        cursor = db.cursor()  # Cursor
 
-        for file in files:
-            if file and file.filename and allowed_doc_file(file.filename):
-                orig = secure_filename(file.filename)
-                fname = secure_filename(f"{uuid.uuid4()}_{orig}")
-                path = os.path.join(UPLOAD_FOLDER_DOCS, fname)
+        for file in files:  # For each uploaded file
+            if file and file.filename and allowed_doc_file(file.filename):  # If file is valid
+                orig = secure_filename(file.filename)  # Make filename safe
+                fname = secure_filename(f"{uuid.uuid4()}_{orig}")  # Create unique filename
+                path = os.path.join(UPLOAD_FOLDER_DOCS, fname)  # Full path to save
                 try:
-                    file.save(path)
-                    cursor.execute("INSERT INTO ngo_documents (ngo_id, filename, original_filename) VALUES (%s, %s, %s)", (ngo_id, fname, orig))
-                    db.commit()
-                    doc_id = cursor.lastrowid
-                    saved.append({"id": doc_id, "filename": fname, "original_filename": orig, "url": f"/uploads/ngo_documents/{fname}"})
-                    print(f"✅ NGO document saved: {fname}")
-                except Exception as e:
-                    print("❌ Error saving NGO document:", e)
-            else:
-                print("⚠️  NGO document not allowed or empty:", getattr(file, 'filename', None))
+                    file.save(path)  # Save file to disk
+                    cursor.execute("INSERT INTO ngo_documents (ngo_id, filename, original_filename) VALUES (%s, %s, %s)", (ngo_id, fname, orig))  # Save to DB
+                    db.commit()  # Save DB changes
+                    doc_id = cursor.lastrowid  # Get new document ID
+                    saved.append({"id": doc_id, "filename": fname, "original_filename": orig, "url": f"/uploads/ngo_documents/{fname}"})  # Add to saved list
+                    print(f"✅ NGO document saved: {fname}")  # Debug
+                except Exception as e:  # If error saving
+                    print("❌ Error saving NGO document:", e)  # Print error
+            else:  # If file not allowed
+                print("⚠️  NGO document not allowed or empty:", getattr(file, 'filename', None))  # Debug
 
-        cursor.close()
-        db.close()
+        cursor.close()  # Close cursor
+        db.close()  # Close DB
 
-        return jsonify({"ok": True, "saved": saved})
+        return jsonify({"ok": True, "saved": saved})  # Return saved files
 
-    except Exception as e:
-        print("❌ Error processing NGO document upload:", e)
-        return {"error": "Server error"}, 500
-
-
-@app.route('/api/vapid_public_key', methods=['GET'])
-def vapid_public_key():
-    """Return VAPID public key for client subscription."""
-    if not VAPID_PUBLIC_KEY:
-        return jsonify({"error": "VAPID_PUBLIC_KEY not configured on server"}), 500
-    return jsonify({"publicKey": VAPID_PUBLIC_KEY})
+    except Exception as e:  # If general error
+        print("❌ Error processing NGO document upload:", e)  # Print error
+        return {"error": "Server error"}, 500  # Return error
 
 
-def ensure_push_table():
+@app.route('/api/vapid_public_key', methods=['GET'])  # Route to get the public key for push notifications
+def vapid_public_key():  # Function to return the VAPID public key
+    """Return VAPID public key for client subscription."""  # Clients need this to subscribe to push notifications
+    if not VAPID_PUBLIC_KEY:  # If key not set
+        return jsonify({"error": "VAPID_PUBLIC_KEY not configured on server"}), 500  # Error
+    return jsonify({"publicKey": VAPID_PUBLIC_KEY})  # Return the key
+
+# def ensure_push_table(0):  # Function to make sure the push subscriptions table exists
+#     try:
+#         db = get_db_connection()  # Connect to DB
+#         cursor = db.cursor()  # Cursor
+#         cursor.execute('''  # SQL to create push subscriptions table
+#             CREATE TABLE IF NOT EXISTS push_subscriptions (
+#                 id INT AUTO_INCREMENT PRIMARY KEY,
+#                 endpoint TEXT NOT NULL,
+#                 p256dh VARCHAR(255),
+#                 auth VARCHAR(255),
+#                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+#             ) ENGINE=InnoDB
+#         ''')
+#         db.commit()  # Save table
+#     except Exception as e:  # If error
+#         print('❌ Error ensuring push_subscriptions table:', e)  # Print error
+#     finally:  # Always
+#         try:
+#             cursor.close()  # Close cursor
+#             db.close()  # Close DB
+#         except Exception:
+#             pass
+
+@app.route('/api/subscribe', methods=['POST', 'OPTIONS'])  # Route to subscribe to push notifications
+def api_subscribe():  # Function to handle subscription
+    if request.method == 'OPTIONS':  # CORS check
+        return jsonify({'ok': True}), 200  # OK
+
+    data = request.get_json() or {}  # Get JSON data from request
+    endpoint = data.get('endpoint')  # Push endpoint URL
+    keys = data.get('keys') or {}  # Encryption keys
+    p256dh = keys.get('p256dh')  # Public key
+    auth_key = keys.get('auth')  # Auth key
+
+    if not endpoint:  # If no endpoint
+        return jsonify({'error': 'Missing subscription endpoint'}), 400  # Error
+
+    ensure_push_table()  # Make sure table exists
     try:
-        db = get_db_connection()
-        cursor = db.cursor()
-        cursor.execute('''
-            CREATE TABLE IF NOT EXISTS push_subscriptions (
-                id INT AUTO_INCREMENT PRIMARY KEY,
-                endpoint TEXT NOT NULL,
-                p256dh VARCHAR(255),
-                auth VARCHAR(255),
-                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-            ) ENGINE=InnoDB
-        ''')
-        db.commit()
-    except Exception as e:
-        print('❌ Error ensuring push_subscriptions table:', e)
-    finally:
-        try:
-            cursor.close()
-            db.close()
-        except Exception:
-            pass
+        db = get_db_connection()  # Connect DB
+        cursor = db.cursor()  # Cursor
+        # Check if subscription already exists
+        cursor.execute('SELECT id FROM push_subscriptions WHERE endpoint=%s', (endpoint,))  # Query
+        if cursor.fetchone():  # If exists
+            cursor.close(); db.close()  # Close
+            return jsonify({'ok': True, 'message': 'Subscription already exists'})  # Already subscribed
 
+        cursor.execute('INSERT INTO push_subscriptions (endpoint, p256dh, auth) VALUES (%s, %s, %s)', (endpoint, p256dh, auth_key))  # Insert new subscription
+        db.commit()  # Save
+        cursor.close(); db.close()  # Close
+        return jsonify({'ok': True})  # Success
+    except Exception as e:  # If error
+        print('❌ Error saving subscription:', e)  # Print error
+        return jsonify({'error': 'Server error'}), 500  # Error
 
-@app.route('/api/subscribe', methods=['POST', 'OPTIONS'])
-def api_subscribe():
-    if request.method == 'OPTIONS':
-        return jsonify({'ok': True}), 200
-
-    data = request.get_json() or {}
-    endpoint = data.get('endpoint')
-    keys = data.get('keys') or {}
-    p256dh = keys.get('p256dh')
-    auth_key = keys.get('auth')
-
-    if not endpoint:
-        return jsonify({'error': 'Missing subscription endpoint'}), 400
-
-    ensure_push_table()
-    try:
-        db = get_db_connection()
-        cursor = db.cursor()
-        # avoid duplicates
-        cursor.execute('SELECT id FROM push_subscriptions WHERE endpoint=%s', (endpoint,))
-        if cursor.fetchone():
-            cursor.close(); db.close()
-            return jsonify({'ok': True, 'message': 'Subscription already exists'})
-
-        cursor.execute('INSERT INTO push_subscriptions (endpoint, p256dh, auth) VALUES (%s, %s, %s)', (endpoint, p256dh, auth_key))
-        db.commit()
-        cursor.close(); db.close()
-        return jsonify({'ok': True})
-    except Exception as e:
-        print('❌ Error saving subscription:', e)
-        return jsonify({'error': 'Server error'}), 500
-
-
-def send_push(subscription_info, payload):
-    if not VAPID_PUBLIC_KEY or not VAPID_PRIVATE_KEY:
-        print('⚠️ VAPID keys not configured; skipping push')
-        return False
+def send_push(subscription_info, payload):  # Function to send push notification
+    if not VAPID_PUBLIC_KEY or not VAPID_PRIVATE_KEY:  # If keys not set
+        print('⚠️ VAPID keys not configured; skipping push')  # Warning
+        return False  # Can't send
 
     try:
-        webpush(
-            subscription_info=subscription_info,
-            data=json.dumps(payload),
-            vapid_private_key=VAPID_PRIVATE_KEY,
-            vapid_claims=VAPID_CLAIMS
+        webpush(  # Send push
+            subscription_info=subscription_info,  # Subscription details
+            data=json.dumps(payload),  # Message data as JSON
+            vapid_private_key=VAPID_PRIVATE_KEY,  # Private key
+            vapid_claims=VAPID_CLAIMS  # Claims
         )
-        return True
-    except WebPushException as ex:
-        print('❌ WebPush error:', repr(ex))
-        return False
+        return True  # Success
+    except WebPushException as ex:  # If error
+        print('❌ WebPush error:', repr(ex))  # Print error
+        return False  # Failed
 
     # (GET/POST logic moved into the ngo_documents route earlier to fix indentation bug)
 
 # (Moved static file route to bottom so API routes are matched first)
 
 # ---------------- HOME ----------------
-@app.route("/")
-def home():#simple test route that tells backend is running
-    return {"message": "HelpReach backend running 🚀"} # if you open http://127.0.0.1:5000 you will see this msg
+@app.route("/")  # Main route, like the homepage of the API
+def home():  # Function that runs when someone visits the root URL
+    return {"message": "HelpReach backend running 🚀"}  # Returns a simple JSON message to show the server is working
 
 # ---------------- REGISTER ----------------
-@app.route("/api/register", methods=["POST", "OPTIONS"]) #This line tells Flask to create an API endpoint at /api/register POST:usrd to register new user
-def register():#This function runs whenever /api/register is called
-    if request.method == "OPTIONS": #OPTIONS: used to check browser before post,this is used to check cross origin requests
-        return jsonify({"ok": True}), 200  # This avoids CORS errors
+@app.route("/api/register", methods=["POST", "OPTIONS"])  # API endpoint for user registration, accepts POST (to register) and OPTIONS (for CORS check)
+def register():  # Function that handles new user registration
+    if request.method == "OPTIONS":  # Handle CORS pre-flight request (browser checks before sending POST)
+        return jsonify({"ok": True}), 200  # Return OK to allow the actual request
 
-    try:
-        data = request.form if request.form else request.json # read data from the backend if data comes form data use request.form else use request.json
+    try:  # Start error handling block
+        data = request.form if request.form else request.json  # Get data from form (if uploaded) or JSON
 
-        name = data.get("name") # fetch user input values sent from frontend These match the users table columns
-        email = data.get("email")
-        password = data.get("password")
-        location = data.get("location")
-        phone = data.get("phone")
+        name = data.get("name")  # Get the user's name from the request data
+        email = data.get("email")  # Get email
+        password = data.get("password")  # Get password
+        location = data.get("location")  # Get location
+        phone = data.get("phone")  # Get phone number
 
-        if not name or not email or not password: #Ensures required fields are not empty if empty return error
-            return {"error": "Missing fields"}, 400
+        if not name or not email or not password:  # Check if required fields are missing
+            return {"error": "Missing fields"}, 400  # Return error if any required field is empty
 
-        password_hash = hashlib.sha256(password.encode()).hexdigest() #Converts password into a secure hash
+        password_hash = hashlib.sha256(password.encode()).hexdigest()  # Convert password to secure hash (can't be reversed)
 
-        db = get_db_connection() #Connects to the database
-        cursor = db.cursor() #cursor is used to execute SQL queries
+        db = get_db_connection()  # Connect to the MySQL database
+        cursor = db.cursor()  # Create cursor to run SQL queries
 
-        try: #Starts error‑handling block,Prevents app crash if database error occurs
-            cursor.execute(
-                "INSERT INTO users (name, email, password_hash,location,phone) VALUES (%s, %s, %s, %s, %s)", #Inserts new user data into users table
-                (name, email, password_hash, location, phone) #%s prevents SQL injection value come from frontend
+        try:  # Inner try block for database operations
+            cursor.execute(  # Run SQL INSERT to add new user to database
+                "INSERT INTO users (name, email, password_hash,location,phone) VALUES (%s, %s, %s, %s, %s)",
+                (name, email, password_hash, location, phone)  # Values to insert (safe from SQL injection)
             )
-            db.commit() #Permanently saves data into database
-            print(f"✅ User registered: {email}")
-            
+            db.commit()  # Save the new user to the database
+            print(f"✅ User registered: {email}")  # Print success message to console
             # 🔹 Send welcome email after successful registration (non-blocking)
-            try:
-                send_email(
-                    to_email=email,
-                    subject="Welcome to HelpReach 🎉",
-                    message=f"""
+            try:  # Try to send welcome email (but don't fail if email fails)
+                send_email(  # Call our email sending function
+                    to_email=email,  # Send to the new user's email
+                    subject="Welcome to HelpReach 🎉",  # Email subject line
+                    message=f"""  # Email body as HTML string
 <html>
   <body style="font-family: Arial, sans-serif; line-height:1.6; color:#333;">
     <p>Hello <strong>{name}</strong>,</p>
@@ -304,7 +298,7 @@ def register():#This function runs whenever /api/register is called
     </p>
 
     <p>
-      If you need help getting started, simply reply to this email — we’re happy to help.
+      If you need help getting started, simply reply to this email — we're happy to help.
     </p>
 
     <p>
@@ -315,40 +309,40 @@ def register():#This function runs whenever /api/register is called
 </html>
 """
                 )
-            except Exception as email_error:
-                print(f"❌ Email error (non-blocking): {email_error}")
+            except Exception as email_error:  # If email sending fails
+                print(f"❌ Email error (non-blocking): {email_error}")  # Print error but continue
                 # Don't fail the registration if email fails
             
             # 🔹 FETCH the newly created user
-            fetch_cursor = db.cursor(dictionary=True)
-            fetch_cursor.execute(
+            fetch_cursor = db.cursor(dictionary=True)  # New cursor to get user data
+            fetch_cursor.execute(  # Query to get the new user's details
                 "SELECT id, name, email, role, phone, location FROM users WHERE email=%s",
-                (email,)
+                (email,)  # Use email to find the user
             )
-            new_user = fetch_cursor.fetchone()
-            fetch_cursor.close()
+            new_user = fetch_cursor.fetchone()  # Get the user data
+            fetch_cursor.close()  # Close this cursor
             
             # 🔹 Set cookie with user_id for session management (dev-friendly SameSite)
-            response = jsonify({"ok": True, "message": "User registered", "user": new_user})
-            response.set_cookie(
-    "user_id",
-    str(new_user["id"]),
-    max_age=86400,
-    httponly=True,
-    samesite="Lax",  # Works with HTTP for local development
-    secure=False  # True only on HTTPS
+            response = jsonify({"ok": True, "message": "User registered", "user": new_user})  # Create JSON response
+            response.set_cookie(  # Set a cookie in the browser for login session
+    "user_id",  # Cookie name
+    str(new_user["id"]),  # Cookie value (user ID)
+    max_age=86400,  # Expires in 1 day
+    httponly=True,  # Can't be read by JavaScript (security)
+    samesite="Lax",  # Allows some cross-site requests
+    secure=False  # False for local development (HTTP)
 )
 
-            return response
-        except Exception as e: #Catches database or server errors, return error msg
-            print(f"❌ Database error: {str(e)}")
-            return {"error": str(e)}, 500
-        finally:
-            cursor.close() #Closes database connection,Prevents memory leaks
-            db.close() #Executes whether success or error occurs
-    except Exception as outer_error:
-        print(f"❌ Outer error in register: {str(outer_error)}")
-        return {"error": f"Server error: {str(outer_error)}"}, 500
+            return response  # Return success response with user data
+        except Exception as e:  # If database error
+            print(f"❌ Database error: {str(e)}")  # Print error
+            return {"error": str(e)}, 500  # Return server error
+        finally:  # Always run this
+            cursor.close()  # Close main cursor
+            db.close()  # Close database connection
+    except Exception as outer_error:  # If any other error
+        print(f"❌ Outer error in register: {str(outer_error)}")  # Print error
+        return {"error": f"Server error: {str(outer_error)}"}, 500  # Return error
 
 @app.route("/api/debug-cookie")
 def debug_cookie():

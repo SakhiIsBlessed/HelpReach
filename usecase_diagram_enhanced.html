@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,25 +13,29 @@
             font-family: Arial, sans-serif;
             background-color: #f5f5f5;
         }
+
         .container {
             max-width: 1600px;
             margin: 0 auto;
             background-color: white;
             padding: 30px;
             border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         }
+
         h1 {
             text-align: center;
             color: #333;
             margin-bottom: 10px;
         }
+
         .subtitle {
             text-align: center;
             color: #666;
             margin-bottom: 30px;
             font-size: 14px;
         }
+
         .mermaid {
             display: flex;
             justify-content: center;
@@ -39,6 +44,7 @@
             padding: 20px;
             border-radius: 4px;
         }
+
         .export-button {
             display: flex;
             gap: 10px;
@@ -46,6 +52,7 @@
             margin-top: 30px;
             flex-wrap: wrap;
         }
+
         button {
             padding: 10px 20px;
             font-size: 14px;
@@ -55,9 +62,11 @@
             background-color: #e74c3c;
             color: white;
         }
+
         button:hover {
             background-color: #c0392b;
         }
+
         .legend {
             margin-top: 30px;
             padding: 20px;
@@ -65,10 +74,12 @@
             border-radius: 4px;
             border-left: 4px solid #e74c3c;
         }
+
         .legend h3 {
             margin-top: 0;
             color: #333;
         }
+
         .actor-section {
             margin-top: 20px;
             padding: 15px;
@@ -76,86 +87,94 @@
             border-radius: 4px;
             border-left: 3px solid #e74c3c;
         }
+
         .actor-section strong {
             display: block;
             margin-bottom: 8px;
             font-size: 14px;
         }
+
         .usecase-list {
             margin-left: 15px;
             font-size: 12px;
             color: #555;
         }
+
         .usecase-list li {
             margin: 5px 0;
             line-height: 1.5;
         }
+
         table {
             width: 100%;
             border-collapse: collapse;
             margin-top: 15px;
         }
+
         table th {
             background-color: #e74c3c;
             color: white;
             padding: 10px;
             text-align: left;
         }
+
         table td {
             padding: 8px;
             border-bottom: 1px solid #ddd;
         }
+
         table tr:nth-child(even) {
             background-color: #f9f9f9;
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <h1>🎭 HelpReach Use Case Diagram - Enhanced</h1>
         <p class="subtitle">User Roles & System Functionalities - Detailed View</p>
-        
+
         <div class="mermaid">
-usecaseDiagram
-    actor Donor
-    actor NGO
-    actor Admin
+            usecaseDiagram
+            actor Donor
+            actor NGO
+            actor Admin
 
-    Donor --> (Register / Login)
-    Donor --> (View NGO Directory)
-    Donor --> (Search NGOs)
-    Donor --> (Create Donation)
-    Donor --> (Upload Photos)
-    Donor --> (Add Item Details)
-    Donor --> (View History)
-    Donor --> (Track Status)
-    Donor --> (View Dashboard)
-    Donor --> (Manage Profile)
-    Donor --> (Notifications)
+            Donor --> (Register / Login)
+            Donor --> (View NGO Directory)
+            Donor --> (Search NGOs)
+            Donor --> (Create Donation)
+            Donor --> (Upload Photos)
+            Donor --> (Add Item Details)
+            Donor --> (View History)
+            Donor --> (Track Status)
+            Donor --> (View Dashboard)
+            Donor --> (Manage Profile)
+            Donor --> (Notifications)
 
-    NGO --> (Register / Login)
-    NGO --> (View Donations)
-    NGO --> (Search Donations)
-    NGO --> (Claim Donation)
-    NGO --> (Upload Documents)
-    NGO --> (Bank Accounts)
-    NGO --> (Received Donations)
-    NGO --> (Accept/Reject)
-    NGO --> (Update Profile)
-    NGO --> (NGO Dashboard)
-    NGO --> (Track Items)
+            NGO --> (Register / Login)
+            NGO --> (View Donations)
+            NGO --> (Search Donations)
+            NGO --> (Claim Donation)
+            NGO --> (Upload Documents)
+            NGO --> (Bank Accounts)
+            NGO --> (Received Donations)
+            NGO --> (Accept/Reject)
+            NGO --> (Update Profile)
+            NGO --> (NGO Dashboard)
+            NGO --> (Track Items)
 
-    Admin --> (Register / Login)
-    Admin --> (Manage Users)
-    Admin --> (Manage NGOs)
-    Admin --> (Verify Documents)
-    Admin --> (Monitor Donations)
-    Admin --> (View Reports)
-    Admin --> (Email Settings)
-    Admin --> (Block Users)
-    Admin --> (System Settings)
-    Admin --> (View Analytics)
-    Admin --> (Disputes)
+            Admin --> (Register / Login)
+            Admin --> (Manage Users)
+            Admin --> (Manage NGOs)
+            Admin --> (Verify Documents)
+            Admin --> (Monitor Donations)
+            Admin --> (View Reports)
+            Admin --> (Email Settings)
+            Admin --> (Block Users)
+            Admin --> (System Settings)
+            Admin --> (View Analytics)
+            Admin --> (Disputes)
 
         </div>
 
@@ -307,11 +326,13 @@ usecaseDiagram
                 <strong>📊 Use Case Workflow Example</strong>
                 <div class="usecase-list">
                     <strong>Donor Workflow:</strong><br>
-                    Register/Login → View NGO Directory → Create Donation → Upload Photos → Submit → Track Status → View Dashboard<br><br>
-                    
+                    Register/Login → View NGO Directory → Create Donation → Upload Photos → Submit → Track Status → View
+                    Dashboard<br><br>
+
                     <strong>NGO Workflow:</strong><br>
-                    Register/Login → Upload Documents → View Available Donations → Claim Item → Accept Donation → Track Pickup<br><br>
-                    
+                    Register/Login → Upload Documents → View Available Donations → Claim Item → Accept Donation → Track
+                    Pickup<br><br>
+
                     <strong>Admin Workflow:</strong><br>
                     Login → Verify NGO Documents → Monitor Donations → Manage Users → View Reports → System Settings
                 </div>
@@ -339,8 +360,8 @@ usecaseDiagram
             const script = document.createElement('script');
             script.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
             document.head.appendChild(script);
-            
-            script.onload = function() {
+
+            script.onload = function () {
                 const mermaidDiv = document.querySelector('.mermaid');
                 html2canvas(mermaidDiv, { backgroundColor: '#ffffff', scale: 2 }).then(canvas => {
                     const link = document.createElement('a');
@@ -370,4 +391,5 @@ usecaseDiagram
         }
     </script>
 </body>
+
 </html>

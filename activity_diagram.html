@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,30 +13,35 @@
             font-family: Arial, sans-serif;
             background-color: #f5f5f5;
         }
+
         .container {
             max-width: 1400px;
             margin: 0 auto;
             background-color: white;
             padding: 30px;
             border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         }
+
         h1 {
             text-align: center;
             color: #333;
             margin-bottom: 10px;
         }
+
         .subtitle {
             text-align: center;
             color: #666;
             margin-bottom: 30px;
             font-size: 14px;
         }
+
         .mermaid {
             display: flex;
             justify-content: center;
             overflow-x: auto;
         }
+
         .export-button {
             display: flex;
             gap: 10px;
@@ -43,6 +49,7 @@
             margin-top: 30px;
             flex-wrap: wrap;
         }
+
         button {
             padding: 10px 20px;
             font-size: 14px;
@@ -52,9 +59,11 @@
             background-color: #667eea;
             color: white;
         }
+
         button:hover {
             background-color: #5568d3;
         }
+
         .legend {
             margin-top: 30px;
             padding: 20px;
@@ -62,21 +71,25 @@
             border-radius: 4px;
             border-left: 4px solid #667eea;
         }
+
         .legend h3 {
             margin-top: 0;
             color: #333;
         }
+
         .legend-item {
             margin: 12px 0;
             font-size: 13px;
             color: #666;
         }
+
         .flow-section {
             margin-top: 20px;
             padding: 15px;
             background-color: #f0f0f0;
             border-radius: 4px;
         }
+
         .flow-section strong {
             display: block;
             margin-bottom: 10px;
@@ -84,56 +97,57 @@
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <h1>📊 HelpReach Activity Diagram - Donation Flow</h1>
         <p class="subtitle">User Journey & System Processes</p>
-        
+
         <div class="mermaid">
-flowchart TD
-    Start([👤 User Starts]) --> Login{Logged In?}
-    Login -->|No| Register["📝 Register / Login"]
-    Register --> DashBoard["📱 View Dashboard"]
-    Login -->|Yes| DashBoard
-    
-    DashBoard --> Browse["🔍 Browse NGO Directory"]
-    Browse --> SelectNGO["🏢 Select NGO"]
-    SelectNGO --> CreateDonation["✏️ Create Donation"]
-    
-    CreateDonation --> AddItems["📋 Add Item Details<br/>Name, Quantity, Condition"]
-    AddItems --> UploadPhotos["📸 Upload Photos"]
-    UploadPhotos --> AddDescription["📝 Add Description<br/>& Instructions"]
-    
-    AddDescription --> Review{Review OK?}
-    Review -->|No, Edit| EditDonation["✏️ Edit Donation"]
-    EditDonation --> AddItems
-    Review -->|Yes| Submit["✅ Submit Donation"]
-    
-    Submit --> NotifyNGOs["📧 Notify Matching NGOs"]
-    NotifyNGOs --> DonationPosted["✅ Donation Posted"]
-    
-    DonationPosted --> WaitForClaim{"NGO Claims<br/>Donation?"}
-    WaitForClaim -->|Yes| NGOClaimed["🏢 NGO Claimed Item"]
-    WaitForClaim -->|No| ExpireCheck{"30 Days<br/>Passed?"}
-    ExpireCheck -->|Yes| Expired["⏰ Donation Expired"]
-    ExpireCheck -->|No| WaitForClaim
-    
-    NGOClaimed --> AdminVerify["👨‍💼 Admin Verifies<br/>NGO Credentials"]
-    AdminVerify --> Verified{Valid NGO?}
-    
-    Verified -->|No| Rejected["❌ Claim Rejected"]
-    Verified -->|Yes| Approved["✅ Claim Approved"]
-    
-    Approved --> SendPickup["📬 Send Pickup Instructions"]
-    SendPickup --> TrackingActive["📍 Donation Tracking Active"]
-    
-    Rejected --> NotifyDonor["📧 Notify Donor of Rejection"]
-    NotifyDonor --> AvailableAgain["🔄 Available for Other NGOs"]
-    AvailableAgain --> WaitForClaim
-    
-    Expired --> ArchiveDonation["📦 Archive Donation"]
-    TrackingActive --> Complete(["✅ Donation Complete"])
-    ArchiveDonation --> Complete
+            flowchart TD
+            Start([👤 User Starts]) --> Login{Logged In?}
+            Login -->|No| Register["📝 Register / Login"]
+            Register --> DashBoard["📱 View Dashboard"]
+            Login -->|Yes| DashBoard
+
+            DashBoard --> Browse["🔍 Browse NGO Directory"]
+            Browse --> SelectNGO["🏢 Select NGO"]
+            SelectNGO --> CreateDonation["✏️ Create Donation"]
+
+            CreateDonation --> AddItems["📋 Add Item Details<br />Name, Quantity, Condition"]
+            AddItems --> UploadPhotos["📸 Upload Photos"]
+            UploadPhotos --> AddDescription["📝 Add Description<br />& Instructions"]
+
+            AddDescription --> Review{Review OK?}
+            Review -->|No, Edit| EditDonation["✏️ Edit Donation"]
+            EditDonation --> AddItems
+            Review -->|Yes| Submit["✅ Submit Donation"]
+
+            Submit --> NotifyNGOs["📧 Notify Matching NGOs"]
+            NotifyNGOs --> DonationPosted["✅ Donation Posted"]
+
+            DonationPosted --> WaitForClaim{"NGO Claims<br />Donation?"}
+            WaitForClaim -->|Yes| NGOClaimed["🏢 NGO Claimed Item"]
+            WaitForClaim -->|No| ExpireCheck{"30 Days<br />Passed?"}
+            ExpireCheck -->|Yes| Expired["⏰ Donation Expired"]
+            ExpireCheck -->|No| WaitForClaim
+
+            NGOClaimed --> AdminVerify["👨‍💼 Admin Verifies<br />NGO Credentials"]
+            AdminVerify --> Verified{Valid NGO?}
+
+            Verified -->|No| Rejected["❌ Claim Rejected"]
+            Verified -->|Yes| Approved["✅ Claim Approved"]
+
+            Approved --> SendPickup["📬 Send Pickup Instructions"]
+            SendPickup --> TrackingActive["📍 Donation Tracking Active"]
+
+            Rejected --> NotifyDonor["📧 Notify Donor of Rejection"]
+            NotifyDonor --> AvailableAgain["🔄 Available for Other NGOs"]
+            AvailableAgain --> WaitForClaim
+
+            Expired --> ArchiveDonation["📦 Archive Donation"]
+            TrackingActive --> Complete(["✅ Donation Complete"])
+            ArchiveDonation --> Complete
 
         </div>
 
@@ -145,11 +159,12 @@ flowchart TD
 
         <div class="legend">
             <h3>📋 Activity Diagram Walkthrough</h3>
-            
+
             <div class="flow-section">
                 <strong>🟢 Start: User Initiates Action</strong>
                 <div class="legend-item">
-                    The user either logs in (if account exists) or registers a new account before accessing any donation features.
+                    The user either logs in (if account exists) or registers a new account before accessing any donation
+                    features.
                 </div>
             </div>
 
@@ -167,29 +182,34 @@ flowchart TD
             <div class="flow-section">
                 <strong>🟡 Decision Point: Review & Validation</strong>
                 <div class="legend-item">
-                    Before submission, the system checks if all required information is complete. If the donor finds an error, they can edit and correct it. Once satisfied, they submit the donation.
+                    Before submission, the system checks if all required information is complete. If the donor finds an
+                    error, they can edit and correct it. Once satisfied, they submit the donation.
                 </div>
             </div>
 
             <div class="flow-section">
                 <strong>🟣 Notification & Waiting Phase</strong>
                 <div class="legend-item">
-                    After posting, the system automatically notifies all matching NGOs about the available donation. The donation enters a waiting state for NGO claims (up to 30 days).
+                    After posting, the system automatically notifies all matching NGOs about the available donation. The
+                    donation enters a waiting state for NGO claims (up to 30 days).
                 </div>
             </div>
 
             <div class="flow-section">
                 <strong>🟠 NGO Claim Process</strong>
                 <div class="legend-item">
-                    When an NGO claims the donation, the admin receives a notification to verify the NGO's credentials, documents, and legitimacy.
+                    When an NGO claims the donation, the admin receives a notification to verify the NGO's credentials,
+                    documents, and legitimacy.
                 </div>
             </div>
 
             <div class="flow-section">
                 <strong>🔴 Admin Verification Decision Point</strong>
                 <div class="legend-item">
-                    <strong>If Valid:</strong> Claim is approved → Pickup instructions sent → Tracking becomes active<br>
-                    <strong>If Invalid:</strong> Claim is rejected → Donor notified → Donation becomes available for other NGOs again
+                    <strong>If Valid:</strong> Claim is approved → Pickup instructions sent → Tracking becomes
+                    active<br>
+                    <strong>If Invalid:</strong> Claim is rejected → Donor notified → Donation becomes available for
+                    other NGOs again
                 </div>
             </div>
 
@@ -225,8 +245,8 @@ flowchart TD
             const script = document.createElement('script');
             script.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
             document.head.appendChild(script);
-            
-            script.onload = function() {
+
+            script.onload = function () {
                 const mermaidDiv = document.querySelector('.mermaid');
                 html2canvas(mermaidDiv, { backgroundColor: '#ffffff', scale: 2 }).then(canvas => {
                     const link = document.createElement('a');
@@ -256,4 +276,5 @@ flowchart TD
         }
     </script>
 </body>
+
 </html>

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,25 +13,29 @@
             font-family: Arial, sans-serif;
             background-color: #f5f5f5;
         }
+
         .container {
             max-width: 1600px;
             margin: 0 auto;
             background-color: white;
             padding: 30px;
             border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         }
+
         h1 {
             text-align: center;
             color: #333;
             margin-bottom: 10px;
         }
+
         .subtitle {
             text-align: center;
             color: #666;
             margin-bottom: 30px;
             font-size: 14px;
         }
+
         .mermaid {
             display: flex;
             justify-content: center;
@@ -39,6 +44,7 @@
             padding: 20px;
             border-radius: 4px;
         }
+
         .export-button {
             display: flex;
             gap: 10px;
@@ -46,6 +52,7 @@
             margin-top: 30px;
             flex-wrap: wrap;
         }
+
         button {
             padding: 10px 20px;
             font-size: 14px;
@@ -55,9 +62,11 @@
             background-color: #9b59b6;
             color: white;
         }
+
         button:hover {
             background-color: #8e44ad;
         }
+
         .legend {
             margin-top: 30px;
             padding: 20px;
@@ -65,15 +74,18 @@
             border-radius: 4px;
             border-left: 4px solid #9b59b6;
         }
+
         .legend h3 {
             margin-top: 0;
             color: #333;
         }
+
         .legend-item {
             margin: 12px 0;
             font-size: 13px;
             color: #666;
         }
+
         .class-details {
             margin-top: 20px;
             padding: 15px;
@@ -81,216 +93,224 @@
             border-radius: 4px;
             border-left: 3px solid #9b59b6;
         }
+
         .class-details strong {
             display: block;
             margin-bottom: 10px;
             color: #333;
         }
+
         .class-methods {
             margin-left: 20px;
             margin-top: 10px;
         }
+
         .class-methods li {
             margin: 5px 0;
             font-size: 12px;
         }
+
         table {
             width: 100%;
             border-collapse: collapse;
             margin-top: 15px;
         }
+
         table th {
             background-color: #9b59b6;
             color: white;
             padding: 10px;
             text-align: left;
         }
+
         table td {
             padding: 8px;
             border-bottom: 1px solid #ddd;
         }
+
         table tr:nth-child(even) {
             background-color: #f9f9f9;
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <h1>📦 HelpReach Class Diagram</h1>
         <p class="subtitle">Object-Oriented Design - Classes & Relationships</p>
-        
+
         <div class="mermaid">
-classDiagram
-    class User {
-        int id
-        string name
-        string email
-        string phone
-        string location
-        string password_hash
-        string role
-        datetime created_at
-        --
-        +register()
-        +login()
-        +updateProfile()
-        +getProfile()
-        +logout()
-    }
+            classDiagram
+            class User {
+            int id
+            string name
+            string email
+            string phone
+            string location
+            string password_hash
+            string role
+            datetime created_at
+            --
+            +register()
+            +login()
+            +updateProfile()
+            +getProfile()
+            +logout()
+            }
 
-    class NGO {
-        int id
-        string ngo_name
-        string email
-        string phone
-        string address
-        string registration_number
-        text mission_statement
-        string password_hash
-        --
-        +register()
-        +login()
-        +uploadDocuments()
-        +updateProfile()
-        +claimDonation()
-        +viewReceivedDonations()
-    }
+            class NGO {
+            int id
+            string ngo_name
+            string email
+            string phone
+            string address
+            string registration_number
+            text mission_statement
+            string password_hash
+            --
+            +register()
+            +login()
+            +uploadDocuments()
+            +updateProfile()
+            +claimDonation()
+            +viewReceivedDonations()
+            }
 
-    class Donation {
-        int id
-        int donor_id
-        int ngo_id
-        text description
-        string status
-        datetime created_at
-        datetime updated_at
-        --
-        +createDonation()
-        +updateStatus()
-        +claimDonation()
-        +rejectDonation()
-        +completeDonation()
-    }
+            class Donation {
+            int id
+            int donor_id
+            int ngo_id
+            text description
+            string status
+            datetime created_at
+            datetime updated_at
+            --
+            +createDonation()
+            +updateStatus()
+            +claimDonation()
+            +rejectDonation()
+            +completeDonation()
+            }
 
-    class DonationItem {
-        int id
-        int donation_id
-        string item_name
-        int quantity
-        string condition
-        --
-        +addItem()
-        +updateQuantity()
-        +getDetails()
-    }
+            class DonationItem {
+            int id
+            int donation_id
+            string item_name
+            int quantity
+            string condition
+            --
+            +addItem()
+            +updateQuantity()
+            +getDetails()
+            }
 
-    class DonationPhoto {
-        int id
-        int donation_id
-        string filename
-        string filepath
-        datetime uploaded_at
-        --
-        +uploadPhoto()
-        +deletePhoto()
-        +getURL()
-    }
+            class DonationPhoto {
+            int id
+            int donation_id
+            string filename
+            string filepath
+            datetime uploaded_at
+            --
+            +uploadPhoto()
+            +deletePhoto()
+            +getURL()
+            }
 
-    class NGODocuments {
-        int id
-        int ngo_id
-        string filename
-        string original_filename
-        datetime uploaded_at
-        --
-        +uploadDocument()
-        +verify()
-        +reject()
-    }
+            class NGODocuments {
+            int id
+            int ngo_id
+            string filename
+            string original_filename
+            datetime uploaded_at
+            --
+            +uploadDocument()
+            +verify()
+            +reject()
+            }
 
-    class NGOBankAccount {
-        int id
-        int ngo_id
-        string account_holder_name
-        string account_number
-        string bank_name
-        string ifsc_code
-        --
-        +addBankAccount()
-        +updateBankAccount()
-        +validateAccount()
-    }
+            class NGOBankAccount {
+            int id
+            int ngo_id
+            string account_holder_name
+            string account_number
+            string bank_name
+            string ifsc_code
+            --
+            +addBankAccount()
+            +updateBankAccount()
+            +validateAccount()
+            }
 
-    class DonationClaim {
-        int id
-        int donation_id
-        int ngo_id
-        string status
-        datetime claimed_at
-        datetime updated_at
-        --
-        +createClaim()
-        +approveClaim()
-        +rejectClaim()
-        +getStatus()
-    }
+            class DonationClaim {
+            int id
+            int donation_id
+            int ngo_id
+            string status
+            datetime claimed_at
+            datetime updated_at
+            --
+            +createClaim()
+            +approveClaim()
+            +rejectClaim()
+            +getStatus()
+            }
 
-    class PushSubscription {
-        int id
-        string endpoint
-        string p256dh
-        string auth_key
-        datetime created_at
-        --
-        +subscribe()
-        +unsubscribe()
-        +sendNotification()
-    }
+            class PushSubscription {
+            int id
+            string endpoint
+            string p256dh
+            string auth_key
+            datetime created_at
+            --
+            +subscribe()
+            +unsubscribe()
+            +sendNotification()
+            }
 
-    class EmailLog {
-        int id
-        string recipient_email
-        string subject
-        string email_type
-        datetime sent_at
-        --
-        +logEmail()
-        +sendEmail()
-        +getHistory()
-    }
+            class EmailLog {
+            int id
+            string recipient_email
+            string subject
+            string email_type
+            datetime sent_at
+            --
+            +logEmail()
+            +sendEmail()
+            +getHistory()
+            }
 
-    class Authentication {
-        --
-        +loginUser()
-        +registerUser()
-        +validatePassword()
-        +generateToken()
-        +verifyToken()
-    }
+            class Authentication {
+            --
+            +loginUser()
+            +registerUser()
+            +validatePassword()
+            +generateToken()
+            +verifyToken()
+            }
 
-    class NotificationService {
-        --
-        +sendEmail()
-        +sendPushNotification()
-        +notifyDonor()
-        +notifyNGO()
-        +getNotificationTemplate()
-    }
+            class NotificationService {
+            --
+            +sendEmail()
+            +sendPushNotification()
+            +notifyDonor()
+            +notifyNGO()
+            +getNotificationTemplate()
+            }
 
-    %% Relationships
-    User "1" --|> "*" Donation : creates
-    User "1" --|> "*" PushSubscription : subscribes
-    NGO "1" --|> "*" DonationClaim : receives
-    NGO "1" --|> "*" NGODocuments : uploads
-    NGO "1" --|> "*" NGOBankAccount : maintains
-    Donation "1" --|> "*" DonationItem : contains
-    Donation "1" --|> "*" DonationPhoto : has
-    Donation "1" --|> "*" DonationClaim : claimed
-    DonationClaim "1" -- "1" NGO : claimedBy
-    Authentication -- User : validates
-    Authentication -- NGO : validates
-    NotificationService -- EmailLog : logs
-    NotificationService -- PushSubscription : sends
+            %% Relationships
+            User "1" --|> "*" Donation : creates
+            User "1" --|> "*" PushSubscription : subscribes
+            NGO "1" --|> "*" DonationClaim : receives
+            NGO "1" --|> "*" NGODocuments : uploads
+            NGO "1" --|> "*" NGOBankAccount : maintains
+            Donation "1" --|> "*" DonationItem : contains
+            Donation "1" --|> "*" DonationPhoto : has
+            Donation "1" --|> "*" DonationClaim : claimed
+            DonationClaim "1" -- "1" NGO : claimedBy
+            Authentication -- User : validates
+            Authentication -- NGO : validates
+            NotificationService -- EmailLog : logs
+            NotificationService -- PushSubscription : sends
 
         </div>
 
@@ -302,7 +322,7 @@ classDiagram
 
         <div class="legend">
             <h3>📋 Class Diagram Explanation</h3>
-            
+
             <div class="class-details">
                 <strong>👤 User Class</strong>
                 <div style="font-size: 12px;">
@@ -315,8 +335,10 @@ classDiagram
             <div class="class-details">
                 <strong>🏢 NGO Class</strong>
                 <div style="font-size: 12px;">
-                    <strong>Attributes:</strong> ID, name, email, phone, address, registration_number, mission_statement<br>
-                    <strong>Methods:</strong> register(), login(), uploadDocuments(), claimDonation(), viewReceivedDonations()<br>
+                    <strong>Attributes:</strong> ID, name, email, phone, address, registration_number,
+                    mission_statement<br>
+                    <strong>Methods:</strong> register(), login(), uploadDocuments(), claimDonation(),
+                    viewReceivedDonations()<br>
                     <strong>Purpose:</strong> Represents organizations that receive donations
                 </div>
             </div>
@@ -361,7 +383,8 @@ classDiagram
             <div class="class-details">
                 <strong>🏦 NGOBankAccount Class</strong>
                 <div style="font-size: 12px;">
-                    <strong>Attributes:</strong> ID, ngo_id, account_holder_name, account_number, bank_name, ifsc_code<br>
+                    <strong>Attributes:</strong> ID, ngo_id, account_holder_name, account_number, bank_name,
+                    ifsc_code<br>
                     <strong>Methods:</strong> addBankAccount(), updateBankAccount(), validateAccount()<br>
                     <strong>Purpose:</strong> Stores banking information for NGOs
                 </div>
@@ -398,7 +421,8 @@ classDiagram
             <div class="class-details">
                 <strong>🔐 Authentication Class</strong>
                 <div style="font-size: 12px;">
-                    <strong>Methods:</strong> loginUser(), registerUser(), validatePassword(), generateToken(), verifyToken()<br>
+                    <strong>Methods:</strong> loginUser(), registerUser(), validatePassword(), generateToken(),
+                    verifyToken()<br>
                     <strong>Purpose:</strong> Handles all authentication & security operations
                 </div>
             </div>
@@ -406,7 +430,8 @@ classDiagram
             <div class="class-details">
                 <strong>🔔 NotificationService Class</strong>
                 <div style="font-size: 12px;">
-                    <strong>Methods:</strong> sendEmail(), sendPushNotification(), notifyDonor(), notifyNGO(), getTemplate()<br>
+                    <strong>Methods:</strong> sendEmail(), sendPushNotification(), notifyDonor(), notifyNGO(),
+                    getTemplate()<br>
                     <strong>Purpose:</strong> Manages all notifications (email & push)
                 </div>
             </div>
@@ -471,8 +496,8 @@ classDiagram
             const script = document.createElement('script');
             script.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
             document.head.appendChild(script);
-            
-            script.onload = function() {
+
+            script.onload = function () {
                 const mermaidDiv = document.querySelector('.mermaid');
                 html2canvas(mermaidDiv, { backgroundColor: '#ffffff', scale: 2 }).then(canvas => {
                     const link = document.createElement('a');
@@ -502,4 +527,5 @@ classDiagram
         }
     </script>
 </body>
+
 </html>
