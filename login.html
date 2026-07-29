@@ -705,7 +705,7 @@ document.addEventListener("DOMContentLoaded", function () {
     </div>
   `;
 
-            fetch("http://127.0.0.1:5000/api/chatbot", {
+            fetch("https://helpreach-production-0562.up.railway.app/api/chatbot", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ message })
@@ -792,7 +792,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 submitBtn.disabled = true;
 
                 try {
-                    const res = await fetch('http://127.0.0.1:5000/api/ngo/login', {
+                    const res = await fetch('https://helpreach-production-0562.up.railway.app/api/ngo/login', {
                         method: 'POST',
                         credentials: 'include',
                         headers: { 'Content-Type': 'application/json' },
@@ -815,7 +815,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 } catch (err) {
                     console.error('❌ Network error:', err);
-                    alert('⚠️ Cannot connect to server. Make sure backend is running on http://127.0.0.1:5000');
+                    alert('⚠️ Cannot connect to server. Make sure backend is running on https://helpreach-production-0562.up.railway.app');
                     submitBtn.disabled = false;
                 }
             });
@@ -1010,7 +1010,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 verifyOtpBtn.textContent = 'Sending OTP...';
 
                 try {
-                    const res = await fetch('http://127.0.0.1:5000/api/ngo/forgot-password/request-otp', {
+                    const res = await fetch('https://helpreach-production-0562.up.railway.app/api/ngo/forgot-password/request-otp', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({ email })
@@ -1064,7 +1064,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 resendOtpBtn.textContent = 'Resending...';
 
                 try {
-                    const res = await fetch('http://127.0.0.1:5000/api/ngo/forgot-password/resend-otp', {
+                    const res = await fetch('https://helpreach-production-0562.up.railway.app/api/ngo/forgot-password/resend-otp', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({ token: currentOtpToken })
@@ -1122,7 +1122,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 verifyOtpBtn.textContent = 'Verifying...';
 
                 try {
-                    const res = await fetch('http://127.0.0.1:5000/api/ngo/forgot-password/verify-otp', {
+                    const res = await fetch('https://helpreach-production-0562.up.railway.app/api/ngo/forgot-password/verify-otp', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({ token: currentOtpToken, otp })
@@ -1191,7 +1191,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 resetPasswordBtn.textContent = 'Resetting Password...';
 
                 try {
-                    const res = await fetch('http://127.0.0.1:5000/api/ngo/forgot-password/reset-password', {
+                    const res = await fetch('https://helpreach-production-0562.up.railway.app/api/ngo/forgot-password/reset-password', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({ token: currentOtpToken, new_password: password })

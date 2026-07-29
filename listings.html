@@ -315,7 +315,7 @@
     </div>
   `;
 
-            fetch("http://127.0.0.1:5000/api/chatbot", {
+            fetch("https://helpreach-production-0562.up.railway.app/api/chatbot", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ message })
@@ -338,12 +338,12 @@
     <script>
         async function loadDonations() {
             try {
-                const res = await fetch("http://127.0.0.1:5000/api/donations");
+                const res = await fetch("https://helpreach-production-0562.up.railway.app/api/donations");
                 const data = await res.json();
                 // Fetch globally claimed donation ids and filter them out
                 let globalClaims = [];
                 try {
-                    const claimsRes = await fetch('http://127.0.0.1:5000/api/all-claimed-donations');
+                    const claimsRes = await fetch('https://helpreach-production-0562.up.railway.app/api/all-claimed-donations');
                     if (claimsRes.ok) globalClaims = await claimsRes.json();
                 } catch (err) { console.error('Error fetching global claims:', err); }
                 const claimedIdSet = new Set((globalClaims || []).map(c => c.donation_id).filter(Boolean));

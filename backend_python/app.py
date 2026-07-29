@@ -20,10 +20,10 @@ from werkzeug.utils import secure_filename  # Makes filenames safe for saving
 
 app = Flask(__name__, static_folder='..', static_url_path='')  # Create the Flask app, serve static files from parent directory
 
-# # VAPID config for push notifications (set these in your environment variables):
-# VAPID_PUBLIC_KEY = os.environ.get('VAPID_PUBLIC_KEY')  # Public key for push notifications
-# VAPID_PRIVATE_KEY = os.environ.get('VAPID_PRIVATE_KEY')  # Private key for push notifications
-# VAPID_CLAIMS = {"sub": os.environ.get('VAPID_SUB', 'mailto:helpreach18@gmail.com')}  # Email for push service
+# VAPID config for push notifications (read from environment variables when available)
+VAPID_PUBLIC_KEY = os.environ.get('VAPID_PUBLIC_KEY')  # Public key for push notifications
+VAPID_PRIVATE_KEY = os.environ.get('VAPID_PRIVATE_KEY')  # Private key for push notifications
+VAPID_CLAIMS = {"sub": os.environ.get('VAPID_SUB', 'mailto:helpreach18@gmail.com')}  # Email for push service
 
 # 📁 File upload configuration
 UPLOAD_FOLDER = os.path.join('..', 'uploads', 'donations')  # Folder to save donation photos
@@ -169,28 +169,28 @@ def vapid_public_key():  # Function to return the VAPID public key
         return jsonify({"error": "VAPID_PUBLIC_KEY not configured on server"}), 500  # Error
     return jsonify({"publicKey": VAPID_PUBLIC_KEY})  # Return the key
 
-# def ensure_push_table(0):  # Function to make sure the push subscriptions table exists
-#     try:
-#         db = get_db_connection()  # Connect to DB
-#         cursor = db.cursor()  # Cursor
-#         cursor.execute('''  # SQL to create push subscriptions table
-#             CREATE TABLE IF NOT EXISTS push_subscriptions (
-#                 id INT AUTO_INCREMENT PRIMARY KEY,
-#                 endpoint TEXT NOT NULL,
-#                 p256dh VARCHAR(255),
-#                 auth VARCHAR(255),
-#                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-#             ) ENGINE=InnoDB
-#         ''')
-#         db.commit()  # Save table
-#     except Exception as e:  # If error
-#         print('❌ Error ensuring push_subscriptions table:', e)  # Print error
-#     finally:  # Always
-#         try:
-#             cursor.close()  # Close cursor
-#             db.close()  # Close DB
-#         except Exception:
-#             pass
+def ensure_push_table():  # Function to make sure the push subscriptions table exists
+    try:
+        db = get_db_connection()  # Connect to DB
+        cursor = db.cursor()  # Cursor
+        cursor.execute('''  # SQL to create push subscriptions table
+            CREATE TABLE IF NOT EXISTS push_subscriptions (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                endpoint TEXT NOT NULL,
+                p256dh VARCHAR(255),
+                auth VARCHAR(255),
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            ) ENGINE=InnoDB
+        ''')
+        db.commit()  # Save table
+    except Exception as e:  # If error
+        print('❌ Error ensuring push_subscriptions table:', e)  # Print error
+    finally:  # Always
+        try:
+            cursor.close()  # Close cursor
+            db.close()  # Close DB
+        except Exception:
+            pass
 
 @app.route('/api/subscribe', methods=['POST', 'OPTIONS'])  # Route to subscribe to push notifications
 def api_subscribe():  # Function to handle subscription

@@ -58,7 +58,7 @@
             ngoArea.innerHTML = '';
 
             try {
-                const res = await fetch("http://127.0.0.1:5000/api/donations");
+                const res = await fetch("https://helpreach-production-0562.up.railway.app/api/donations");
 
                 if (!res.ok) {
                     throw new Error("Server error");
@@ -70,7 +70,7 @@
                 let claimedDonations = [];
                 if (isNgoLoggedIn && currentNgoId) {
                     try {
-                        const claimedRes = await fetch(`http://127.0.0.1:5000/api/ngo/${currentNgoId}/claimed-donations`);
+                        const claimedRes = await fetch(`https://helpreach-production-0562.up.railway.app/api/ngo/${currentNgoId}/claimed-donations`);
                         if (claimedRes.ok) {
                             const claimedData = await claimedRes.json();
                             claimedDonations = Array.isArray(claimedData) ? claimedData : (claimedData.donations || []);
@@ -164,7 +164,7 @@
             }
 
             try {
-                const res = await fetch("http://127.0.0.1:5000/api/claim-donation", {
+                const res = await fetch("https://helpreach-production-0562.up.railway.app/api/claim-donation", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json"

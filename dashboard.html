@@ -637,15 +637,15 @@
 
             try {
                 // Trigger server-side expiry pass so expired donations are marked before we render
-                try { await fetch('http://127.0.0.1:5000/api/expire-donations', { method: 'POST' }); } catch (e) { console.warn('expire-donations trigger failed:', e); }
+                try { await fetch('https://helpreach-production-0562.up.railway.app/api/expire-donations', { method: 'POST' }); } catch (e) { console.warn('expire-donations trigger failed:', e); }
 
                 // Fetch all donations
-                const donRes = await fetch("http://127.0.0.1:5000/api/donations");
+                const donRes = await fetch("https://helpreach-production-0562.up.railway.app/api/donations");
                 if (!donRes.ok) throw new Error("Failed to load donations");
                 const donations = await donRes.json();
 
                 // Fetch all claimed donations
-                const claimedRes = await fetch("http://127.0.0.1:5000/api/all-claimed-donations");
+                const claimedRes = await fetch("https://helpreach-production-0562.up.railway.app/api/all-claimed-donations");
                 const claimedData = claimedRes.ok ? await claimedRes.json() : [];
 
                 // Create a map of claimed donations by donation_id
@@ -715,7 +715,7 @@
 
                     // Small thumbnail placed in a right column on md+ screens; stacks on small screens
                     const photoHTML = d.photo_filename
-                        ? `<img src="http://127.0.0.1:5000/uploads/donations/${d.photo_filename}" alt="Donation photo" style="width:160px; height:120px; border-radius:6px; object-fit:cover;">`
+                        ? `<img src="https://helpreach-production-0562.up.railway.app/uploads/donations/${d.photo_filename}" alt="Donation photo" style="width:160px; height:120px; border-radius:6px; object-fit:cover;">`
                         : '';
 
                     card.innerHTML = `
@@ -759,7 +759,7 @@
 
                         // Small thumbnail placed in a right column on md+ screens; stacks on small screens
                         const photoHTML = d.photo_filename
-                            ? `<img src="http://127.0.0.1:5000/uploads/donations/${d.photo_filename}" alt="Donation photo" style="width:160px; height:120px; border-radius:6px; object-fit:cover;">`
+                            ? `<img src="https://helpreach-production-0562.up.railway.app/uploads/donations/${d.photo_filename}" alt="Donation photo" style="width:160px; height:120px; border-radius:6px; object-fit:cover;">`
                             : '';
 
                         card.innerHTML = `
@@ -1275,7 +1275,7 @@
                 window.location.href = 'admin.html';
                 return;
             }
-            fetch("http://127.0.0.1:5000/api/login", {
+            fetch("https://helpreach-production-0562.up.railway.app/api/login", {
                 method: "POST",
                 credentials: 'include', // include cookies so server-set cookie is stored
                 headers: { "Content-Type": "application/json" },
@@ -1333,7 +1333,7 @@
             btn.disabled = true;
             btn.textContent = "📧 Sending...";
 
-            fetch("http://127.0.0.1:5000/api/user/forgot-password/request-otp", {
+            fetch("https://helpreach-production-0562.up.railway.app/api/user/forgot-password/request-otp", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ email })
@@ -1368,7 +1368,7 @@
                 return;
             }
 
-            fetch("http://127.0.0.1:5000/api/user/forgot-password/verify-otp", {
+            fetch("https://helpreach-production-0562.up.railway.app/api/user/forgot-password/verify-otp", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ token: currentOtpToken, otp })
@@ -1399,7 +1399,7 @@
             const btn = event.target;
             btn.disabled = true;
 
-            fetch("http://127.0.0.1:5000/api/user/forgot-password/resend-otp", {
+            fetch("https://helpreach-production-0562.up.railway.app/api/user/forgot-password/resend-otp", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ token: currentOtpToken })
@@ -1465,7 +1465,7 @@
             btn.disabled = true;
             btn.textContent = "🔒 Resetting...";
 
-            fetch("http://127.0.0.1:5000/api/user/forgot-password/reset-password", {
+            fetch("https://helpreach-production-0562.up.railway.app/api/user/forgot-password/reset-password", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ token: currentOtpToken, new_password: password })
@@ -1800,7 +1800,7 @@
     </div>
   `;
 
-            fetch("http://127.0.0.1:5000/api/chatbot", {
+            fetch("https://helpreach-production-0562.up.railway.app/api/chatbot", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ message })
@@ -1872,7 +1872,7 @@
 
             // ================= API CALL =================
             try {
-                const res = await fetch("http://127.0.0.1:5000/api/register", {
+                const res = await fetch("https://helpreach-production-0562.up.railway.app/api/register", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json"
@@ -2017,7 +2017,7 @@
             (async () => {
                 try {
                     if (userData && !userData.id) {
-                        const res = await fetch('http://127.0.0.1:5000/api/user/me', { credentials: 'include' });
+                        const res = await fetch('https://helpreach-production-0562.up.railway.app/api/user/me', { credentials: 'include' });
                         if (res.ok) {
                             const json = await res.json();
                             if (json.ok && json.user && json.user.id) {
@@ -2055,8 +2055,8 @@
                         }
 
                         const [donRes, claimedRes] = await Promise.all([
-                            fetch('http://127.0.0.1:5000/api/donations'),
-                            fetch('http://127.0.0.1:5000/api/all-claimed-donations')
+                            fetch('https://helpreach-production-0562.up.railway.app/api/donations'),
+                            fetch('https://helpreach-production-0562.up.railway.app/api/all-claimed-donations')
                         ]);
 
                         const donations = donRes.ok ? await donRes.json() : [];

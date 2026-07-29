@@ -758,10 +758,10 @@
                 async function fetchData() {
                     try {
                         const [uRes, dRes, cRes, nRes] = await Promise.all([
-                            fetch('http://127.0.0.1:5000/api/users'),
-                            fetch('http://127.0.0.1:5000/api/donations'),
-                            fetch('http://127.0.0.1:5000/api/all-claimed-donations'),
-                            fetch('http://127.0.0.1:5000/api/ngos')
+                            fetch('https://helpreach-production-0562.up.railway.app/api/users'),
+                            fetch('https://helpreach-production-0562.up.railway.app/api/donations'),
+                            fetch('https://helpreach-production-0562.up.railway.app/api/all-claimed-donations'),
+                            fetch('https://helpreach-production-0562.up.railway.app/api/ngos')
                         ]);
                         users = uRes.ok ? await uRes.json() : [];
                         const donationsRaw = dRes.ok ? await dRes.json() : [];

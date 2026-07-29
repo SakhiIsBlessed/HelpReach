@@ -228,7 +228,7 @@
 
     // Poll for active donations and show flybox for unseen ones
     (function () {
-        const BACKEND = window.BACKEND_URL || 'http://127.0.0.1:5000';
+        const BACKEND = window.BACKEND_URL || 'https://helpreach-production-0562.up.railway.app';
         const POLL_INTERVAL_MS = 15 * 1000;
 
         function getShownIds() { try { const raw = sessionStorage.getItem('donation_shown_ids'); return raw ? JSON.parse(raw) : []; } catch (e) { return []; } }

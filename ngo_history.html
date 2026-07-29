@@ -754,7 +754,7 @@
     </div>
   `;
 
-            fetch("http://127.0.0.1:5000/api/chatbot", {
+            fetch("https://helpreach-production-0562.up.railway.app/api/chatbot", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ message })
@@ -875,7 +875,7 @@
 
                 // Try to get from backend session
                 try {
-                    const sessionRes = await fetch("http://127.0.0.1:5000/api/ngo/me", {
+                    const sessionRes = await fetch("https://helpreach-production-0562.up.railway.app/api/ngo/me", {
                         credentials: "include"
                     });
                     const sessionData = await sessionRes.json();
@@ -901,7 +901,7 @@
                 }
 
                 // Fetch received donations for this NGO
-                const receivedRes = await fetch(`http://127.0.0.1:5000/api/ngo/${ngoId}/received-donations`);
+                const receivedRes = await fetch(`https://helpreach-production-0562.up.railway.app/api/ngo/${ngoId}/received-donations`);
 
                 if (!receivedRes.ok) {
                     throw new Error("Failed to fetch donation history");
@@ -933,7 +933,7 @@
 
                     // Show a compact right-side thumbnail on md+ screens, stack on small screens
                     const photoHTML = d.photo_filename
-                        ? `<div class="ms-md-3 mt-3 mt-md-0" style="width:140px; flex-shrink:0;"><img src="http://127.0.0.1:5000/uploads/donations/${d.photo_filename}" alt="Donation photo" style="width:140px; height:140px; border-radius:6px; object-fit:cover;"></div>`
+                        ? `<div class="ms-md-3 mt-3 mt-md-0" style="width:140px; flex-shrink:0;"><img src="https://helpreach-production-0562.up.railway.app/uploads/donations/${d.photo_filename}" alt="Donation photo" style="width:140px; height:140px; border-radius:6px; object-fit:cover;"></div>`
                         : '';
 
                     const categoryBadge = d.category ? `<span class="badge bg-secondary me-2">${d.category}</span>` : '';
@@ -975,7 +975,7 @@
 
                 // Fetch expired (unclaimed) donations and render them in History with an Expired tag
                 try {
-                    const expiredRes = await fetch('http://127.0.0.1:5000/api/expired-donations');
+                    const expiredRes = await fetch('https://helpreach-production-0562.up.railway.app/api/expired-donations');
                     if (expiredRes.ok) {
                         const expiredList = await expiredRes.json();
                         if (Array.isArray(expiredList) && expiredList.length > 0) {
@@ -996,7 +996,7 @@
                                 cardE.className = 'card p-3 mb-3 card-compact';
 
                                 const photoHTML = d.photo_filename
-                                    ? `<div class="ms-md-3 mt-3 mt-md-0" style="width:140px; flex-shrink:0;"><img src="http://127.0.0.1:5000/uploads/donations/${d.photo_filename}" alt="Donation photo" style="width:140px; height:140px; border-radius:6px; object-fit:cover;"></div>`
+                                    ? `<div class="ms-md-3 mt-3 mt-md-0" style="width:140px; flex-shrink:0;"><img src="https://helpreach-production-0562.up.railway.app/uploads/donations/${d.photo_filename}" alt="Donation photo" style="width:140px; height:140px; border-radius:6px; object-fit:cover;"></div>`
                                     : '';
 
                                 const categoryBadge = d.category ? `<span class="badge bg-secondary me-2">${d.category}</span>` : '';
@@ -1047,7 +1047,7 @@
 
             try {
                 // Fetch all donations and compute counts per category and per month
-                const res = await fetch('http://127.0.0.1:5000/api/donations');
+                const res = await fetch('https://helpreach-production-0562.up.railway.app/api/donations');
                 if (!res.ok) throw new Error('Failed to fetch donations');
                 const donations = await res.json();
 
@@ -1362,7 +1362,7 @@
 
             const claimedDate = donation.claimed_at ? new Date(donation.claimed_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' }) : 'N/A';
             const receivedDate = donation.received_at ? new Date(donation.received_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' }) : 'Pending';
-            const photoURL = donation.photo_filename ? `http://127.0.0.1:5000/uploads/donations/${donation.photo_filename}` : '';
+            const photoURL = donation.photo_filename ? `https://helpreach-production-0562.up.railway.app/uploads/donations/${donation.photo_filename}` : '';
 
             // Calculate days between claimed and received
             let daysTaken = 'N/A';
@@ -1726,7 +1726,7 @@
             btn.onclick = submitRegistration;
         }
         function submitLogin() {
-            fetch("http://127.0.0.1:5000/api/login", {
+            fetch("https://helpreach-production-0562.up.railway.app/api/login", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
@@ -1886,7 +1886,7 @@
                 }
 
                 try {
-                    const res = await fetch(`http://127.0.0.1:5000/api/ngo/${ngoId}/documents`, { credentials: 'include' });
+                    const res = await fetch(`https://helpreach-production-0562.up.railway.app/api/ngo/${ngoId}/documents`, { credentials: 'include' });
                     const data = await res.json();
                     if (!res.ok || !data.ok) {
                         list.innerHTML = '<div class="text-muted">No documents uploaded yet.</div>';
@@ -1944,7 +1944,7 @@ function openUploadModal() {
                     uploadBtn.textContent = 'Uploading...';
                     uploadBtn.disabled = true;
 
-                    const res = await fetch(`http://127.0.0.1:5000/api/ngo/${currentNgoId}/documents`, {
+                    const res = await fetch(`https://helpreach-production-0562.up.railway.app/api/ngo/${currentNgoId}/documents`, {
                         method: 'POST',
                         credentials: 'include',
                         body: form
@@ -2011,7 +2011,7 @@ function goToNgoAccount() {
                         }
 
                         try {
-                            const res = await fetch(`http://127.0.0.1:5000/api/ngo/${currentNgoId}/documents`, { credentials: 'include' });
+                            const res = await fetch(`https://helpreach-production-0562.up.railway.app/api/ngo/${currentNgoId}/documents`, { credentials: 'include' });
                             const data = await res.json();
 
                             if (res.ok && data.ok) {
@@ -2064,7 +2064,7 @@ function goToNgoAccount() {
                         showUploadAlert('Uploading...', 'info', 0);
 
                         try {
-                            const res = await fetch(`http://127.0.0.1:5000/api/ngo/${currentNgoId}/documents`, {
+                            const res = await fetch(`https://helpreach-production-0562.up.railway.app/api/ngo/${currentNgoId}/documents`, {
                                 method: 'POST',
                                 credentials: 'include',
                                 body: form
@@ -2136,7 +2136,7 @@ function goToNgoAccount() {
         async function loadNgoProfileFromBackend(ngoId) {
             try {
                 const res = await fetch(
-                    `http://127.0.0.1:5000/api/ngo/profile/${ngoId}`
+                    `https://helpreach-production-0562.up.railway.app/api/ngo/profile/${ngoId}`
                 );
 
                 const data = await res.json();
@@ -2158,7 +2158,7 @@ function goToNgoAccount() {
         window.addEventListener("load", async () => {
             // First, check backend session
             try {
-                const res = await fetch("http://127.0.0.1:5000/api/ngo/me", {
+                const res = await fetch("https://helpreach-production-0562.up.railway.app/api/ngo/me", {
                     credentials: "include"
                 });
 
@@ -2210,7 +2210,7 @@ function goToNgoAccount() {
             showGuestNgo();
 
             // 3️⃣ Call logout API to clear backend session
-            fetch("http://127.0.0.1:5000/api/ngo/logout", {
+            fetch("https://helpreach-production-0562.up.railway.app/api/ngo/logout", {
                 method: "POST",
                 credentials: "include"
             }).catch(err => console.error("Logout error:", err));
