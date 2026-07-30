@@ -43,13 +43,45 @@ def allowed_doc_file(filename):  # Function to check if a file is an allowed doc
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_DOC_EXTENSIONS
 
 # 🔹 Enhanced CORS configuration to support credentials
-# For local development allow all origins so static files opened from filesystem or other ports can call APIs.
+# Read allowed frontend origins from env `FRONTEND_ORIGINS` (comma-separated).
+# When not set we fall back to wildcard for local/dev convenience.
+frontend_origins = os.environ.get('FRONTEND_ORIGINS')
+if frontend_origins:
+    origins = [o.strip() for o in frontend_origins.split(',') if o.strip()]
+else:
+    origins = "*"
+
 CORS(  # Set up CORS to allow frontend to call backend
     app,
-    origins="*",  # Allow any website to call (for development)
+    origins=origins,  # Use configured origins (or '*' for dev)
     allow_headers=["Content-Type", "X-Requested-With"],  # Allow these headers
     supports_credentials=True  # Allow cookies/credentials
 )
+
+# Helper to set auth/session cookies consistently for cross-site usage.
+def set_auth_cookie(resp, name, value, max_age=None):
+    """Set a cookie suitable for cross-site requests when enabled by env.
+
+    Uses env `COOKIE_SAMESITE` (default 'None') and `COOKIE_SECURE` (default '1').
+    If `COOKIE_SAMESITE` is 'None' browsers require `secure=True` to accept the cookie.
+    """
+    samesite = os.environ.get('COOKIE_SAMESITE', 'None')
+    cookie_secure_env = os.environ.get('COOKIE_SECURE', '1')
+    secure_flag = str(cookie_secure_env).lower() not in ('0', 'false', 'no')
+
+    kwargs = {
+        'httponly': True,
+        'samesite': samesite,
+    }
+    if max_age is not None:
+        kwargs['max_age'] = max_age
+    # If samesite is None, browsers require Secure=True for the cookie to be set
+    if secure_flag:
+        kwargs['secure'] = True
+    else:
+        kwargs['secure'] = False
+
+    resp.set_cookie(name, value, **kwargs)
 
 # Dictionary to store OTP temporarily
 otp_store = {}  # Temporary storage for OTP codes (in memory, not database)
@@ -322,16 +354,10 @@ def register():  # Function that handles new user registration
             new_user = fetch_cursor.fetchone()  # Get the user data
             fetch_cursor.close()  # Close this cursor
             
-            # 🔹 Set cookie with user_id for session management (dev-friendly SameSite)
+            # 🔹 Set cookie with user_id for session management
             response = jsonify({"ok": True, "message": "User registered", "user": new_user})  # Create JSON response
-            response.set_cookie(  # Set a cookie in the browser for login session
-    "user_id",  # Cookie name
-    str(new_user["id"]),  # Cookie value (user ID)
-    max_age=86400,  # Expires in 1 day
-    httponly=True,  # Can't be read by JavaScript (security)
-    samesite="Lax",  # Allows some cross-site requests
-    secure=False  # False for local development (HTTP)
-)
+            # Use helper to set cookie attributes suitable for cross-site requests in production
+            set_auth_cookie(response, "user_id", str(new_user["id"]), max_age=86400)
 
             return response  # Return success response with user data
         except Exception as e:  # If database error
@@ -401,16 +427,9 @@ def login():
         except Exception as e:
             print("❌ Login email error:", e)
 
-        # 🔹 Set cookie with user_id for session management (dev-friendly SameSite)
+        # 🔹 Set cookie with user_id for session management
         response = jsonify({"ok": True, "user": user})
-        response.set_cookie(
-    "user_id",
-    str(user["id"]),
-    max_age=86400,
-    httponly=True,
-    samesite="Lax",  # Works with HTTP for local development
-    secure=False  # True only on HTTPS
-)
+        set_auth_cookie(response, "user_id", str(user["id"]), max_age=86400)
 
         return response
 
@@ -912,13 +931,7 @@ def register_ngo():
             "ngo": ngo
         })
         
-        response.set_cookie(
-            "ngo_id",
-            str(ngo["id"]),
-            httponly=True,
-            samesite="Lax",  # Works with HTTP for local development
-            max_age=86400 * 7  # 7 days
-        )
+        set_auth_cookie(response, "ngo_id", str(ngo["id"]), max_age=86400 * 7)
 
         return response
 
@@ -1936,14 +1949,7 @@ def user_login():
         return jsonify({"ok": False, "error": "Invalid credentials"}), 401
 
     resp = jsonify({"ok": True, "user": user})
-    resp.set_cookie(
-        "user_id",
-        str(user["id"]),
-        max_age=86400,
-        httponly=True,
-        samesite="Lax",  # Works with HTTP for local development
-        secure=False
-    )
+    set_auth_cookie(resp, "user_id", str(user["id"]), max_age=86400)
 
     return resp
 
@@ -1977,6 +1983,7 @@ def user_me():
 @app.route("/api/user/logout", methods=["POST"])
 def user_logout():
     resp = jsonify({"ok": True})
+    # Clear cookie using helper-compatible clear (expires=0)
     resp.set_cookie("user_id", "", expires=0)
     return resp
 

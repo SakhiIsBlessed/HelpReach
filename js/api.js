@@ -1,7 +1,10 @@
 // Shared client-side API handlers for Login / Register / Donate
 (function () {
+    // Base backend URL — set by pages that need it (e.g. window.BACKEND_URL).
+    const API_BASE = (window.BACKEND_URL || '');
     async function postJSON(url, data) {
-        const res = await fetch(url, {
+        const fullUrl = url && (url.indexOf('://') !== -1) ? url : (API_BASE + url);
+        const res = await fetch(fullUrl, {
             method: 'POST',
             credentials: 'include',
             headers: {
@@ -14,7 +17,8 @@
     }
 
     async function postForm(url, formData) {
-        const res = await fetch(url, {
+        const fullUrl = url && (url.indexOf('://') !== -1) ? url : (API_BASE + url);
+        const res = await fetch(fullUrl, {
             method: 'POST',
             credentials: 'include',
             body: formData
@@ -40,7 +44,7 @@
             submitBtn.disabled = true; submitBtn.textContent = 'Signing in...';
             try {
                 const fd = new FormData(); fd.append('email', email); fd.append('password', password);
-                const res = await fetch('/api/login', { method: 'POST', credentials: 'include', body: fd });
+                const res = await fetch(API_BASE + '/api/login', { method: 'POST', credentials: 'include', body: fd });
                 const data = await res.json();
                 if (res.ok && data.ok) {
                     window.location.href = 'dashboard.html';
@@ -74,7 +78,7 @@
             submitBtn.disabled = true; submitBtn.textContent = 'Creating...';
             try {
                 const fd = new FormData(); fd.append('name', orgName); fd.append('email', email); fd.append('password', password);
-                const res = await fetch('/api/register', { method: 'POST', credentials: 'include', body: fd });
+                const res = await fetch(API_BASE + '/api/register', { method: 'POST', credentials: 'include', body: fd });
                 const data = await res.json();
                 if (res.ok && data.ok) {
                     // close modal if present
@@ -99,6 +103,6 @@
 
     // Optional: logout link handler
     const logoutLinks = document.querySelectorAll('[data-logout]');
-    logoutLinks.forEach(a => a.addEventListener('click', async function (e) { e.preventDefault(); await fetch('/api/logout', { method: 'POST', credentials: 'include' }); window.location.href = 'index.html'; }));
+    logoutLinks.forEach(a => a.addEventListener('click', async function (e) { e.preventDefault(); await fetch(API_BASE + '/api/logout', { method: 'POST', credentials: 'include' }); window.location.href = 'index.html'; }));
 
 })();
